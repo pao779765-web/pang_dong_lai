@@ -18,7 +18,7 @@
 
 - [x] 创建工作区 `D:\ai沙盒\codex+grok`
 - [x] 添加 README / AGENTS / PLAN / HANDOFF
-- [ ] 初始化 Git（若尚未初始化）
+- [x] 初始化 Git（`main`）
 - [ ] 用户确认第一项真实业务目标
 
 ### 阶段 1 — 业务开发

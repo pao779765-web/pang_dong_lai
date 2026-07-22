@@ -18,12 +18,12 @@
 
 - [x] 创建目录：`D:\ai沙盒\codex+grok`
 - [x] 写入 `README.md`、`AGENTS.md`、`docs/PLAN.md`、`docs/HANDOFF.md`、`.gitignore`
+- [x] 初始化 Git（`main`，首次 commit `26b648e`）
 
 ---
 
 ## 未完成 / 下一步
 
-- [ ] 初始化 Git 仓库并做首次 commit（可由 Grok 完成）
 - [ ] 用户在下方「业务目标」填入第一件事
 - [ ] Codex 或 Grok 按目标开工
 
@@ -66,7 +66,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |------|----|----------|------|
-| 2026-07-22 | Grok | 创建协同基建与模板 | README.md, AGENTS.md, docs/* , .gitignore |
+| 2026-07-22 | Grok | 创建协同基建与模板 + Git 初始化 | README.md, AGENTS.md, docs/*, .gitignore, .git |
 
 ---
 
