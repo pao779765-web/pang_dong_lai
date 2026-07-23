@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-07-23
 
-**当前执行者：** Codex（优先修 QA-01 生产静态资源）；Grok 首页验收 `f8090a0` 已完成
+**当前执行者：** 用户可验收 AI 对话 UI；Codex 仍待 QA-01；Grok 可复测视觉
 **分支：** `main`
 
 ---
@@ -45,6 +45,7 @@
 - [x] 响应式、键盘焦点、减少动态、离屏暂停动画（dev 验证）。
 - [x] `npm run lint`、`npm test` 在 `f8090a0` 上通过。
 - [x] **Grok 以 `f8090a0` 完成首页独立质量验收**，结论：**有条件通过**，详见 `docs/QA_REPORT.md`。
+- [x] 用户授权后，按现有浅色简约风格重构 AI 问答界面与用户/助手气泡（低饱和、圆角、与关键词胶囊气质统一）；保留非官方与未接资料库说明。
 
 ---
 
@@ -53,6 +54,7 @@
 - [ ] **Codex【优先】QA-01**：`vinext start` 下 `/assets/*` CSS/JS 404，生产本地预览不可用。
 - [ ] Codex（可选）QA-02：微调 360 视口关键词坐标。
 - [ ] Codex（可选）QA-03：锚点后焦点落到栏目标题。
+- [ ] 用户确认 AI 对话区浅色重构视觉是否满意。
 - [ ] Grok：独立复核 14 家门店、来源候选、链接与合规 → `docs/SOURCE_AUDIT.md`。
 - [ ] Grok：QA-01 修复后复测生产预览资产。
 - [ ] 用户：门店照片授权或占位图策略；浅色 hero 视觉最终确认。
@@ -67,10 +69,11 @@
 ```
 
 正式页面：`pangdonglai_project/site`（vinext / React / TypeScript）。  
-最新验收提交：`f8090a0`。浅色 `hero-bg.png` 已接入且 dev 下正常显示。
+首页验收提交：`f8090a0`（有条件通过）。  
+本轮另完成：AI 对话区浅色柔和 UI 重构（用户授权，与 Hero/关键词视觉统一）。
 
-**Grok 结论：有条件通过。**  
-阻断项：生产预览静态资源（QA-01）。非阻断：360 关键词轻微相交（QA-02）。
+阻断项：生产预览静态资源（QA-01）。  
+待用户确认：AI 对话区新视觉。
 
 未推送远端，未部署云端。
 
@@ -91,7 +94,7 @@
 
 ### 给用户
 
-1. 确认浅色 hero 与 360 首屏是否可接受。  
+1. 确认浅色 hero、360 首屏与 **AI 对话区新气泡 UI** 是否可接受。  
 2. 门店图与发布仍待授权。
 
 ---
@@ -99,7 +102,7 @@
 ## 文件边界
 
 - 不修改：`pangdonglai_project/胖东来网页（7月22日1点34分）.html`
-- 网站源码：`pangdonglai_project/site/**`（Grok 本轮未改）
+- 网站源码：`pangdonglai_project/site/**`（本轮仅改对话区 page.tsx + globals.css）
 - 方案：`pangdonglai_project/PRODUCT_PLAN.md`、`docs/PLAN.md`
 - 交接：`docs/HANDOFF.md`
 - 质量报告：`docs/QA_REPORT.md`
@@ -127,6 +130,7 @@
 | 2026-07-23 | Codex | 首页首屏与双锚点 | `aae95cc` |
 | 2026-07-23 | Codex | 同步浅色 hero-bg 与样式 | `f8090a0`（hero-bg.png, globals.css） |
 | 2026-07-23 | Grok | 以 `f8090a0` 做首页独立验收：有条件通过 | docs/QA_REPORT.md, docs/HANDOFF.md |
+| 2026-07-23 | Grok | 重构 AI 对话区为浅色柔和气泡 UI，与 Hero/关键词风格统一 | site/app/page.tsx, site/app/globals.css, docs/HANDOFF.md |
 
 ---
 

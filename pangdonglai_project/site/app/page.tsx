@@ -286,37 +286,75 @@ export default function Home() {
         aria-labelledby="dialogue-title"
       >
         <div className="section-shell dialogue-layout">
-          <div className="dialogue-window" aria-label="AI 问答概念界面">
+          <div className="dialogue-intro">
+            <p className="section-index">B / DIALOGUE</p>
+            <p className="dialogue-kicker">从问题走向理解</p>
+            <p className="dialogue-lead">
+              用柔和的对话继续探索标签背后的人与制度。回答会尽量克制，并标明这是非官方资料助手。
+            </p>
+          </div>
+
+          <div className="dialogue-window" aria-label="AI 问答界面">
             <header className="dialogue-bar">
               <div className="dialogue-identity">
                 <span className="dialogue-dot" aria-hidden="true" />
-                <h2 id="dialogue-title">与胖东来对话</h2>
+                <div>
+                  <h2 id="dialogue-title">与胖东来对话</h2>
+                  <p className="dialogue-subtitle">文化资料助手</p>
+                </div>
               </div>
               <span className="dialogue-disclaimer">非官方资料助手</span>
             </header>
 
             <div className="dialogue-body" aria-live="polite" aria-busy={isSending}>
               {messages.length === 0 ? (
-                <div className="message message-ai chat-empty-state">
-                  <span>资料助手</span>
-                  <p>你好。你可以从企业文化、门店体验或公众印象开始提问。</p>
-                  <p>当前版本尚未接入资料检索，具体事实请以官方渠道或原始报道为准。</p>
+                <div className="chat-empty-state">
+                  <div className="message message-assistant">
+                    <span className="message-label">资料助手</span>
+                    <div className="message-content">
+                      <p>你好。可以从企业文化、门店体验或公众印象开始提问。</p>
+                      <p className="message-footnote">
+                        当前版本尚未接入资料检索，具体事实请以官方渠道或原始报道为准。
+                      </p>
+                    </div>
+                  </div>
+                  <div className="chat-suggest" aria-label="话题提示">
+                    <span className="chat-suggest-chip">企业文化？</span>
+                    <span className="chat-suggest-chip">门店体验？</span>
+                    <span className="chat-suggest-chip">公众印象？</span>
+                  </div>
                 </div>
               ) : (
                 messages.map((message) => (
-                  <div key={message.id} className={`message message-${message.role}`}>
-                    <span>{message.role === "user" ? "你" : "资料助手"}</span>
-                    <p>{message.content}</p>
+                  <div
+                    key={message.id}
+                    className={`message message-${message.role === "user" ? "user" : "assistant"}`}
+                  >
+                    <span className="message-label">
+                      {message.role === "user" ? "你" : "资料助手"}
+                    </span>
+                    <div className="message-content">
+                      <p>{message.content}</p>
+                    </div>
                   </div>
                 ))
               )}
-              {isSending ? <p className="chat-pending">正在思考…</p> : null}
-              {chatError ? <p className="chat-error" role="alert">{chatError}</p> : null}
+              {isSending ? (
+                <div className="chat-pending" aria-live="polite">
+                  <span className="chat-pending-dots" aria-hidden="true" />
+                  正在思考…
+                </div>
+              ) : null}
+              {chatError ? (
+                <p className="chat-error" role="alert">
+                  {chatError}
+                </p>
+              ) : null}
             </div>
 
             <form className="question-shell" onSubmit={handleChatSubmit}>
               <label htmlFor="prototype-question">输入你的问题</label>
-              <div>
+              <div className="question-row">
                 <input
                   id="prototype-question"
                   type="text"
@@ -339,7 +377,9 @@ export default function Home() {
 
         <footer className="site-footer">
           <span>胖东来文化数字馆 / PDL CULTURE ARCHIVE</span>
-          <a href="#top" onClick={handleAnchorClick}>回到表面 ↑</a>
+          <a href="#top" onClick={handleAnchorClick}>
+            回到表面 ↑
+          </a>
         </footer>
       </section>
     </main>
