@@ -356,43 +356,52 @@ button:disabled {
   pointer-events: none;
 }
 
-.keyword {
+.keyword-entry {
   position: absolute;
   top: var(--y);
   left: var(--x);
+  animation: keyword-enter 0.78s var(--intro-delay) cubic-bezier(0.16, 0.84, 0.32, 1) both;
+}
+
+.keyword {
   display: inline-block;
   padding: 7px 10px 6px;
-  border: 1px solid rgba(135, 78, 52, 0.16);
+  border: 1px solid rgba(113, 58, 38, 0.38);
   border-radius: 999px;
-  color: rgba(97, 52, 34, 0.5);
+  color: rgba(78, 36, 24, 0.9);
+  background: rgba(255, 249, 241, 0.66);
+  box-shadow: 0 7px 24px rgba(112, 60, 40, 0.1);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
   background: rgba(255, 251, 245, 0.27);
   backdrop-filter: blur(3px);
   font-size: clamp(0.62rem, 0.78vw, 0.76rem);
   font-weight: 400;
   letter-spacing: 0.12em;
   white-space: nowrap;
-  animation: keyword-drift var(--duration) var(--delay) ease-in-out infinite alternate;
+  animation: keyword-drift var(--duration) calc(var(--intro-delay) + 0.78s + var(--delay)) ease-in-out infinite alternate both;
 }
 
 .keyword b {
   margin-left: 2px;
-  color: var(--copper-light);
+  color: #b34c2b;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1.15em;
   font-weight: 400;
 }
 
 .keyword-copper {
-  border-color: rgba(184, 101, 62, 0.22);
-  color: rgba(163, 81, 48, 0.62);
+  border-color: rgba(161, 70, 37, 0.42);
+  color: rgba(128, 52, 29, 0.94);
+  background: rgba(255, 243, 232, 0.78);
 }
 
 .keyword-smoke {
-  border-color: transparent;
-  color: rgba(113, 66, 45, 0.28);
-  background: transparent;
+  border-color: rgba(101, 58, 39, 0.28);
+  color: rgba(89, 47, 31, 0.78);
+  background: rgba(255, 250, 244, 0.48);
 }
 
+.hero[data-active="false"] .keyword-entry,
 .hero[data-active="false"] .keyword {
   animation-play-state: paused;
 }
@@ -805,16 +814,29 @@ button:disabled {
   }
 }
 
+@keyframes keyword-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(-10px, 18px, 0) scale(0.92);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
 @keyframes keyword-drift {
   0% {
-    opacity: 0.3;
+    opacity: 0.72;
     transform: translate3d(0, 0, 0);
   }
   45% {
-    opacity: 0.64;
+    opacity: 0.98;
   }
   100% {
-    opacity: 0.38;
+    opacity: 0.77;
     transform: translate3d(var(--dx), var(--dy), 0);
   }
 }
@@ -830,12 +852,12 @@ button:disabled {
 }
 
 @media (max-width: 1040px) {
-  .keyword[data-index="17"],
-  .keyword[data-index="18"],
-  .keyword[data-index="19"],
-  .keyword[data-index="20"],
-  .keyword[data-index="21"],
-  .keyword[data-index="22"] {
+  .keyword-entry[data-index="17"],
+  .keyword-entry[data-index="18"],
+  .keyword-entry[data-index="19"],
+  .keyword-entry[data-index="20"],
+  .keyword-entry[data-index="21"],
+  .keyword-entry[data-index="22"] {
     display: none;
   }
 
@@ -910,25 +932,25 @@ button:disabled {
     backdrop-filter: blur(2px);
   }
 
-  .keyword[data-index="9"],
-  .keyword[data-index="10"],
-  .keyword[data-index="11"],
-  .keyword[data-index="12"],
-  .keyword[data-index="13"],
-  .keyword[data-index="14"],
-  .keyword[data-index="15"],
-  .keyword[data-index="16"] {
+  .keyword-entry[data-index="9"],
+  .keyword-entry[data-index="10"],
+  .keyword-entry[data-index="11"],
+  .keyword-entry[data-index="12"],
+  .keyword-entry[data-index="13"],
+  .keyword-entry[data-index="14"],
+  .keyword-entry[data-index="15"],
+  .keyword-entry[data-index="16"] {
     display: none;
   }
 
-  .keyword[data-index="1"] { --x: 3%; --y: 14%; }
-  .keyword[data-index="2"] { --x: 67%; --y: 16%; }
-  .keyword[data-index="3"] { --x: 5%; --y: 26%; }
-  .keyword[data-index="4"] { --x: 70%; --y: 29%; }
-  .keyword[data-index="5"] { --x: 3%; --y: 68%; }
-  .keyword[data-index="6"] { --x: 64%; --y: 71%; }
-  .keyword[data-index="7"] { --x: 7%; --y: 88%; }
-  .keyword[data-index="8"] { --x: 68%; --y: 86%; }
+  .keyword-entry[data-index="1"] { --x: 3%; --y: 14%; }
+  .keyword-entry[data-index="2"] { --x: 67%; --y: 16%; }
+  .keyword-entry[data-index="3"] { --x: 5%; --y: 26%; }
+  .keyword-entry[data-index="4"] { --x: 70%; --y: 29%; }
+  .keyword-entry[data-index="5"] { --x: 3%; --y: 68%; }
+  .keyword-entry[data-index="6"] { --x: 64%; --y: 71%; }
+  .keyword-entry[data-index="7"] { --x: 7%; --y: 88%; }
+  .keyword-entry[data-index="8"] { --x: 68%; --y: 86%; }
 
   .scroll-cue {
     display: none;
