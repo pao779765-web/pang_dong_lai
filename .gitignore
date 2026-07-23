@@ -34,3 +34,8 @@ tmp/
 
 # local review workspace
 .tmp_manual_review/
+
+# local worker secrets (Cloudflare / vinext)
+.dev.vars
+**/.dev.vars
+
