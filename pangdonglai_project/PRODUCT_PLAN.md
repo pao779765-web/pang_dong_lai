@@ -4,7 +4,7 @@
 >
 > 日期：2026-07-22
 >
-> 项目目录：`D:\ai沙盒\codex+grok\pangdonglai_project`
+> 项目目录：`D:\ai沙盒\胖东来项目文件夹\pangdonglai_project`
 >
 > 项目性质：基于公开可核验资料构建的非官方文化学习与传播原型
 >
@@ -217,7 +217,7 @@ flowchart TD
 
 - 360×800、768×1024、1440×900 三种视口均无文字覆盖中心标题。
 - A、B 锚点均可用鼠标和键盘触发。
-- A 到 `#understand`，B 到 `#ai-dialogue`，落点标题完整可见。
+- A 到 `#explore`，B 到 `#ai-dialogue`，落点标题完整可见。
 - 关键词离屏后不继续消耗动画帧。
 - 减少动态模式下没有持续位移动画。
 - 首屏没有未经来源支持的确定性事实表述。
@@ -629,7 +629,7 @@ type Report = {
 - Vite
 - React
 - TypeScript
-- React Router
+- vinext / Next App Router（由 Vite 驱动）
 - CSS Modules 或整理后的 Tailwind CSS（二选一，不混乱叠加）
 - Lucide 图标
 

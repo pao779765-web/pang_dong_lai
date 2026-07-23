@@ -20,6 +20,8 @@ Desktop.ini
 node_modules/
 dist/
 build/
+!pangdonglai_project/site/build/
+!pangdonglai_project/site/build/sites-vite-plugin.ts
 .venv/
 __pycache__/
 *.pyc

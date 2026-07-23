@@ -28,7 +28,7 @@
 
 ### 阶段 0 — 协作基建
 
-- [x] 创建工作区 `D:\ai沙盒\codex+grok`
+- [x] 创建工作区；2026-07-23 已迁移至 `D:\ai沙盒\胖东来项目文件夹`
 - [x] 添加 README / AGENTS / PLAN / HANDOFF
 - [x] 初始化 Git（`main`）
 
@@ -66,7 +66,7 @@
 
 ## 技术选型（推荐，待用户批准后执行）
 
-- 前端：Vite + React + TypeScript + React Router
+- 前端：Vite 驱动的 vinext / Next App Router + React + TypeScript
 - 样式：整理后的 Tailwind CSS 或 CSS Modules，二选一
 - 第一版内容：TypeScript/JSON 静态数据
 - 第一版地图：地址 + 高德/百度地图深链，不接 SDK
