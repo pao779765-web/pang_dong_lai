@@ -596,32 +596,6 @@ button:disabled {
   margin: 0 auto;
 }
 
-.dialogue-intro {
-  text-align: center;
-}
-
-.dialogue-intro .section-index {
-  margin: 0 0 14px;
-}
-
-.dialogue-kicker {
-  margin: 0;
-  color: rgba(98, 54, 36, 0.72);
-  font-family: "Songti SC", SimSun, "Times New Roman", serif;
-  font-size: clamp(1.55rem, 3.2vw, 2.2rem);
-  font-weight: 400;
-  letter-spacing: 0.04em;
-}
-
-.dialogue-lead {
-  max-width: 34em;
-  margin: 14px auto 0;
-  color: rgba(70, 42, 28, 0.58);
-  font-size: 0.84rem;
-  letter-spacing: 0.06em;
-  line-height: 1.9;
-}
-
 .section-index-light {
   margin-bottom: 32px;
   color: #995332;
@@ -679,49 +653,40 @@ button:disabled {
 
 .dialogue-bar {
   display: flex;
-  min-height: 72px;
-  padding: 16px clamp(18px, 3vw, 28px);
+  min-height: 56px;
+  padding: 12px clamp(18px, 3vw, 28px);
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  justify-content: flex-start;
+  gap: 12px;
   border-bottom: 1px solid rgba(142, 85, 55, 0.1);
   background: rgba(255, 251, 245, 0.55);
 }
 
-.dialogue-identity {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-}
-
 .dialogue-dot {
   flex: 0 0 auto;
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: linear-gradient(145deg, #e0a57a, #cc7444);
-  box-shadow: 0 0 0 5px rgba(204, 116, 68, 0.1);
+  box-shadow: 0 0 0 4px rgba(204, 116, 68, 0.1);
 }
 
-.dialogue-identity h2 {
-  margin: 0;
-  color: rgba(52, 30, 20, 0.92);
-  font-family: "Songti SC", SimSun, "Times New Roman", serif;
-  font-size: clamp(1.08rem, 1.6vw, 1.32rem);
-  font-weight: 400;
-  letter-spacing: 0.06em;
-}
-
-.dialogue-subtitle {
-  margin: 4px 0 0;
-  color: rgba(98, 54, 36, 0.48);
-  font-size: 0.62rem;
-  letter-spacing: 0.14em;
+.dialogue-title-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .dialogue-disclaimer {
-  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: 7px 12px;
   border: 1px solid rgba(161, 70, 37, 0.16);
   border-radius: 999px;
@@ -1254,11 +1219,6 @@ button:disabled {
   .dialogue-layout {
     gap: 22px;
     max-width: none;
-  }
-
-  .dialogue-lead {
-    font-size: 0.78rem;
-    line-height: 1.8;
   }
 
   .dialogue-window {

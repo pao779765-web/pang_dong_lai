@@ -286,24 +286,15 @@ export default function Home() {
         aria-labelledby="dialogue-title"
       >
         <div className="section-shell dialogue-layout">
-          <div className="dialogue-intro">
-            <p className="section-index">B / DIALOGUE</p>
-            <p className="dialogue-kicker">从问题走向理解</p>
-            <p className="dialogue-lead">
-              用柔和的对话继续探索标签背后的人与制度。回答会尽量克制，并标明这是非官方资料助手。
-            </p>
-          </div>
-
           <div className="dialogue-window" aria-label="AI 问答界面">
             <header className="dialogue-bar">
-              <div className="dialogue-identity">
+              <h2 id="dialogue-title" className="dialogue-title-sr">
+                与胖东来对话
+              </h2>
+              <span className="dialogue-disclaimer">
                 <span className="dialogue-dot" aria-hidden="true" />
-                <div>
-                  <h2 id="dialogue-title">与胖东来对话</h2>
-                  <p className="dialogue-subtitle">文化资料助手</p>
-                </div>
-              </div>
-              <span className="dialogue-disclaimer">非官方资料助手</span>
+                非官方资料助手
+              </span>
             </header>
 
             <div className="dialogue-body" aria-live="polite" aria-busy={isSending}>
