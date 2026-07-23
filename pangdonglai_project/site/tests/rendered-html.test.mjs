@@ -39,7 +39,8 @@ test("server-renders the Pangdonglai culture homepage", async () => {
   assert.match(html, /与胖东来对话/);
   assert.match(html, /id="explore"/);
   assert.match(html, /id="ai-dialogue"/);
-  assert.match(html, /当前仅展示交互方向，尚未接入 AI 或真实资料库/);
+  assert.match(html, /非官方资料助手/);
+  assert.match(html, /对话功能将在资料库准备完成后开放/);
 });
 
 test("removes disposable starter-preview code and metadata", async () => {

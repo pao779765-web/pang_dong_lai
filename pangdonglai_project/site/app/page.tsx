@@ -232,52 +232,39 @@ export default function Home() {
         aria-labelledby="dialogue-title"
       >
         <div className="section-shell dialogue-layout">
-          <div className="dialogue-copy">
-            <p className="section-index section-index-light">B / DIALOGUE</p>
-            <div className="prototype-label">胖东来文化资料助手（非官方）</div>
-            <h2 id="dialogue-title">别只问它做了什么，<br />也问它为什么这样做。</h2>
-            <p>
-              未来，这里会连接经过整理的公开资料。回答会展示依据、区分事实与观点，
-              并提醒你：一家企业的文化，不能被一句口号概括。
-            </p>
-            <p className="prototype-note">
-              当前仅展示交互方向，尚未接入 AI 或真实资料库。
-            </p>
-          </div>
-
           <div className="dialogue-window" aria-label="AI 问答概念界面">
-            <div className="dialogue-bar">
-              <span>PDL CULTURE / ASK</span>
-              <span className="dialogue-state">结构示例</span>
-            </div>
-            <div className="message message-user">
-              <span>你的问题</span>
-              <p>“自由与爱”在具体管理制度里，意味着什么？</p>
-            </div>
-            <div className="message message-ai">
-              <span>文化馆回答</span>
-              <p>
-                我会先区分企业表达、媒体叙述与员工体验，再把能被核验的制度与案例列出来。
-              </p>
-              <div className="answer-structure">
-                <span>01 / 概念背景</span>
-                <span>02 / 现实做法</span>
-                <span>03 / 来源与争议</span>
+            <header className="dialogue-bar">
+              <div className="dialogue-identity">
+                <span className="dialogue-dot" aria-hidden="true" />
+                <h2 id="dialogue-title">与胖东来对话</h2>
+              </div>
+              <span className="dialogue-disclaimer">非官方资料助手</span>
+            </header>
+
+            <div className="dialogue-body">
+              <p className="dialogue-kicker">从一个问题开始</p>
+              <div className="message message-ai">
+                <span>资料助手</span>
+                <p>你好。你可以从企业文化、门店体验或公众印象开始提问。</p>
+                <p>
+                  资料库接入后，我会区分已核验信息与观点，并在回答中标明来源。
+                </p>
               </div>
             </div>
+
             <div className="question-shell">
-              <label htmlFor="prototype-question">继续追问</label>
+              <label htmlFor="prototype-question">输入你的问题</label>
               <div>
                 <input
                   id="prototype-question"
                   type="text"
-                  value="问一个关于胖东来文化的问题…"
-                  readOnly
+                  placeholder="问一个关于胖东来文化的问题"
+                  disabled
                   aria-describedby="prototype-help"
                 />
                 <button type="button" disabled aria-label="发送功能开发中">发送</button>
               </div>
-              <small id="prototype-help">问答功能将在资料库完成后开放</small>
+              <small id="prototype-help">对话功能将在资料库准备完成后开放</small>
             </div>
           </div>
         </div>
