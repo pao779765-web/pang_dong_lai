@@ -850,10 +850,10 @@ button:disabled {
 @keyframes keyword-sway {
   0%,
   100% {
-    transform: translateX(-3px) rotate(-0.25deg);
+    transform: translateX(-7px) rotate(-0.5deg);
   }
   50% {
-    transform: translateX(3px) rotate(0.25deg);
+    transform: translateX(7px) rotate(0.5deg);
   }
 }
 
