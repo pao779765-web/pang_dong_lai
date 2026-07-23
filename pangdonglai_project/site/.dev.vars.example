@@ -1,0 +1,11 @@
+# 复制本文件为 .dev.vars（同目录），填入真实 Key。
+# .dev.vars 已被 Git 忽略，不会上传到 GitHub。
+#
+# 用法：
+#   1. 复制：copy .dev.vars.example .dev.vars
+#   2. 编辑 .dev.vars，把下面的值换成你的 DeepSeek API Key
+#   3. 重新运行：npm run dev
+#
+# 注意：不要把真实 Key 写进本 example 文件，也不要提交 .dev.vars。
+
+DEEPSEEK_API_KEY=sk-请替换为你的DeepSeek密钥
