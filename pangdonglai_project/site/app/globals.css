@@ -378,6 +378,11 @@ button:disabled {
   font-weight: 400;
   letter-spacing: 0.12em;
   white-space: nowrap;
+  animation: keyword-sway var(--sway-duration) calc(var(--intro-delay) + 0.78s) ease-in-out infinite both;
+}
+
+.keyword-drift {
+  display: inline-block;
   animation: keyword-drift var(--duration) calc(var(--intro-delay) + 0.78s + var(--delay)) ease-in-out infinite alternate both;
 }
 
@@ -402,6 +407,7 @@ button:disabled {
 }
 
 .hero[data-active="false"] .keyword-entry,
+.hero[data-active="false"] .keyword-drift,
 .hero[data-active="false"] .keyword {
   animation-play-state: paused;
 }
@@ -838,6 +844,16 @@ button:disabled {
   100% {
     opacity: 0.77;
     transform: translate3d(var(--dx), var(--dy), 0);
+  }
+}
+
+@keyframes keyword-sway {
+  0%,
+  100% {
+    transform: translateX(-3px) rotate(-0.25deg);
+  }
+  50% {
+    transform: translateX(3px) rotate(0.25deg);
   }
 }
 

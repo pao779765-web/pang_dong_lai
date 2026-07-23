@@ -69,6 +69,7 @@ function getKeywordStyle(keyword: Keyword, index: number) {
     "--duration": `${keyword.duration}s`,
     "--delay": `${keyword.delay}s`,
     "--intro-delay": `${0.12 + Math.floor(index / 6) * 0.42 + (index % 6) * 0.08}s`,
+    "--sway-duration": `${8 + (index % 5) * 1.25}s`,
   } as CSSProperties;
 }
 
@@ -174,9 +175,11 @@ export default function Home() {
               data-index={index + 1}
               style={getKeywordStyle(keyword, index)}
             >
-              <span className={`keyword keyword-${keyword.tone}`}>
-                {keyword.label.slice(0, -1)}
-                <b>？</b>
+              <span className="keyword-drift">
+                <span className={`keyword keyword-${keyword.tone}`}>
+                  {keyword.label.slice(0, -1)}
+                  <b>？</b>
+                </span>
               </span>
             </span>
           ))}
