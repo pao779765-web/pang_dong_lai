@@ -28,7 +28,7 @@
 
 ### 阶段 0 — 协作基建
 
-- [x] 创建工作区；2026-07-23 已迁移至 `D:\ai沙盒\胖东来项目文件夹`
+- [x] 创建并确认正式工作区：`D:\ai沙盒\codex+grok`
 - [x] 添加 README / AGENTS / PLAN / HANDOFF
 - [x] 初始化 Git（`main`）
 

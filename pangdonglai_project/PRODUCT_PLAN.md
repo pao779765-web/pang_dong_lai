@@ -4,7 +4,7 @@
 >
 > 日期：2026-07-22
 >
-> 项目目录：`D:\ai沙盒\胖东来项目文件夹\pangdonglai_project`
+> 项目目录：`D:\ai沙盒\codex+grok\pangdonglai_project`
 >
 > 项目性质：基于公开可核验资料构建的非官方文化学习与传播原型
 >
