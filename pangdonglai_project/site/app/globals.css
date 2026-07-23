@@ -58,10 +58,7 @@ button:disabled {
   isolation: isolate;
   min-height: 100svh;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 50% 44%, rgba(113, 62, 36, 0.28), transparent 27rem),
-    radial-gradient(circle at 4% 0%, rgba(204, 116, 68, 0.13), transparent 30rem),
-    linear-gradient(145deg, #17120f 0%, var(--night) 48%, #11100d 100%);
+  background: #fff6eb url("/hero-bg.png") center / cover no-repeat;
 }
 
 .hero::before {
@@ -70,26 +67,23 @@ button:disabled {
   inset: 0;
   content: "";
   pointer-events: none;
-  opacity: 0.34;
-  background-image:
-    repeating-linear-gradient(
-      115deg,
-      transparent 0,
-      transparent 4px,
-      rgba(255, 255, 255, 0.018) 5px
-    );
-  mask-image: linear-gradient(to bottom, black, transparent 82%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 252, 247, 0.1) 0%,
+    rgba(255, 248, 239, 0.04) 58%,
+    rgba(255, 245, 232, 0.18) 100%
+  );
 }
 
 .hero-grid {
   position: absolute;
   z-index: -1;
   inset: 0;
-  opacity: 0.48;
+  opacity: 0.22;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(241, 234, 220, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(241, 234, 220, 0.045) 1px, transparent 1px);
+    linear-gradient(rgba(142, 85, 55, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(142, 85, 55, 0.08) 1px, transparent 1px);
   background-size: 12.5vw 12.5vw;
   mask-image: radial-gradient(circle at 50% 50%, transparent 9rem, black 47rem);
 }
@@ -107,10 +101,10 @@ button:disabled {
   aspect-ratio: 1;
   top: 50%;
   left: 50%;
-  border: 1px solid rgba(204, 116, 68, 0.12);
+  border: 1px solid rgba(184, 111, 72, 0.12);
   box-shadow:
-    inset 0 0 80px rgba(204, 116, 68, 0.04),
-    0 0 90px rgba(204, 116, 68, 0.04);
+    inset 0 0 80px rgba(184, 111, 72, 0.03),
+    0 0 90px rgba(184, 111, 72, 0.03);
   transform: translate(-50%, -50%);
 }
 
@@ -119,7 +113,7 @@ button:disabled {
   aspect-ratio: 1;
   top: 50%;
   left: 50%;
-  border: 1px solid rgba(241, 234, 220, 0.08);
+  border: 1px solid rgba(184, 111, 72, 0.1);
   transform: translate(-50%, -50%) rotate(22deg);
 }
 
@@ -148,15 +142,15 @@ button:disabled {
   width: 45px;
   height: 29px;
   place-items: center;
-  border: 1px solid rgba(241, 234, 220, 0.5);
-  color: var(--paper-bright);
+  border: 1px solid rgba(117, 65, 42, 0.48);
+  color: #6b3826;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 0.72rem;
   letter-spacing: 0.14em;
 }
 
 .wordmark-name {
-  color: rgba(241, 234, 220, 0.88);
+  color: rgba(91, 47, 31, 0.82);
   font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: 0.22em;
@@ -164,7 +158,7 @@ button:disabled {
 
 .site-note {
   margin: 0;
-  color: rgba(241, 234, 220, 0.44);
+  color: rgba(100, 56, 37, 0.58);
   font-size: 0.67rem;
   letter-spacing: 0.22em;
 }
@@ -188,7 +182,7 @@ button:disabled {
   margin: 0 0 clamp(21px, 3vh, 34px);
   align-items: center;
   gap: 11px;
-  color: var(--copper-light);
+  color: #ad5f3b;
   font-size: clamp(0.64rem, 0.85vw, 0.75rem);
   font-weight: 600;
   letter-spacing: 0.28em;
@@ -201,7 +195,7 @@ button:disabled {
   width: 28px;
   height: 28px;
   place-items: center;
-  border: 1px solid rgba(204, 116, 68, 0.5);
+  border: 1px solid rgba(173, 95, 59, 0.5);
   border-radius: 50%;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 0.66rem;
@@ -210,7 +204,7 @@ button:disabled {
 
 .hero-title {
   margin: 0;
-  color: var(--paper-bright);
+  color: #4e2417;
   font-family: "Songti SC", SimSun, "Times New Roman", serif;
   font-size: clamp(3.1rem, 6.5vw, 6.65rem);
   font-weight: 400;
@@ -228,7 +222,7 @@ button:disabled {
 
 .title-question {
   margin-bottom: clamp(10px, 1.4vh, 18px);
-  color: rgba(241, 234, 220, 0.62);
+  color: rgba(92, 48, 31, 0.68);
   font-family:
     Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
   font-size: clamp(0.94rem, 1.5vw, 1.28rem);
@@ -240,7 +234,7 @@ button:disabled {
 
 .title-answer {
   margin-top: clamp(12px, 1.8vh, 20px);
-  color: var(--copper-light);
+  color: #bb6540;
   font-size: 0.58em;
   letter-spacing: 0.04em;
   animation: reveal-up 1s 0.34s both;
@@ -248,7 +242,7 @@ button:disabled {
 
 .hero-intro {
   margin: clamp(25px, 3.6vh, 40px) 0 0;
-  color: rgba(241, 234, 220, 0.57);
+  color: rgba(84, 43, 28, 0.67);
   font-size: clamp(0.78rem, 1.2vw, 0.93rem);
   font-weight: 300;
   letter-spacing: 0.13em;
@@ -270,7 +264,7 @@ button:disabled {
   display: grid;
   min-height: 66px;
   align-items: center;
-  border: 1px solid rgba(241, 234, 220, 0.25);
+  border: 1px solid rgba(118, 66, 43, 0.24);
   border-radius: 2px;
   grid-template-columns: 38px 1fr 23px;
   gap: 13px;
@@ -285,8 +279,8 @@ button:disabled {
 .anchor-primary {
   width: 210px;
   padding: 11px 14px 11px 12px;
-  color: var(--paper);
-  background: rgba(241, 234, 220, 0.035);
+  color: #5b2f20;
+  background: rgba(255, 252, 247, 0.54);
 }
 
 .anchor-dialogue {
@@ -332,8 +326,8 @@ button:disabled {
 }
 
 .anchor-primary:hover {
-  border-color: rgba(241, 234, 220, 0.72);
-  background: rgba(241, 234, 220, 0.09);
+  border-color: rgba(118, 66, 43, 0.62);
+  background: rgba(255, 252, 247, 0.84);
   transform: translateY(-2px);
 }
 
@@ -368,10 +362,10 @@ button:disabled {
   left: var(--x);
   display: inline-block;
   padding: 7px 10px 6px;
-  border: 1px solid rgba(241, 234, 220, 0.11);
+  border: 1px solid rgba(135, 78, 52, 0.16);
   border-radius: 999px;
-  color: rgba(241, 234, 220, 0.42);
-  background: rgba(14, 13, 11, 0.18);
+  color: rgba(97, 52, 34, 0.5);
+  background: rgba(255, 251, 245, 0.27);
   backdrop-filter: blur(3px);
   font-size: clamp(0.62rem, 0.78vw, 0.76rem);
   font-weight: 400;
@@ -389,13 +383,13 @@ button:disabled {
 }
 
 .keyword-copper {
-  border-color: rgba(204, 116, 68, 0.2);
-  color: rgba(237, 160, 111, 0.57);
+  border-color: rgba(184, 101, 62, 0.22);
+  color: rgba(163, 81, 48, 0.62);
 }
 
 .keyword-smoke {
   border-color: transparent;
-  color: rgba(241, 234, 220, 0.27);
+  color: rgba(113, 66, 45, 0.28);
   background: transparent;
 }
 
@@ -411,7 +405,7 @@ button:disabled {
   display: flex;
   align-items: center;
   gap: 13px;
-  color: rgba(241, 234, 220, 0.32);
+  color: rgba(98, 54, 36, 0.42);
   font-size: 0.56rem;
   letter-spacing: 0.22em;
 }
@@ -422,7 +416,7 @@ button:disabled {
   width: 62px;
   height: 1px;
   overflow: hidden;
-  background: rgba(241, 234, 220, 0.16);
+  background: rgba(116, 66, 44, 0.18);
 }
 
 .scroll-cue i::after {
