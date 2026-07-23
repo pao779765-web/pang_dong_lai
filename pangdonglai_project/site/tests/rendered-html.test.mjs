@@ -2,15 +2,16 @@ import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
-async function render(path = "/") {
+async function render(path = "/", init = {}) {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
   const { default: worker } = await import(workerUrl.href);
 
+  const headers = new Headers(init.headers);
+  headers.set("accept", "text/html");
+
   return worker.fetch(
-    new Request(`http://localhost${path}`, {
-      headers: { accept: "text/html" },
-    }),
+    new Request(`http://localhost${path}`, { ...init, headers }),
     {
       ASSETS: {
         fetch: async () => new Response("Not found", { status: 404 }),
@@ -40,7 +41,18 @@ test("server-renders the Pangdonglai culture homepage", async () => {
   assert.match(html, /id="explore"/);
   assert.match(html, /id="ai-dialogue"/);
   assert.match(html, /非官方资料助手/);
-  assert.match(html, /对话功能将在资料库准备完成后开放/);
+  assert.match(html, /非官方 AI 对话 · 当前未接入资料检索/);
+});
+
+test("keeps the DeepSeek key on the server", async () => {
+  const response = await render("/api/chat", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ messages: [{ role: "user", content: "你好" }] }),
+  });
+
+  assert.equal(response.status, 503);
+  assert.deepEqual(await response.json(), { error: "本地尚未配置 DeepSeek API Key。" });
 });
 
 test("removes disposable starter-preview code and metadata", async () => {

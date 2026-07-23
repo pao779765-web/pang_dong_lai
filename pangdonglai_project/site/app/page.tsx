@@ -1,7 +1,7 @@
 "use client";
 
-import type { CSSProperties, MouseEvent } from "react";
-import { useEffect, useRef } from "react";
+import type { CSSProperties, FormEvent, MouseEvent } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Keyword = {
   label: string;
@@ -12,6 +12,12 @@ type Keyword = {
   duration: number;
   delay: number;
   tone: "paper" | "copper" | "smoke";
+};
+
+type ConversationMessage = {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
 };
 
 const keywords: Keyword[] = [
@@ -75,6 +81,10 @@ function getKeywordStyle(keyword: Keyword, index: number) {
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
+  const [messages, setMessages] = useState<ConversationMessage[]>([]);
+  const [draft, setDraft] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const [chatError, setChatError] = useState("");
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -109,6 +119,50 @@ export default function Home() {
     target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
     window.history.replaceState(null, "", href);
     window.setTimeout(() => target.focus({ preventScroll: true }), reducedMotion ? 0 : 650);
+  }
+
+  async function handleChatSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const content = draft.trim();
+    if (!content || isSending) {
+      return;
+    }
+
+    const nextMessages = [
+      ...messages,
+      { id: `user-${Date.now()}`, role: "user" as const, content },
+    ];
+    setMessages(nextMessages);
+    setDraft("");
+    setChatError("");
+    setIsSending(true);
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          messages: nextMessages.map(({ role, content: messageContent }) => ({
+            role,
+            content: messageContent,
+          })),
+        }),
+      });
+      const data: { message?: unknown; error?: unknown } = await response.json();
+
+      if (!response.ok || typeof data.message !== "string") {
+        throw new Error(typeof data.error === "string" ? data.error : "暂时无法获得回答，请稍后重试。");
+      }
+
+      setMessages((current) => [
+        ...current,
+        { id: `assistant-${Date.now()}`, role: "assistant", content: data.message },
+      ]);
+    } catch (error) {
+      setChatError(error instanceof Error ? error.message : "暂时无法获得回答，请稍后重试。");
+    } finally {
+      setIsSending(false);
+    }
   }
 
   return (
@@ -241,31 +295,45 @@ export default function Home() {
               <span className="dialogue-disclaimer">非官方资料助手</span>
             </header>
 
-            <div className="dialogue-body">
-              <p className="dialogue-kicker">从一个问题开始</p>
-              <div className="message message-ai">
-                <span>资料助手</span>
-                <p>你好。你可以从企业文化、门店体验或公众印象开始提问。</p>
-                <p>
-                  资料库接入后，我会区分已核验信息与观点，并在回答中标明来源。
-                </p>
-              </div>
+            <div className="dialogue-body" aria-live="polite" aria-busy={isSending}>
+              {messages.length === 0 ? (
+                <div className="message message-ai chat-empty-state">
+                  <span>资料助手</span>
+                  <p>你好。你可以从企业文化、门店体验或公众印象开始提问。</p>
+                  <p>当前版本尚未接入资料检索，具体事实请以官方渠道或原始报道为准。</p>
+                </div>
+              ) : (
+                messages.map((message) => (
+                  <div key={message.id} className={`message message-${message.role}`}>
+                    <span>{message.role === "user" ? "你" : "资料助手"}</span>
+                    <p>{message.content}</p>
+                  </div>
+                ))
+              )}
+              {isSending ? <p className="chat-pending">正在思考…</p> : null}
+              {chatError ? <p className="chat-error" role="alert">{chatError}</p> : null}
             </div>
 
-            <div className="question-shell">
+            <form className="question-shell" onSubmit={handleChatSubmit}>
               <label htmlFor="prototype-question">输入你的问题</label>
               <div>
                 <input
                   id="prototype-question"
                   type="text"
                   placeholder="问一个关于胖东来文化的问题"
-                  disabled
+                  value={draft}
+                  onChange={(event) => setDraft(event.target.value)}
+                  disabled={isSending}
+                  maxLength={1200}
+                  autoComplete="off"
                   aria-describedby="prototype-help"
                 />
-                <button type="button" disabled aria-label="发送功能开发中">发送</button>
+                <button type="submit" disabled={isSending || !draft.trim()}>
+                  {isSending ? "思考中" : "发送"}
+                </button>
               </div>
-              <small id="prototype-help">对话功能将在资料库准备完成后开放</small>
-            </div>
+              <small id="prototype-help">非官方 AI 对话 · 当前未接入资料检索</small>
+            </form>
           </div>
         </div>
 
