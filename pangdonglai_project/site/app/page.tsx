@@ -203,20 +203,28 @@ export default function Home() {
 
           <nav className="hero-actions" aria-label="首页快速入口">
             <a className="anchor-link anchor-primary" href="#explore" onClick={handleAnchorClick}>
-              <span className="anchor-code" aria-hidden="true">A</span>
+              <span className="anchor-code" aria-hidden="true">
+                A
+              </span>
               <span className="anchor-copy">
                 <small>越过标签</small>
                 向下探索
               </span>
-              <span className="anchor-arrow" aria-hidden="true">↓</span>
+              <span className="anchor-arrow" aria-hidden="true">
+                ↓
+              </span>
             </a>
             <a className="anchor-link anchor-dialogue" href="#ai-dialogue" onClick={handleAnchorClick}>
-              <span className="anchor-code" aria-hidden="true">B</span>
+              <span className="anchor-code" aria-hidden="true">
+                B
+              </span>
               <span className="anchor-copy">
                 <small>提出你的问题</small>
                 与胖东来对话
               </span>
-              <span className="anchor-arrow" aria-hidden="true">↘</span>
+              <span className="anchor-arrow" aria-hidden="true">
+                ↘
+              </span>
             </a>
           </nav>
         </div>
