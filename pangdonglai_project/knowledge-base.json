@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "1.0",
+  "collection": "pangdonglai-rag-local",
+  "description": "第一批经用户批准的本地 RAG 资料。内容只保存必要的事实性摘录与来源链接，不保存新闻全文。",
+  "documents": [
+    {
+      "id": "official-store-directory-2026-07-24",
+      "title": "胖东来各门店信息",
+      "type": "official_directory",
+      "status": "approved",
+      "approval": {
+        "approvedBy": "user",
+        "approvedAt": "2026-07-24",
+        "basis": "docs/SOURCE_AUDIT.md 的建议；用户明确批准。"
+      },
+      "source": {
+        "publisher": "胖东来网站（web.azpdl.cn）",
+        "sourceType": "official",
+        "url": "https://web.azpdl.cn/contact",
+        "publishedAt": null,
+        "verifiedAt": "2026-07-24"
+      },
+      "scope": [
+        "门店名称",
+        "门店地址",
+        "门店联系方式",
+        "常规营业时间",
+        "周二闭店说明"
+      ],
+      "answeringRules": [
+        "仅回答本资料列出的门店信息，不推断未列出的门店或扩张计划。",
+        "电话、地址和营业时间可能变化；回答时必须附原始链接和核验日期，并提示以官网最新信息或到店通知为准。",
+        "本资料不能单独支持企业文化、员工制度、经营业绩或外界评价类问题。"
+      ],
+      "chunks": [
+        {
+          "id": "store-directory-hours",
+          "title": "常规营业安排与周二闭店说明",
+          "text": "官方门店信息页列出许昌与新乡地区的门店。页面列出的常规营业时段为：周一、周三、周四、周日 9:30–21:00；周五、周六 9:30–21:30。页面另说明夏季（6—8 月）营业至 21:30，并说明自 2023-02-21 起多数门店周二闭店；天使城、金汇、北海、金三角、禹州、许昌大众服饰和新乡三胖为页面列出的周二不闭店例外。",
+          "facts": {
+            "defaultHours": {
+              "mondayWednesdayThursdaySunday": "09:30-21:00",
+              "fridaySaturday": "09:30-21:30",
+              "summerJuneJulyAugust": "09:30-21:30"
+            },
+            "tuesdayClosure": {
+              "ruleEffectiveFrom": "2023-02-21",
+              "exceptions": [
+                "许昌天使城",
+                "许昌金汇店",
+                "许昌北海店",
+                "许昌金三角店",
+                "禹州店",
+                "许昌大众服饰",
+                "新乡三胖"
+              ]
+            }
+          }
+        },
+        {
+          "id": "store-directory-xuchang-yuzhou",
+          "title": "许昌与禹州门店地址",
+          "text": "官方门店信息页列出以下许昌与禹州门店地址。",
+          "facts": {
+            "stores": [
+              { "name": "许昌天使城", "address": "许昌市魏都区八龙路与建安大道交汇处东北角" },
+              { "name": "许昌时代广场", "address": "许昌市魏都区七一路277号" },
+              { "name": "许昌生活广场", "address": "许昌市魏都区南关大街42号" },
+              { "name": "许昌大众服饰", "address": "河南省许昌市颍昌路838号" },
+              { "name": "许昌金三角店", "address": "许昌市新许路与文兴路交叉口新合作广场" },
+              { "name": "许昌云鼎店", "address": "许昌市东城区魏文路与学府街交叉口云鼎广场3号楼一层" },
+              { "name": "许昌北海店", "address": "许昌市建安区镜水路36号" },
+              { "name": "许昌金汇店", "address": "许昌市魏都区八一路与北大街交汇处东北角" },
+              { "name": "许昌劳动店", "address": "许昌市魏都区劳动南路与西湖北街交叉口东南50米" },
+              { "name": "许昌人民店", "address": "许昌市魏都区劳动路与人民路交叉口恒达魏源广场5号楼负一层" },
+              { "name": "禹州店", "address": "禹州市颍河大街568号（老体育公园负一层）" }
+            ]
+          }
+        },
+        {
+          "id": "store-directory-xinxiang",
+          "title": "新乡门店地址",
+          "text": "官方门店信息页列出以下新乡门店地址。",
+          "facts": {
+            "stores": [
+              { "name": "新乡大胖", "address": "新乡市红旗区人民中路199号" },
+              { "name": "新乡二胖", "address": "新乡市卫滨区健康路31号" },
+              { "name": "新乡三胖", "address": "河南省新乡市红旗区牧野路（中）199号" }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
