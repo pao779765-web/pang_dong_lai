@@ -44,8 +44,8 @@ const keywords: Keyword[] = [
   { label: "透明定价？", x: 88, y: 56, dx: -13, dy: 12, duration: 20, delay: -10, tone: "copper" },
   { label: "不可复制？", x: 22, y: 88, dx: 10, dy: -12, duration: 17, delay: -6, tone: "smoke" },
   { label: "一店带火一城？", x: 80, y: 47, dx: -15, dy: 8, duration: 26, delay: -11, tone: "paper" },
-  { label: "委屈休假？", x: 4, y: 58, dx: 13, dy: 9, duration: 19, delay: -16, tone: "smoke" },
-  { label: "周二闭店？", x: 45, y: 88, dx: -10, dy: -11, duration: 21, delay: -4, tone: "copper" },
+  { label: "委屈奖？", x: 4, y: 58, dx: 13, dy: 9, duration: 19, delay: -16, tone: "smoke" },
+  { label: "民办公务员？", x: 45, y: 88, dx: -10, dy: -11, duration: 21, delay: -4, tone: "copper" },
   { label: "购物安心？", x: 86, y: 87, dx: -14, dy: -8, duration: 24, delay: -18, tone: "paper" },
   { label: "商业理想主义？", x: 8, y: 29, dx: 12, dy: -9, duration: 22, delay: -13, tone: "paper" },
   { label: "高薪高福利？", x: 73, y: 28, dx: -11, dy: 10, duration: 18, delay: -1, tone: "copper" },
@@ -207,7 +207,7 @@ function RagChat() {
   );
 }
 
-function getKeywordStyle(keyword: Keyword) {
+function getKeywordStyle(keyword: Keyword, index: number) {
   return {
     "--x": `${keyword.x}%`,
     "--y": `${keyword.y}%`,
@@ -215,6 +215,8 @@ function getKeywordStyle(keyword: Keyword) {
     "--dy": `${keyword.dy}px`,
     "--duration": `${keyword.duration}s`,
     "--delay": `${keyword.delay}s`,
+    "--intro-delay": `${0.12 + Math.floor(index / 6) * 0.42 + (index % 6) * 0.08}s`,
+    "--sway-duration": `${8 + (index % 5) * 1.25}s`,
   } as CSSProperties;
 }
 
@@ -316,12 +318,16 @@ export default function Home() {
           {keywords.map((keyword, index) => (
             <span
               key={keyword.label}
-              className={`keyword keyword-${keyword.tone}`}
+              className="keyword-entry"
               data-index={index + 1}
-              style={getKeywordStyle(keyword)}
+              style={getKeywordStyle(keyword, index)}
             >
-              {keyword.label.slice(0, -1)}
-              <b>？</b>
+              <span className="keyword-drift">
+                <span className={`keyword keyword-${keyword.tone}`}>
+                  {keyword.label.slice(0, -1)}
+                  <b>？</b>
+                </span>
+              </span>
             </span>
           ))}
         </div>
