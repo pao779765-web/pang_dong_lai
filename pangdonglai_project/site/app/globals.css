@@ -724,6 +724,10 @@ button:disabled {
   backdrop-filter: blur(8px);
 }
 
+.dialogue-window-prototype {
+  display: none;
+}
+
 .dialogue-bar {
   display: flex;
   min-height: 56px;
@@ -824,6 +828,35 @@ button:disabled {
   line-height: 1.75;
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+.message-sources {
+  display: grid;
+  gap: 6px;
+  margin-top: 13px;
+  padding-top: 11px;
+  border-top: 1px solid rgba(113, 58, 38, 0.12);
+  color: rgba(83, 48, 32, 0.74);
+  font-size: 0.68rem;
+  line-height: 1.5;
+}
+
+.message-sources strong {
+  color: rgba(113, 58, 38, 0.72);
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+}
+
+.message-sources a {
+  color: inherit;
+  text-decoration-color: rgba(161, 70, 37, 0.35);
+  text-underline-offset: 3px;
+}
+
+.chat-error {
+  margin: 9px 0 0;
+  color: #a14725;
+  font-size: 0.72rem;
 }
 
 .message-footnote {

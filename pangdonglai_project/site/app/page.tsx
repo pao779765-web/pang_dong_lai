@@ -14,10 +14,19 @@ type Keyword = {
   tone: "paper" | "copper" | "smoke";
 };
 
-type ConversationMessage = {
+type ChatRole = "user" | "assistant";
+
+type ChatSource = {
+  title: string;
+  url: string;
+  verifiedAt: string;
+};
+
+type ChatMessage = {
   id: string;
-  role: "user" | "assistant";
+  role: ChatRole;
   content: string;
+  sources?: ChatSource[];
 };
 
 const keywords: Keyword[] = [
@@ -35,8 +44,8 @@ const keywords: Keyword[] = [
   { label: "透明定价？", x: 88, y: 56, dx: -13, dy: 12, duration: 20, delay: -10, tone: "copper" },
   { label: "不可复制？", x: 22, y: 88, dx: 10, dy: -12, duration: 17, delay: -6, tone: "smoke" },
   { label: "一店带火一城？", x: 80, y: 47, dx: -15, dy: 8, duration: 26, delay: -11, tone: "paper" },
-  { label: "委屈奖？", x: 4, y: 58, dx: 13, dy: 9, duration: 19, delay: -16, tone: "smoke" },
-  { label: "民办公务员？", x: 45, y: 88, dx: -10, dy: -11, duration: 21, delay: -4, tone: "copper" },
+  { label: "委屈休假？", x: 4, y: 58, dx: 13, dy: 9, duration: 19, delay: -16, tone: "smoke" },
+  { label: "周二闭店？", x: 45, y: 88, dx: -10, dy: -11, duration: 21, delay: -4, tone: "copper" },
   { label: "购物安心？", x: 86, y: 87, dx: -14, dy: -8, duration: 24, delay: -18, tone: "paper" },
   { label: "商业理想主义？", x: 8, y: 29, dx: 12, dy: -9, duration: 22, delay: -13, tone: "paper" },
   { label: "高薪高福利？", x: 73, y: 28, dx: -11, dy: 10, duration: 18, delay: -1, tone: "copper" },
@@ -66,7 +75,139 @@ const lenses = [
   },
 ];
 
-function getKeywordStyle(keyword: Keyword, index: number) {
+const suggestedQuestions = ["胖东来周二是否闭店？", "新乡三胖在哪里？", "许昌有哪些门店？"];
+
+function readSources(value: unknown): ChatSource[] {
+  if (!Array.isArray(value)) return [];
+
+  return value.flatMap((item) => {
+    if (
+      !item ||
+      typeof item !== "object" ||
+      typeof (item as ChatSource).title !== "string" ||
+      typeof (item as ChatSource).url !== "string" ||
+      typeof (item as ChatSource).verifiedAt !== "string"
+    ) {
+      return [];
+    }
+
+    return [item as ChatSource];
+  });
+}
+
+function RagChat() {
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    {
+      id: "assistant-welcome",
+      role: "assistant",
+      content: "我会先检索已审核的本地资料，再回答你的问题。当前资料主要覆盖门店地址、营业安排与周二闭店说明。",
+    },
+  ]);
+  const [draft, setDraft] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const [chatError, setChatError] = useState("");
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const content = draft.trim();
+    if (!content || isSending) return;
+
+    const nextMessages: ChatMessage[] = [
+      ...messages,
+      { id: `user-${Date.now()}`, role: "user", content },
+    ];
+    setMessages(nextMessages);
+    setDraft("");
+    setChatError("");
+    setIsSending(true);
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          messages: nextMessages.map(({ role, content: messageContent }) => ({ role, content: messageContent })),
+        }),
+      });
+      const data: { message?: unknown; sources?: unknown; error?: unknown } = await response.json();
+
+      if (!response.ok || typeof data.message !== "string") {
+        throw new Error(typeof data.error === "string" ? data.error : "暂时无法获得回答，请稍后重试。");
+      }
+
+      setMessages((current) => [
+        ...current,
+        {
+          id: `assistant-${Date.now()}`,
+          role: "assistant",
+          content: data.message,
+          sources: readSources(data.sources),
+        },
+      ]);
+    } catch (error) {
+      setChatError(error instanceof Error ? error.message : "暂时无法获得回答，请稍后重试。");
+    } finally {
+      setIsSending(false);
+    }
+  }
+
+  return (
+    <div className="dialogue-window" aria-label="胖东来文化资料问答">
+      <div className="dialogue-bar">
+        <span>PDL CULTURE / ASK</span>
+        <span className="dialogue-state">BM25 本地检索</span>
+      </div>
+      <p className="dialogue-disclaimer">非官方资料助手 · 仅依据已审核的本地资料回答</p>
+
+      <div className="dialogue-body" aria-live="polite">
+        {messages.map((message) => (
+          <article className={`message message-${message.role}`} key={message.id}>
+            <span>{message.role === "user" ? "你" : "资料助手"}</span>
+            <div className="message-content">
+              <p>{message.content}</p>
+              {message.role === "assistant" && message.sources?.length ? (
+                <div className="message-sources" aria-label="回答依据">
+                  <strong>资料来源</strong>
+                  {message.sources.map((source) => (
+                    <a href={source.url} target="_blank" rel="noreferrer" key={source.url}>
+                      {source.title} · 核验于 {source.verifiedAt}
+                    </a>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          </article>
+        ))}
+        {isSending ? <div className="message message-assistant"><span>资料助手</span><div className="message-content"><p>正在检索资料并生成回答…</p></div></div> : null}
+      </div>
+
+      <div className="chat-suggest" aria-label="推荐问题">
+        {suggestedQuestions.map((question) => (
+          <button className="chat-suggest-chip" onClick={() => setDraft(question)} type="button" key={question}>
+            {question}
+          </button>
+        ))}
+      </div>
+      <form className="question-shell" onSubmit={handleSubmit}>
+        <label htmlFor="chat-question">输入你的问题</label>
+        <div className="question-row">
+          <input
+            id="chat-question"
+            type="text"
+            value={draft}
+            onChange={(event) => setDraft(event.target.value)}
+            placeholder="例如：胖东来周二是否闭店？"
+            disabled={isSending}
+          />
+          <button type="submit" disabled={isSending || !draft.trim()}>{isSending ? "检索中" : "发送"}</button>
+        </div>
+        {chatError ? <p className="chat-error" role="alert">{chatError}</p> : null}
+      </form>
+    </div>
+  );
+}
+
+function getKeywordStyle(keyword: Keyword) {
   return {
     "--x": `${keyword.x}%`,
     "--y": `${keyword.y}%`,
@@ -74,17 +215,11 @@ function getKeywordStyle(keyword: Keyword, index: number) {
     "--dy": `${keyword.dy}px`,
     "--duration": `${keyword.duration}s`,
     "--delay": `${keyword.delay}s`,
-    "--intro-delay": `${0.12 + Math.floor(index / 6) * 0.42 + (index % 6) * 0.08}s`,
-    "--sway-duration": `${8 + (index % 5) * 1.25}s`,
   } as CSSProperties;
 }
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
-  const [messages, setMessages] = useState<ConversationMessage[]>([]);
-  const [draft, setDraft] = useState("");
-  const [isSending, setIsSending] = useState(false);
-  const [chatError, setChatError] = useState("");
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -119,50 +254,6 @@ export default function Home() {
     target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
     window.history.replaceState(null, "", href);
     window.setTimeout(() => target.focus({ preventScroll: true }), reducedMotion ? 0 : 650);
-  }
-
-  async function handleChatSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const content = draft.trim();
-    if (!content || isSending) {
-      return;
-    }
-
-    const nextMessages = [
-      ...messages,
-      { id: `user-${Date.now()}`, role: "user" as const, content },
-    ];
-    setMessages(nextMessages);
-    setDraft("");
-    setChatError("");
-    setIsSending(true);
-
-    try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          messages: nextMessages.map(({ role, content: messageContent }) => ({
-            role,
-            content: messageContent,
-          })),
-        }),
-      });
-      const data: { message?: unknown; error?: unknown } = await response.json();
-
-      if (!response.ok || typeof data.message !== "string") {
-        throw new Error(typeof data.error === "string" ? data.error : "暂时无法获得回答，请稍后重试。");
-      }
-
-      setMessages((current) => [
-        ...current,
-        { id: `assistant-${Date.now()}`, role: "assistant", content: data.message },
-      ]);
-    } catch (error) {
-      setChatError(error instanceof Error ? error.message : "暂时无法获得回答，请稍后重试。");
-    } finally {
-      setIsSending(false);
-    }
   }
 
   return (
@@ -203,28 +294,20 @@ export default function Home() {
 
           <nav className="hero-actions" aria-label="首页快速入口">
             <a className="anchor-link anchor-primary" href="#explore" onClick={handleAnchorClick}>
-              <span className="anchor-code" aria-hidden="true">
-                A
-              </span>
+              <span className="anchor-code" aria-hidden="true">A</span>
               <span className="anchor-copy">
                 <small>越过标签</small>
                 向下探索
               </span>
-              <span className="anchor-arrow" aria-hidden="true">
-                ↓
-              </span>
+              <span className="anchor-arrow" aria-hidden="true">↓</span>
             </a>
             <a className="anchor-link anchor-dialogue" href="#ai-dialogue" onClick={handleAnchorClick}>
-              <span className="anchor-code" aria-hidden="true">
-                B
-              </span>
+              <span className="anchor-code" aria-hidden="true">B</span>
               <span className="anchor-copy">
                 <small>提出你的问题</small>
                 与胖东来对话
               </span>
-              <span className="anchor-arrow" aria-hidden="true">
-                ↘
-              </span>
+              <span className="anchor-arrow" aria-hidden="true">↘</span>
             </a>
           </nav>
         </div>
@@ -233,16 +316,12 @@ export default function Home() {
           {keywords.map((keyword, index) => (
             <span
               key={keyword.label}
-              className="keyword-entry"
+              className={`keyword keyword-${keyword.tone}`}
               data-index={index + 1}
-              style={getKeywordStyle(keyword, index)}
+              style={getKeywordStyle(keyword)}
             >
-              <span className="keyword-drift">
-                <span className={`keyword keyword-${keyword.tone}`}>
-                  {keyword.label.slice(0, -1)}
-                  <b>？</b>
-                </span>
-              </span>
+              {keyword.label.slice(0, -1)}
+              <b>？</b>
             </span>
           ))}
         </div>
@@ -294,91 +373,59 @@ export default function Home() {
         aria-labelledby="dialogue-title"
       >
         <div className="section-shell dialogue-layout">
-          <div className="dialogue-window" aria-label="AI 问答界面">
-            <header className="dialogue-bar">
-              <h2 id="dialogue-title" className="dialogue-title-sr">
-                与胖东来对话
-              </h2>
-              <span className="dialogue-disclaimer">
-                <span className="dialogue-dot" aria-hidden="true" />
-                非官方资料助手
-              </span>
-            </header>
+          <div className="dialogue-copy">
+            <p className="section-index section-index-light">B / DIALOGUE</p>
+            <div className="prototype-label">胖东来文化资料助手（非官方）</div>
+            <h2 id="dialogue-title">别只问它做了什么，<br />也问它为什么这样做。</h2>
+            <p>
+              未来，这里会连接经过整理的公开资料。回答会展示依据、区分事实与观点，
+              并提醒你：一家企业的文化，不能被一句口号概括。
+            </p>
+            <p className="prototype-note">当前已接入本地 BM25 检索；回答只使用已审核资料，并展示来源。</p>
+          </div>
 
-            <div className="dialogue-body" aria-live="polite" aria-busy={isSending}>
-              {messages.length === 0 ? (
-                <div className="chat-empty-state">
-                  <div className="message message-assistant">
-                    <span className="message-label">资料助手</span>
-                    <div className="message-content">
-                      <p>你好。可以从企业文化、门店体验或公众印象开始提问。</p>
-                      <p className="message-footnote">
-                        当前版本尚未接入资料检索，具体事实请以官方渠道或原始报道为准。
-                      </p>
-                    </div>
-                  </div>
-                  <div className="chat-suggest" aria-label="话题提示">
-                    <span className="chat-suggest-chip">企业文化？</span>
-                    <span className="chat-suggest-chip">门店体验？</span>
-                    <span className="chat-suggest-chip">公众印象？</span>
-                  </div>
-                </div>
-              ) : (
-                messages.map((message) => (
-                  <div
-                    key={message.id}
-                    className={`message message-${message.role === "user" ? "user" : "assistant"}`}
-                  >
-                    <span className="message-label">
-                      {message.role === "user" ? "你" : "资料助手"}
-                    </span>
-                    <div className="message-content">
-                      <p>{message.content}</p>
-                    </div>
-                  </div>
-                ))
-              )}
-              {isSending ? (
-                <div className="chat-pending" aria-live="polite">
-                  <span className="chat-pending-dots" aria-hidden="true" />
-                  正在思考…
-                </div>
-              ) : null}
-              {chatError ? (
-                <p className="chat-error" role="alert">
-                  {chatError}
-                </p>
-              ) : null}
+          <RagChat />
+
+          <div className="dialogue-window dialogue-window-prototype" aria-label="AI 问答概念界面">
+            <div className="dialogue-bar">
+              <span>PDL CULTURE / ASK</span>
+              <span className="dialogue-state">结构示例</span>
             </div>
-
-            <form className="question-shell" onSubmit={handleChatSubmit}>
-              <label htmlFor="prototype-question">输入你的问题</label>
-              <div className="question-row">
+            <div className="message message-user">
+              <span>你的问题</span>
+              <p>“自由与爱”在具体管理制度里，意味着什么？</p>
+            </div>
+            <div className="message message-ai">
+              <span>文化馆回答</span>
+              <p>
+                我会先区分企业表达、媒体叙述与员工体验，再把能被核验的制度与案例列出来。
+              </p>
+              <div className="answer-structure">
+                <span>01 / 概念背景</span>
+                <span>02 / 现实做法</span>
+                <span>03 / 来源与争议</span>
+              </div>
+            </div>
+            <div className="question-shell">
+              <label htmlFor="prototype-question">继续追问</label>
+              <div>
                 <input
                   id="prototype-question"
                   type="text"
-                  placeholder="问一个关于胖东来文化的问题"
-                  value={draft}
-                  onChange={(event) => setDraft(event.target.value)}
-                  disabled={isSending}
-                  maxLength={1200}
-                  autoComplete="off"
+                  value="问一个关于胖东来文化的问题…"
+                  readOnly
                   aria-describedby="prototype-help"
                 />
-                <button type="submit" disabled={isSending || !draft.trim()}>
-                  {isSending ? "思考中" : "发送"}
-                </button>
+                <button type="button" disabled aria-label="发送功能开发中">发送</button>
               </div>
-              <small id="prototype-help">非官方 AI 对话 · 当前未接入资料检索</small>
-            </form>
+              <small id="prototype-help">问答功能将在资料库完成后开放</small>
+            </div>
           </div>
         </div>
 
         <footer className="site-footer">
           <span>胖东来文化数字馆 / PDL CULTURE ARCHIVE</span>
-          <a href="#top" onClick={handleAnchorClick}>
-            回到表面 ↑
-          </a>
+          <a href="#top" onClick={handleAnchorClick}>回到表面 ↑</a>
         </footer>
       </section>
     </main>

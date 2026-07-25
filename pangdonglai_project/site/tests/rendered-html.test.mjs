@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
-async function render(path = "/", init = {}) {
+async function render(path = "/", init = {}, env = {}) {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
   const { default: worker } = await import(workerUrl.href);
@@ -16,6 +16,7 @@ async function render(path = "/", init = {}) {
       ASSETS: {
         fetch: async () => new Response("Not found", { status: 404 }),
       },
+      ...env,
     },
     {
       waitUntil() {},
@@ -40,8 +41,53 @@ test("server-renders the Pangdonglai culture homepage", async () => {
   assert.match(html, /与胖东来对话/);
   assert.match(html, /id="explore"/);
   assert.match(html, /id="ai-dialogue"/);
-  assert.match(html, /非官方资料助手/);
-  assert.match(html, /非官方 AI 对话 · 当前未接入资料检索/);
+  assert.match(html, /BM25 本地检索/);
+  assert.match(html, /当前已接入本地 BM25 检索/);
+  assert.match(html, /输入你的问题/);
+});
+
+test("passes BM25 evidence to DeepSeek and returns verified sources", async () => {
+  const originalFetch = globalThis.fetch;
+  let deepseekRequest;
+
+  globalThis.fetch = async (input, init) => {
+    if (String(input) === "https://api.deepseek.com/chat/completions") {
+      deepseekRequest = JSON.parse(init.body);
+      return new Response(
+        JSON.stringify({ choices: [{ message: { content: "测试回答" } }] }),
+        { headers: { "content-type": "application/json" } },
+      );
+    }
+    return originalFetch(input, init);
+  };
+
+  try {
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ messages: [{ role: "user", content: "胖东来周二是否闭店？" }] }),
+      },
+      { DEEPSEEK_API_KEY: "test-key" },
+    );
+
+    assert.equal(response.status, 200);
+    assert.deepEqual(await response.json(), {
+      message: "测试回答",
+      sources: [
+        {
+          title: "胖东来各门店信息",
+          url: "https://web.azpdl.cn/contact",
+          verifiedAt: "2026-07-24",
+        },
+      ],
+    });
+    assert.match(deepseekRequest.messages[0].content, /常规营业安排与周二闭店说明/);
+    assert.match(deepseekRequest.messages[0].content, /只能依据下方“检索到的资料”回答具体事实/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
 });
 
 test("keeps the DeepSeek key on the server", async () => {
