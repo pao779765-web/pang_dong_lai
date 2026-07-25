@@ -379,16 +379,9 @@ export default function Home() {
         aria-labelledby="dialogue-title"
       >
         <div className="section-shell dialogue-layout">
-          <div className="dialogue-copy">
-            <p className="section-index section-index-light">B / DIALOGUE</p>
-            <div className="prototype-label">胖东来文化资料助手（非官方）</div>
-            <h2 id="dialogue-title">别只问它做了什么，<br />也问它为什么这样做。</h2>
-            <p>
-              未来，这里会连接经过整理的公开资料。回答会展示依据、区分事实与观点，
-              并提醒你：一家企业的文化，不能被一句口号概括。
-            </p>
-            <p className="prototype-note">当前已接入本地 BM25 检索；回答只使用已审核资料，并展示来源。</p>
-          </div>
+          <h2 id="dialogue-title" className="dialogue-title-sr">
+            与胖东来对话
+          </h2>
 
           <RagChat />
 

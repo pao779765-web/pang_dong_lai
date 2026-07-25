@@ -42,7 +42,6 @@ test("server-renders the Pangdonglai culture homepage", async () => {
   assert.match(html, /id="explore"/);
   assert.match(html, /id="ai-dialogue"/);
   assert.match(html, /BM25 本地检索/);
-  assert.match(html, /当前已接入本地 BM25 检索/);
   assert.match(html, /输入你的问题/);
 });
 
