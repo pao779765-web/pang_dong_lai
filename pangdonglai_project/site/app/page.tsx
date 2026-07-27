@@ -129,7 +129,9 @@ function RagChat() {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
-          messages: nextMessages.map(({ role, content: messageContent }) => ({ role, content: messageContent })),
+          messages: nextMessages
+            .filter((message) => message.content.trim())
+            .map(({ role, content: messageContent }) => ({ role, content: messageContent })),
         }),
       });
       if (!response.ok) {
