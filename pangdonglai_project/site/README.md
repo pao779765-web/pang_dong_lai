@@ -33,6 +33,15 @@ npm test
 npm run lint
 ```
 
+生产预览（包含 Worker 与静态资源绑定）：
+
+```bash
+npm run build
+npm run start
+```
+
+`npm run start` 使用构建产物中的 Cloudflare Worker 配置提供预览，因此不会出现直接运行 `vinext start` 时遗漏 `/assets/*` 文件的问题。
+
 ## 永久保存 DeepSeek API Key（推荐）
 
 本站对话接口在 **Worker 服务端** 读取 `DEEPSEEK_API_KEY`。  

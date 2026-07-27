@@ -11,6 +11,15 @@
 
 ## 最终结论
 
+> 本报告的主体记录的是 2026-07-23 基于 `f8090a0` 的首页验收。QA-01 已于 2026-07-27 按下方回归记录关闭。
+
+### 后续回归：QA-01（2026-07-27）
+
+- `npm run build` 通过；`npm run start` 使用 Worker 预览配置提供 `dist/client` 静态资源。
+- 首页引用的 1 个 CSS 与 5 个 JS 均返回 HTTP 200；浏览器确认样式表已加载，推荐问题按钮可启用输入框。
+- `npm run lint` 与 `npm test` 通过（6/6）。
+- 直接运行 `vinext start` 的 404 现象保留为历史复现记录；该 Cloudflare Worker 工程的受支持本地生产预览入口改为 `npm run start`。
+
 # **有条件通过**
 
 首页在 **`vinext dev`** 下满足本轮功能与体验验收要求：主标题、漂浮关键词、A/B 锚点、用户提供的浅色 `hero-bg.png`、窄屏布局、键盘焦点与减少动态效果均可验证；lint / test / build 通过；原始 HTML 未被改动。
