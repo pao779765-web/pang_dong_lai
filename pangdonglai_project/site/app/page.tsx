@@ -153,41 +153,62 @@ function RagChat() {
 
   return (
     <div className="dialogue-window" aria-label="胖东来文化资料问答">
-      <div className="dialogue-bar">
-        <span>PDL CULTURE / ASK</span>
-        <span className="dialogue-state">BM25 本地检索</span>
-      </div>
-      <p className="dialogue-disclaimer">非官方资料助手 · 仅依据已审核的本地资料回答</p>
+      <header className="dialogue-bar">
+        <h2 id="dialogue-title" className="dialogue-title-sr">
+          与胖东来对话
+        </h2>
+        <span className="dialogue-disclaimer">
+          <span className="dialogue-dot" aria-hidden="true" />
+          非官方资料助手 · BM25 本地检索
+        </span>
+      </header>
 
-      <div className="dialogue-body" aria-live="polite">
-        {messages.map((message) => (
-          <article className={`message message-${message.role}`} key={message.id}>
-            <span>{message.role === "user" ? "你" : "资料助手"}</span>
-            <div className="message-content">
-              <p>{message.content}</p>
-              {message.role === "assistant" && message.sources?.length ? (
-                <div className="message-sources" aria-label="回答依据">
-                  <strong>资料来源</strong>
-                  {message.sources.map((source) => (
-                    <a href={source.url} target="_blank" rel="noreferrer" key={source.url}>
-                      {source.title} · 核验于 {source.verifiedAt}
-                    </a>
-                  ))}
-                </div>
-              ) : null}
+      <div className="dialogue-body" aria-live="polite" aria-busy={isSending}>
+        {messages.length === 1 && messages[0].id === "assistant-welcome" ? (
+          <div className="chat-empty-state">
+            <article className="message message-assistant">
+              <span className="message-label">资料助手</span>
+              <div className="message-content">
+                <p>{messages[0].content}</p>
+                <p className="message-footnote">回答只使用已审核的本地资料，并会展示资料来源。</p>
+              </div>
+            </article>
+            <div className="chat-suggest" aria-label="推荐问题">
+              {suggestedQuestions.map((question) => (
+                <button className="chat-suggest-chip" onClick={() => setDraft(question)} type="button" key={question}>
+                  {question}
+                </button>
+              ))}
             </div>
-          </article>
-        ))}
-        {isSending ? <div className="message message-assistant"><span>资料助手</span><div className="message-content"><p>正在检索资料并生成回答…</p></div></div> : null}
+          </div>
+        ) : (
+          messages.map((message) => (
+            <article className={`message message-${message.role}`} key={message.id}>
+              <span className="message-label">{message.role === "user" ? "你" : "资料助手"}</span>
+              <div className="message-content">
+                <p>{message.content}</p>
+                {message.role === "assistant" && message.sources?.length ? (
+                  <div className="message-sources" aria-label="回答依据">
+                    <strong>资料来源</strong>
+                    {message.sources.map((source) => (
+                      <a href={source.url} target="_blank" rel="noreferrer" key={source.url}>
+                        {source.title} · 核验于 {source.verifiedAt}
+                      </a>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            </article>
+          ))
+        )}
+        {isSending ? (
+          <div className="chat-pending" aria-live="polite">
+            <span className="chat-pending-dots" aria-hidden="true" />
+            正在检索资料并生成回答…
+          </div>
+        ) : null}
       </div>
 
-      <div className="chat-suggest" aria-label="推荐问题">
-        {suggestedQuestions.map((question) => (
-          <button className="chat-suggest-chip" onClick={() => setDraft(question)} type="button" key={question}>
-            {question}
-          </button>
-        ))}
-      </div>
       <form className="question-shell" onSubmit={handleSubmit}>
         <label htmlFor="chat-question">输入你的问题</label>
         <div className="question-row">
@@ -202,6 +223,7 @@ function RagChat() {
           <button type="submit" disabled={isSending || !draft.trim()}>{isSending ? "检索中" : "发送"}</button>
         </div>
         {chatError ? <p className="chat-error" role="alert">{chatError}</p> : null}
+        <small>非官方 AI 对话 · 回答依据为当前本地已审核资料</small>
       </form>
     </div>
   );
