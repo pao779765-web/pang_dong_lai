@@ -96,6 +96,26 @@ function readSources(value: unknown): ChatSource[] {
   });
 }
 
+function splitAssistantFootnote(content: string) {
+  const taggedFootnote = content.match(/\s*【资料说明】([\s\S]*?)(?:【\/资料说明】|$)/);
+  if (taggedFootnote) {
+    return {
+      answer: content.slice(0, taggedFootnote.index).trimEnd(),
+      footnote: taggedFootnote[1].trim(),
+    };
+  }
+
+  const legacyFootnote = content.match(/(?:\n|^)\s*(需要说明的是[\s\S]+?)\s*$/);
+  if (legacyFootnote) {
+    return {
+      answer: content.slice(0, legacyFootnote.index).trimEnd(),
+      footnote: legacyFootnote[1].trim(),
+    };
+  }
+
+  return { answer: content, footnote: "" };
+}
+
 function RagChat() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -241,24 +261,31 @@ function RagChat() {
             </div>
           </div>
         ) : (
-          messages.map((message) => (
-            <article className={`message message-${message.role}${message.isStreaming ? " message-streaming" : ""}`} key={message.id}>
-              <span className="message-label">{message.role === "user" ? "你" : "资料助手"}</span>
-              <div className="message-content">
-                <p>{message.content}</p>
-                {message.role === "assistant" && message.sources?.length ? (
-                  <div className="message-sources" aria-label="回答依据">
-                    <strong>资料来源</strong>
-                    {message.sources.map((source) => (
-                      <a href={source.url} target="_blank" rel="noreferrer" key={source.url}>
-                        {source.title} · 核验于 {source.verifiedAt}
-                      </a>
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-            </article>
-          ))
+          messages.map((message) => {
+            const { answer, footnote } = message.role === "assistant"
+              ? splitAssistantFootnote(message.content)
+              : { answer: message.content, footnote: "" };
+
+            return (
+              <article className={`message message-${message.role}${message.isStreaming ? " message-streaming" : ""}`} key={message.id}>
+                <span className="message-label">{message.role === "user" ? "你" : "资料助手"}</span>
+                <div className="message-content">
+                  <p>{answer}</p>
+                  {footnote ? <p className="message-caveat">{footnote}</p> : null}
+                  {message.role === "assistant" && message.sources?.length ? (
+                    <div className="message-sources" aria-label="回答依据">
+                      <strong>资料来源</strong>
+                      {message.sources.map((source) => (
+                        <a href={source.url} target="_blank" rel="noreferrer" key={source.url}>
+                          {source.title} · 核验于 {source.verifiedAt}
+                        </a>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              </article>
+            );
+          })
         )}
         {isSending ? (
           <div className="chat-pending" aria-live="polite">
