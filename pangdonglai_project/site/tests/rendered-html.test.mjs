@@ -83,8 +83,44 @@ test("streams BM25-grounded DeepSeek tokens and verified sources", async () => {
     assert.match(body, /"type":"sources","sources":\[{"title":"胖东来各门店信息","url":"https:\/\/web\.azpdl\.cn\/contact","verifiedAt":"2026-07-24"}\]/);
     assert.match(body, /"type":"done"/);
     assert.equal(deepseekRequest.stream, true);
+    assert.match(deepseekRequest.messages[0].content, /DeepSeek 模型 deepseek-v4-flash/);
     assert.match(deepseekRequest.messages[0].content, /常规营业安排与周二闭店说明/);
     assert.match(deepseekRequest.messages[0].content, /只能依据下方“检索到的资料”回答具体事实/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("does not attach store sources when only the generic brand name matches", async () => {
+  const originalFetch = globalThis.fetch;
+  let deepseekRequest;
+
+  globalThis.fetch = async (input, init) => {
+    if (String(input) === "https://api.deepseek.com/chat/completions") {
+      deepseekRequest = JSON.parse(init.body);
+      return new Response(
+        'data: {"choices":[{"delta":{"content":"资料不足"}}]}\n\ndata: [DONE]\n\n',
+        { headers: { "content-type": "text/event-stream" } },
+      );
+    }
+    return originalFetch(input, init);
+  };
+
+  try {
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ messages: [{ role: "user", content: "胖东来酱油怎么样？" }] }),
+      },
+      { DEEPSEEK_API_KEY: "test-key" },
+    );
+
+    const body = await response.text();
+    assert.match(deepseekRequest.messages[0].content, /本次检索没有命中任何已批准资料/);
+    assert.doesNotMatch(body, /"type":"sources"/);
+    assert.match(body, /"type":"done"/);
   } finally {
     globalThis.fetch = originalFetch;
   }
