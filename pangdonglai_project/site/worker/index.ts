@@ -199,6 +199,74 @@ function buildSystemPrompt(retrieved: RetrievedChunk[]) {
   return `${BASE_SYSTEM_PROMPT}\n\n【检索到的资料】\n${evidence}`;
 }
 
+function streamEvent(value: unknown) {
+  return new TextEncoder().encode(`data: ${JSON.stringify(value)}\n\n`);
+}
+
+function streamChatResponse(upstream: Response, sources: ChatSource[]) {
+  if (!upstream.body) {
+    return json({ error: "AI 服务没有返回可读取的内容，请稍后重试。" }, 502);
+  }
+
+  const stream = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      const reader = upstream.body!.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let receivedContent = false;
+
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const events = buffer.split("\n\n");
+          buffer = events.pop() ?? "";
+
+          for (const event of events) {
+            for (const line of event.split("\n")) {
+              if (!line.startsWith("data:")) continue;
+              const data = line.slice(5).trim();
+              if (!data || data === "[DONE]") continue;
+
+              try {
+                const payload = JSON.parse(data) as { choices?: Array<{ delta?: { content?: unknown } }> };
+                const content = payload.choices?.[0]?.delta?.content;
+                if (typeof content === "string" && content) {
+                  receivedContent = true;
+                  controller.enqueue(streamEvent({ type: "delta", content }));
+                }
+              } catch {
+                // Ignore a malformed upstream event and continue reading later tokens.
+              }
+            }
+          }
+        }
+
+        if (!receivedContent) {
+          controller.enqueue(streamEvent({ type: "error", error: "AI 服务没有返回有效回答，请稍后重试。" }));
+        } else {
+          controller.enqueue(streamEvent({ type: "sources", sources }));
+          controller.enqueue(streamEvent({ type: "done" }));
+        }
+      } catch {
+        controller.enqueue(streamEvent({ type: "error", error: "生成回答时连接中断，请稍后重试。" }));
+      } finally {
+        reader.releaseLock();
+        controller.close();
+      }
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      "cache-control": "no-cache, no-transform",
+      "content-type": "text/event-stream; charset=utf-8",
+    },
+  });
+}
+
 async function handleChat(request: Request, env: Env) {
   if (request.method !== "POST") {
     return json({ error: "仅支持 POST 请求。" }, 405);
@@ -236,7 +304,7 @@ async function handleChat(request: Request, env: Env) {
         messages: [{ role: "system", content: buildSystemPrompt(retrieved) }, ...messages],
         thinking: { type: "disabled" },
         max_tokens: 700,
-        stream: false,
+        stream: true,
       }),
     });
   } catch {
@@ -247,19 +315,7 @@ async function handleChat(request: Request, env: Env) {
     return json({ error: "AI 服务暂时无法回答，请稍后重试。" }, 502);
   }
 
-  let result: { choices?: Array<{ message?: { content?: unknown } }> };
-  try {
-    result = await upstream.json();
-  } catch {
-    return json({ error: "AI 服务返回了无法识别的内容。" }, 502);
-  }
-
-  const content = result.choices?.[0]?.message?.content;
-  if (typeof content !== "string" || !content.trim()) {
-    return json({ error: "AI 服务没有返回有效回答，请稍后重试。" }, 502);
-  }
-
-  return json({ message: content.trim(), sources });
+  return streamChatResponse(upstream, sources);
 }
 
 // Image security config. SVG sources with .svg extension auto-skip the

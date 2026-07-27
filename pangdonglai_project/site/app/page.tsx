@@ -27,6 +27,7 @@ type ChatMessage = {
   role: ChatRole;
   content: string;
   sources?: ChatSource[];
+  isStreaming?: boolean;
 };
 
 const keywords: Keyword[] = [
@@ -112,9 +113,11 @@ function RagChat() {
     const content = draft.trim();
     if (!content || isSending) return;
 
+    const assistantId = `assistant-${Date.now()}`;
     const nextMessages: ChatMessage[] = [
       ...messages,
       { id: `user-${Date.now()}`, role: "user", content },
+      { id: assistantId, role: "assistant", content: "", isStreaming: true },
     ];
     setMessages(nextMessages);
     setDraft("");
@@ -129,23 +132,77 @@ function RagChat() {
           messages: nextMessages.map(({ role, content: messageContent }) => ({ role, content: messageContent })),
         }),
       });
-      const data: { message?: unknown; sources?: unknown; error?: unknown } = await response.json();
-
-      if (!response.ok || typeof data.message !== "string") {
+      if (!response.ok) {
+        const data: { error?: unknown } = await response.json().catch(() => ({}));
         throw new Error(typeof data.error === "string" ? data.error : "暂时无法获得回答，请稍后重试。");
       }
 
-      setMessages((current) => [
-        ...current,
-        {
-          id: `assistant-${Date.now()}`,
-          role: "assistant",
-          content: data.message,
-          sources: readSources(data.sources),
-        },
-      ]);
+      if (!response.body) {
+        throw new Error("浏览器未能接收流式回答，请稍后重试。");
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+
+      const applyEvent = (event: string) => {
+        const data = event
+          .split("\n")
+          .find((line) => line.startsWith("data:"))
+          ?.slice(5)
+          .trim();
+        if (!data) return;
+
+        let payload: { type?: unknown; content?: unknown; sources?: unknown; error?: unknown };
+        try {
+          payload = JSON.parse(data);
+        } catch {
+          return;
+        }
+
+        if (payload.type === "delta" && typeof payload.content === "string") {
+          setMessages((current) => current.map((message) => (
+            message.id === assistantId
+              ? { ...message, content: message.content + payload.content }
+              : message
+          )));
+        }
+
+        if (payload.type === "sources") {
+          setMessages((current) => current.map((message) => (
+            message.id === assistantId
+              ? { ...message, sources: readSources(payload.sources) }
+              : message
+          )));
+        }
+
+        if (payload.type === "error") {
+          throw new Error(typeof payload.error === "string" ? payload.error : "生成回答时出现问题，请稍后重试。");
+        }
+
+        if (payload.type === "done") {
+          setMessages((current) => current.map((message) => (
+            message.id === assistantId ? { ...message, isStreaming: false } : message
+          )));
+        }
+      };
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const events = buffer.split("\n\n");
+        buffer = events.pop() ?? "";
+        events.forEach(applyEvent);
+      }
+
+      if (buffer.trim()) applyEvent(buffer);
     } catch (error) {
       setChatError(error instanceof Error ? error.message : "暂时无法获得回答，请稍后重试。");
+      setMessages((current) => current.map((message) => (
+        message.id === assistantId ? { ...message, isStreaming: false } : message
+      )));
     } finally {
       setIsSending(false);
     }
@@ -183,7 +240,7 @@ function RagChat() {
           </div>
         ) : (
           messages.map((message) => (
-            <article className={`message message-${message.role}`} key={message.id}>
+            <article className={`message message-${message.role}${message.isStreaming ? " message-streaming" : ""}`} key={message.id}>
               <span className="message-label">{message.role === "user" ? "你" : "资料助手"}</span>
               <div className="message-content">
                 <p>{message.content}</p>

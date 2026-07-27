@@ -830,6 +830,20 @@ button:disabled {
   word-break: break-word;
 }
 
+.message-streaming .message-content p::after {
+  display: inline-block;
+  margin-left: 3px;
+  color: #cc7444;
+  content: "▍";
+  animation: stream-caret 0.8s steps(2, start) infinite;
+}
+
+@keyframes stream-caret {
+  50% {
+    opacity: 0;
+  }
+}
+
 .message-sources {
   display: grid;
   gap: 6px;

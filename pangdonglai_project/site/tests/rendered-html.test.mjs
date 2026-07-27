@@ -45,7 +45,7 @@ test("server-renders the Pangdonglai culture homepage", async () => {
   assert.match(html, /输入你的问题/);
 });
 
-test("passes BM25 evidence to DeepSeek and returns verified sources", async () => {
+test("streams BM25-grounded DeepSeek tokens and verified sources", async () => {
   const originalFetch = globalThis.fetch;
   let deepseekRequest;
 
@@ -53,8 +53,12 @@ test("passes BM25 evidence to DeepSeek and returns verified sources", async () =
     if (String(input) === "https://api.deepseek.com/chat/completions") {
       deepseekRequest = JSON.parse(init.body);
       return new Response(
-        JSON.stringify({ choices: [{ message: { content: "测试回答" } }] }),
-        { headers: { "content-type": "application/json" } },
+        [
+          'data: {"choices":[{"delta":{"content":"测试"}}]}\n\n',
+          'data: {"choices":[{"delta":{"content":"回答"}}]}\n\n',
+          "data: [DONE]\n\n",
+        ].join(""),
+        { headers: { "content-type": "text/event-stream" } },
       );
     }
     return originalFetch(input, init);
@@ -72,16 +76,13 @@ test("passes BM25 evidence to DeepSeek and returns verified sources", async () =
     );
 
     assert.equal(response.status, 200);
-    assert.deepEqual(await response.json(), {
-      message: "测试回答",
-      sources: [
-        {
-          title: "胖东来各门店信息",
-          url: "https://web.azpdl.cn/contact",
-          verifiedAt: "2026-07-24",
-        },
-      ],
-    });
+    assert.match(response.headers.get("content-type") ?? "", /^text\/event-stream\b/i);
+    const body = await response.text();
+    assert.match(body, /"type":"delta","content":"测试"/);
+    assert.match(body, /"type":"delta","content":"回答"/);
+    assert.match(body, /"type":"sources","sources":\[{"title":"胖东来各门店信息","url":"https:\/\/web\.azpdl\.cn\/contact","verifiedAt":"2026-07-24"}\]/);
+    assert.match(body, /"type":"done"/);
+    assert.equal(deepseekRequest.stream, true);
     assert.match(deepseekRequest.messages[0].content, /常规营业安排与周二闭店说明/);
     assert.match(deepseekRequest.messages[0].content, /只能依据下方“检索到的资料”回答具体事实/);
   } finally {
