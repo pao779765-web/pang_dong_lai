@@ -8,6 +8,9 @@
       "title": "胖东来各门店信息",
       "type": "official_directory",
       "status": "approved",
+      "evidenceLevel": "L1",
+      "evidenceLabel": "可核验原始资料",
+      "answerMode": "fact_with_source",
       "approval": {
         "approvedBy": "user",
         "approvedAt": "2026-07-24",
@@ -87,6 +90,110 @@
               { "name": "新乡二胖", "address": "新乡市卫滨区健康路31号" },
               { "name": "新乡三胖", "address": "河南省新乡市红旗区牧野路（中）199号" }
             ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "official-company-profile-2026-07-27",
+      "title": "胖东来简介",
+      "type": "official_profile",
+      "status": "approved",
+      "evidenceLevel": "L1",
+      "evidenceLabel": "可核验原始资料",
+      "answerMode": "fact_with_source",
+      "approval": {
+        "approvedBy": "user",
+        "approvedAt": "2026-07-27",
+        "basis": "docs/SOURCE_AUDIT_02.md 的 V2-1；用户明确批准。"
+      },
+      "source": {
+        "publisher": "胖东来商贸集团有限公司网站（web.azpdl.cn）",
+        "sourceType": "official",
+        "url": "https://web.azpdl.cn/about",
+        "publishedAt": null,
+        "verifiedAt": "2026-07-27"
+      },
+      "scope": [
+        "企业公开自述的成立时间",
+        "公开自述的主要经营区域与门店规模",
+        "中央厨房与物流等配套业态"
+      ],
+      "answeringRules": [
+        "仅回答该官网简介页明确展示的企业公开自述，并附原始链接与核验日期。",
+        "门店数量、用工规模和业态会变化；回答时提示以官网最新页面为准。",
+        "本资料不能单独支持薪酬福利制度、财务数据、企业文化的深层阐释或第三方评价。"
+      ],
+      "chunks": [
+        {
+          "id": "company-profile-foundation-and-footprint",
+          "title": "企业公开简介中的成立与业务画像",
+          "text": "企业官网简介页将胖东来商贸集团表述为线下实体零售企业，称其于 1995 年 3 月创立（即官网所述的成立/创建时间）；页面展示其在许昌、新乡约有 14 家门店，并列有中央厨房、物流等配套。这是企业公开自述，门店及人员等规模信息可能变化，应以官网最新页面为准。",
+          "facts": {
+            "founded": "1995-03",
+            "regions": ["许昌", "新乡"],
+            "storeCountClaim": "约14家",
+            "supportingFacilities": ["中央厨房", "物流"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "peoples-daily-yudonglai-interview-2025-08-19",
+      "title": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
+      "type": "media_interview",
+      "status": "approved",
+      "evidenceLevel": "L2",
+      "evidenceLabel": "权威记录与访谈",
+      "answerMode": "attributed_claim",
+      "approval": {
+        "approvedBy": "user",
+        "approvedAt": "2026-07-27",
+        "basis": "docs/SOURCE_AUDIT_02.md 的 V2-2；用户明确批准。"
+      },
+      "source": {
+        "publisher": "人民日报数字报",
+        "sourceType": "media",
+        "url": "https://paper.people.com.cn/rmrb/pc/content/202508/19/content_30097056.html",
+        "publishedAt": "2025-08-19",
+        "verifiedAt": "2026-07-27"
+      },
+      "scope": [
+        "于东来在访谈中的公开表述",
+        "员工与顾客关系的自述",
+        "品质、规模、诚信与投诉处理的自述"
+      ],
+      "answeringRules": [
+        "回答必须使用“据《人民日报》2025 年访谈”“于东来在访谈中表示”等归因措辞。",
+        "不得把受访者自述写成已独立核验的财务事实、制度全文或所有门店的实时做法。",
+        "不得单独用本资料证明薪酬金额、门店实时信息、关店原因或“模式绝对不可复制”等结论。"
+      ],
+      "chunks": [
+        {
+          "id": "interview-people-and-customers",
+          "title": "访谈中关于员工、顾客与一线授权的表述",
+          "text": "据《人民日报》2025 年对于东来的访谈，受访者围绕员工与顾客的关系、一线员工的权责及服务体验作出公开表述。该片段记录的是访谈中的自述，不等同于对具体制度执行效果的独立审计。",
+          "facts": {
+            "claimType": "访谈自述",
+            "topics": ["员工", "顾客", "一线授权", "服务体验"]
+          }
+        },
+        {
+          "id": "interview-quality-and-scale",
+          "title": "访谈中关于品质、规模与扩张的表述",
+          "text": "据《人民日报》2025 年访谈，受访者谈及品质与规模之间的取舍，以及不盲目扩张、对部分门店经营选择的看法。这只能支持“受访者如何表述经营理念”，不能单独证明所有相关经营事实或具体决策结果。",
+          "facts": {
+            "claimType": "访谈自述",
+            "topics": ["品质", "规模", "扩张", "经营选择"]
+          }
+        },
+        {
+          "id": "interview-trust-and-complaints",
+          "title": "访谈中关于诚信、退换货与投诉的表述",
+          "text": "据《人民日报》2025 年访谈，受访者公开谈及诚信、无理由退换货与投诉处理等做法。这些内容适合说明该访谈中的企业自述，不应被表述为已经独立核验的制度全文或永久不变的运营规则。",
+          "facts": {
+            "claimType": "访谈自述",
+            "topics": ["诚信", "退换货", "投诉处理"]
           }
         }
       ]

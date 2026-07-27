@@ -126,6 +126,42 @@ test("does not attach store sources when only the generic brand name matches", a
   }
 });
 
+test("marks approved media interview evidence as an attributed claim", async () => {
+  const originalFetch = globalThis.fetch;
+  let deepseekRequest;
+
+  globalThis.fetch = async (input, init) => {
+    if (String(input) === "https://api.deepseek.com/chat/completions") {
+      deepseekRequest = JSON.parse(init.body);
+      return new Response(
+        'data: {"choices":[{"delta":{"content":"访谈摘要"}}]}\n\ndata: [DONE]\n\n',
+        { headers: { "content-type": "text/event-stream" } },
+      );
+    }
+    return originalFetch(input, init);
+  };
+
+  try {
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ messages: [{ role: "user", content: "胖东来为什么不盲目扩张？" }] }),
+      },
+      { DEEPSEEK_API_KEY: "test-key" },
+    );
+
+    const body = await response.text();
+    assert.match(deepseekRequest.messages[0].content, /证据等级：L2（权威记录与访谈）/);
+    assert.match(deepseekRequest.messages[0].content, /回答方式：attributed_claim/);
+    assert.match(deepseekRequest.messages[0].content, /据《人民日报》2025 年访谈/);
+    assert.match(body, /人民日报于东来访谈/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test("keeps the DeepSeek key on the server", async () => {
   const response = await render("/api/chat", {
     method: "POST",
