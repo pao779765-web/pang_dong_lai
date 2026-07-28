@@ -593,49 +593,108 @@ button:disabled {
 
 .next-chapters {
   display: grid;
-  margin-top: clamp(38px, 5vw, 64px);
+  width: min(940px, 100%);
+  margin: clamp(42px, 5vw, 68px) auto 0;
+  gap: clamp(16px, 2.2vw, 26px);
   grid-template-columns: repeat(2, minmax(0, 1fr));
   color: var(--paper);
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.035), transparent 45%),
-    var(--ink);
-  box-shadow: 0 18px 46px rgba(44, 28, 18, 0.14);
 }
 
 .chapter-card {
+  position: relative;
   display: flex;
-  min-height: clamp(250px, 24vw, 330px);
-  padding: clamp(30px, 4vw, 54px);
+  overflow: hidden;
+  min-height: clamp(182px, 18vw, 230px);
+  padding: clamp(26px, 3vw, 39px);
+  border: 1px solid rgba(244, 233, 213, 0.34);
+  border-radius: 28px;
   flex-direction: column;
   align-items: flex-start;
-  background: transparent;
+  background:
+    radial-gradient(circle at 18% 2%, rgba(255, 245, 226, 0.35), transparent 31%),
+    radial-gradient(circle at 94% 110%, rgba(190, 104, 59, 0.32), transparent 43%),
+    linear-gradient(135deg, rgba(64, 42, 32, 0.96), rgba(31, 23, 19, 0.88));
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.22),
+    inset 0 -16px 26px rgba(0, 0, 0, 0.16),
+    0 12px 26px rgba(54, 33, 22, 0.13);
+  isolation: isolate;
+  transition: transform 300ms cubic-bezier(0.2, 0.9, 0.3, 1.25), box-shadow 300ms ease, border-color 220ms ease, filter 220ms ease;
+}
+
+.chapter-card::before {
+  position: absolute;
+  top: -62%;
+  left: -14%;
+  z-index: 0;
+  width: 82%;
+  height: 120%;
+  border-radius: 50%;
+  background: linear-gradient(112deg, rgba(255, 255, 255, 0.27), rgba(255, 255, 255, 0));
+  content: "";
+  opacity: 0.82;
+  transform: rotate(18deg);
+  transition: transform 420ms ease, opacity 260ms ease;
+}
+
+.chapter-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .chapter-card-link {
-  position: relative;
   width: 100%;
-  border: 0;
+  border: 1px solid rgba(244, 233, 213, 0.34);
   color: inherit;
   font: inherit;
   text-align: left;
   text-decoration: none;
   cursor: pointer;
-  transition: background 220ms ease, box-shadow 220ms ease;
 }
 
 .chapter-card-link:hover,
-.chapter-card-link:focus-visible {
-  background: linear-gradient(135deg, rgba(194, 126, 75, 0.26), rgba(241, 234, 220, 0.035));
-  box-shadow: inset 0 0 0 1px rgba(226, 158, 104, 0.26);
+.chapter-card-link:focus-visible,
+.chapter-card:not(.chapter-card-link):hover {
+  border-color: rgba(255, 219, 184, 0.66);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.32),
+    inset 0 -16px 26px rgba(0, 0, 0, 0.1),
+    0 20px 34px rgba(88, 49, 27, 0.25);
+  filter: saturate(1.12);
+  transform: translateY(-7px) scale(1.018);
+}
+
+.chapter-card:hover::before,
+.chapter-card:focus-visible::before {
+  opacity: 1;
+  transform: translateX(18px) rotate(18deg);
 }
 
 .chapter-card-link:focus-visible {
   outline: 2px solid var(--copper-light);
-  outline-offset: -6px;
+  outline-offset: 4px;
 }
 
 .chapter-card + .chapter-card {
-  border-left: 1px solid rgba(241, 234, 220, 0.18);
+  border-left: 1px solid rgba(244, 233, 213, 0.34);
+}
+
+.chapter-card-link:active {
+  box-shadow:
+    inset 0 7px 14px rgba(0, 0, 0, 0.26),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.16),
+    0 5px 12px rgba(54, 33, 22, 0.14);
+  transform: translateY(3px) scale(0.985);
+  transition-duration: 80ms;
+}
+
+.chapter-card:not(.chapter-card-link):active {
+  box-shadow:
+    inset 0 7px 14px rgba(0, 0, 0, 0.26),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.16),
+    0 5px 12px rgba(54, 33, 22, 0.14);
+  transform: translateY(3px) scale(0.985);
+  transition-duration: 80ms;
 }
 
 .chapter-index {
@@ -646,12 +705,12 @@ button:disabled {
 
 .chapter-card h3 {
   max-width: 14em;
-  margin: auto 0 13px;
+  margin: auto 0 8px;
   font-family: "Songti SC", SimSun, serif;
-  font-size: clamp(1.8rem, 3vw, 3.05rem);
+  font-size: clamp(1.55rem, 2.35vw, 2.3rem);
   font-weight: 400;
   letter-spacing: -0.04em;
-  line-height: 1.18;
+  line-height: 1.2;
 }
 
 .chapter-card p {
@@ -664,12 +723,12 @@ button:disabled {
 
 .chapter-arrow {
   position: absolute;
-  right: clamp(30px, 4vw, 54px);
-  bottom: clamp(28px, 3.2vw, 45px);
+  right: clamp(24px, 2.8vw, 35px);
+  bottom: clamp(22px, 2.5vw, 31px);
   color: var(--copper-light);
   display: grid;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   place-items: center;
   border: 1px solid rgba(226, 158, 104, 0.45);
   border-radius: 50%;
@@ -679,8 +738,12 @@ button:disabled {
 
 .chapter-card-link:hover .chapter-arrow,
 .chapter-card-link:focus-visible .chapter-arrow {
-  transform: translate(4px, 4px);
-  background: rgba(226, 158, 104, 0.14);
+  background: rgba(255, 225, 194, 0.18);
+  transform: translate(4px, 4px) rotate(-7deg);
+}
+
+.chapter-card-link:active .chapter-arrow {
+  transform: translate(3px, 6px) scale(0.88);
 }
 
 .store-section {
