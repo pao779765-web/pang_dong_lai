@@ -58,6 +58,7 @@
 - [x] **RAG-CASE-01 资料边界**：V3-1（茶叶反馈）和 V3-2（鲜鸡蛋争议）以用户批准的 `limited` 归因资料进入各自案例轨，只能说明企业公开的初步回应，不能作为终局结论；SOURCE_AUDIT_03 其余候选仍未入库。
 - [x] **Codex RAG-CASE-02**：面向用户的案例补充说明改为自然语言；不展示内部字段、分级标签或检索过程。
 - [x] **Codex UI-EXPLORE-01**：按用户要求删除 Explore 区的索引、标题与说明文案；内容卡片直接承接该区域。
+- [x] **Codex UI-CHAPTERS-01**：将原“三扇门”改为两个内容板块框架：门店地图与新闻档案；AI 对话保留在独立区域。
 - [ ] Codex（可选）QA-02：微调 360 视口关键词坐标。
 - [ ] Codex（可选）QA-03：锚点后焦点落到栏目标题。
 - [ ] 用户确认 AI 对话区浅色重构视觉是否满意。
@@ -141,6 +142,7 @@
 | 2026-07-28 | Codex | 按 Grok 审核完成案例 schema、事件/文化双轨检索、证据阶段来源标记与回归测试 | knowledge-base.json, site/worker/index.ts, site/app/page.tsx, site/app/globals.css, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-07-28 | Codex | 将案例回答的补充说明融入正文，移除面向用户的内部字段、分级标签和检索术语 | site/worker/index.ts, site/app/page.tsx, site/app/globals.css, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-07-28 | Codex | 删除 Explore 区的引导文案，并收紧内容卡片顶部留白 | site/app/page.tsx, site/app/globals.css, docs/HANDOFF.md |
+| 2026-07-28 | Codex | 将原“三扇门”改为门店地图与新闻档案的双栏内容框架 | site/app/page.tsx, site/app/globals.css, docs/HANDOFF.md |
 
 ---
 

@@ -592,36 +592,46 @@ button:disabled {
 }
 
 .next-chapters {
-  display: flex;
+  display: grid;
   margin-top: clamp(38px, 5vw, 64px);
-  padding: 28px 31px;
-  align-items: center;
-  justify-content: space-between;
-  gap: 30px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   color: var(--paper);
   background: var(--ink);
 }
 
-.next-kicker {
+.chapter-card {
+  display: flex;
+  min-height: 210px;
+  padding: clamp(30px, 4vw, 54px);
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.chapter-card + .chapter-card {
+  border-left: 1px solid rgba(241, 234, 220, 0.18);
+}
+
+.chapter-index {
   color: var(--copper-light);
   font-size: 0.62rem;
   letter-spacing: 0.2em;
 }
 
-.next-chapters p {
-  margin: 10px 0 0;
+.chapter-card h3 {
+  margin: auto 0 0;
   font-family: "Songti SC", SimSun, serif;
-  font-size: clamp(1.15rem, 2.2vw, 1.75rem);
-  letter-spacing: 0.08em;
+  font-size: clamp(2rem, 3.6vw, 3.45rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
 }
 
-.next-status {
-  flex: 0 0 auto;
-  padding: 8px 12px;
-  border: 1px solid rgba(241, 234, 220, 0.25);
-  color: rgba(241, 234, 220, 0.58);
-  font-size: 0.62rem;
-  letter-spacing: 0.16em;
+.chapter-card p {
+  margin: 16px 0 0;
+  color: rgba(241, 234, 220, 0.6);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  line-height: 1.8;
 }
 
 .dialogue-section {
@@ -1300,9 +1310,17 @@ button:disabled {
   }
 
   .next-chapters {
-    padding: 24px 21px;
-    align-items: flex-start;
-    flex-direction: column;
+    grid-template-columns: 1fr;
+  }
+
+  .chapter-card {
+    min-height: 178px;
+    padding: 28px 23px;
+  }
+
+  .chapter-card + .chapter-card {
+    border-top: 1px solid rgba(241, 234, 220, 0.18);
+    border-left: 0;
   }
 
   .dialogue-section {

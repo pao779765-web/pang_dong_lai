@@ -445,12 +445,17 @@ export default function Home() {
             ))}
           </div>
 
-          <aside className="next-chapters" aria-label="后续内容规划">
-            <div>
-              <span className="next-kicker">接下来会被打开的三扇门</span>
-              <p>门店地图 · 新闻档案 · 文化问答</p>
-            </div>
-            <span className="next-status">内容建设中</span>
+          <aside className="next-chapters" aria-label="内容板块">
+            <article className="chapter-card">
+              <span className="chapter-index">01</span>
+              <h3>门店地图</h3>
+              <p>各个门店的具体位置和照片</p>
+            </article>
+            <article className="chapter-card">
+              <span className="chapter-index">02</span>
+              <h3>新闻档案</h3>
+              <p>互联网上的新闻、报道与事件脉络</p>
+            </article>
           </aside>
         </div>
       </section>
