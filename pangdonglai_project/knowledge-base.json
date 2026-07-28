@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "collection": "pangdonglai-rag-local",
-  "description": "第一批经用户批准的本地 RAG 资料。内容只保存必要的事实性摘录与来源链接，不保存新闻全文。",
+  "description": "经用户批准的本地 RAG 资料。含 L1/L2 硬事实与 limited 归因类事件回应。只保存自写摘要与来源链接，不保存新闻/视频全文。",
   "documents": [
     {
       "id": "official-store-directory-2026-07-24",
@@ -194,6 +194,101 @@
           "facts": {
             "claimType": "访谈自述",
             "topics": ["诚信", "退换货", "投诉处理"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "media-tea-fly-preliminary-response-2026-01",
+      "title": "顾客抖音反馈茶叶问题后的企业公开初步说明",
+      "type": "media_company_response",
+      "status": "limited",
+      "evidenceLevel": "L2",
+      "evidenceLabel": "权威媒体对企业公开说明的记录（非最终调查结论）",
+      "answerMode": "attributed_claim",
+      "approval": {
+        "approvedBy": "user",
+        "approvedAt": "2026-07-27",
+        "basis": "docs/SOURCE_AUDIT_03_DRAFT.md V3-1；用户同意按 L2 + limited + 归因入库。"
+      },
+      "source": {
+        "publisher": "人民网河南等媒体转述；企业 2026-01-05 公开发布情况说明（官方抖音原帖本库未核验 ID）",
+        "sourceType": "media",
+        "url": "https://ha.people.com.cn/n2/2026/0106/c351638-41465164.html",
+        "publishedAt": "2026-01-06",
+        "verifiedAt": "2026-07-27",
+        "alternateUrls": [
+          "https://www.thepaper.cn/newsDetail_forward_32324722"
+        ]
+      },
+      "scope": [
+        "企业公开的初步调查与处置动作",
+        "客服流程致歉的公开表述",
+        "调查完成前对商品与供应商的排查表述"
+      ],
+      "answeringRules": [
+        "必须使用「据媒体报道」「据企业公开情况说明」等归因措辞，并带日期。",
+        "仅描述企业公开表示采取的初步动作（如组建调查组、下架排查、访厂复核、客服致歉）；禁止写成事件最终结论、苍蝇来源已查清或质量问题已定性。",
+        "禁止用本资料概括抖音舆论整体倾向；禁止推断全部商品或全部客服情况。",
+        "官方抖音原帖 permalink 未入库核验前，不得表述为 L1 企业原件。"
+      ],
+      "chunks": [
+        {
+          "id": "tea-fly-preliminary-actions",
+          "title": "初步情况说明中的公开处置表述",
+          "text": "据 2026 年 1 月媒体报道，胖东来于 2026-01-05 前后针对顾客在抖音反馈茶叶相关问题公开发布情况说明。说明称企业组建专项调查组进行调查，结果将另行公示；在调查结果出来前对涉事商品下架排查，并由品质管理对厂家资质与生产、检测环节进行复核；同时表示客服未按公司流程处理造成不佳体验并致歉。该说明属初步处置阶段材料，不是最终调查报告。",
+          "facts": {
+            "claimType": "媒体转述的企业初步公开说明",
+            "stage": "preliminary_only",
+            "topics": ["专项调查", "下架排查", "访厂复核", "客服致歉"],
+            "finalInvestigationReportFound": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "media-egg-canthaxanthin-company-response-2026-04",
+      "title": "鲜鸡蛋角黄素网络争议中的企业公开回应与送检说明",
+      "type": "media_company_response",
+      "status": "limited",
+      "evidenceLevel": "L2",
+      "evidenceLabel": "权威媒体对企业公开说明与自述送检的记录（非监管终局）",
+      "answerMode": "attributed_claim",
+      "approval": {
+        "approvedBy": "user",
+        "approvedAt": "2026-07-27",
+        "basis": "docs/SOURCE_AUDIT_03_DRAFT.md V3-2；用户同意按 L2 + limited + 归因入库。"
+      },
+      "source": {
+        "publisher": "中国经济网 / 21世纪经济报道等转述；企业经抖音官方账号发情况说明（原帖 ID 本库未核验）",
+        "sourceType": "media",
+        "url": "https://www.ce.cn/cysc/sp/info/202604/t20260406_2883752.shtml",
+        "publishedAt": "2026-04-06",
+        "verifiedAt": "2026-07-27",
+        "alternateUrls": [
+          "https://www.21jingji.com/article/20260406/herald/f0b475f419894076ccaae613be6305cf.html"
+        ]
+      },
+      "scope": [
+        "企业针对网络视频争议的公开回应步骤",
+        "企业自述的第三方送检与结果表述",
+        "企业关于角黄素标准与维权的公开说法"
+      ],
+      "answeringRules": [
+        "必须使用「据媒体报道」「据企业公开说明」归因；企业送检结果不等于市场监管最终裁定。",
+        "禁止写「监管已认定鸡蛋绝对安全」或「已认定视频造假并结案」，除非另有监管通报原文入库。",
+        "可说明企业公开表示启动调查、送检、饲料抽检及拟依法维权等自述动作；不得把网络视频指控本身写成已证伪或已证实。",
+        "官方抖音原帖未核验前不得升为 L1。"
+      ],
+      "chunks": [
+        {
+          "id": "egg-canthaxanthin-company-stated-testing",
+          "title": "企业公开说明中的调查与送检表述",
+          "text": "据 2026 年 4 月媒体报道，胖东来针对网络视频称其销售鲜鸡蛋检出角黄素一事，通过官方渠道发布情况说明及后续详细说明。企业称成立调查组，将在售多品牌鲜鸡蛋送至多家检测机构检测，并称相关指标符合所列产品与食品安全标准；对角黄素因无鲜鸡蛋国标限值，检测数值仅作参考。企业还称曾说明市场监管部门到店检查抽检、厂家配合调查，并表示将依法维权。上述内容为企业公开自述与媒体转述，审计时未检得市场监管部门就该事件的最终公开结案通报。",
+          "facts": {
+            "claimType": "媒体转述的企业公开说明与自述送检",
+            "regulatoryFinalPublicConclusionFound": false,
+            "topics": ["调查组", "第三方检测", "角黄素标准解释", "拟依法维权"]
           }
         }
       ]

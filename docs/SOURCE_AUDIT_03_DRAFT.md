@@ -217,3 +217,21 @@ Grok 对 V3-2：**L2 + limited**。
 - **不要**仅凭本草案把 V3-1/V3-2 写入硬事实主库为 `approved`。  
 - 用户若批准 limited 入库：chunk 必须带「据媒体报道的企业公开说明」「调查未完成/非监管终局」等限定。  
 - **禁止**修改本审计结论以抬高等级。
+
+---
+
+## 用户批示与入库记录
+
+| 时间 | 批示 |
+|------|------|
+| 2026-07-27 | 用户明确：**同意 V3-1、V3-2 按 L2 + limited + 归因入库**。 |
+| 2026-07-27 | V3-3 维持 limited（不升优先）；V3-4 本轮不入库。 |
+
+### 已写入 knowledge-base.json 的文档 ID
+
+| 审计编号 | 知识库 id | status | evidenceLevel |
+|----------|-----------|--------|---------------|
+| V3-1 | `media-tea-fly-preliminary-response-2026-01` | **limited** | **L2** |
+| V3-2 | `media-egg-canthaxanthin-company-response-2026-04` | **limited** | **L2** |
+
+写入约束已落实：chunk 与 `answeringRules` 含归因、「仅初步处置 / 非监管终局」、禁止写成最终结论；**未**升为 L1 或 `approved` 硬事实主档。
