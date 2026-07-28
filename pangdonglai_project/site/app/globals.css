@@ -596,26 +596,37 @@ button:disabled {
   margin-top: clamp(38px, 5vw, 64px);
   grid-template-columns: repeat(2, minmax(0, 1fr));
   color: var(--paper);
-  background: var(--ink);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.035), transparent 45%),
+    var(--ink);
+  box-shadow: 0 18px 46px rgba(44, 28, 18, 0.14);
 }
 
 .chapter-card {
   display: flex;
-  min-height: 210px;
+  min-height: clamp(250px, 24vw, 330px);
   padding: clamp(30px, 4vw, 54px);
   flex-direction: column;
   align-items: flex-start;
+  background: transparent;
 }
 
 .chapter-card-link {
   position: relative;
+  width: 100%;
+  border: 0;
   color: inherit;
+  font: inherit;
+  text-align: left;
   text-decoration: none;
+  cursor: pointer;
+  transition: background 220ms ease, box-shadow 220ms ease;
 }
 
 .chapter-card-link:hover,
 .chapter-card-link:focus-visible {
-  background: rgba(241, 234, 220, 0.06);
+  background: linear-gradient(135deg, rgba(194, 126, 75, 0.26), rgba(241, 234, 220, 0.035));
+  box-shadow: inset 0 0 0 1px rgba(226, 158, 104, 0.26);
 }
 
 .chapter-card-link:focus-visible {
@@ -634,12 +645,13 @@ button:disabled {
 }
 
 .chapter-card h3 {
-  margin: auto 0 0;
+  max-width: 14em;
+  margin: auto 0 13px;
   font-family: "Songti SC", SimSun, serif;
-  font-size: clamp(2rem, 3.6vw, 3.45rem);
+  font-size: clamp(1.8rem, 3vw, 3.05rem);
   font-weight: 400;
   letter-spacing: -0.04em;
-  line-height: 1.1;
+  line-height: 1.18;
 }
 
 .chapter-card p {
@@ -655,21 +667,34 @@ button:disabled {
   right: clamp(30px, 4vw, 54px);
   bottom: clamp(28px, 3.2vw, 45px);
   color: var(--copper-light);
-  font-size: 1.25rem;
-  transition: transform 180ms ease;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid rgba(226, 158, 104, 0.45);
+  border-radius: 50%;
+  font-size: 1rem;
+  transition: transform 180ms ease, background 180ms ease;
 }
 
 .chapter-card-link:hover .chapter-arrow,
 .chapter-card-link:focus-visible .chapter-arrow {
   transform: translate(4px, 4px);
+  background: rgba(226, 158, 104, 0.14);
 }
 
 .store-section {
+  display: none;
   padding: clamp(92px, 10vw, 140px) 0;
   background: #f4eee3;
   color: var(--ink);
   outline: none;
   scroll-margin-top: 24px;
+}
+
+.store-section.is-open {
+  display: block;
+  animation: store-section-reveal 420ms ease-out both;
 }
 
 .store-heading {
@@ -740,10 +765,25 @@ button:disabled {
   border-right: 1px solid var(--rule-dark);
   border-bottom: 1px solid var(--rule-dark);
   background: rgba(255, 251, 243, 0.5);
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+.store-section.is-open .store-card {
+  animation: store-card-reveal 540ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--store-delay);
 }
 
 .store-card:nth-child(3n) {
   border-right: 0;
+}
+
+.store-photo-link {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  color: var(--paper);
+  text-decoration: none;
 }
 
 .store-card img {
@@ -752,6 +792,48 @@ button:disabled {
   height: clamp(155px, 16vw, 230px);
   object-fit: cover;
   background: #e7dfd1;
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1), filter 420ms ease;
+}
+
+.store-photo-link::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 45%, rgba(20, 15, 11, 0.72));
+  content: "";
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.store-photo-link span {
+  position: absolute;
+  right: 17px;
+  bottom: 14px;
+  z-index: 1;
+  padding: 6px 9px;
+  border: 1px solid rgba(241, 234, 220, 0.58);
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.store-photo-link:hover img,
+.store-photo-link:focus-visible img {
+  filter: saturate(1.08) contrast(1.04);
+  transform: scale(1.045);
+}
+
+.store-photo-link:hover::after,
+.store-photo-link:focus-visible::after,
+.store-photo-link:hover span,
+.store-photo-link:focus-visible span {
+  opacity: 1;
+}
+
+.store-photo-link:hover span,
+.store-photo-link:focus-visible span {
+  transform: translateY(0);
 }
 
 .store-card-body {
@@ -806,6 +888,30 @@ button:disabled {
 
 .store-credit {
   margin-top: 21px;
+}
+
+@keyframes store-section-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes store-card-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .dialogue-section {
@@ -1488,7 +1594,7 @@ button:disabled {
   }
 
   .chapter-card {
-    min-height: 178px;
+    min-height: 205px;
     padding: 28px 23px;
   }
 
@@ -1664,5 +1770,9 @@ button:disabled {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+  }
+
+  .store-section.is-open .store-card {
+    animation-delay: 0ms !important;
   }
 }

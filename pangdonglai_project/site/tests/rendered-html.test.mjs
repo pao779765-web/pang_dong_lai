@@ -38,17 +38,19 @@ test("server-renders the Pangdonglai culture homepage", async () => {
   assert.match(html, /从理解人开始/);
   assert.match(html, /href="#explore"/);
   assert.match(html, /href="#ai-dialogue"/);
-  assert.match(html, /href="#store-directory"/);
+  assert.match(html, /aria-controls="store-directory"/);
   assert.match(html, /与胖东来对话/);
   assert.match(html, /id="explore"/);
   assert.match(html, /id="ai-dialogue"/);
   assert.match(html, /id="store-directory"/);
+  assert.match(html, /aria-hidden="true"/);
   assert.match(html, /BM25 本地检索/);
   assert.match(html, /输入你的问题/);
   for (const storeName of ["许昌天使城", "许昌时代广场", "许昌生活广场", "许昌大众服饰", "许昌金三角店", "许昌云鼎店", "许昌北海店", "许昌金汇店", "许昌劳动店", "许昌人民店", "禹州店", "新乡大胖", "新乡二胖", "新乡三胖"]) {
     assert.match(html, new RegExp(storeName));
   }
   assert.equal((html.match(/<img[^>]+alt="[^"]*官方门店照片"/g) ?? []).length, 14);
+  assert.equal((html.match(/href="https:\/\/web\.azpdl\.cn\/"/g) ?? []).length, 14);
 });
 
 test("streams BM25-grounded DeepSeek tokens and verified sources", async () => {

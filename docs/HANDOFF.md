@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-07-28
 
-**当前执行者：** Codex 已完成 STORE-01；用户可验收 14 家门店目录
+**当前执行者：** Codex 已完成 STORE-02；用户可验收门店展开交互与入口视觉
 **分支：** `main`
 
 ---
@@ -60,6 +60,7 @@
 - [x] **Codex UI-EXPLORE-01**：按用户要求删除 Explore 区的索引、标题与说明文案；内容卡片直接承接该区域。
 - [x] **Codex UI-CHAPTERS-01**：将原“三扇门”改为两个内容板块框架：01“查看各个门店信息、位置等具体情况”、02“查看热点事件”；AI 对话保留在独立区域。
 - [x] **Codex STORE-01**：用胖东来官网的 14 家门店资料补全门店目录，提供官方照片、地址、夏季与常规营业时间、周二安排和地图入口。
+- [x] **Codex STORE-02**：美化双栏目与门店目录；点击 01 后门店卡片按顺序出场，点击任一门店照片在新标签打开胖东来官网。
 - [ ] Codex（可选）QA-02：微调 360 视口关键词坐标。
 - [ ] Codex（可选）QA-03：锚点后焦点落到栏目标题。
 - [ ] 用户确认 AI 对话区浅色重构视觉是否满意。
@@ -146,6 +147,7 @@
 | 2026-07-28 | Codex | 将原“三扇门”改为门店地图与新闻档案的双栏内容框架 | site/app/page.tsx, site/app/globals.css, docs/HANDOFF.md |
 | 2026-07-28 | Codex | 按用户指定文案更新双栏：查看各个门店信息、位置等具体情况；查看热点事件 | site/app/page.tsx, docs/HANDOFF.md |
 | 2026-07-28 | Codex | 补全 14 家门店目录：官方照片、地址、营业时间、周二安排与地图入口 | site/app/page.tsx, site/app/globals.css, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
+| 2026-07-28 | Codex | 美化双栏目与门店目录；实现 01 点击展开、门店卡片顺序出场和照片跳转官网 | site/app/page.tsx, site/app/globals.css, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 
 ---
 

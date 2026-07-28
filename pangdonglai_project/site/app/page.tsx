@@ -354,6 +354,8 @@ function getKeywordStyle(keyword: Keyword, index: number) {
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
+  const storeDirectoryRef = useRef<HTMLElement>(null);
+  const [storesOpen, setStoresOpen] = useState(false);
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -388,6 +390,19 @@ export default function Home() {
     target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
     window.history.replaceState(null, "", href);
     window.setTimeout(() => target.focus({ preventScroll: true }), reducedMotion ? 0 : 650);
+  }
+
+  function openStoreDirectory() {
+    setStoresOpen(true);
+    window.requestAnimationFrame(() => {
+      const target = storeDirectoryRef.current;
+      if (!target) return;
+
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+      window.history.replaceState(null, "", "#store-directory");
+      window.setTimeout(() => target.focus({ preventScroll: true }), reducedMotion ? 0 : 650);
+    });
   }
 
   return (
@@ -486,11 +501,11 @@ export default function Home() {
           </div>
 
           <aside className="next-chapters" aria-label="内容板块">
-            <a className="chapter-card chapter-card-link" href="#store-directory">
+            <button className="chapter-card chapter-card-link" type="button" onClick={openStoreDirectory} aria-expanded={storesOpen} aria-controls="store-directory">
               <span className="chapter-index">01</span>
               <h3>查看各个门店<br />信息、位置等具体情况</h3>
-              <span className="chapter-arrow" aria-hidden="true">↘</span>
-            </a>
+              <span className="chapter-arrow" aria-hidden="true">{storesOpen ? "↑" : "↘"}</span>
+            </button>
             <article className="chapter-card">
               <span className="chapter-index">02</span>
               <h3>查看热点事件</h3>
@@ -499,7 +514,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="store-directory" className="store-section" tabIndex={-1} aria-labelledby="store-directory-title">
+      <section ref={storeDirectoryRef} id="store-directory" className={`store-section${storesOpen ? " is-open" : ""}`} tabIndex={-1} aria-labelledby="store-directory-title" aria-hidden={!storesOpen}>
         <div className="section-shell">
           <div className="store-heading">
             <div>
@@ -511,13 +526,19 @@ export default function Home() {
 
           <p className="store-notice">营业时间可能因节假日、天气或现场安排调整，请以门店当天提示为准。</p>
 
-          {storeRegions.map((region) => (
+          {storeRegions.map((region, regionIndex) => {
+            const regionOffset = storeRegions.slice(0, regionIndex).reduce((total, previousRegion) => total + previousRegion.stores.length, 0);
+
+            return (
             <div className="store-region" key={region.city}>
               <h3>{region.city}</h3>
               <div className="store-grid">
-                {region.stores.map((store) => (
-                  <article className="store-card" key={store.name}>
-                    <img src={store.photoUrl} alt={`${store.name}官方门店照片`} loading="lazy" />
+                {region.stores.map((store, storeIndex) => (
+                  <article className="store-card" key={store.name} style={{ "--store-delay": `${(regionOffset + storeIndex) * 85}ms` } as CSSProperties}>
+                    <a className="store-photo-link" href="https://web.azpdl.cn/" target="_blank" rel="noreferrer" aria-label={`前往胖东来官网了解${store.name}`}>
+                      <img src={store.photoUrl} alt={`${store.name}官方门店照片`} loading="lazy" />
+                      <span>前往官网 ↗</span>
+                    </a>
                     <div className="store-card-body">
                       <h4>{store.name}</h4>
                       <dl>
@@ -538,7 +559,8 @@ export default function Home() {
                 ))}
               </div>
             </div>
-          ))}
+            );
+          })}
 
           <p className="store-credit">门店地址、营业规则与图片来自胖东来官网。</p>
         </div>
