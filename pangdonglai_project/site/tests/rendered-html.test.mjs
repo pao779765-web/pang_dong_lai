@@ -153,9 +153,10 @@ test("marks approved media interview evidence as an attributed claim", async () 
     );
 
     const body = await response.text();
-    assert.match(deepseekRequest.messages[0].content, /证据等级：L2（权威记录与访谈）/);
-    assert.match(deepseekRequest.messages[0].content, /回答方式：attributed_claim/);
-    assert.match(deepseekRequest.messages[0].content, /据《人民日报》2025 年访谈/);
+    const prompt = deepseekRequest.messages[0].content;
+    assert.match(prompt, /公开访谈中的受访者表述/);
+    assert.match(prompt, /据《人民日报》2025 年访谈/);
+    assert.doesNotMatch(prompt, /L2|attributed_claim/);
     assert.match(body, /人民日报于东来访谈/);
   } finally {
     globalThis.fetch = originalFetch;
@@ -190,13 +191,14 @@ test("keeps a limited event response inside its case and forbids finality langua
 
     const body = await response.text();
     const prompt = deepseekRequest.messages[0].content;
-    assert.match(prompt, /【案例档案】/);
+    assert.match(prompt, /【这次问题的回答边界】/);
     assert.match(prompt, /顾客反馈茶叶问题后的企业公开初步说明/);
-    assert.match(prompt, /证据阶段：preliminary/);
-    assert.match(prompt, /本题是否追问终局：是/);
+    assert.match(prompt, /目前能看到的是企业当时的公开回应，后续调查结论尚未见到/);
+    assert.match(prompt, /用户是否在问后续结论：是/);
     assert.match(prompt, /不得引用其他案例或企业理念资料来裁定本案例事实/);
     assert.doesNotMatch(prompt, /人民日报于东来访谈/);
     assert.doesNotMatch(prompt, /胖东来简介/);
+    assert.doesNotMatch(prompt, /L1|L2|caseId|claimType|finality|preliminary_only|资料说明/);
     assert.match(body, /顾客抖音反馈茶叶问题后的企业公开初步说明/);
     assert.match(body, /"claimType":"company_preliminary_response"/);
     assert.match(body, /"finality":"preliminary"/);

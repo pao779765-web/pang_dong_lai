@@ -102,26 +102,6 @@ function readSources(value: unknown): ChatSource[] {
   });
 }
 
-function splitAssistantFootnote(content: string) {
-  const taggedFootnote = content.match(/\s*【资料说明】([\s\S]*?)(?:【\/资料说明】|$)/);
-  if (taggedFootnote) {
-    return {
-      answer: content.slice(0, taggedFootnote.index).trimEnd(),
-      footnote: taggedFootnote[1].trim(),
-    };
-  }
-
-  const legacyFootnote = content.match(/(?:\n|^)\s*(需要说明的是[\s\S]+?)\s*$/);
-  if (legacyFootnote) {
-    return {
-      answer: content.slice(0, legacyFootnote.index).trimEnd(),
-      footnote: legacyFootnote[1].trim(),
-    };
-  }
-
-  return { answer: content, footnote: "" };
-}
-
 function RagChat() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -255,7 +235,7 @@ function RagChat() {
               <span className="message-label">资料助手</span>
               <div className="message-content">
                 <p>{messages[0].content}</p>
-                <p className="message-footnote">回答只使用已审核资料：事件回答会标明企业回应与最终结论是否齐全。</p>
+                <p className="message-footnote">可以从企业公开回应、访谈和具体案例聊起。</p>
               </div>
             </article>
             <div className="chat-suggest" aria-label="推荐问题">
@@ -267,23 +247,17 @@ function RagChat() {
             </div>
           </div>
         ) : (
-          messages.map((message) => {
-            const { answer, footnote } = message.role === "assistant"
-              ? splitAssistantFootnote(message.content)
-              : { answer: message.content, footnote: "" };
-
-            return (
+          messages.map((message) => (
               <article className={`message message-${message.role}${message.isStreaming ? " message-streaming" : ""}`} key={message.id}>
                 <span className="message-label">{message.role === "user" ? "你" : "资料助手"}</span>
                 <div className="message-content">
-                  <p>{answer}</p>
-                  {footnote ? <p className="message-caveat">{footnote}</p> : null}
+                  <p>{message.content}</p>
                   {message.role === "assistant" && message.sources?.length ? (
-                    <div className="message-sources" aria-label="回答依据">
-                      <strong>资料来源</strong>
+                    <div className="message-sources" aria-label="相关资料">
+                      <strong>相关资料</strong>
                       {message.sources.map((source) => (
                         <a href={source.url} target="_blank" rel="noreferrer" key={source.url}>
-                          {source.title} · 核验于 {source.verifiedAt}
+                          {source.title} · 更新于 {source.verifiedAt}
                           {source.caseTitle ? (
                             <span className="message-source-context">
                               {source.caseTitle} · {source.claimType === "company_preliminary_response" ? "企业初步回应" : source.claimType} · {source.finality === "preliminary" ? "非最终结论" : source.finality === "no_regulatory_final" ? "未见监管终局" : source.finality}
@@ -295,8 +269,7 @@ function RagChat() {
                   ) : null}
                 </div>
               </article>
-            );
-          })
+            ))
         )}
         {isSending ? (
           <div className="chat-pending" aria-live="polite">
@@ -320,7 +293,7 @@ function RagChat() {
           <button type="submit" disabled={isSending || !draft.trim()}>{isSending ? "检索中" : "发送"}</button>
         </div>
         {chatError ? <p className="chat-error" role="alert">{chatError}</p> : null}
-        <small>非官方 AI 对话 · 回答依据为当前本地已审核资料</small>
+        <small>非官方 AI 对话 · 会结合当前可用资料回答</small>
       </form>
     </div>
   );

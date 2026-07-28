@@ -888,27 +888,6 @@ button:disabled {
   line-height: 1.7 !important;
 }
 
-.message-caveat {
-  width: fit-content;
-  max-width: 92%;
-  margin: 12px 0 0 auto !important;
-  padding: 7px 0 0 10px;
-  border-top: 1px solid rgba(113, 58, 38, 0.11);
-  color: rgba(98, 54, 36, 0.52) !important;
-  font-size: 0.64rem !important;
-  line-height: 1.65 !important;
-  letter-spacing: 0.02em !important;
-  text-align: right;
-}
-
-.message-caveat::before {
-  margin-right: 5px;
-  color: rgba(161, 70, 37, 0.58);
-  content: "资料说明";
-  font-size: 0.58rem;
-  letter-spacing: 0.08em;
-}
-
 /* 用户气泡：略深的暖铜色，右对齐，呼应关键词 copper 色 */
 .message-user {
   align-self: flex-end;
