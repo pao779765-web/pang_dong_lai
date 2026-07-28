@@ -354,8 +354,11 @@ function getKeywordStyle(keyword: Keyword, index: number) {
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
+  const chaptersRef = useRef<HTMLElement>(null);
   const storeDirectoryRef = useRef<HTMLElement>(null);
+  const storeToggleRef = useRef<HTMLButtonElement>(null);
   const [storesOpen, setStoresOpen] = useState(false);
+  const [storesClosing, setStoresClosing] = useState(false);
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -393,6 +396,25 @@ export default function Home() {
   }
 
   function openStoreDirectory() {
+    if (storesOpen && !storesClosing) {
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      setStoresClosing(true);
+      storeToggleRef.current?.focus({ preventScroll: true });
+      chaptersRef.current?.scrollIntoView({
+        behavior: reducedMotion ? "auto" : "smooth",
+        block: "center",
+      });
+      window.history.replaceState(null, "", "#explore");
+      window.setTimeout(() => {
+        setStoresOpen(false);
+        setStoresClosing(false);
+      }, reducedMotion ? 0 : 760);
+      return;
+    }
+
+    if (storesClosing) return;
+
     setStoresOpen(true);
     window.requestAnimationFrame(() => {
       const target = storeDirectoryRef.current;
@@ -500,11 +522,11 @@ export default function Home() {
             ))}
           </div>
 
-          <aside className="next-chapters" aria-label="内容板块">
-            <button className="chapter-card chapter-card-link" type="button" onClick={openStoreDirectory} aria-expanded={storesOpen} aria-controls="store-directory">
+          <aside ref={chaptersRef} className="next-chapters" aria-label="内容板块">
+            <button ref={storeToggleRef} className={`chapter-card chapter-card-link${storesOpen && !storesClosing ? " is-expanded" : ""}`} type="button" onClick={openStoreDirectory} aria-expanded={storesOpen && !storesClosing} aria-controls="store-directory">
               <span className="chapter-index">01</span>
-              <h3>查看各个门店<br />信息、位置等具体情况</h3>
-              <span className="chapter-arrow" aria-hidden="true">{storesOpen ? "↑" : "↘"}</span>
+              <h3>{storesOpen && !storesClosing ? <>收起门店<br />信息</> : <>查看各个门店<br />信息、位置等具体情况</>}</h3>
+              <span className="chapter-arrow" aria-hidden="true">{storesOpen && !storesClosing ? "↑" : "↘"}</span>
             </button>
             <article className="chapter-card">
               <span className="chapter-index">02</span>
@@ -514,8 +536,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section ref={storeDirectoryRef} id="store-directory" className={`store-section${storesOpen ? " is-open" : ""}`} tabIndex={-1} aria-labelledby="store-directory-title" aria-hidden={!storesOpen}>
-        <div className="section-shell">
+      <section ref={storeDirectoryRef} id="store-directory" className={`store-section${storesOpen ? " is-open" : ""}${storesClosing ? " is-closing" : ""}`} tabIndex={-1} aria-labelledby="store-directory-title" aria-hidden={!storesOpen || storesClosing}>
+        <div className="store-section-clip">
+          <div className="store-section-inner">
+            <div className="section-shell">
           <div className="store-heading">
             <div>
               <p>STORE DIRECTORY</p>
@@ -534,7 +558,7 @@ export default function Home() {
               <h3>{region.city}</h3>
               <div className="store-grid">
                 {region.stores.map((store, storeIndex) => (
-                  <article className="store-card" key={store.name} style={{ "--store-delay": `${(regionOffset + storeIndex) * 85}ms` } as CSSProperties}>
+                  <article className="store-card" key={store.name} style={{ "--store-delay": `${(regionOffset + storeIndex) * 85}ms`, "--store-reverse-delay": `${(13 - (regionOffset + storeIndex)) * 30}ms` } as CSSProperties}>
                     <a className="store-photo-link" href="https://web.azpdl.cn/" target="_blank" rel="noreferrer" aria-label={`前往胖东来官网了解${store.name}`}>
                       <img src={store.photoUrl} alt={`${store.name}官方门店照片`} loading="lazy" />
                       <span>前往官网 ↗</span>
@@ -562,7 +586,9 @@ export default function Home() {
             );
           })}
 
-          <p className="store-credit">门店地址、营业规则与图片来自胖东来官网。</p>
+              <p className="store-credit">门店地址、营业规则与图片来自胖东来官网。</p>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -746,18 +746,54 @@ button:disabled {
   transform: translate(3px, 6px) scale(0.88);
 }
 
+.chapter-card-link.is-expanded .chapter-arrow {
+  transform: rotate(90deg);
+}
+
+.chapter-card-link.is-expanded:hover .chapter-arrow,
+.chapter-card-link.is-expanded:focus-visible .chapter-arrow {
+  transform: translate(0, -3px) rotate(90deg);
+}
+
 .store-section {
-  display: none;
-  padding: clamp(92px, 10vw, 140px) 0;
+  display: grid;
+  overflow: hidden;
+  grid-template-rows: 0fr;
   background: #f4eee3;
   color: var(--ink);
+  opacity: 0;
   outline: none;
   scroll-margin-top: 24px;
+  transform: translateY(-10px);
+  visibility: hidden;
+  transition:
+    grid-template-rows 500ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 260ms ease,
+    transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.store-section-clip {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.store-section-inner {
+  padding: clamp(92px, 10vw, 140px) 0;
 }
 
 .store-section.is-open {
-  display: block;
-  animation: store-section-reveal 420ms ease-out both;
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.store-section.is-open.is-closing {
+  grid-template-rows: 0fr;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition-delay: 210ms, 450ms, 360ms;
 }
 
 .store-heading {
@@ -835,6 +871,18 @@ button:disabled {
 .store-section.is-open .store-card {
   animation: store-card-reveal 540ms cubic-bezier(0.16, 1, 0.3, 1) both;
   animation-delay: var(--store-delay);
+}
+
+.store-section.is-open.is-closing .store-card {
+  animation: store-card-retreat 240ms cubic-bezier(0.32, 0, 0.67, 0) both;
+  animation-delay: var(--store-reverse-delay);
+}
+
+.store-section.is-open.is-closing .store-heading,
+.store-section.is-open.is-closing .store-notice,
+.store-section.is-open.is-closing .store-credit,
+.store-section.is-open.is-closing .store-region > h3 {
+  animation: store-content-retreat 220ms ease both;
 }
 
 .store-card:nth-child(3n) {
@@ -953,18 +1001,6 @@ button:disabled {
   margin-top: 21px;
 }
 
-@keyframes store-section-reveal {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes store-card-reveal {
   from {
     opacity: 0;
@@ -974,6 +1010,30 @@ button:disabled {
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes store-card-retreat {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-18px) scale(0.985);
+  }
+}
+
+@keyframes store-content-retreat {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
   }
 }
 
@@ -1671,7 +1731,7 @@ button:disabled {
     bottom: 25px;
   }
 
-  .store-section {
+  .store-section-inner {
     padding: 79px 0 92px;
   }
 
