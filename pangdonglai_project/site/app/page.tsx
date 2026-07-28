@@ -448,13 +448,11 @@ export default function Home() {
           <aside className="next-chapters" aria-label="内容板块">
             <article className="chapter-card">
               <span className="chapter-index">01</span>
-              <h3>门店地图</h3>
-              <p>各个门店的具体位置和照片</p>
+              <h3>查看各个门店<br />信息、位置等具体情况</h3>
             </article>
             <article className="chapter-card">
               <span className="chapter-index">02</span>
-              <h3>新闻档案</h3>
-              <p>互联网上的新闻、报道与事件脉络</p>
+              <h3>查看热点事件</h3>
             </article>
           </aside>
         </div>
