@@ -430,17 +430,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="explore" className="explore-section" tabIndex={-1} aria-labelledby="explore-title">
+      <section id="explore" className="explore-section" tabIndex={-1} aria-label="探索主题">
         <div className="section-shell">
-          <div className="section-heading">
-            <p className="section-index">A / EXPLORE</p>
-            <h2 id="explore-title">标签很响亮，<br />理解需要证据。</h2>
-            <p>
-              这里不急着回答“胖东来好不好”，而是先建立一条从印象走向事实的路径。
-              未来的门店、报道与文化资料，都会沿着这条路径被组织起来。
-            </p>
-          </div>
-
           <div className="lens-grid">
             {lenses.map((lens) => (
               <article className="lens-card" key={lens.number}>

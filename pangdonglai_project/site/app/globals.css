@@ -532,23 +532,6 @@ button:disabled {
   color: var(--ink);
 }
 
-.section-heading {
-  display: grid;
-  align-items: start;
-  grid-template-columns: 0.55fr 1.2fr 0.75fr;
-  gap: clamp(24px, 4vw, 70px);
-}
-
-.section-index {
-  margin: 7px 0 0;
-  color: #995332;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 0.69rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-}
-
-.section-heading h2,
 .dialogue-copy h2 {
   margin: 0;
   font-family: "Songti SC", SimSun, "Times New Roman", serif;
@@ -558,17 +541,9 @@ button:disabled {
   line-height: 1.08;
 }
 
-.section-heading > p:last-child {
-  margin: 7px 0 0;
-  color: rgba(23, 19, 15, 0.64);
-  font-size: 0.91rem;
-  letter-spacing: 0.08em;
-  line-height: 2;
-}
-
 .lens-grid {
   display: grid;
-  margin-top: clamp(75px, 10vw, 130px);
+  margin-top: 0;
   border-bottom: 1px solid var(--rule-dark);
   grid-template-columns: repeat(3, 1fr);
 }
@@ -1199,11 +1174,6 @@ button:disabled {
     display: none;
   }
 
-  .section-heading {
-    grid-template-columns: 0.42fr 1.1fr 0.8fr;
-    gap: 28px;
-  }
-
   .dialogue-layout {
     gap: 50px;
   }
@@ -1311,22 +1281,9 @@ button:disabled {
     background: var(--paper);
   }
 
-  .section-heading {
-    display: block;
-  }
-
-  .section-heading h2 {
-    margin-top: 22px;
-    font-size: clamp(2.55rem, 13vw, 4rem);
-  }
-
-  .section-heading > p:last-child {
-    margin-top: 29px;
-  }
-
   .lens-grid {
     display: block;
-    margin-top: 65px;
+    margin-top: 0;
   }
 
   .lens-card {
