@@ -607,6 +607,22 @@ button:disabled {
   align-items: flex-start;
 }
 
+.chapter-card-link {
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+}
+
+.chapter-card-link:hover,
+.chapter-card-link:focus-visible {
+  background: rgba(241, 234, 220, 0.06);
+}
+
+.chapter-card-link:focus-visible {
+  outline: 2px solid var(--copper-light);
+  outline-offset: -6px;
+}
+
 .chapter-card + .chapter-card {
   border-left: 1px solid rgba(241, 234, 220, 0.18);
 }
@@ -632,6 +648,164 @@ button:disabled {
   font-size: 0.78rem;
   letter-spacing: 0.08em;
   line-height: 1.8;
+}
+
+.chapter-arrow {
+  position: absolute;
+  right: clamp(30px, 4vw, 54px);
+  bottom: clamp(28px, 3.2vw, 45px);
+  color: var(--copper-light);
+  font-size: 1.25rem;
+  transition: transform 180ms ease;
+}
+
+.chapter-card-link:hover .chapter-arrow,
+.chapter-card-link:focus-visible .chapter-arrow {
+  transform: translate(4px, 4px);
+}
+
+.store-section {
+  padding: clamp(92px, 10vw, 140px) 0;
+  background: #f4eee3;
+  color: var(--ink);
+  outline: none;
+  scroll-margin-top: 24px;
+}
+
+.store-heading {
+  display: flex;
+  padding-bottom: 28px;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+  border-bottom: 1px solid var(--rule-dark);
+}
+
+.store-heading > div > p {
+  margin: 0 0 17px;
+  color: #995332;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+}
+
+.store-heading h2 {
+  margin: 0;
+  font-family: "Songti SC", SimSun, "Times New Roman", serif;
+  font-size: clamp(2.8rem, 5vw, 5.1rem);
+  font-weight: 400;
+  letter-spacing: -0.075em;
+  line-height: 1;
+}
+
+.store-heading > p {
+  max-width: 25em;
+  margin: 0 0 3px;
+  color: rgba(23, 19, 15, 0.6);
+  font-size: 0.83rem;
+  letter-spacing: 0.06em;
+  line-height: 1.9;
+}
+
+.store-notice,
+.store-credit {
+  margin: 16px 0 0;
+  color: rgba(23, 19, 15, 0.54);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  line-height: 1.8;
+}
+
+.store-region {
+  margin-top: clamp(55px, 7vw, 88px);
+}
+
+.store-region > h3 {
+  margin: 0 0 17px;
+  color: #995332;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.73rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+.store-grid {
+  display: grid;
+  border-top: 1px solid var(--rule-dark);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.store-card {
+  overflow: hidden;
+  min-width: 0;
+  border-right: 1px solid var(--rule-dark);
+  border-bottom: 1px solid var(--rule-dark);
+  background: rgba(255, 251, 243, 0.5);
+}
+
+.store-card:nth-child(3n) {
+  border-right: 0;
+}
+
+.store-card img {
+  display: block;
+  width: 100%;
+  height: clamp(155px, 16vw, 230px);
+  object-fit: cover;
+  background: #e7dfd1;
+}
+
+.store-card-body {
+  padding: 24px 24px 26px;
+}
+
+.store-card h4 {
+  margin: 0;
+  font-family: "Songti SC", SimSun, "Times New Roman", serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+}
+
+.store-card dl {
+  margin: 23px 0 0;
+}
+
+.store-card dl > div + div {
+  margin-top: 16px;
+}
+
+.store-card dt {
+  color: #995332;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+}
+
+.store-card dd {
+  margin: 7px 0 0;
+  color: rgba(23, 19, 15, 0.68);
+  font-size: 0.76rem;
+  letter-spacing: 0.035em;
+  line-height: 1.75;
+}
+
+.store-map-link {
+  display: inline-block;
+  margin-top: 25px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgba(153, 83, 50, 0.45);
+  color: #844525;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+}
+
+.store-map-link:hover,
+.store-map-link:focus-visible {
+  color: #4c2717;
+}
+
+.store-credit {
+  margin-top: 21px;
 }
 
 .dialogue-section {
@@ -1321,6 +1495,41 @@ button:disabled {
   .chapter-card + .chapter-card {
     border-top: 1px solid rgba(241, 234, 220, 0.18);
     border-left: 0;
+  }
+
+  .chapter-arrow {
+    right: 23px;
+    bottom: 25px;
+  }
+
+  .store-section {
+    padding: 79px 0 92px;
+  }
+
+  .store-heading {
+    display: block;
+    padding-bottom: 23px;
+  }
+
+  .store-heading > p {
+    margin-top: 22px;
+  }
+
+  .store-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .store-card,
+  .store-card:nth-child(3n) {
+    border-right: 0;
+  }
+
+  .store-card img {
+    height: min(58vw, 270px);
+  }
+
+  .store-card-body {
+    padding: 22px 20px 25px;
   }
 
   .dialogue-section {
