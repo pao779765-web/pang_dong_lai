@@ -867,6 +867,14 @@ button:disabled {
   text-underline-offset: 3px;
 }
 
+.message-source-context {
+  display: block;
+  margin-top: 3px;
+  color: rgba(161, 70, 37, 0.76);
+  font-size: 0.61rem;
+  letter-spacing: 0.04em;
+}
+
 .chat-error {
   margin: 9px 0 0;
   color: #a14725;

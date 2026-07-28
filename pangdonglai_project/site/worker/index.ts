@@ -36,6 +36,8 @@ const BASE_SYSTEM_PROMPT = `你是“胖东来文化资料助手”，一个非�
 区分“官方页面列出的信息”“媒体转述”和“观点”；不杜撰来源，不假装代表胖东来。
 L1“可核验原始资料”可用于带来源的事实说明；涉及可能变化的信息，提醒用户以链接页面的最新内容为准。
 L2“权威记录与访谈”只可作为受访者或报道中的归因性表述：必须写明“据报道”“受访者表示”等，不得改写成独立核验的事实。
+当问题命中具体案例时，先回答该案例的证据阶段，再说明它为何能检验企业文化；不得用企业简介、访谈或文化口号证明具体客诉真伪。
+企业初步回应、媒体记录与监管/司法最终结论是不同层级。只有标记为 final 的证据才能使用“最终结论”“已查清”“已定性”等终局话术；没有时必须明确说明尚无已核验终局资料。
 当回答需要补充资料边界、时效性或“这只是访谈自述”等说明时，必须另起一行，并用【资料说明】和【/资料说明】包住这段简短说明；不要把标记内的内容混入主回答。
 请使用简洁、友好、克制的中文回答。`;
 
@@ -82,6 +84,10 @@ type RetrievedChunk = {
   evidenceLabel: string;
   answerMode: string;
   answeringRules: string[];
+  caseId: string | null;
+  caseTitle?: string;
+  claimType: string;
+  finality: string;
   score: number;
 };
 
@@ -89,6 +95,24 @@ type ChatSource = {
   title: string;
   url: string;
   verifiedAt: string;
+  caseTitle?: string;
+  claimType?: string;
+  finality?: string;
+};
+
+type CaseRecord = {
+  id: string;
+  title: string;
+  aliases: string[];
+  finality: string;
+  culturalLens: string;
+};
+
+type SearchPlan = {
+  track: "case" | "general";
+  caseRecord?: CaseRecord;
+  asksForFinality: boolean;
+  retrieved: RetrievedChunk[];
 };
 
 type IndexedChunk = Omit<RetrievedChunk, "score"> & {
@@ -145,7 +169,44 @@ function scoreBm25(
   return score;
 }
 
-function searchKnowledge(question: string): RetrievedChunk[] {
+function toRetrievedChunk(document: (typeof knowledgeBase.documents)[number], chunk: (typeof knowledgeBase.documents)[number]["chunks"][number], score: number, caseRecord?: CaseRecord): RetrievedChunk {
+  const content = `${document.title}\n${chunk.title}\n${chunk.text}\n${JSON.stringify(chunk.facts)}`;
+  return {
+    chunkTitle: chunk.title,
+    content,
+    sourceTitle: document.title,
+    sourceUrl: document.source.url,
+    verifiedAt: document.source.verifiedAt,
+    evidenceLevel: document.evidenceLevel,
+    evidenceLabel: document.evidenceLabel,
+    answerMode: document.answerMode,
+    answeringRules: document.answeringRules,
+    caseId: document.caseId,
+    caseTitle: caseRecord?.title,
+    claimType: document.claimType,
+    finality: document.finality,
+    score,
+  };
+}
+
+function findCase(question: string): CaseRecord | undefined {
+  const normalized = question.toLowerCase();
+  return (knowledgeBase.cases as CaseRecord[]).find((caseRecord) =>
+    caseRecord.aliases.some((alias) => normalized.includes(alias.toLowerCase())),
+  );
+}
+
+function asksForFinality(question: string) {
+  return /最终|结论|定性|查清|结案|调查结果|监管认定/.test(question);
+}
+
+function searchCase(caseRecord: CaseRecord): RetrievedChunk[] {
+  return knowledgeBase.documents
+    .filter((document) => document.caseId === caseRecord.id && ["approved", "limited"].includes(document.status))
+    .flatMap((document) => document.chunks.map((chunk) => toRetrievedChunk(document, chunk, 1, caseRecord)));
+}
+
+function searchGeneralKnowledge(question: string): RetrievedChunk[] {
   const queryTerms = makeSearchTerms(question);
   if (queryTerms.length === 0) return [];
 
@@ -157,15 +218,7 @@ function searchKnowledge(question: string): RetrievedChunk[] {
         const evidenceContent = `${chunk.title}\n${chunk.text}\n${JSON.stringify(chunk.facts)}`;
 
         return {
-          chunkTitle: chunk.title,
-          content,
-          sourceTitle: document.title,
-          sourceUrl: document.source.url,
-          verifiedAt: document.source.verifiedAt,
-          evidenceLevel: document.evidenceLevel,
-          evidenceLabel: document.evidenceLabel,
-          answerMode: document.answerMode,
-          answeringRules: document.answeringRules,
+          ...toRetrievedChunk(document, chunk, 0),
           terms: makeSearchTerms(content),
           evidenceTerms: makeSearchTerms(evidenceContent),
         };
@@ -209,6 +262,20 @@ function searchKnowledge(question: string): RetrievedChunk[] {
     .slice(0, 3);
 }
 
+function searchKnowledge(question: string): SearchPlan {
+  const caseRecord = findCase(question);
+  if (caseRecord) {
+    return {
+      track: "case",
+      caseRecord,
+      asksForFinality: asksForFinality(question),
+      retrieved: searchCase(caseRecord),
+    };
+  }
+
+  return { track: "general", asksForFinality: asksForFinality(question), retrieved: searchGeneralKnowledge(question) };
+}
+
 function collectSources(retrieved: RetrievedChunk[]): ChatSource[] {
   const sources = new Map<string, ChatSource>();
   for (const item of retrieved) {
@@ -216,12 +283,14 @@ function collectSources(retrieved: RetrievedChunk[]): ChatSource[] {
       title: item.sourceTitle,
       url: item.sourceUrl,
       verifiedAt: item.verifiedAt,
+      ...(item.caseId ? { caseTitle: item.caseTitle, claimType: item.claimType, finality: item.finality } : {}),
     });
   }
   return [...sources.values()];
 }
 
-function buildSystemPrompt(retrieved: RetrievedChunk[]) {
+function buildSystemPrompt(plan: SearchPlan) {
+  const { retrieved } = plan;
   const evidence = retrieved.length
     ? retrieved
         .map(
@@ -230,7 +299,11 @@ function buildSystemPrompt(retrieved: RetrievedChunk[]) {
         .join("\n\n")
     : "本次检索没有命中任何已批准资料。";
 
-  return `${BASE_SYSTEM_PROMPT}\n\n【检索到的资料】\n${evidence}`;
+  const trackInstructions = plan.track === "case" && plan.caseRecord
+    ? `【案例档案】\n案例：${plan.caseRecord.title}\n证据阶段：${plan.caseRecord.finality}\n文化阅读：${plan.caseRecord.culturalLens}\n本题是否追问终局：${plan.asksForFinality ? "是" : "否"}\n回答顺序：先用本案例资料说明企业公开回应，再明确是否存在最终结论，最后以“可供观察/检验”而非“已经证明”的方式回答文化问题。不得引用其他案例或企业理念资料来裁定本案例事实。`
+    : "【一般资料问答】\n只能引用直接支持当前问题的资料；不要为了凑来源列出不相关资料。";
+
+  return `${BASE_SYSTEM_PROMPT}\n\n${trackInstructions}\n\n【检索到的资料】\n${evidence}`;
 }
 
 function streamEvent(value: unknown) {
@@ -324,8 +397,8 @@ async function handleChat(request: Request, env: Env) {
     return json({ error: "请先输入一个有效的问题。" }, 400);
   }
 
-  const retrieved = searchKnowledge(messages.at(-1)!.content);
-  const sources = collectSources(retrieved);
+  const searchPlan = searchKnowledge(messages.at(-1)!.content);
+  const sources = collectSources(searchPlan.retrieved);
 
   let upstream: Response;
   try {
@@ -337,7 +410,7 @@ async function handleChat(request: Request, env: Env) {
       },
       body: JSON.stringify({
         model: "deepseek-v4-flash",
-        messages: [{ role: "system", content: buildSystemPrompt(retrieved) }, ...messages],
+        messages: [{ role: "system", content: buildSystemPrompt(searchPlan) }, ...messages],
         thinking: { type: "disabled" },
         max_tokens: 700,
         stream: true,

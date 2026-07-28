@@ -20,6 +20,9 @@ type ChatSource = {
   title: string;
   url: string;
   verifiedAt: string;
+  caseTitle?: string;
+  claimType?: string;
+  finality?: string;
 };
 
 type ChatMessage = {
@@ -76,7 +79,7 @@ const lenses = [
   },
 ];
 
-const suggestedQuestions = ["胖东来周二是否闭店？", "新乡三胖在哪里？", "许昌有哪些门店？"];
+const suggestedQuestions = ["胖东来周二是否闭店？", "茶叶反馈后企业公开怎么说的？是最终结论吗？", "新乡三胖在哪里？"];
 
 function readSources(value: unknown): ChatSource[] {
   if (!Array.isArray(value)) return [];
@@ -87,7 +90,10 @@ function readSources(value: unknown): ChatSource[] {
       typeof item !== "object" ||
       typeof (item as ChatSource).title !== "string" ||
       typeof (item as ChatSource).url !== "string" ||
-      typeof (item as ChatSource).verifiedAt !== "string"
+      typeof (item as ChatSource).verifiedAt !== "string" ||
+      ("caseTitle" in item && typeof (item as ChatSource).caseTitle !== "string") ||
+      ("claimType" in item && typeof (item as ChatSource).claimType !== "string") ||
+      ("finality" in item && typeof (item as ChatSource).finality !== "string")
     ) {
       return [];
     }
@@ -121,7 +127,7 @@ function RagChat() {
     {
       id: "assistant-welcome",
       role: "assistant",
-      content: "我会先检索已审核的本地资料，再回答你的问题。当前资料主要覆盖门店地址、营业安排与周二闭店说明。",
+      content: "我会把具体事件的证据与文化理解分开回答：企业初步回应不等于最终结论，文化观点也不能裁定客诉真伪。",
     },
   ]);
   const [draft, setDraft] = useState("");
@@ -249,7 +255,7 @@ function RagChat() {
               <span className="message-label">资料助手</span>
               <div className="message-content">
                 <p>{messages[0].content}</p>
-                <p className="message-footnote">回答只使用已审核的本地资料，并会展示资料来源。</p>
+                <p className="message-footnote">回答只使用已审核资料：事件回答会标明企业回应与最终结论是否齐全。</p>
               </div>
             </article>
             <div className="chat-suggest" aria-label="推荐问题">
@@ -278,6 +284,11 @@ function RagChat() {
                       {message.sources.map((source) => (
                         <a href={source.url} target="_blank" rel="noreferrer" key={source.url}>
                           {source.title} · 核验于 {source.verifiedAt}
+                          {source.caseTitle ? (
+                            <span className="message-source-context">
+                              {source.caseTitle} · {source.claimType === "company_preliminary_response" ? "企业初步回应" : source.claimType} · {source.finality === "preliminary" ? "非最终结论" : source.finality === "no_regulatory_final" ? "未见监管终局" : source.finality}
+                            </span>
+                          ) : null}
                         </a>
                       ))}
                     </div>

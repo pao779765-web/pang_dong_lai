@@ -162,6 +162,49 @@ test("marks approved media interview evidence as an attributed claim", async () 
   }
 });
 
+test("keeps a limited event response inside its case and forbids finality language", async () => {
+  const originalFetch = globalThis.fetch;
+  let deepseekRequest;
+
+  globalThis.fetch = async (input, init) => {
+    if (String(input) === "https://api.deepseek.com/chat/completions") {
+      deepseekRequest = JSON.parse(init.body);
+      return new Response(
+        'data: {"choices":[{"delta":{"content":"企业初步回应"}}]}\n\ndata: [DONE]\n\n',
+        { headers: { "content-type": "text/event-stream" } },
+      );
+    }
+    return originalFetch(input, init);
+  };
+
+  try {
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ messages: [{ role: "user", content: "茶叶苍蝇反馈后企业公开怎么说的？是最终结论吗？" }] }),
+      },
+      { DEEPSEEK_API_KEY: "test-key" },
+    );
+
+    const body = await response.text();
+    const prompt = deepseekRequest.messages[0].content;
+    assert.match(prompt, /【案例档案】/);
+    assert.match(prompt, /顾客反馈茶叶问题后的企业公开初步说明/);
+    assert.match(prompt, /证据阶段：preliminary/);
+    assert.match(prompt, /本题是否追问终局：是/);
+    assert.match(prompt, /不得引用其他案例或企业理念资料来裁定本案例事实/);
+    assert.doesNotMatch(prompt, /人民日报于东来访谈/);
+    assert.doesNotMatch(prompt, /胖东来简介/);
+    assert.match(body, /顾客抖音反馈茶叶问题后的企业公开初步说明/);
+    assert.match(body, /"claimType":"company_preliminary_response"/);
+    assert.match(body, /"finality":"preliminary"/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test("keeps the DeepSeek key on the server", async () => {
   const response = await render("/api/chat", {
     method: "POST",

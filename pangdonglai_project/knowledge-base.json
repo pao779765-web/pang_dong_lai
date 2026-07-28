@@ -1,13 +1,32 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "collection": "pangdonglai-rag-local",
   "description": "经用户批准的本地 RAG 资料。含 L1/L2 硬事实与 limited 归因类事件回应。只保存自写摘要与来源链接，不保存新闻/视频全文。",
+  "cases": [
+    {
+      "id": "tea-fly-feedback-2026-01",
+      "title": "顾客反馈茶叶问题后的企业公开初步说明",
+      "aliases": ["茶叶", "苍蝇", "茶叶苍蝇", "茶叶反馈"],
+      "finality": "preliminary",
+      "culturalLens": "用户关心的是企业文化在质疑中如何接受检验：是否回应顾客、是否承认流程问题、是否先行排查，以及是否公开后续结果。"
+    },
+    {
+      "id": "egg-canthaxanthin-feedback-2026-04",
+      "title": "鲜鸡蛋角黄素网络争议中的企业公开回应",
+      "aliases": ["鲜鸡蛋", "角黄素", "鸡蛋争议"],
+      "finality": "no_regulatory_final",
+      "culturalLens": "用户可借此观察企业面对质量争议时的公开回应、送检与后续核验边界；企业自述不能替代监管终局。"
+    }
+  ],
   "documents": [
     {
       "id": "official-store-directory-2026-07-24",
       "title": "胖东来各门店信息",
       "type": "official_directory",
       "status": "approved",
+      "caseId": null,
+      "claimType": "official_directory",
+      "finality": "not_applicable",
       "evidenceLevel": "L1",
       "evidenceLabel": "可核验原始资料",
       "answerMode": "fact_with_source",
@@ -99,6 +118,9 @@
       "title": "胖东来简介",
       "type": "official_profile",
       "status": "approved",
+      "caseId": null,
+      "claimType": "official_profile",
+      "finality": "not_applicable",
       "evidenceLevel": "L1",
       "evidenceLabel": "可核验原始资料",
       "answerMode": "fact_with_source",
@@ -143,6 +165,9 @@
       "title": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
       "type": "media_interview",
       "status": "approved",
+      "caseId": null,
+      "claimType": "attributed_culture_statement",
+      "finality": "not_applicable",
       "evidenceLevel": "L2",
       "evidenceLabel": "权威记录与访谈",
       "answerMode": "attributed_claim",
@@ -203,6 +228,9 @@
       "title": "顾客抖音反馈茶叶问题后的企业公开初步说明",
       "type": "media_company_response",
       "status": "limited",
+      "caseId": "tea-fly-feedback-2026-01",
+      "claimType": "company_preliminary_response",
+      "finality": "preliminary",
       "evidenceLevel": "L2",
       "evidenceLabel": "权威媒体对企业公开说明的记录（非最终调查结论）",
       "answerMode": "attributed_claim",
@@ -251,6 +279,9 @@
       "title": "鲜鸡蛋角黄素网络争议中的企业公开回应与送检说明",
       "type": "media_company_response",
       "status": "limited",
+      "caseId": "egg-canthaxanthin-feedback-2026-04",
+      "claimType": "company_preliminary_response",
+      "finality": "no_regulatory_final",
       "evidenceLevel": "L2",
       "evidenceLabel": "权威媒体对企业公开说明与自述送检的记录（非监管终局）",
       "answerMode": "attributed_claim",
