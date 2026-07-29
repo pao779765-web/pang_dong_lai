@@ -66,6 +66,7 @@
 - [x] **Codex DEPLOY-01**：用户已授权并完成仅本人可访问的预览版本发布；未创建公开访问或自定义域名。
 - [x] **Codex ARCH-01**：将门店展示资料从 React 页面抽离为独立内容文件，并抽取前后端共用的聊天消息契约，降低内容更新与接口演进的耦合。
 - [x] **Codex DEPLOY-CN-01**：在保留现有本地与 Sites 预览流程的前提下，增加腾讯云 CloudBase 可用的 Node 容器运行入口、部署配置与回归验证，为后续国内正式上线做兼容适配。
+- [ ] **Codex DEPLOY-CN-02**：将已验证的容器版本部署到用户创建的 CloudBase 环境 `pangdonglai-site-d2eqrsj5b8ada0f`，先生成测试地址并完成首页、静态资源与健康检查验收；暂不绑定正式域名。
 - [ ] **Codex SEC-01**：`/api/chat` 的站点级 WAF 限流待落实。当前 Sites 发布面未提供该规则的配置入口，需改为 Worker 级限流或接入可管理的 Cloudflare 域名后配置 WAF。
 - [ ] Codex（可选）QA-02：微调 360 视口关键词坐标。
 - [ ] Codex（可选）QA-03：锚点后焦点落到栏目标题。
@@ -160,6 +161,7 @@
 | 2026-07-29 | Codex | 将 14 家门店资料抽为独立 JSON 内容文件，并抽出前后端共用的聊天请求与来源契约；补充结构回归测试 | site/data/store-directory.json, site/data/stores.ts, site/shared/chat.ts, site/app/page.tsx, site/worker/index.ts, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-07-29 | Grok | 修复 L3 图书 limited 未进一般轨检索：一般轨可搜 approved + 无 caseId 的 limited；停用「怎么/是否」等虚词作 distinctive 证据，避免书误召回门店/酱油问；补充 how-to 召回测试 | knowledge-base.json, site/worker/index.ts, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-07-29 | Codex | 保留现有本地与 Sites 预览，新增 CloudBase Node 容器运行入口、非 root Dockerfile、密钥排除规则、部署手册及首页/静态资源/API 回归测试 | site/scripts/cloudbase-server.mjs, site/Dockerfile, site/.dockerignore, site/package.json, site/tests/rendered-html.test.mjs, docs/DEPLOY_CN.md, docs/HANDOFF.md |
+| 2026-07-29 | Codex | 定位 CloudBase 首次构建失败为部署包缺少项目根知识库；将容器构建上下文提升到项目目录，并以最小允许清单同时纳入 site 与 knowledge-base.json | pangdonglai_project/Dockerfile, pangdonglai_project/.dockerignore, site/tests/rendered-html.test.mjs, docs/DEPLOY_CN.md, docs/HANDOFF.md |
 
 ---
 

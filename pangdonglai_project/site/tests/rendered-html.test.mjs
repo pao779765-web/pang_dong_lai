@@ -89,17 +89,19 @@ test("serves the built site through the CloudBase-compatible Node entrypoint", a
 
 test("packages a non-root CloudBase container without local secret files", async () => {
   const [dockerfile, dockerignore] = await Promise.all([
-    readFile(new URL("../Dockerfile", import.meta.url), "utf8"),
-    readFile(new URL("../.dockerignore", import.meta.url), "utf8"),
+    readFile(new URL("../../Dockerfile", import.meta.url), "utf8"),
+    readFile(new URL("../../.dockerignore", import.meta.url), "utf8"),
   ]);
 
   assert.match(dockerfile, /RUN npm run build/);
+  assert.match(dockerfile, /COPY knowledge-base\.json \/app\/knowledge-base\.json/);
   assert.match(dockerfile, /USER site/);
   assert.match(dockerfile, /EXPOSE 3000/);
   assert.doesNotMatch(dockerfile, /DEEPSEEK_API_KEY\s*=/);
-  assert.match(dockerignore, /^\.dev\.vars$/m);
-  assert.match(dockerignore, /^\.env\.\*$/m);
-  assert.doesNotMatch(dockerignore, /^\.openai$/m);
+  assert.match(dockerignore, /^site\/\.dev\.vars$/m);
+  assert.match(dockerignore, /^site\/\.env\.\*$/m);
+  assert.match(dockerignore, /^!knowledge-base\.json$/m);
+  assert.match(dockerignore, /^site\/\.openai$/m);
 });
 
 test("server-renders the Pangdonglai culture homepage", async () => {

@@ -29,7 +29,7 @@ npm run start:cloudbase
 
 ## CloudBase 云托管参数
 
-腾讯云控制台中选择 CloudBase 云托管，从 `pangdonglai_project/site` 目录的源代码构建：
+腾讯云控制台中选择 CloudBase 云托管，从 `pangdonglai_project` 目录的最小部署包构建。该构建范围同时包含 `site` 与其依赖的 `knowledge-base.json`：
 
 | 配置 | 值 |
 |---|---|
@@ -40,7 +40,7 @@ npm run start:cloudbase
 | 健康检查路径 | `/healthz` |
 | 运行时环境变量 | `DEEPSEEK_API_KEY` |
 
-容器默认以非 root 用户运行。`.dockerignore` 已排除本地密钥、环境文件、构建缓存、测试文件和 Git 元数据。
+容器默认以非 root 用户运行。项目根目录的 `.dockerignore` 采用最小允许清单，只纳入网站源码与知识库，并排除本地密钥、环境文件、构建缓存、测试文件、Sites 配置和 Git 元数据。
 
 第一次部署建议只使用 CloudBase 测试域名验收，不立即切换当前预览站。确认首页、静态资源和 AI 流式回答正常后，再绑定已经完成 ICP 备案的自定义域名。
 
