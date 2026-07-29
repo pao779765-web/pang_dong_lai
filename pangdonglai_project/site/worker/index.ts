@@ -49,9 +49,24 @@ function json(body: unknown, status = 200) {
   });
 }
 
-function readMessages(value: unknown): ChatMessage[] | null {
-  if (!Array.isArray(value) || value.length === 0 || value.length > 10) {
-    return null;
+/** Hard cap per request: abuse / cost / context guard. Client should send a sliding window under this. */
+const MAX_CHAT_MESSAGES = 16;
+const MAX_MESSAGE_CHARS = 1200;
+
+type ReadMessagesResult =
+  | { ok: true; messages: ChatMessage[] }
+  | { ok: false; error: string };
+
+function readMessages(value: unknown): ReadMessagesResult {
+  if (!Array.isArray(value) || value.length === 0) {
+    return { ok: false, error: "请先输入一个有效的问题。" };
+  }
+
+  if (value.length > MAX_CHAT_MESSAGES) {
+    return {
+      ok: false,
+      error: `单次请求最多 ${MAX_CHAT_MESSAGES} 条消息。请只保留最近几轮对话后重试，或刷新页面开始新对话。`,
+    };
   }
 
   const messages: ChatMessage[] = [];
@@ -62,18 +77,28 @@ function readMessages(value: unknown): ChatMessage[] | null {
       !["user", "assistant"].includes((item as { role?: unknown }).role as string) ||
       typeof (item as { content?: unknown }).content !== "string"
     ) {
-      return null;
+      return { ok: false, error: "消息格式不正确，请刷新页面后重试。" };
     }
 
     const role = (item as { role: ChatRole }).role;
     const content = (item as { content: string }).content.trim();
-    if (!content || content.length > 1200) {
-      return null;
+    if (!content) {
+      return { ok: false, error: "请先输入一个有效的问题。" };
+    }
+    if (content.length > MAX_MESSAGE_CHARS) {
+      return {
+        ok: false,
+        error: `单条消息请控制在 ${MAX_MESSAGE_CHARS} 字以内。`,
+      };
     }
     messages.push({ role, content });
   }
 
-  return messages;
+  if (messages.at(-1)?.role !== "user") {
+    return { ok: false, error: "请先输入一个有效的问题。" };
+  }
+
+  return { ok: true, messages };
 }
 type RetrievedChunk = {
   chunkTitle: string;
@@ -406,10 +431,11 @@ async function handleChat(request: Request, env: Env) {
     return json({ error: "请求格式不正确。" }, 400);
   }
 
-  const messages = readMessages(payload.messages);
-  if (!messages || messages.at(-1)?.role !== "user") {
-    return json({ error: "请先输入一个有效的问题。" }, 400);
+  const parsed = readMessages(payload.messages);
+  if (!parsed.ok) {
+    return json({ error: parsed.error }, 400);
   }
+  const messages = parsed.messages;
 
   const searchPlan = searchKnowledge(messages.at(-1)!.content);
   const sources = collectSources(searchPlan.retrieved);

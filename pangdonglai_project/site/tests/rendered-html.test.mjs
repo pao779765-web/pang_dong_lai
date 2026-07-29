@@ -134,6 +134,66 @@ test("does not attach store sources when only the generic brand name matches", a
   }
 });
 
+test("rejects chat payloads longer than the server message cap with a clear error", async () => {
+  const longHistory = Array.from({ length: 17 }, (_, index) => ({
+    role: index % 2 === 0 ? "user" : "assistant",
+    content: `消息${index + 1}`,
+  }));
+  // Ensure last is user
+  longHistory[longHistory.length - 1] = { role: "user", content: "最后一问" };
+
+  const response = await render(
+    "/api/chat",
+    {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ messages: longHistory }),
+    },
+    { DEEPSEEK_API_KEY: "test-key" },
+  );
+
+  assert.equal(response.status, 400);
+  const data = await response.json();
+  assert.match(String(data.error), /最多 16 条/);
+});
+
+test("accepts a 12-message sliding window that ends with a user turn", async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (input) => {
+    if (String(input) === "https://api.deepseek.com/chat/completions") {
+      return new Response(
+        'data: {"choices":[{"delta":{"content":"ok"}}]}\n\ndata: [DONE]\n\n',
+        { headers: { "content-type": "text/event-stream" } },
+      );
+    }
+    return originalFetch(input);
+  };
+
+  try {
+    const messages = [];
+    for (let i = 0; i < 5; i += 1) {
+      messages.push({ role: "user", content: `问${i + 1}` });
+      messages.push({ role: "assistant", content: `答${i + 1}` });
+    }
+    messages.push({ role: "user", content: "问6" });
+
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ messages }),
+      },
+      { DEEPSEEK_API_KEY: "test-key" },
+    );
+
+    assert.equal(response.status, 200);
+    assert.match(await response.text(), /"type":"done"/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test("marks approved media interview evidence as an attributed claim", async () => {
   const originalFetch = globalThis.fetch;
   let deepseekRequest;

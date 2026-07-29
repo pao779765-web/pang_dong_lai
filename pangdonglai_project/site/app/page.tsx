@@ -142,6 +142,16 @@ function readSources(value: unknown): ChatSource[] {
   });
 }
 
+/** UI may keep full history; only this many non-empty messages are sent to the API (under server cap of 16). */
+const CHAT_API_HISTORY_WINDOW = 12;
+
+function toApiMessages(history: ChatMessage[]) {
+  return history
+    .filter((message) => message.content.trim())
+    .map(({ role, content: messageContent }) => ({ role, content: messageContent }))
+    .slice(-CHAT_API_HISTORY_WINDOW);
+}
+
 function RagChat() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -171,13 +181,16 @@ function RagChat() {
     setIsSending(true);
 
     try {
+      const apiMessages = toApiMessages(nextMessages);
+      if (apiMessages.length === 0 || apiMessages.at(-1)?.role !== "user") {
+        throw new Error("请先输入一个有效的问题。");
+      }
+
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
-          messages: nextMessages
-            .filter((message) => message.content.trim())
-            .map(({ role, content: messageContent }) => ({ role, content: messageContent })),
+          messages: apiMessages,
         }),
       });
       if (!response.ok) {
