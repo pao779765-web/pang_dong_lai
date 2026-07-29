@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import test from "node:test";
+import { createCloudBaseServer } from "../scripts/cloudbase-server.mjs";
 
 async function render(path = "/", init = {}, env = {}) {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
@@ -42,6 +43,63 @@ test("keeps store content and chat contract outside their UI and Worker entrypoi
 
   const regions = JSON.parse(storeDirectory);
   assert.equal(regions.flatMap((region) => region.stores).length, 14);
+});
+
+test("serves the built site through the CloudBase-compatible Node entrypoint", async (context) => {
+  const server = await createCloudBaseServer({
+    env: { DEEPSEEK_API_KEY: undefined },
+  });
+  await new Promise((resolveListen, rejectListen) => {
+    server.once("error", rejectListen);
+    server.listen(0, "127.0.0.1", () => {
+      server.off("error", rejectListen);
+      resolveListen();
+    });
+  });
+  context.after(() => new Promise((resolveClose, rejectClose) => {
+    server.close((error) => (error ? rejectClose(error) : resolveClose()));
+  }));
+
+  const address = server.address();
+  assert.ok(address && typeof address === "object");
+  const origin = `http://127.0.0.1:${address.port}`;
+
+  const health = await fetch(`${origin}/healthz`);
+  assert.equal(health.status, 200);
+  assert.deepEqual(await health.json(), { status: "ok" });
+
+  const homepage = await fetch(origin);
+  assert.equal(homepage.status, 200);
+  const html = await homepage.text();
+  assert.match(html, /<html lang="zh-CN">/i);
+
+  const assetPath = html.match(/(?:href|src)="(\/assets\/[^"]+\.(?:css|js))"/)?.[1];
+  assert.ok(assetPath);
+  const asset = await fetch(`${origin}${assetPath}`);
+  assert.equal(asset.status, 200);
+  assert.match(asset.headers.get("cache-control") ?? "", /immutable/);
+
+  const chat = await fetch(`${origin}/api/chat`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ messages: [{ role: "user", content: "你好" }] }),
+  });
+  assert.equal(chat.status, 503);
+});
+
+test("packages a non-root CloudBase container without local secret files", async () => {
+  const [dockerfile, dockerignore] = await Promise.all([
+    readFile(new URL("../Dockerfile", import.meta.url), "utf8"),
+    readFile(new URL("../.dockerignore", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(dockerfile, /RUN npm run build/);
+  assert.match(dockerfile, /USER site/);
+  assert.match(dockerfile, /EXPOSE 3000/);
+  assert.doesNotMatch(dockerfile, /DEEPSEEK_API_KEY\s*=/);
+  assert.match(dockerignore, /^\.dev\.vars$/m);
+  assert.match(dockerignore, /^\.env\.\*$/m);
+  assert.doesNotMatch(dockerignore, /^\.openai$/m);
 });
 
 test("server-renders the Pangdonglai culture homepage", async () => {

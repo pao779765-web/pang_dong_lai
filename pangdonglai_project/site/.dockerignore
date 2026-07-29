@@ -1,0 +1,11 @@
+.git
+.dev.vars
+.env
+.env.*
+.next
+.vinext
+.wrangler
+dist
+node_modules
+tests
+*.log
