@@ -101,7 +101,7 @@ test("packages a non-root CloudBase container without local secret files", async
   assert.match(dockerignore, /^site\/\.dev\.vars$/m);
   assert.match(dockerignore, /^site\/\.env\.\*$/m);
   assert.match(dockerignore, /^!knowledge-base\.json$/m);
-  assert.match(dockerignore, /^site\/\.openai$/m);
+  assert.doesNotMatch(dockerignore, /^site\/\.openai$/m);
 });
 
 test("server-renders the Pangdonglai culture homepage", async () => {

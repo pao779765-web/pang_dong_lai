@@ -8,7 +8,6 @@ site/.dev.vars
 site/.dev.vars.*
 site/.env
 site/.env.*
-site/.openai
 site/.git
 site/.next
 site/.vinext

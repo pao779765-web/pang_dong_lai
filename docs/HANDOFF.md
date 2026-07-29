@@ -162,6 +162,7 @@
 | 2026-07-29 | Grok | 修复 L3 图书 limited 未进一般轨检索：一般轨可搜 approved + 无 caseId 的 limited；停用「怎么/是否」等虚词作 distinctive 证据，避免书误召回门店/酱油问；补充 how-to 召回测试 | knowledge-base.json, site/worker/index.ts, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-07-29 | Codex | 保留现有本地与 Sites 预览，新增 CloudBase Node 容器运行入口、非 root Dockerfile、密钥排除规则、部署手册及首页/静态资源/API 回归测试 | site/scripts/cloudbase-server.mjs, site/Dockerfile, site/.dockerignore, site/package.json, site/tests/rendered-html.test.mjs, docs/DEPLOY_CN.md, docs/HANDOFF.md |
 | 2026-07-29 | Codex | 定位 CloudBase 首次构建失败为部署包缺少项目根知识库；将容器构建上下文提升到项目目录，并以最小允许清单同时纳入 site 与 knowledge-base.json | pangdonglai_project/Dockerfile, pangdonglai_project/.dockerignore, site/tests/rendered-html.test.mjs, docs/DEPLOY_CN.md, docs/HANDOFF.md |
+| 2026-07-29 | Codex | 定位 CloudBase 二次构建失败为 Sites Vite 配置被 Docker 白名单误排除；仅放行非敏感 hosting.json，继续排除环境变量和密钥文件 | pangdonglai_project/.dockerignore, site/tests/rendered-html.test.mjs, docs/DEPLOY_CN.md, docs/HANDOFF.md |
 
 ---
 
