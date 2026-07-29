@@ -2,7 +2,7 @@
 
 > **规则：** 谁做完谁更新本文件。下一位只认本文件 + Git，不靠聊天记录猜。
 
-**更新时间：** 2026-07-28
+**更新时间：** 2026-07-29
 
 **当前执行者：** Codex 已完成 UI-CHAPTERS-02；用户可验收果冻入口视觉
 **分支：** `main`
@@ -64,6 +64,7 @@
 - [x] **Codex UI-CHAPTERS-02**：将双栏目缩小并分隔为独立果冻按钮，补充匹配的悬停浮起与按下回弹效果。
 - [x] **Codex STORE-03**：优化 01 门店目录“收起”体验：卡片逆序退场、区域平滑回收并把视线带回入口，避免内容突然消失造成页面跳动。
 - [x] **Codex DEPLOY-01**：用户已授权并完成仅本人可访问的预览版本发布；未创建公开访问或自定义域名。
+- [x] **Codex ARCH-01**：将门店展示资料从 React 页面抽离为独立内容文件，并抽取前后端共用的聊天消息契约，降低内容更新与接口演进的耦合。
 - [ ] **Codex SEC-01**：`/api/chat` 的站点级 WAF 限流待落实。当前 Sites 发布面未提供该规则的配置入口，需改为 Worker 级限流或接入可管理的 Cloudflare 域名后配置 WAF。
 - [ ] Codex（可选）QA-02：微调 360 视口关键词坐标。
 - [ ] Codex（可选）QA-03：锚点后焦点落到栏目标题。
@@ -155,6 +156,7 @@
 | 2026-07-28 | Codex | 将双栏目收束为独立果冻按钮，并加入悬停与按下回弹效果 | site/app/globals.css, docs/HANDOFF.md |
 | 2026-07-28 | Codex | 优化门店目录收起动效：卡片逆序退场、目录平滑收拢并在收起时回到 01 入口，消除内容被直接裁切后的页面跳动 | site/app/page.tsx, site/app/globals.css, docs/HANDOFF.md |
 | 2026-07-28 | Codex | 绑定 Sites 项目并发布仅本人可访问的预览版本；未公开发布，站点级 WAF 限流待平台入口或 Worker 级方案落实 | site/.openai/hosting.json, docs/HANDOFF.md |
+| 2026-07-29 | Codex | 将 14 家门店资料抽为独立 JSON 内容文件，并抽出前后端共用的聊天请求与来源契约；补充结构回归测试 | site/data/store-directory.json, site/data/stores.ts, site/shared/chat.ts, site/app/page.tsx, site/worker/index.ts, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 
 ---
 

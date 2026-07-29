@@ -2,6 +2,7 @@
 import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } from "vinext/server/image-optimization";
 import handler from "vinext/server/app-router-entry";
 import knowledgeBase from "../../knowledge-base.json";
+import { CHAT_ROLES, type ChatRequestMessage, type ChatRole, type ChatSource } from "../shared/chat";
 
 interface Env {
   ASSETS: Fetcher;
@@ -20,13 +21,6 @@ interface ExecutionContext {
   waitUntil(promise: Promise<unknown>): void;
   passThroughOnException(): void;
 }
-
-type ChatRole = "user" | "assistant";
-
-type ChatMessage = {
-  role: ChatRole;
-  content: string;
-};
 
 const BASE_SYSTEM_PROMPT = `你是“胖东来文化资料助手”，一个非官方的对话助手。
 你的自然语言回答由 DeepSeek 模型 deepseek-v4-flash 生成；本地 BM25 只负责从已审核资料库中检索证据。
@@ -54,7 +48,7 @@ const MAX_CHAT_MESSAGES = 16;
 const MAX_MESSAGE_CHARS = 1200;
 
 type ReadMessagesResult =
-  | { ok: true; messages: ChatMessage[] }
+  | { ok: true; messages: ChatRequestMessage[] }
   | { ok: false; error: string };
 
 function readMessages(value: unknown): ReadMessagesResult {
@@ -69,12 +63,12 @@ function readMessages(value: unknown): ReadMessagesResult {
     };
   }
 
-  const messages: ChatMessage[] = [];
+  const messages: ChatRequestMessage[] = [];
   for (const item of value) {
     if (
       !item ||
       typeof item !== "object" ||
-      !["user", "assistant"].includes((item as { role?: unknown }).role as string) ||
+      !CHAT_ROLES.includes((item as { role?: unknown }).role as ChatRole) ||
       typeof (item as { content?: unknown }).content !== "string"
     ) {
       return { ok: false, error: "消息格式不正确，请刷新页面后重试。" };
@@ -115,15 +109,6 @@ type RetrievedChunk = {
   claimType: string;
   finality: string;
   score: number;
-};
-
-type ChatSource = {
-  title: string;
-  url: string;
-  verifiedAt: string;
-  caseTitle?: string;
-  claimType?: string;
-  finality?: string;
 };
 
 type CaseRecord = {

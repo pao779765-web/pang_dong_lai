@@ -25,6 +25,25 @@ async function render(path = "/", init = {}, env = {}) {
   );
 }
 
+test("keeps store content and chat contract outside their UI and Worker entrypoints", async () => {
+  const [page, worker, storeDirectory, sharedChat] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../worker/index.ts", import.meta.url), "utf8"),
+    readFile(new URL("../data/store-directory.json", import.meta.url), "utf8"),
+    readFile(new URL("../shared/chat.ts", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(page, /@\/data\/stores/);
+  assert.match(page, /@\/shared\/chat/);
+  assert.doesNotMatch(page, /const storeRegions/);
+  assert.match(worker, /from "\.\.\/shared\/chat"/);
+  assert.doesNotMatch(worker, /type ChatSource =/);
+  assert.match(sharedChat, /export type ChatRequestMessage/);
+
+  const regions = JSON.parse(storeDirectory);
+  assert.equal(regions.flatMap((region) => region.stores).length, 14);
+});
+
 test("server-renders the Pangdonglai culture homepage", async () => {
   const response = await render();
   assert.equal(response.status, 200);

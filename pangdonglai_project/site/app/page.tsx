@@ -4,6 +4,8 @@
 
 import type { CSSProperties, FormEvent, MouseEvent } from "react";
 import { useEffect, useRef, useState } from "react";
+import { storeRegions } from "@/data/stores";
+import type { ChatRequestMessage, ChatSource } from "@/shared/chat";
 
 type Keyword = {
   label: string;
@@ -16,30 +18,10 @@ type Keyword = {
   tone: "paper" | "copper" | "smoke";
 };
 
-type ChatRole = "user" | "assistant";
-
-type ChatSource = {
-  title: string;
-  url: string;
-  verifiedAt: string;
-  caseTitle?: string;
-  claimType?: string;
-  finality?: string;
-};
-
-type ChatMessage = {
+type ChatMessage = ChatRequestMessage & {
   id: string;
-  role: ChatRole;
-  content: string;
   sources?: ChatSource[];
   isStreaming?: boolean;
-};
-
-type Store = {
-  name: string;
-  address: string;
-  tuesdayOpen: boolean;
-  photoUrl: string;
 };
 
 const keywords: Keyword[] = [
@@ -85,33 +67,6 @@ const lenses = [
     kicker: "核验",
     title: "证据来自哪里",
     copy: "让每个结论都能回到公开报道、实地资料与可追溯的来源，而不是停在传说里。",
-  },
-];
-
-const storeRegions: { city: string; stores: Store[] }[] = [
-  {
-    city: "许昌及禹州",
-    stores: [
-      { name: "许昌天使城", address: "许昌市魏都区八龙路与建安大道交汇处东北角", tuesdayOpen: true, photoUrl: "https://web.azpdl.cn/upload/PMIzb714NouyFRxUbRKcwLJDn6f_22222.jpg" },
-      { name: "许昌时代广场", address: "许昌市魏都区七一路277号", tuesdayOpen: false, photoUrl: "https://web.azpdl.cn/upload/Odb7bViVCoZEuVxJ8ABcbiwEnXg_xc_shidai.jpg" },
-      { name: "许昌生活广场", address: "许昌市魏都区南关大街42号", tuesdayOpen: false, photoUrl: "https://web.azpdl.cn/upload/BiTtbu5Ceojcugxx5gvccPYenIc_xc_shenghuo.jpg" },
-      { name: "许昌大众服饰", address: "河南省许昌市颍昌路838号", tuesdayOpen: true, photoUrl: "https://web.azpdl.cn/upload/HhLqbWvN7or9AhxQdS2c5kPBnLb_%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20250102195205.webp" },
-      { name: "许昌金三角店", address: "许昌市新许路与文兴路交叉口新合作广场", tuesdayOpen: true, photoUrl: "https://web.azpdl.cn/upload/JRAub2w0Jo8fyoxNf7gcuns3nSN_xc_jinsanjiao.jpg" },
-      { name: "许昌云鼎店", address: "许昌市东城区魏文路与学府街交叉口云鼎广场3号楼一层", tuesdayOpen: false, photoUrl: "https://web.azpdl.cn/upload/XKp8b0LTloG8CGx8G5kcFIUvnTb_xc_yunding.jpg" },
-      { name: "许昌北海店", address: "许昌市建安区镜水路36号", tuesdayOpen: true, photoUrl: "https://web.azpdl.cn/upload/ZFNDbu6AHogLo9xsCPIcNEqKn4b_xc_beihai.jpg" },
-      { name: "许昌金汇店", address: "许昌市魏都区八一路与北大街交汇处东北角", tuesdayOpen: true, photoUrl: "https://web.azpdl.cn/upload/MDvlbGhI3olHtFxWSaXcluAInUh_DSC01163.webp" },
-      { name: "许昌劳动店", address: "许昌市魏都区劳动南路与西湖北街交叉口东南50米", tuesdayOpen: false, photoUrl: "https://web.azpdl.cn/upload/SvsebfBHVoktLkxzTIHcXDFxnfc_xc_laodong.jpg" },
-      { name: "许昌人民店", address: "许昌市魏都区劳动路与人民路交叉口恒达魏源广场5号楼负一层", tuesdayOpen: false, photoUrl: "https://web.azpdl.cn/upload/KyrVbjYrQorU9SxrZbxciHP1nVb_xc_renmin.jpg" },
-      { name: "禹州店", address: "禹州市颍河大街568号（老体育公园负一层）", tuesdayOpen: true, photoUrl: "https://web.azpdl.cn/upload/PMdmb6Mdyo9PL1xzg0kcmiQxnHb_%E7%A6%B9%E5%B7%9E%E5%BA%97.webp" },
-    ],
-  },
-  {
-    city: "新乡",
-    stores: [
-      { name: "新乡大胖", address: "新乡市红旗区人民中路199号", tuesdayOpen: false, photoUrl: "https://web.azpdl.cn/upload/Q8OcbzJXhoc0nnxyNQ2cbeVvnRf_xx_dapang.jpg" },
-      { name: "新乡二胖", address: "新乡市卫滨区健康路31号", tuesdayOpen: false, photoUrl: "https://web.azpdl.cn/upload/Ol65bCdoLozJxRxmJlZc65X1ngc_%E5%B0%8F%E8%83%96.webp" },
-      { name: "新乡三胖", address: "河南省新乡市红旗区牧野路（中）199号", tuesdayOpen: true, photoUrl: "https://web.azpdl.cn/upload/sanpang.jpg" },
-    ],
   },
 ];
 
