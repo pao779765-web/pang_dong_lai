@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-07-29
 
-**当前执行者：** Codex 已完成 UI-CHAPTERS-02；用户可验收果冻入口视觉
+**当前执行者：** Grok 已修「怎么学胖东来」书资料未召回与误召回；用户可重启 dev 验收对话
 **分支：** `main`
 
 ---
@@ -157,6 +157,7 @@
 | 2026-07-28 | Codex | 优化门店目录收起动效：卡片逆序退场、目录平滑收拢并在收起时回到 01 入口，消除内容被直接裁切后的页面跳动 | site/app/page.tsx, site/app/globals.css, docs/HANDOFF.md |
 | 2026-07-28 | Codex | 绑定 Sites 项目并发布仅本人可访问的预览版本；未公开发布，站点级 WAF 限流待平台入口或 Worker 级方案落实 | site/.openai/hosting.json, docs/HANDOFF.md |
 | 2026-07-29 | Codex | 将 14 家门店资料抽为独立 JSON 内容文件，并抽出前后端共用的聊天请求与来源契约；补充结构回归测试 | site/data/store-directory.json, site/data/stores.ts, site/shared/chat.ts, site/app/page.tsx, site/worker/index.ts, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
+| 2026-07-29 | Grok | 修复 L3 图书 limited 未进一般轨检索：一般轨可搜 approved + 无 caseId 的 limited；停用「怎么/是否」等虚词作 distinctive 证据，避免书误召回门店/酱油问；补充 how-to 召回测试 | knowledge-base.json, site/worker/index.ts, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 
 ---
 

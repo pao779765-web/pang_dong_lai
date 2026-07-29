@@ -151,6 +151,60 @@ function makeSearchTerms(value: string): string[] {
 
 const GENERIC_BRAND_TERMS = new Set(makeSearchTerms("胖东来"));
 
+/**
+ * Bigrams that appear in many Chinese questions but are not topical evidence.
+ * Without this, phrases like「怎么样」「是否闭店」false-match book text that happens
+ * to contain「怎么学」「是否学不来」as the sole source of those bigrams.
+ */
+const NON_DISTINCTIVE_TERMS = new Set([
+  ...GENERIC_BRAND_TERMS,
+  ...makeSearchTerms(
+    [
+      "怎么",
+      "怎样",
+      "如何",
+      "是否",
+      "什么",
+      "为何",
+      "为什么",
+      "可以",
+      "不能",
+      "不是",
+      "就是",
+      "还是",
+      "或者",
+      "以及",
+      "如果",
+      "因为",
+      "所以",
+      "这个",
+      "那个",
+      "这些",
+      "那些",
+      "我们",
+      "你们",
+      "他们",
+      "对于",
+      "关于",
+      "进行",
+      "通过",
+      "一个",
+      "没有",
+      "有没有",
+      "怎么样",
+      "什么样",
+      "够吗",
+      "吗",
+      "呢",
+      "吧",
+    ].join(""),
+  ),
+]);
+
+function isDistinctiveQueryTerm(term: string) {
+  return !NON_DISTINCTIVE_TERMS.has(term);
+}
+
 function scoreBm25(
   queryTerms: string[],
   documentTerms: string[],
@@ -217,12 +271,19 @@ function searchCase(caseRecord: CaseRecord): RetrievedChunk[] {
     .flatMap((document) => document.chunks.map((chunk) => toRetrievedChunk(document, chunk, 1, caseRecord)));
 }
 
+/** Approved facts + limited non-case materials (e.g. L3 book). Case-bound limited stays on case track only. */
+function isSearchableInGeneralTrack(document: (typeof knowledgeBase.documents)[number]) {
+  if (document.status === "approved") return true;
+  if (document.status === "limited" && !document.caseId) return true;
+  return false;
+}
+
 function searchGeneralKnowledge(question: string): RetrievedChunk[] {
   const queryTerms = makeSearchTerms(question);
   if (queryTerms.length === 0) return [];
 
   const indexedChunks: IndexedChunk[] = knowledgeBase.documents
-    .filter((document) => document.status === "approved")
+    .filter(isSearchableInGeneralTrack)
     .flatMap((document) =>
       document.chunks.map((chunk) => {
         const content = `${document.title}\n${chunk.title}\n${chunk.text}`;
@@ -258,7 +319,7 @@ function searchGeneralKnowledge(question: string): RetrievedChunk[] {
     .map(({ terms, evidenceTerms, ...item }) => {
       const hasDistinctiveEvidence = queryTerms.some(
         (term) =>
-          !GENERIC_BRAND_TERMS.has(term) &&
+          isDistinctiveQueryTerm(term) &&
           evidenceTerms.includes(term) &&
           sourceFrequencies.get(term)?.size === 1,
       );
@@ -291,9 +352,10 @@ function searchKnowledge(question: string): SearchPlan {
 function collectSources(retrieved: RetrievedChunk[]): ChatSource[] {
   const sources = new Map<string, ChatSource>();
   for (const item of retrieved) {
-    sources.set(item.sourceUrl, {
+    const key = item.sourceUrl || item.sourceTitle;
+    sources.set(key, {
       title: item.sourceTitle,
-      url: item.sourceUrl,
+      url: item.sourceUrl || "",
       verifiedAt: item.verifiedAt,
       ...(item.caseId ? { caseTitle: item.caseTitle, claimType: item.claimType, finality: item.finality } : {}),
     });
@@ -303,6 +365,7 @@ function collectSources(retrieved: RetrievedChunk[]): ChatSource[] {
 
 function describeSourceForReader(item: RetrievedChunk) {
   if (item.caseId) return "媒体记录的企业当时公开回应；不是后续调查结论";
+  if (item.evidenceLevel === "L3") return "第三方图书/研究的观点摘要，不是企业官方制度原文";
   if (item.answerMode === "attributed_claim") return "公开访谈中的受访者表述";
   return "公开页面列出的信息";
 }
@@ -321,7 +384,7 @@ function buildSystemPrompt(plan: SearchPlan) {
           (item, index) => `【参考 ${index + 1}】\n标题：${item.chunkTitle}\n来源：${item.sourceTitle}\n时间：${item.verifiedAt}\n这份资料是什么：${describeSourceForReader(item)}\n内容：${item.content}`,
         )
         .join("\n\n")
-    : "本次检索没有命中任何已批准资料。";
+    : "本次检索没有命中任何已审核资料（含 approved 与 limited 非事件资料）。";
 
   const trackInstructions = plan.track === "case" && plan.caseRecord
     ? `【这次问题的回答边界】\n事件：${plan.caseRecord.title}\n需要先说明：${describeCaseStage(plan.caseRecord)}\n它值得怎样理解：${plan.caseRecord.culturalLens}\n用户是否在问后续结论：${plan.asksForFinality ? "是" : "否"}\n回答顺序：先自然地回答企业当时公开怎么说，再用一句自然语言说明有没有后续结论，最后把文化理解写成“值得观察的问题”，不要裁定客诉真伪。不得引用其他案例或企业理念资料来裁定本案例事实。`

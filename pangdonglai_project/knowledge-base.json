@@ -342,10 +342,10 @@
       "source": {
         "publisher": "王慧中 著；公开书目多见科学出版社/龙门书局，ISBN 9787508843438，约 2014 年（以读者持有本版权页为准）",
         "sourceType": "book",
-        "url": null,
+        "url": "https://book.douban.com/subject/26269190/",
         "publishedAt": "2014",
         "verifiedAt": "2026-07-28",
-        "notes": "用户持有扫描 PDF 于本机微信目录；本库不收录全书 OCR 全文，仅存自写摘要。"
+        "notes": "用户持有扫描 PDF 于本机；本库不收录全书 OCR 全文，仅存自写摘要。url 为公开书目页，非全文。"
       },
       "scope": [
         "第三方视角下如何讨论学习胖东来",

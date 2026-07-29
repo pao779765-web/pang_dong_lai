@@ -145,9 +145,47 @@ test("does not attach store sources when only the generic brand name matches", a
     );
 
     const body = await response.text();
-    assert.match(deepseekRequest.messages[0].content, /本次检索没有命中任何已批准资料/);
+    assert.match(deepseekRequest.messages[0].content, /本次检索没有命中任何已审核资料/);
     assert.doesNotMatch(body, /"type":"sources"/);
     assert.match(body, /"type":"done"/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("retrieves limited L3 book chunks for how-to-learn questions", async () => {
+  const originalFetch = globalThis.fetch;
+  let deepseekRequest;
+
+  globalThis.fetch = async (input, init) => {
+    if (String(input) === "https://api.deepseek.com/chat/completions") {
+      deepseekRequest = JSON.parse(init.body);
+      return new Response(
+        'data: {"choices":[{"delta":{"content":"据书中讨论"}}]}\n\ndata: [DONE]\n\n',
+        { headers: { "content-type": "text/event-stream" } },
+      );
+    }
+    return originalFetch(input, init);
+  };
+
+  try {
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          messages: [{ role: "user", content: "怎么学胖东来？只学高福利和服务话术够吗？" }],
+        }),
+      },
+      { DEEPSEEK_API_KEY: "test-key" },
+    );
+
+    assert.equal(response.status, 200);
+    const prompt = deepseekRequest.messages[0].content;
+    assert.match(prompt, /胖东来，你要怎么学/);
+    assert.match(prompt, /高福利|服务话术|表面/);
+    assert.doesNotMatch(prompt, /本次检索没有命中任何已审核资料/);
   } finally {
     globalThis.fetch = originalFetch;
   }
