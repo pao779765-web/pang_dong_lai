@@ -28,10 +28,13 @@
         "富妮来",
         "内衣掉色",
         "红内裤事件",
-        "掉色过敏"
+        "掉色过敏",
+        "红内裤舆论",
+        "要理性",
+        "维权依法"
       ],
       "finality": "civil_judgment_public",
-      "culturalLens": "可观察客诉是否按流程处理、网络表达与核实义务、企业调查报告与民事判决分别说明什么；文化讨论不能替代医学因果或监管食安终局认定。"
+      "culturalLens": "可观察客诉是否按流程处理、网络表达与核实义务、企业调查报告与民事判决分别说明什么；亦可观察媒体如何评论判决与舆论边界。文化与舆情讨论不能替代案件事实、医学因果或监管食安终局认定。"
     }
   ],
   "documents": [
@@ -569,6 +572,158 @@
             "claimType": "判决说理摘要",
             "period": "2025-05",
             "topics": ["红内裤", "名誉权", "自媒体", "核实义务", "判决理由"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "thepaper-red-underwear-judgment-commentary-2025-05",
+      "title": "澎湃马上评：胖东来「红内裤案」宣判，消费维权也须依法",
+      "type": "media_commentary",
+      "status": "limited",
+      "caseId": "red-underwear-color-libel-2025",
+      "claimType": "media_opinion",
+      "finality": "not_applicable",
+      "evidenceLevel": "L3",
+      "evidenceLabel": "媒体署名评论立场摘要（非判决原文、非案件事实主依据）",
+      "answerMode": "attributed_claim",
+      "approval": {
+        "approvedBy": "user",
+        "approvedAt": "2026-07-30",
+        "basis": "用户批准舆论入库表：澎湃等署名评论 L3 limited，只答「媒体如何评判决」。"
+      },
+      "source": {
+        "publisher": "澎湃新闻·马上评（特约评论员 熊志）",
+        "sourceType": "media",
+        "url": "https://www.thepaper.cn/newsDetail_forward_30905664",
+        "publishedAt": "2025-05-30",
+        "verifiedAt": "2026-07-30"
+      },
+      "scope": [
+        "判决后媒体评论的价值取向：维权依法、言论边界、企业与消费者权益并重"
+      ],
+      "answeringRules": [
+        "必须写「据澎湃新闻马上评评论认为/评论文章称」；只能用于回答「媒体如何评价判决/舆论边界」，不得用本文替代法院查明事实或企业报告。",
+        "不得把评论立场写成「社会共识」或「法律唯一正确解读」。",
+        "案件事实以案例轨 L1/L2 资料为准。"
+      ],
+      "chunks": [
+        {
+          "id": "thepaper-red-underwear-rights-boundary",
+          "title": "评论立场：维权依法与网络言论边界",
+          "text": "据澎湃新闻 2025 年 5 月 30 日「马上评」署名评论（特约评论员熊志）：在介绍红内裤案一审判决后，文章认为判决在消费者维权与企业名誉保护之间划出法律红线；强调消费者权利与企业权利均受法律保护；自媒体尤其是有影响力的博主公开言论应实事求是、谨言慎行；网络言论自由并非没有边界。该内容仅为媒体评论立场，不是判决书原文，也不能单独证明案件全部事实细节。",
+          "facts": {
+            "claimType": "媒体评论",
+            "topics": ["红内裤", "判决评论", "维权依法", "言论边界", "名誉权", "舆论"]
+          }
+        },
+        {
+          "id": "thepaper-red-underwear-enterprise-and-consumer",
+          "title": "评论立场：企业依法维权与理性维权",
+          "text": "据同一篇澎湃马上评：评论认为胖东来在事件中积极沟通送检体现对消费者负责，同时依法维权可为其他商家提供范例；并主张企业面对不实指控可果断依法维权，消费者通过互联网维权发声也应以事实为依据、理性维权，避免情绪化表达，以营造公平健康的网络与营商环境。回答「网上怎么评」时可引用，但须标明是评论观点，不是案件事实结论。",
+          "facts": {
+            "claimType": "媒体评论",
+            "topics": ["红内裤", "依法维权", "理性维权", "舆论导向", "公关"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "civiw-red-underwear-sentiment-monitor-2025-05",
+      "title": "商业舆情监测摘要：红内裤事件信息量与情感占比（某机构）",
+      "type": "sentiment_monitor_secondary",
+      "status": "limited",
+      "caseId": "red-underwear-color-libel-2025",
+      "claimType": "third_party_sentiment_stats",
+      "finality": "not_applicable",
+      "evidenceLevel": "L4",
+      "evidenceLabel": "第三方商业舆情监测数字（方法论不透明，仅作参考）",
+      "answerMode": "attributed_claim",
+      "approval": {
+        "approvedBy": "user",
+        "approvedAt": "2026-07-30",
+        "basis": "用户批准舆论表：识微等情感占比 L4 慎用，最多「某机构监测称」。"
+      },
+      "source": {
+        "publisher": "识微科技·识微商情等公开舆情文章",
+        "sourceType": "commercial_monitor",
+        "url": "https://m.civiw.com/business/20250530163337915",
+        "publishedAt": "2025-05-30",
+        "verifiedAt": "2026-07-30",
+        "notes": "商业监测产品公开页；样本、算法与情感标注规则未充分公开，禁止写成「全国民意调查」或「法院认定」。"
+      },
+      "scope": [
+        "某机构给出的信息量、渠道与情感占比数字（有时段）"
+      ],
+      "answeringRules": [
+        "必须写「据某商业舆情监测机构公开文章称」或「据识微商情等监测材料称」；数字仅对应该文所述监测时段。",
+        "禁止把负面/正面占比写成「全国舆论一边倒」；负面口径可能混合批评企业、批评博主、批评网暴等。",
+        "不得用本资料证明案件事实真伪或判决对错。",
+        "网友具体评论抽样未入库；最多概括「存在多类声音」。"
+      ],
+      "chunks": [
+        {
+          "id": "civiw-red-underwear-volume-and-sentiment",
+          "title": "监测所称信息量与情感占比（慎用）",
+          "text": "据识微商情等商业舆情监测公开文章（监测区间约 2025 年 2 月 28 日至 5 月 30 日 15 时）：有关「胖东来红内裤事件」的舆情信息约 15.7 万条量级；文章称舆情在 5 月 30 日前后达高峰，3 月 15 日、4 月 6 日有次高峰；传播上新闻 App 约占一半，短视频、社交网络次之。情感倾向上，该文称负面约 49.5%、中性约 38.2%、正面约 12.3%。以上仅为该机构公开材料中的统计表述，方法论不透明，不能当作科学民调或社会共识，也不得用来替代 L1/L2 案件事实资料。",
+          "facts": {
+            "claimType": "第三方监测数字",
+            "period": "2025-02-28至2025-05-30",
+            "topics": ["红内裤", "舆论", "舆情", "情感占比", "负面", "监测"]
+          }
+        },
+        {
+          "id": "civiw-red-underwear-multi-voice-boundary",
+          "title": "使用边界：多声部与禁止过度解读",
+          "text": "据同一监测取向与本库入库边界：红内裤相关网络讨论存在多类声音（质疑企业、支持依法维权、讨论维权边界、反对网暴等），本库不收录网友评论抽样原文。若用户问「网上怎么看」，可说明「公开讨论声音并不单一」，并引用判决后媒体评论（如澎湃马上评）与案件事实材料分轨回答；不得把监测负面占比直接等同于「多数人反对胖东来」或「多数人支持博主」。",
+          "facts": {
+            "claimType": "使用边界",
+            "topics": ["红内裤", "舆论", "多声部", "边界", "网友"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "media-yudonglai-rationality-red-underwear-2025-02",
+      "title": "媒体转述：于东来就红内裤追责谈「要有理性」",
+      "type": "media_attributed_person_statement",
+      "status": "approved",
+      "caseId": "red-underwear-color-libel-2025",
+      "claimType": "attributed_person_statement",
+      "finality": "not_applicable",
+      "evidenceLevel": "L2",
+      "evidenceLabel": "权威/主流媒体对创始人公开表述的转述（非判决）",
+      "answerMode": "attributed_claim",
+      "approval": {
+        "approvedBy": "user",
+        "approvedAt": "2026-07-30",
+        "basis": "用户批准舆论表：于东来「要理性」可挂 L2 企业/人物表述，须归因，非判决。"
+      },
+      "source": {
+        "publisher": "每日经济新闻等转述大象新闻报道",
+        "sourceType": "media",
+        "url": "https://www.nbd.com.cn/articles/2025-02-28/3771691.html",
+        "publishedAt": "2025-02-28",
+        "verifiedAt": "2026-07-30",
+        "notes": "报道称于东来回应追责红内裤事件的公开说法。属人物公开表述的媒体记录，不是法院判决理由全文。"
+      },
+      "scope": [
+        "于东来就追责表态的公开说法（媒体转述）"
+      ],
+      "answeringRules": [
+        "必须写「据媒体报道，于东来表示/回应称」；不得写成判决主文或监管结论。",
+        "该表述是价值取向提醒，不能单独证明商品质量或侵权是否成立。",
+        "案件事实与判决结果以 L1 企业材料与 L2 判决资料为准。"
+      ],
+      "chunks": [
+        {
+          "id": "yudonglai-red-underwear-rationality",
+          "title": "于东来：要有理性，不能随便放大情绪（媒体转述）",
+          "text": "据每日经济新闻等 2025 年 2 月 28 日报道（转述大象新闻）：胖东来创始人于东来就红内裤事件追责回应称，是要跟人们提醒，做事最起码要有理性，不能随便去放大自己的情绪；该承担的要勇敢承担，彼此友善、彼此尊重，为了社会往更加美好的方向发展。该内容仅为媒体记录的人物公开表述，用于说明企业方在舆论中的价值话语，不能替代调查报告或法院判决中的事实与法律认定。",
+          "facts": {
+            "claimType": "人物公开表述（媒体转述）",
+            "period": "2025-02-28",
+            "topics": ["红内裤", "于东来", "理性", "情绪", "追责", "舆论"]
           }
         }
       ]

@@ -92,9 +92,21 @@ claimType：social_party_claim
 
 ---
 
+## 舆论材料（用户 2026-07-30 批准截图表）
+
+| 类型 | L | status | 入库 |
+|------|---|--------|------|
+| 澎湃马上评署名评论立场摘要 | L3 | limited | **已入库** `thepaper-red-underwear-judgment-commentary-2025-05` |
+| 识微等情感占比数字 | L4 | limited（慎用） | **已入库** `civiw-red-underwear-sentiment-monitor-2025-05` |
+| 网友评论抽样 | L4 | — | **不进主库**（仅允许概括「存在多类声音」，见监测条边界 chunk） |
+| 于东来「要理性」 | L2 | approved | **已入库** `media-yudonglai-rationality-red-underwear-2025-02` |
+
+---
+
 ## 变更记录
 
 | 时间 | 内容 |
 |------|------|
 | 2026-07-30 | 用户定级：企业报告与早期回应 L1+approved；社交原片可审后入库。 |
 | 2026-07-30 | 已入库 V6-1～V6-4；V6-5/V6-6 待审。 |
+| 2026-07-30 | 用户批准舆论定级表：入库澎湃 L3、识微 L4、于东来 L2；网友抽样不进主库。 |
