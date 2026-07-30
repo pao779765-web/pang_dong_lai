@@ -428,8 +428,16 @@ function collectSources(retrieved: RetrievedChunk[]): ChatSource[] {
 }
 
 function describeSourceForReader(item: RetrievedChunk) {
-  if (item.caseId) return "媒体记录的企业当时公开回应；不是后续调查结论";
+  if (item.caseId) {
+    if (item.evidenceLevel === "L1") return "企业公开声明或调查报告要点摘要；须按事件阶段理解，不等于监管或医学终局";
+    if (item.claimType === "court_civil_judgment_report" || item.finality === "civil_judgment_public") {
+      return "法院民事判决的公开报道摘要；名誉权结果不等于食安监管终局";
+    }
+    if (item.evidenceLevel === "L4") return "社交平台当事人或自媒体内容摘要；仅作争议表述线索，不能单独证明质量或侵权";
+    return "媒体记录的企业当时公开回应或其他事件资料；请区分阶段";
+  }
   if (item.evidenceLevel === "L3") return "第三方图书/研究的观点摘要，不是企业官方制度原文";
+  if (item.evidenceLevel === "L4") return "社交平台内容摘要；须严格归因，不能单独作硬事实终局";
   if (item.answerMode === "attributed_claim") return "公开访谈中的受访者表述";
   return "公开页面列出的信息";
 }
@@ -437,6 +445,9 @@ function describeSourceForReader(item: RetrievedChunk) {
 function describeCaseStage(caseRecord: CaseRecord) {
   if (caseRecord.finality === "preliminary") return "目前能看到的是企业当时的公开回应，后续调查结论尚未见到。";
   if (caseRecord.finality === "no_regulatory_final") return "目前能看到的是企业公开回应，尚未见到相关部门的最终公开结论。";
+  if (caseRecord.finality === "civil_judgment_public") {
+    return "本案已有公开的民事一审判决报道；企业调查报告、起诉主张与法院判决是不同阶段，不能混为一谈，也不等于监管食安或医学因果终局。";
+  }
   return "请结合资料所列时间与来源理解这件事。";
 }
 

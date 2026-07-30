@@ -282,7 +282,7 @@ function RagChat() {
                           {source.title} · 更新于 {source.verifiedAt}
                           {source.caseTitle ? (
                             <span className="message-source-context">
-                              {source.caseTitle} · {source.claimType === "company_preliminary_response" ? "企业初步回应" : source.claimType} · {source.finality === "preliminary" ? "非最终结论" : source.finality === "no_regulatory_final" ? "未见监管终局" : source.finality}
+                              {source.caseTitle} · {source.claimType === "company_preliminary_response" ? "企业初步回应" : source.claimType === "company_investigation_report" ? "企业调查报告" : source.claimType === "company_litigation_notice" ? "企业诉讼公示" : source.claimType === "court_civil_judgment_report" ? "民事判决报道" : source.claimType === "social_party_claim" ? "社交平台表述" : source.claimType} · {source.finality === "preliminary" ? "非最终结论" : source.finality === "no_regulatory_final" ? "未见监管终局" : source.finality === "civil_judgment_public" ? "民事判决已公开" : source.finality === "company_report_stage" ? "企业报告阶段" : source.finality === "litigation_stage" ? "诉讼阶段" : source.finality}
                             </span>
                           ) : null}
                         </a>

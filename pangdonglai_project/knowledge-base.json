@@ -16,6 +16,22 @@
       "aliases": ["鲜鸡蛋", "角黄素", "鸡蛋争议"],
       "finality": "no_regulatory_final",
       "culturalLens": "用户可借此观察企业面对质量争议时的公开回应、送检与后续核验边界；企业自述不能替代监管终局。"
+    },
+    {
+      "id": "red-underwear-color-libel-2025",
+      "title": "红色内裤掉色过敏争议与名誉权诉讼",
+      "aliases": [
+        "红内裤",
+        "红色内裤",
+        "内裤掉色",
+        "两个小段",
+        "富妮来",
+        "内衣掉色",
+        "红内裤事件",
+        "掉色过敏"
+      ],
+      "finality": "civil_judgment_public",
+      "culturalLens": "可观察客诉是否按流程处理、网络表达与核实义务、企业调查报告与民事判决分别说明什么；文化讨论不能替代医学因果或监管食安终局认定。"
     }
   ],
   "documents": [
@@ -342,6 +358,217 @@
           "facts": {
             "claimType": "使用边界",
             "topics": ["影城", "退票", "时效", "公示", "边界"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "pdl-red-underwear-early-response-2025-02",
+      "title": "胖东来就红色内裤争议的早期公开回应（下架、调查组与致歉）",
+      "type": "company_public_statement",
+      "status": "approved",
+      "caseId": "red-underwear-color-libel-2025",
+      "claimType": "company_preliminary_response",
+      "finality": "preliminary",
+      "evidenceLevel": "L1",
+      "evidenceLabel": "企业公开声明要点（官方渠道发布；本库存自写摘要）",
+      "answerMode": "fact_with_source",
+      "approval": {
+        "approvedBy": "user",
+        "approvedAt": "2026-07-30",
+        "basis": "docs/SOURCE_AUDIT_06.md；用户要求企业报告与早期回应 L1+approved、不加 limited。"
+      },
+      "source": {
+        "publisher": "许昌市胖东来商贸集团有限公司（官方抖音等渠道公开发布；要点经权威媒体转载交叉）",
+        "sourceType": "official",
+        "url": "https://news.cctv.com/2025/04/06/ARTIL6LyM2RCmvIBetSuMnLg250406.shtml",
+        "publishedAt": "2025-02-04",
+        "verifiedAt": "2026-07-30",
+        "notes": "早期回应：约 2025-02-04 情况说明（调查组、下架），2025-02-06 致歉。原帖在企业官方抖音；本库主链用央视网转载页作可核验入口，摘要只写企业公开动作，不存视频全文。若补到原帖永久 ID 可替换 url。"
+      },
+      "scope": [
+        "企业就红色内裤争议的早期公开动作：调查组、下架、致歉",
+        "事件轨时间线前半段"
+      ],
+      "answeringRules": [
+        "必须写明「据胖东来企业公开说明/官方回应」，并区分 2 月 4 日与 2 月 6 日阶段。",
+        "早期回应不等于检测结论，也不等于法院判决；不得写成「已最终认定过敏原因」或监管食安终局。",
+        "禁止用本资料单独裁定博主视频内容真伪。"
+      ],
+      "chunks": [
+        {
+          "id": "red-underwear-early-takedown-and-team",
+          "title": "2 月 4 日前后：调查组与下架（企业公开）",
+          "text": "据胖东来企业在 2025 年 2 月 4 日前后的公开说明（官方渠道发布，权威媒体广泛转载）：针对网民反映红色内裤掉色、过敏等问题，公司已组建专项调查小组，并对涉事品牌系列产品进行下架处理；同时对相关内衣类商品开展复查。该阶段属于企业初步处置公开信息，不代表检测报告或司法结论已经作出。",
+          "facts": {
+            "claimType": "企业公开初步动作",
+            "period": "2025-02-04",
+            "topics": ["红内裤", "调查组", "下架", "早期回应"]
+          }
+        },
+        {
+          "id": "red-underwear-early-apology",
+          "title": "2 月 6 日：承认客诉处理问题并致歉（企业公开）",
+          "text": "据胖东来企业 2025 年 2 月 6 日公开致歉说明：承认管理中存在问题，处理客诉人员未按照公司标准和流程处理，对顾客造成困扰和伤害，并向顾客致歉；同时表示调查结果将适时公示。该内容仅支持「企业当时如何公开认错客诉流程」，不能单独证明商品质量结论或过敏医学因果。",
+          "facts": {
+            "claimType": "企业公开致歉",
+            "period": "2025-02-06",
+            "topics": ["红内裤", "致歉", "客诉流程", "管理问题"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "pdl-red-underwear-investigation-report-2025-02-14",
+      "title": "胖东来《关于“红色内裤掉色、过敏以及部门处理过程”的调查报告》要点",
+      "type": "company_investigation_report",
+      "status": "approved",
+      "caseId": "red-underwear-color-libel-2025",
+      "claimType": "company_investigation_report",
+      "finality": "company_report_stage",
+      "evidenceLevel": "L1",
+      "evidenceLabel": "企业调查报告要点（官方发布；本库存自写摘要，非报告全文）",
+      "answerMode": "fact_with_source",
+      "approval": {
+        "approvedBy": "user",
+        "approvedAt": "2026-07-30",
+        "basis": "docs/SOURCE_AUDIT_06.md；用户要求企业报告 L1+approved、不加 limited。"
+      },
+      "source": {
+        "publisher": "许昌市胖东来商贸集团有限公司（官方抖音发布约 53 页调查报告）",
+        "sourceType": "official",
+        "url": "https://news.cctv.com/2025/04/06/ARTIL6LyM2RCmvIBetSuMnLg250406.shtml",
+        "publishedAt": "2025-02-14",
+        "verifiedAt": "2026-07-30",
+        "notes": "报告标题与要点经央视网等权威转载核验。本库不收录 53 页全文，仅自写摘要。原发布渠道为企业官方抖音。"
+      },
+      "scope": [
+        "企业调查报告中的送检结论表述、内部处理、对顾客措施、拟追责表态"
+      ],
+      "answeringRules": [
+        "必须写「据胖东来 2025 年 2 月 14 日公开调查报告」；检测合格等为报告所载，不是本库独立复检。",
+        "报告阶段不等于法院判决；后续判决须引用判决类资料。",
+        "不得把企业拟追责金额写成已判决金额（判决为另一阶段）。",
+        "禁止大段复制报告原文。"
+      ],
+      "chunks": [
+        {
+          "id": "red-underwear-report-testing-and-staff",
+          "title": "报告要点：送检合格表述与内部处理",
+          "text": "据胖东来 2025 年 2 月 14 日公开发布的《关于“红色内裤掉色、过敏以及部门处理过程”的调查报告》（媒体报道篇幅约 53 页）：报告称综合三家检测机构结果，可认定服装部所售中山市民伟制衣有限公司旗下「富妮来品牌」相关女士内裤为合格商品；同时承认部分人员未按流程处理客诉，对实习班长、值班课长、客诉主管等作出免职等处理，并对相关管理岗位给予降级等连带处理。以上均为企业报告自述要点。",
+          "facts": {
+            "claimType": "企业调查报告",
+            "period": "2025-02-14",
+            "topics": ["红内裤", "调查报告", "送检", "合格", "富妮来", "免职"]
+          }
+        },
+        {
+          "id": "red-underwear-report-customer-and-legal",
+          "title": "报告要点：对顾客措施与拟依法追责",
+          "text": "据同一份企业调查报告要点：依据其客诉处理标准，给予顾客发放 500 元投诉奖，跟踪健康恢复并承担相关医疗费用；报告同时认为，在产品未经鉴定结论、医院亦未直接作出因果关系结论前，于网络定论产品掉色引起过敏并贬损商品品质，可能误导消费者并影响品牌与供应链，作为自媒体应更谨慎核实；企业表示将依法维权，原则上追责金额不低于 100 万元。注意：不低于 100 万是企业当时表态，后经法院判决的赔偿数额以判决资料为准（报道为一审 40 万元等）。",
+          "facts": {
+            "claimType": "企业调查报告",
+            "period": "2025-02-14",
+            "topics": ["红内裤", "500元", "医疗费", "追责", "100万", "名誉权"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "pdl-red-underwear-lawsuit-notice-2025-04",
+      "title": "胖东来关于「红内裤」事件博主名誉权诉讼的处理公示",
+      "type": "company_public_statement",
+      "status": "approved",
+      "caseId": "red-underwear-color-libel-2025",
+      "claimType": "company_litigation_notice",
+      "finality": "litigation_stage",
+      "evidenceLevel": "L1",
+      "evidenceLabel": "企业诉讼公示要点（官方公众号等；自写摘要）",
+      "answerMode": "fact_with_source",
+      "approval": {
+        "approvedBy": "user",
+        "approvedAt": "2026-07-30",
+        "basis": "docs/SOURCE_AUDIT_06.md；与企业公开材料一并 L1+approved。"
+      },
+      "source": {
+        "publisher": "胖东来商贸集团公众号等官方渠道（处理公示）",
+        "sourceType": "official",
+        "url": "https://news.cctv.com/2025/04/06/ARTIL6LyM2RCmvIBetSuMnLg250406.shtml",
+        "publishedAt": "2025-04-05",
+        "verifiedAt": "2026-07-30",
+        "notes": "2025-04-05 晚公示起诉段某（网名两个小段等）。主链为央视网转载入口。"
+      },
+      "scope": [
+        "企业以名誉权起诉博主、追责金额表态"
+      ],
+      "answeringRules": [
+        "写「据胖东来 2025 年 4 月处理公示」；起诉主张不等于已判决结果。",
+        "判决结果须引用判决类资料，不得用本条代替一审结论。"
+      ],
+      "chunks": [
+        {
+          "id": "red-underwear-lawsuit-filing",
+          "title": "起诉公示：名誉权与追责金额表态",
+          "text": "据 2025 年 4 月 5 日胖东来商贸集团公开发布的侵权行为处理公示（权威媒体转载）：企业以名誉权侵权为由，对「红内裤」事件相关博主段某（网名「两个小段（小）」等）提起诉讼，称其在抖音发表视频指红内裤掉色、品质有问题并致过敏，引发广泛关注与负面评价；企业表示追责金额不低于 100 万元。该条仅说明企业提起诉讼的公开主张，一审判决内容以法院判决资料为准。",
+          "facts": {
+            "claimType": "企业诉讼公示",
+            "period": "2025-04-05",
+            "topics": ["红内裤", "起诉", "名誉权", "两个小段", "100万"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "media-red-underwear-civil-judgment-2025-05",
+      "title": "红内裤案一审判决公开报道：赔偿 40 万并道歉",
+      "type": "media_court_judgment",
+      "status": "approved",
+      "caseId": "red-underwear-color-libel-2025",
+      "claimType": "court_civil_judgment_report",
+      "finality": "civil_judgment_public",
+      "evidenceLevel": "L2",
+      "evidenceLabel": "媒体对法院一审判决的记录（非裁判文书全文）",
+      "answerMode": "attributed_claim",
+      "approval": {
+        "approvedBy": "user",
+        "approvedAt": "2026-07-30",
+        "basis": "docs/SOURCE_AUDIT_06.md 判决段；与企业 L1 材料配套入库。"
+      },
+      "source": {
+        "publisher": "许昌市魏都区人民法院相关公开信息（经观察者网等媒体报道）",
+        "sourceType": "media",
+        "url": "https://www.guancha.cn/politics/2025_05_30_777673.shtml",
+        "publishedAt": "2025-05-30",
+        "verifiedAt": "2026-07-30",
+        "notes": "报道引用魏都区法院 2025-05-29 前后公告：5 月 28 日开庭并当庭宣判。河南高院 2026-03 另有案情披露转述可作交叉。"
+      },
+      "scope": [
+        "一审名誉权判决结果与法院认定要点（媒体记录）"
+      ],
+      "answeringRules": [
+        "必须写「据法院公开信息/据报道」；判决是名誉权民事结果，不是监管食安终局，也不是医学鉴定终局。",
+        "与企业调查报告分开表述：报告是企业阶段，判决是司法阶段。",
+        "不得引申为「消费者不能批评企业」。"
+      ],
+      "chunks": [
+        {
+          "id": "red-underwear-judgment-outcome",
+          "title": "一审判决结果（媒体记录）",
+          "text": "据媒体报道的许昌市魏都区人民法院公开信息：2025 年 5 月 28 日公开审理许昌市胖东来商贸集团有限公司与段某名誉权纠纷并当庭宣判，判决段某在其抖音账号发布经法院审核的书面道歉视频，发布后 30 日内不得删除，并赔偿胖东来各项经济损失共计 40 万元。报道称双方当庭表示暂不上诉。回答须归因法院/报道，并说明这是民事名誉权判决结果。",
+          "facts": {
+            "claimType": "民事一审判决",
+            "period": "2025-05-28",
+            "topics": ["红内裤", "判决", "40万", "道歉", "名誉权", "魏都区法院"]
+          }
+        },
+        {
+          "id": "red-underwear-judgment-reasoning",
+          "title": "法院认定要点摘要（媒体记录）",
+          "text": "据同一类公开报道：法院审理认为，段某作为拥有大量粉丝的自媒体从业者，在企业已处理投诉、其本人未核实皮炎症状是否由案涉商品导致的情况下仍发布贬损性视频，存在主观过错，行为侵害企业名誉权，应赔礼道歉并赔偿损失；法院结合品牌影响、传播范围、下架送检与维权支出等酌定赔偿 40 万元。报道亦载明视频传播数据量级及双方部分事实查明内容。此为媒体转述的法院说理摘要，细节以裁判文书或法院原文为准。",
+          "facts": {
+            "claimType": "判决说理摘要",
+            "period": "2025-05",
+            "topics": ["红内裤", "名誉权", "自媒体", "核实义务", "判决理由"]
           }
         }
       ]

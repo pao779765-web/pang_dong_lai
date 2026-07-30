@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-07-30
 
-**当前执行者：** Grok 已将用户批准的 C1（新华社 6A）与 C4（影城退票）入库；V5-1 视频仍不入库
+**当前执行者：** Grok 已按用户定级入库红内裤案 L1 企业材料+L2 判决；社交原片待用户审链
 **分支：** `main`
 
 ---
@@ -174,6 +174,7 @@
 | 2026-07-30 | Grok | 用户提交王波粒「逛 3 天胖东来」抖音链；按 RAG_RESEARCH_PROTOCOL 写 V5-1 候选卡（L4，建议 limited 或仅作线索）；同源 B站/YouTube 已记录；**未写 knowledge-base** | docs/SOURCE_AUDIT_05.md, docs/HANDOFF.md |
 | 2026-07-30 | Grok | 用户选 C：视频不入库；按线索上挖，对照已有 L1/L2/L3；新增上级候选建议 C1 新华社千笔楼、C4 影城退票报道；塑封书/抓娃娃等仍缺上级源 | docs/SOURCE_AUDIT_05.md, docs/HANDOFF.md |
 | 2026-07-30 | Grok | 用户批准 C1+C4：入库新华社千笔楼（approved/L2，3 chunks）与界面影城半价退票（limited/L2，2 chunks）；补充召回测试 | knowledge-base.json, site/tests/rendered-html.test.mjs, docs/SOURCE_AUDIT_05.md, docs/HANDOFF.md |
+| 2026-07-30 | Grok | 红内裤案：用户定 L1 企业早期回应/报告/起诉公示 approved；判决 L2 approved；社交原片 candidate 待审；案例轨与 UI 阶段文案 | knowledge-base.json, site/worker/index.ts, site/app/page.tsx, site/tests/rendered-html.test.mjs, docs/SOURCE_AUDIT_06.md, docs/HANDOFF.md |
 
 ---
 
