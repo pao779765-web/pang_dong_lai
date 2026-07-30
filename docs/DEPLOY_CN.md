@@ -49,7 +49,7 @@ npm run start:cloudbase
 1. 在腾讯云完成域名 ICP 备案。
 2. 在 CloudBase 绑定自定义域名并启用 HTTPS。
 3. 将 `DEEPSEEK_API_KEY` 配置为服务端环境变量。
-4. 在 CloudBase 安全管控中为 `/api/chat` 配置按 IP 限频；应用代码中的输入限制仍保留。
+4. 保留应用层 `/api/chat` 保护：同一客户端每分钟最多 6 次、单实例最多 4 个并发、64 KiB 请求体上限和 45 秒上游超时。绑定正式域名后，再在 CloudBase HTTP 网关为该路径叠加按 IP 限频。
 5. 通过 CloudBase 日志检查 4xx、5xx、响应时间和实例扩缩容。
 6. 验收通过后再把正式域名解析切到 CloudBase。
 

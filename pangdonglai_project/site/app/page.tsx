@@ -135,6 +135,9 @@ function RagChat() {
     setChatError("");
     setIsSending(true);
 
+    const requestController = new AbortController();
+    const requestTimeout = window.setTimeout(() => requestController.abort(), 50_000);
+
     try {
       const apiMessages = toApiMessages(nextMessages);
       if (apiMessages.length === 0 || apiMessages.at(-1)?.role !== "user") {
@@ -147,6 +150,7 @@ function RagChat() {
         body: JSON.stringify({
           messages: apiMessages,
         }),
+        signal: requestController.signal,
       });
       if (!response.ok) {
         const data: { error?: unknown } = await response.json().catch(() => ({}));
@@ -215,11 +219,17 @@ function RagChat() {
 
       if (buffer.trim()) applyEvent(buffer);
     } catch (error) {
-      setChatError(error instanceof Error ? error.message : "暂时无法获得回答，请稍后重试。");
+      const message = error instanceof DOMException && error.name === "AbortError"
+        ? "这次回答等待时间过长，请稍后重试。"
+        : error instanceof Error
+          ? error.message
+          : "暂时无法获得回答，请稍后重试。";
+      setChatError(message);
       setMessages((current) => current.map((message) => (
         message.id === assistantId ? { ...message, isStreaming: false } : message
       )));
     } finally {
+      window.clearTimeout(requestTimeout);
       setIsSending(false);
     }
   }

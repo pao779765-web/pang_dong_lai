@@ -36,16 +36,72 @@ const BASE_SYSTEM_PROMPT = `你是“胖东来文化资料助手”，一个非�
 需要补充边界时，在正文里用一两句自然语言直接说清。例如：“目前能看到的是当时企业的公开回应，后续调查结论尚未见到。”不要另设标题、标签、注释或补充区。
 请使用简洁、友好、克制的中文回答。`;
 
-function json(body: unknown, status = 200) {
+function json(body: unknown, status = 200, headers?: HeadersInit) {
+  const responseHeaders = new Headers(headers);
+  responseHeaders.set("content-type", "application/json; charset=utf-8");
   return new Response(JSON.stringify(body), {
     status,
-    headers: { "content-type": "application/json; charset=utf-8" },
+    headers: responseHeaders,
   });
 }
 
 /** Hard cap per request: abuse / cost / context guard. Client should send a sliding window under this. */
 const MAX_CHAT_MESSAGES = 16;
 const MAX_MESSAGE_CHARS = 1200;
+const MAX_CHAT_BODY_BYTES = 64 * 1024;
+const CHAT_RATE_LIMIT_WINDOW_MS = 60_000;
+const CHAT_RATE_LIMIT_REQUESTS = 6;
+const MAX_CONCURRENT_CHAT_REQUESTS = 4;
+const CHAT_UPSTREAM_TIMEOUT_MS = 45_000;
+
+type ChatRateBucket = {
+  count: number;
+  resetAt: number;
+};
+
+const chatRateBuckets = new Map<string, ChatRateBucket>();
+let activeChatRequests = 0;
+let lastRateLimitCleanup = 0;
+
+function readClientAddress(request: Request) {
+  const directAddress = request.headers.get("cf-connecting-ip") ?? request.headers.get("x-real-ip");
+  if (directAddress?.trim()) return directAddress.trim();
+
+  const forwarded = request.headers.get("x-forwarded-for");
+  return forwarded?.split(",")[0]?.trim() || null;
+}
+
+function checkChatRateLimit(request: Request, now = Date.now()) {
+  const clientAddress = readClientAddress(request);
+  if (!clientAddress) return null;
+
+  if (now - lastRateLimitCleanup >= CHAT_RATE_LIMIT_WINDOW_MS) {
+    for (const [key, bucket] of chatRateBuckets) {
+      if (bucket.resetAt <= now) chatRateBuckets.delete(key);
+    }
+    lastRateLimitCleanup = now;
+  }
+
+  const current = chatRateBuckets.get(clientAddress);
+  if (!current || current.resetAt <= now) {
+    chatRateBuckets.set(clientAddress, {
+      count: 1,
+      resetAt: now + CHAT_RATE_LIMIT_WINDOW_MS,
+    });
+    return null;
+  }
+
+  if (current.count >= CHAT_RATE_LIMIT_REQUESTS) {
+    return Math.max(1, Math.ceil((current.resetAt - now) / 1000));
+  }
+
+  current.count += 1;
+  return null;
+}
+
+function releaseChatSlot() {
+  activeChatRequests = Math.max(0, activeChatRequests - 1);
+}
 
 type ReadMessagesResult =
   | { ok: true; messages: ChatRequestMessage[] }
@@ -397,8 +453,14 @@ function streamEvent(value: unknown) {
   return new TextEncoder().encode(`data: ${JSON.stringify(value)}\n\n`);
 }
 
-function streamChatResponse(upstream: Response, sources: ChatSource[]) {
+function streamChatResponse(
+  upstream: Response,
+  sources: ChatSource[],
+  onFinish: () => void,
+  didTimeout: () => boolean,
+) {
   if (!upstream.body) {
+    onFinish();
     return json({ error: "AI 服务没有返回可读取的内容，请稍后重试。" }, 502);
   }
 
@@ -447,10 +509,16 @@ function streamChatResponse(upstream: Response, sources: ChatSource[]) {
           controller.enqueue(streamEvent({ type: "done" }));
         }
       } catch {
-        controller.enqueue(streamEvent({ type: "error", error: "生成回答时连接中断，请稍后重试。" }));
+        controller.enqueue(streamEvent({
+          type: "error",
+          error: didTimeout()
+            ? "这次回答等待时间过长，请稍后重试。"
+            : "生成回答时连接中断，请稍后重试。",
+        }));
       } finally {
         reader.releaseLock();
         controller.close();
+        onFinish();
       }
     },
   });
@@ -472,9 +540,18 @@ async function handleChat(request: Request, env: Env) {
     return json({ error: "本地尚未配置 DeepSeek API Key。" }, 503);
   }
 
+  const declaredLength = Number(request.headers.get("content-length") ?? 0);
+  if (Number.isFinite(declaredLength) && declaredLength > MAX_CHAT_BODY_BYTES) {
+    return json({ error: "本次发送的内容过多，请缩短问题或开始新对话。" }, 413);
+  }
+
   let payload: { messages?: unknown };
   try {
-    payload = await request.json();
+    const rawPayload = await request.text();
+    if (new TextEncoder().encode(rawPayload).byteLength > MAX_CHAT_BODY_BYTES) {
+      return json({ error: "本次发送的内容过多，请缩短问题或开始新对话。" }, 413);
+    }
+    payload = JSON.parse(rawPayload) as { messages?: unknown };
   } catch {
     return json({ error: "请求格式不正确。" }, 400);
   }
@@ -485,8 +562,42 @@ async function handleChat(request: Request, env: Env) {
   }
   const messages = parsed.messages;
 
+  const retryAfter = checkChatRateLimit(request);
+  if (retryAfter !== null) {
+    return json(
+      { error: `发送得有些快，请等待 ${retryAfter} 秒后再试。` },
+      429,
+      {
+        "cache-control": "no-store",
+        "retry-after": String(retryAfter),
+      },
+    );
+  }
+
+  if (activeChatRequests >= MAX_CONCURRENT_CHAT_REQUESTS) {
+    return json(
+      { error: "当前提问人数较多，请稍等几秒再试。" },
+      503,
+      {
+        "cache-control": "no-store",
+        "retry-after": "5",
+      },
+    );
+  }
+  activeChatRequests += 1;
+
   const searchPlan = searchKnowledge(messages.at(-1)!.content);
   const sources = collectSources(searchPlan.retrieved);
+
+  const upstreamController = new AbortController();
+  const timeout = setTimeout(() => upstreamController.abort(), CHAT_UPSTREAM_TIMEOUT_MS);
+  let finished = false;
+  const finishRequest = () => {
+    if (finished) return;
+    finished = true;
+    clearTimeout(timeout);
+    releaseChatSlot();
+  };
 
   let upstream: Response;
   try {
@@ -503,16 +614,26 @@ async function handleChat(request: Request, env: Env) {
         max_tokens: 700,
         stream: true,
       }),
+      signal: upstreamController.signal,
     });
   } catch {
-    return json({ error: "暂时无法连接 AI 服务，请稍后重试。" }, 502);
+    finishRequest();
+    return upstreamController.signal.aborted
+      ? json({ error: "AI 回答超时，请稍后重试。" }, 504)
+      : json({ error: "暂时无法连接 AI 服务，请稍后重试。" }, 502);
   }
 
   if (!upstream.ok) {
+    finishRequest();
     return json({ error: "AI 服务暂时无法回答，请稍后重试。" }, 502);
   }
 
-  return streamChatResponse(upstream, sources);
+  return streamChatResponse(
+    upstream,
+    sources,
+    finishRequest,
+    () => upstreamController.signal.aborted,
+  );
 }
 
 // Image security config. SVG sources with .svg extension auto-skip the

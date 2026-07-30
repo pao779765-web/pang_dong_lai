@@ -3,9 +3,14 @@ import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 import { createCloudBaseServer } from "../scripts/cloudbase-server.mjs";
 
-async function render(path = "/", init = {}, env = {}) {
+let renderSequence = 0;
+
+async function render(path = "/", init = {}, env = {}, workerCacheKey) {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
-  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
+  workerUrl.searchParams.set(
+    "test",
+    workerCacheKey ?? `${process.pid}-${Date.now()}-${renderSequence++}`,
+  );
   const { default: worker } = await import(workerUrl.href);
 
   const headers = new Headers(init.headers);
@@ -272,6 +277,87 @@ test("rejects chat payloads longer than the server message cap with a clear erro
   assert.equal(response.status, 400);
   const data = await response.json();
   assert.match(String(data.error), /最多 16 条/);
+});
+
+test("rejects oversized chat request bodies before calling the model", async () => {
+  const originalFetch = globalThis.fetch;
+  let modelWasCalled = false;
+  globalThis.fetch = async (input, init) => {
+    if (String(input) === "https://api.deepseek.com/chat/completions") {
+      modelWasCalled = true;
+    }
+    return originalFetch(input, init);
+  };
+
+  try {
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          messages: [{ role: "user", content: "问".repeat(30_000) }],
+        }),
+      },
+      { DEEPSEEK_API_KEY: "test-key" },
+    );
+
+    assert.equal(response.status, 413);
+    assert.equal(modelWasCalled, false);
+    assert.match(String((await response.json()).error), /内容过多/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("limits repeated chat requests from the same client address", async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (input, init) => {
+    if (String(input) === "https://api.deepseek.com/chat/completions") {
+      return new Response(
+        'data: {"choices":[{"delta":{"content":"ok"}}]}\n\ndata: [DONE]\n\n',
+        { headers: { "content-type": "text/event-stream" } },
+      );
+    }
+    return originalFetch(input, init);
+  };
+
+  try {
+    const workerCacheKey = `rate-limit-${process.pid}-${Date.now()}`;
+    const requestInit = {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-forwarded-for": "203.0.113.10",
+      },
+      body: JSON.stringify({
+        messages: [{ role: "user", content: "胖东来的文化是什么？" }],
+      }),
+    };
+
+    for (let index = 0; index < 6; index += 1) {
+      const response = await render(
+        "/api/chat",
+        requestInit,
+        { DEEPSEEK_API_KEY: "test-key" },
+        workerCacheKey,
+      );
+      assert.equal(response.status, 200);
+      assert.match(await response.text(), /"type":"done"/);
+    }
+
+    const limited = await render(
+      "/api/chat",
+      requestInit,
+      { DEEPSEEK_API_KEY: "test-key" },
+      workerCacheKey,
+    );
+    assert.equal(limited.status, 429);
+    assert.ok(Number(limited.headers.get("retry-after")) >= 1);
+    assert.match(String((await limited.json()).error), /发送得有些快/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
 });
 
 test("accepts a 12-message sliding window that ends with a user turn", async () => {
