@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-07-30
 
-**当前执行者：** Grok：用户选 C，V5-1 视频不入库；已交叉出上级候选 C1/C4，待用户再批
+**当前执行者：** Grok 已将用户批准的 C1（新华社 6A）与 C4（影城退票）入库；V5-1 视频仍不入库
 **分支：** `main`
 
 ---
@@ -173,6 +173,7 @@
 | 2026-07-30 | Codex | 用户自行在 CloudBase 配置 DeepSeek 密钥；只核验变量存在。真实问答 3.4 秒返回 200，正文、来源、完成事件齐全；线上超大输入返回 413 | docs/HANDOFF.md |
 | 2026-07-30 | Grok | 用户提交王波粒「逛 3 天胖东来」抖音链；按 RAG_RESEARCH_PROTOCOL 写 V5-1 候选卡（L4，建议 limited 或仅作线索）；同源 B站/YouTube 已记录；**未写 knowledge-base** | docs/SOURCE_AUDIT_05.md, docs/HANDOFF.md |
 | 2026-07-30 | Grok | 用户选 C：视频不入库；按线索上挖，对照已有 L1/L2/L3；新增上级候选建议 C1 新华社千笔楼、C4 影城退票报道；塑封书/抓娃娃等仍缺上级源 | docs/SOURCE_AUDIT_05.md, docs/HANDOFF.md |
+| 2026-07-30 | Grok | 用户批准 C1+C4：入库新华社千笔楼（approved/L2，3 chunks）与界面影城半价退票（limited/L2，2 chunks）；补充召回测试 | knowledge-base.json, site/tests/rendered-html.test.mjs, docs/SOURCE_AUDIT_05.md, docs/HANDOFF.md |
 
 ---
 

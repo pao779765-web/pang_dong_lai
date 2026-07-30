@@ -374,12 +374,19 @@ function searchGeneralKnowledge(question: string): RetrievedChunk[] {
 
   return indexedChunks
     .map(({ terms, evidenceTerms, ...item }) => {
-      const hasDistinctiveEvidence = queryTerms.some(
-        (term) =>
-          isDistinctiveQueryTerm(term) &&
-          evidenceTerms.includes(term) &&
-          sourceFrequencies.get(term)?.size === 1,
+      // Distinctive = non-stopword query terms that appear in this chunk's evidence.
+      // Prefer terms unique to one source (reduces brand-only noise); also allow
+      // multi-source operational terms when ≥2 distinctive terms match (e.g. 周二+闭店
+      // shared by store directory and media features).
+      const matchingDistinctiveTerms = queryTerms.filter(
+        (term) => isDistinctiveQueryTerm(term) && evidenceTerms.includes(term),
       );
+      const hasUniqueDistinctiveTerm = matchingDistinctiveTerms.some(
+        (term) => sourceFrequencies.get(term)?.size === 1,
+      );
+      const hasDistinctiveEvidence =
+        matchingDistinctiveTerms.length > 0 &&
+        (hasUniqueDistinctiveTerm || matchingDistinctiveTerms.length >= 2);
 
       return {
         ...item,

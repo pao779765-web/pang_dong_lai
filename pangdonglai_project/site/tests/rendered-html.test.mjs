@@ -172,7 +172,9 @@ test("streams BM25-grounded DeepSeek tokens and verified sources", async () => {
     const body = await response.text();
     assert.match(body, /"type":"delta","content":"测试"/);
     assert.match(body, /"type":"delta","content":"回答"/);
-    assert.match(body, /"type":"sources","sources":\[{"title":"胖东来各门店信息","url":"https:\/\/web\.azpdl\.cn\/contact","verifiedAt":"2026-07-24"}\]/);
+    assert.match(body, /"type":"sources"/);
+    assert.match(body, /胖东来各门店信息/);
+    assert.match(body, /web\.azpdl\.cn\/contact/);
     assert.match(body, /"type":"done"/);
     assert.equal(deepseekRequest.stream, true);
     assert.match(deepseekRequest.messages[0].content, /DeepSeek 模型 deepseek-v4-flash/);
@@ -213,6 +215,86 @@ test("does not attach store sources when only the generic brand name matches", a
     assert.match(deepseekRequest.messages[0].content, /本次检索没有命中任何已审核资料/);
     assert.doesNotMatch(body, /"type":"sources"/);
     assert.match(body, /"type":"done"/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("retrieves Xinhua 6A scenic feature for spring-festival crowd questions", async () => {
+  const originalFetch = globalThis.fetch;
+  let deepseekRequest;
+
+  globalThis.fetch = async (input, init) => {
+    if (String(input) === "https://api.deepseek.com/chat/completions") {
+      deepseekRequest = JSON.parse(init.body);
+      return new Response(
+        'data: {"choices":[{"delta":{"content":"据新华社报道"}}]}\n\ndata: [DONE]\n\n',
+        { headers: { "content-type": "text/event-stream" } },
+      );
+    }
+    return originalFetch(input, init);
+  };
+
+  try {
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          messages: [{ role: "user", content: "胖东来为什么被称为6A级景区？春节客流怎么样？" }],
+        }),
+      },
+      { DEEPSEEK_API_KEY: "test-key" },
+    );
+
+    assert.equal(response.status, 200);
+    const prompt = deepseekRequest.messages[0].content;
+    assert.match(prompt, /新华社|千笔楼|6A/);
+    assert.match(prompt, /客流|春节/);
+    const body = await response.text();
+    assert.match(body, /"type":"sources"/);
+    assert.match(body, /news\.cn|6A级景区/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("retrieves limited cinema half-refund media chunk", async () => {
+  const originalFetch = globalThis.fetch;
+  let deepseekRequest;
+
+  globalThis.fetch = async (input, init) => {
+    if (String(input) === "https://api.deepseek.com/chat/completions") {
+      deepseekRequest = JSON.parse(init.body);
+      return new Response(
+        'data: {"choices":[{"delta":{"content":"据报道"}}]}\n\ndata: [DONE]\n\n',
+        { headers: { "content-type": "text/event-stream" } },
+      );
+    }
+    return originalFetch(input, init);
+  };
+
+  try {
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          messages: [{ role: "user", content: "胖东来影城电影难看可以退一半票吗？" }],
+        }),
+      },
+      { DEEPSEEK_API_KEY: "test-key" },
+    );
+
+    assert.equal(response.status, 200);
+    const prompt = deepseekRequest.messages[0].content;
+    assert.match(prompt, /影城|退一半|20\s*分钟|难看/);
+    assert.match(prompt, /界面|据.*报道|转述/);
+    const body = await response.text();
+    assert.match(body, /"type":"sources"/);
+    assert.match(body, /jiemian\.com|影城/);
   } finally {
     globalThis.fetch = originalFetch;
   }
