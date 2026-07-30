@@ -250,7 +250,11 @@ test("retrieves limited L3 book chunks for how-to-learn questions", async () => 
     const prompt = deepseekRequest.messages[0].content;
     assert.match(prompt, /胖东来，你要怎么学/);
     assert.match(prompt, /高福利|服务话术|表面/);
+    assert.match(prompt, /作者观点|书中讨论|第三方图书/);
     assert.doesNotMatch(prompt, /本次检索没有命中任何已审核资料/);
+    const body = await response.text();
+    assert.match(body, /"type":"sources"/);
+    assert.match(body, /胖东来，你要怎么学|book\.douban\.com/);
   } finally {
     globalThis.fetch = originalFetch;
   }

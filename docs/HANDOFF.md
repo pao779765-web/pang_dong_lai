@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-07-30
 
-**当前执行者：** Codex 已完成 CloudBase AI 真实问答验收；等待用户提供正式域名及 ICP 备案状态
+**当前执行者：** Grok 已扩写图书主题摘要（12 chunks）并强化来源归因；CloudBase 侧仍待用户正式域名/ICP
 **分支：** `main`
 
 ---
@@ -161,6 +161,7 @@
 | 2026-07-28 | Codex | 绑定 Sites 项目并发布仅本人可访问的预览版本；未公开发布，站点级 WAF 限流待平台入口或 Worker 级方案落实 | site/.openai/hosting.json, docs/HANDOFF.md |
 | 2026-07-29 | Codex | 将 14 家门店资料抽为独立 JSON 内容文件，并抽出前后端共用的聊天请求与来源契约；补充结构回归测试 | site/data/store-directory.json, site/data/stores.ts, site/shared/chat.ts, site/app/page.tsx, site/worker/index.ts, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-07-29 | Grok | 修复 L3 图书 limited 未进一般轨检索：一般轨可搜 approved + 无 caseId 的 limited；停用「怎么/是否」等虚词作 distinctive 证据，避免书误召回门店/酱油问；补充 how-to 召回测试 | knowledge-base.json, site/worker/index.ts, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
+| 2026-07-29 | Grok | 用户要求图书多收录：按公开目录扩为 12 条主题摘要（仍不存全书）；prompt 强制「据书中讨论」归因；一般轨 top-k=5；sources 展示书目链接 | knowledge-base.json, site/worker/index.ts, site/tests/rendered-html.test.mjs, docs/SOURCE_AUDIT_04.md, docs/HANDOFF.md |
 | 2026-07-29 | Codex | 保留现有本地与 Sites 预览，新增 CloudBase Node 容器运行入口、非 root Dockerfile、密钥排除规则、部署手册及首页/静态资源/API 回归测试 | site/scripts/cloudbase-server.mjs, site/Dockerfile, site/.dockerignore, site/package.json, site/tests/rendered-html.test.mjs, docs/DEPLOY_CN.md, docs/HANDOFF.md |
 | 2026-07-29 | Codex | 定位 CloudBase 首次构建失败为部署包缺少项目根知识库；将容器构建上下文提升到项目目录，并以最小允许清单同时纳入 site 与 knowledge-base.json | pangdonglai_project/Dockerfile, pangdonglai_project/.dockerignore, site/tests/rendered-html.test.mjs, docs/DEPLOY_CN.md, docs/HANDOFF.md |
 | 2026-07-29 | Codex | 定位 CloudBase 二次构建失败为 Sites Vite 配置被 Docker 白名单误排除；仅放行非敏感 hosting.json，继续排除环境变量和密钥文件 | pangdonglai_project/.dockerignore, site/tests/rendered-html.test.mjs, docs/DEPLOY_CN.md, docs/HANDOFF.md |

@@ -77,17 +77,26 @@ book-how-to-learn-pdl-wanghuizhong
 |------|------|
 | 2026-07-28 | 用户批准：L3 + limited；仅自写摘要；不存全书；硬事实以 L1/L2 为准。 |
 | 2026-07-28 | 已写入 knowledge-base：`book-how-to-learn-pdl-wanghuizhong`（4 条 chunks）。 |
+| 2026-07-29 | 用户要求「内容收录多一些，回答可注明来源」。扩写为 **12 条**主题摘要（公开目录五章 + 方法论/闭环/时效边界）；仍不存 OCR 全文。元数据补 `publishedAt: 2014-08-25`、ISBN。回答侧：system prompt 强制图书归因；接口 `sources` 附书目链接。 |
 
-### chunks 一览
+### chunks 一览（2026-07-29 扩写后）
 
 | chunk id | 主题 |
 |----------|------|
-| `book-learn-pdl-meta-and-boundary` | 图书性质与使用边界 |
+| `book-learn-pdl-meta-and-boundary` | 图书性质、作者与使用边界 |
+| `book-learn-pdl-toc-and-structure` | 公开目录与全书结构 |
+| `book-learn-pdl-ch1-growth` | 第一章：成长脉络与区域竞争 |
+| `book-learn-pdl-ch2-influence` | 第二章：灯一样的企业与影响力 |
+| `book-learn-pdl-ch3-humanistic-management` | 第三章：人性化管理与员工 |
+| `book-learn-pdl-ch4-customer` | 第四章：让顾客满意 |
+| `book-learn-pdl-ch5-culture` | 第五章：文化立企与道法术 |
 | `book-learn-pdl-surface-vs-culture` | 学表面 vs 学文化 |
-| `book-learn-pdl-people-and-service` | 员工与服务议题概括 |
+| `book-learn-pdl-flywheel-logic` | 员工—顾客—经营闭环 |
 | `book-learn-pdl-limits-of-copying` | 简单照搬的局限 |
+| `book-learn-pdl-how-to-learn-method` | 怎么学：学习提醒 |
+| `book-learn-pdl-time-lag-and-crosscheck` | 时效与交叉验证 |
 
-可选后续：用户核对版权页后补精确 ISBN/出版年；若有文字版可再增主题 chunk（仍禁止全书正文）。
+可选后续：若用户提供文字版或授权 OCR 重点页，可再加深摘要（仍禁止全书正文入库）。
 
 ---
 
