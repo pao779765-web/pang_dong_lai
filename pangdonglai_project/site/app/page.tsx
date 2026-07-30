@@ -219,11 +219,15 @@ function RagChat() {
 
       if (buffer.trim()) applyEvent(buffer);
     } catch (error) {
-      const message = error instanceof DOMException && error.name === "AbortError"
-        ? "这次回答等待时间过长，请稍后重试。"
-        : error instanceof Error
-          ? error.message
-          : "暂时无法获得回答，请稍后重试。";
+      let message = "暂时无法获得回答，请稍后重试。";
+      if (error instanceof DOMException && error.name === "AbortError") {
+        message = "这次回答等待时间过长，请稍后重试。";
+      } else if (error instanceof TypeError) {
+        // Browser "Failed to fetch" when dev server is down, wrong port, or network blocked.
+        message = "无法连接本地问答接口。请确认已在 site 目录运行 npm run dev，页面地址为 http://localhost:3000，然后刷新重试。";
+      } else if (error instanceof Error && error.message) {
+        message = error.message;
+      }
       setChatError(message);
       setMessages((current) => current.map((message) => (
         message.id === assistantId ? { ...message, isStreaming: false } : message

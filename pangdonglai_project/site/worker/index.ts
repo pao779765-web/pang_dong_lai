@@ -626,7 +626,35 @@ async function handleChat(request: Request, env: Env) {
 
   if (!upstream.ok) {
     finishRequest();
-    return json({ error: "AI 服务暂时无法回答，请稍后重试。" }, 502);
+    let upstreamMessage = "";
+    try {
+      const raw = await upstream.text();
+      const parsed = JSON.parse(raw) as { error?: { message?: unknown; type?: unknown } | string; message?: unknown };
+      if (typeof parsed.error === "string") upstreamMessage = parsed.error;
+      else if (parsed.error && typeof parsed.error === "object" && typeof parsed.error.message === "string") {
+        upstreamMessage = parsed.error.message;
+      } else if (typeof parsed.message === "string") {
+        upstreamMessage = parsed.message;
+      }
+    } catch {
+      // Keep a generic message when the provider body is not JSON.
+    }
+
+    if (upstream.status === 401 || upstream.status === 403) {
+      return json({ error: "DeepSeek API Key 无效或无权限，请检查 site/.dev.vars 中的 DEEPSEEK_API_KEY 后重启本地服务。" }, 502);
+    }
+    if (upstream.status === 402) {
+      return json({ error: "DeepSeek 账户余额不足或套餐不可用，请到 DeepSeek 控制台确认后再试。" }, 502);
+    }
+    if (upstream.status === 429) {
+      return json({ error: "DeepSeek 侧请求过于频繁，请稍等一分钟再试。" }, 502);
+    }
+    if (upstreamMessage) {
+      return json({
+        error: `AI 服务暂时无法回答（${upstreamMessage.slice(0, 160)}）。若刚改过密钥或模型，请重启 npm run dev。`,
+      }, 502);
+    }
+    return json({ error: `AI 服务暂时无法回答（HTTP ${upstream.status}），请稍后重试。` }, 502);
   }
 
   return streamChatResponse(
