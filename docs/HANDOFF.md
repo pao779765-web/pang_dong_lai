@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-07-30
 
-**当前执行者：** Grok 已扩写图书主题摘要（12 chunks）并强化来源归因；CloudBase 侧仍待用户正式域名/ICP
+**当前执行者：** Grok 已按 RAG 守则审计抖音探访视频 V5-1（候选，未入库）；待用户批 limited / 拒绝 / 先挖上级来源
 **分支：** `main`
 
 ---
@@ -171,6 +171,7 @@
 | 2026-07-30 | Codex | 为 AI 问答增加按客户端分钟限频、实例并发上限、请求体上限及模型超时；页面端同步增加请求超时与友好错误提示，15 项测试及 lint 通过 | site/worker/index.ts, site/app/page.tsx, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-07-30 | Codex | CloudBase 安全版本 004 构建成功并接管 100% 流量；公网首页与 `/healthz` 返回 200，未配置密钥时 `/api/chat` 按预期返回 503 | docs/HANDOFF.md |
 | 2026-07-30 | Codex | 用户自行在 CloudBase 配置 DeepSeek 密钥；只核验变量存在。真实问答 3.4 秒返回 200，正文、来源、完成事件齐全；线上超大输入返回 413 | docs/HANDOFF.md |
+| 2026-07-30 | Grok | 用户提交王波粒「逛 3 天胖东来」抖音链；按 RAG_RESEARCH_PROTOCOL 写 V5-1 候选卡（L4，建议 limited 或仅作线索）；同源 B站/YouTube 已记录；**未写 knowledge-base** | docs/SOURCE_AUDIT_05.md, docs/HANDOFF.md |
 
 ---
 
