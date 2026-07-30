@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-07-30
 
-**当前执行者：** Grok 已按 RAG 守则审计抖音探访视频 V5-1（候选，未入库）；待用户批 limited / 拒绝 / 先挖上级来源
+**当前执行者：** Grok：用户选 C，V5-1 视频不入库；已交叉出上级候选 C1/C4，待用户再批
 **分支：** `main`
 
 ---
@@ -172,6 +172,7 @@
 | 2026-07-30 | Codex | CloudBase 安全版本 004 构建成功并接管 100% 流量；公网首页与 `/healthz` 返回 200，未配置密钥时 `/api/chat` 按预期返回 503 | docs/HANDOFF.md |
 | 2026-07-30 | Codex | 用户自行在 CloudBase 配置 DeepSeek 密钥；只核验变量存在。真实问答 3.4 秒返回 200，正文、来源、完成事件齐全；线上超大输入返回 413 | docs/HANDOFF.md |
 | 2026-07-30 | Grok | 用户提交王波粒「逛 3 天胖东来」抖音链；按 RAG_RESEARCH_PROTOCOL 写 V5-1 候选卡（L4，建议 limited 或仅作线索）；同源 B站/YouTube 已记录；**未写 knowledge-base** | docs/SOURCE_AUDIT_05.md, docs/HANDOFF.md |
+| 2026-07-30 | Grok | 用户选 C：视频不入库；按线索上挖，对照已有 L1/L2/L3；新增上级候选建议 C1 新华社千笔楼、C4 影城退票报道；塑封书/抓娃娃等仍缺上级源 | docs/SOURCE_AUDIT_05.md, docs/HANDOFF.md |
 
 ---
 
