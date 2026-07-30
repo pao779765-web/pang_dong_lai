@@ -5,6 +5,7 @@
 - 根目录：`D:\ai沙盒\codex+grok`
 - 交接文件：`docs/HANDOFF.md`（每次换手必读必写）
 - 方案文件：`docs/PLAN.md`（总体方案，少改）
+- RAG 资料规范：`docs/RAG_RESEARCH_PROTOCOL.md`（互联网检索、来源审核或知识库入库前必读）
 
 ## 协作规则
 
@@ -13,6 +14,7 @@
 3. 完成一项就勾选，并在「最近变更」写清改了哪些文件。
 4. 有 Git 时：小步 commit，信息用中文或英文均可，说清楚做了什么。
 5. **禁止**提交密钥、Token、`.env`、账号凭据。
+6. Codex 或 Grok 进行胖东来互联网资料检索、来源审核、RAG 入库或相关检索逻辑修改前，必须完整阅读并遵守 `docs/RAG_RESEARCH_PROTOCOL.md`。
 
 ## 分工建议
 
