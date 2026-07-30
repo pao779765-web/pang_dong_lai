@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-07-30
 
-**当前执行者：** Codex 已发布 AI 防刷版本；等待用户在 CloudBase 控制台填写 DeepSeek 密钥后继续真实问答验收
+**当前执行者：** Codex 已完成 CloudBase AI 真实问答验收；等待用户提供正式域名及 ICP 备案状态
 **分支：** `main`
 
 ---
@@ -68,13 +68,14 @@
 - [x] **Codex DEPLOY-CN-01**：在保留现有本地与 Sites 预览流程的前提下，增加腾讯云 CloudBase 可用的 Node 容器运行入口、部署配置与回归验证，为后续国内正式上线做兼容适配。
 - [x] **Codex DEPLOY-CN-02**：已将容器版本部署到用户创建的 CloudBase 环境 `pangdonglai-site-d2eqrsj5b8ada0f`；安全版本 004 正常承载 100% 流量，测试域名的首页与健康检查均返回 200；暂未绑定正式域名。
 - [x] **Codex SEC-01**：已为 `/api/chat` 增加仅作用于问答接口的应用层保护：同一客户端每分钟最多 6 次、单实例最多 4 个并发、64 KiB 请求体上限、45 秒上游超时，并返回友好的 413/429/503/504 提示；待绑定正式域名后可再叠加 CloudBase HTTP 网关路径级限频。
+- [x] **Codex AI-LIVE-01**：用户已在 CloudBase 服务设置中配置 `DEEPSEEK_API_KEY`；仅核验变量存在，不读取或记录密钥值。公网真实问答返回 200，包含流式正文、资料来源与完成事件；线上超大输入按预期返回 413。
 - [ ] Codex（可选）QA-02：微调 360 视口关键词坐标。
 - [ ] Codex（可选）QA-03：锚点后焦点落到栏目标题。
 - [ ] 用户确认 AI 对话区浅色重构视觉是否满意。
 - [x] Grok：按 `RAG_SYNC.md` 审计用户指定 3 条 RAG 候选链接 → `docs/SOURCE_AUDIT.md`（2026-07-24；待用户批准 approved 项）。
 - [ ] Grok（可选）：独立复测 `npm run start` 的生产预览资产。
 - [ ] 用户：门店照片授权或占位图策略；浅色 hero 视觉最终确认。
-- [ ] AI 接口阶段前再定模型、部署与预算。
+- [x] AI 接口采用 `deepseek-v4-flash` 非思考模式并部署在 CloudBase；通过 700 token 输出上限、按客户端分钟限频和 DeepSeek 账户余额共同控制初期成本，后续按真实流量调整。
 
 ---
 
@@ -166,9 +167,10 @@
 | 2026-07-29 | Codex | CloudBase 版本 003 构建并全量发布成功；测试域名首页、`/healthz` 与 6 个 CSS/JS 资源均验收为 200，尚未配置正式域名与云端 DeepSeek 密钥 | docs/HANDOFF.md |
 | 2026-07-30 | Codex | 为 AI 问答增加按客户端分钟限频、实例并发上限、请求体上限及模型超时；页面端同步增加请求超时与友好错误提示，15 项测试及 lint 通过 | site/worker/index.ts, site/app/page.tsx, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-07-30 | Codex | CloudBase 安全版本 004 构建成功并接管 100% 流量；公网首页与 `/healthz` 返回 200，未配置密钥时 `/api/chat` 按预期返回 503 | docs/HANDOFF.md |
+| 2026-07-30 | Codex | 用户自行在 CloudBase 配置 DeepSeek 密钥；只核验变量存在。真实问答 3.4 秒返回 200，正文、来源、完成事件齐全；线上超大输入返回 413 | docs/HANDOFF.md |
 
 ---
 
 ## 阻塞
 
-- **上线：** CloudBase 测试版已可公网访问；AI 对话仍需在云端配置 `DEEPSEEK_API_KEY`，正式域名仍需 ICP 备案后绑定。
+- **上线：** CloudBase 公网访问与 AI 对话均已可用；只剩正式域名需在完成 ICP 备案后绑定。
