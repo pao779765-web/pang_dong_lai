@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-07-30
 
-**当前执行者：** Codex 正在完成 CloudBase 正式上线前的 AI 防刷、密钥配置与域名准备
+**当前执行者：** Codex 已发布 AI 防刷版本；等待用户在 CloudBase 控制台填写 DeepSeek 密钥后继续真实问答验收
 **分支：** `main`
 
 ---
@@ -66,7 +66,7 @@
 - [x] **Codex DEPLOY-01**：用户已授权并完成仅本人可访问的预览版本发布；未创建公开访问或自定义域名。
 - [x] **Codex ARCH-01**：将门店展示资料从 React 页面抽离为独立内容文件，并抽取前后端共用的聊天消息契约，降低内容更新与接口演进的耦合。
 - [x] **Codex DEPLOY-CN-01**：在保留现有本地与 Sites 预览流程的前提下，增加腾讯云 CloudBase 可用的 Node 容器运行入口、部署配置与回归验证，为后续国内正式上线做兼容适配。
-- [x] **Codex DEPLOY-CN-02**：已将容器版本部署到用户创建的 CloudBase 环境 `pangdonglai-site-d2eqrsj5b8ada0f`；版本 003 正常承载 100% 流量，测试域名的首页、健康检查及 6 个 CSS/JS 静态资源均返回 200；暂未绑定正式域名。
+- [x] **Codex DEPLOY-CN-02**：已将容器版本部署到用户创建的 CloudBase 环境 `pangdonglai-site-d2eqrsj5b8ada0f`；安全版本 004 正常承载 100% 流量，测试域名的首页与健康检查均返回 200；暂未绑定正式域名。
 - [x] **Codex SEC-01**：已为 `/api/chat` 增加仅作用于问答接口的应用层保护：同一客户端每分钟最多 6 次、单实例最多 4 个并发、64 KiB 请求体上限、45 秒上游超时，并返回友好的 413/429/503/504 提示；待绑定正式域名后可再叠加 CloudBase HTTP 网关路径级限频。
 - [ ] Codex（可选）QA-02：微调 360 视口关键词坐标。
 - [ ] Codex（可选）QA-03：锚点后焦点落到栏目标题。
@@ -90,7 +90,7 @@
 
 待用户确认：AI 对话区新视觉。
 
-未推送远端；CloudBase 测试域名已部署版本 003，本轮安全修复待发布。
+未推送远端；CloudBase 测试域名已部署安全版本 004。
 
 ---
 
@@ -165,6 +165,7 @@
 | 2026-07-29 | Codex | 定位 CloudBase 二次构建失败为 Sites Vite 配置被 Docker 白名单误排除；仅放行非敏感 hosting.json，继续排除环境变量和密钥文件 | pangdonglai_project/.dockerignore, site/tests/rendered-html.test.mjs, docs/DEPLOY_CN.md, docs/HANDOFF.md |
 | 2026-07-29 | Codex | CloudBase 版本 003 构建并全量发布成功；测试域名首页、`/healthz` 与 6 个 CSS/JS 资源均验收为 200，尚未配置正式域名与云端 DeepSeek 密钥 | docs/HANDOFF.md |
 | 2026-07-30 | Codex | 为 AI 问答增加按客户端分钟限频、实例并发上限、请求体上限及模型超时；页面端同步增加请求超时与友好错误提示，15 项测试及 lint 通过 | site/worker/index.ts, site/app/page.tsx, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
+| 2026-07-30 | Codex | CloudBase 安全版本 004 构建成功并接管 100% 流量；公网首页与 `/healthz` 返回 200，未配置密钥时 `/api/chat` 按预期返回 503 | docs/HANDOFF.md |
 
 ---
 
