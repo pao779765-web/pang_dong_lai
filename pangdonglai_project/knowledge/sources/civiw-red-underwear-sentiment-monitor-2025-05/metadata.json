@@ -32,13 +32,13 @@
     "网友具体评论抽样未入库；最多概括「存在多类声音」。"
   ],
   "ingestion": {
-    "contentStatus": "summary_only",
-    "fullTextAllowed": "unknown",
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
     "contentFormat": "markdown",
     "contentPath": "sources/civiw-red-underwear-sentiment-monitor-2025-05/content.md",
     "chunksPath": "chunks/civiw-red-underwear-sentiment-monitor-2025-05.jsonl",
     "sourceSnapshotHash": null,
     "migratedAt": "2026-07-31",
-    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+    "notes": "2026-07-31 已依据识微科技公开页回填监测时段、信息量、平台/情感/信息类型指标及方法局限；不保存图表、网友评论或报告全文，不能作为民调和案件事实。"
   }
 }

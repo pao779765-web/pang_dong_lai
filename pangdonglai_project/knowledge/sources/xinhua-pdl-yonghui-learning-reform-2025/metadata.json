@@ -32,13 +32,13 @@
     "调改业绩与商品价格等以该报道时点为准，不能外推所有调改店。"
   ],
   "ingestion": {
-    "contentStatus": "summary_only",
-    "fullTextAllowed": "unknown",
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
     "contentFormat": "markdown",
     "contentPath": "sources/xinhua-pdl-yonghui-learning-reform-2025/content.md",
     "chunksPath": "chunks/xinhua-pdl-yonghui-learning-reform-2025.jsonl",
     "sourceSnapshotHash": null,
     "migratedAt": "2026-07-31",
-    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+    "notes": "2026-07-31 已依据新华网原页回填永辉鲁谷店调改事实、员工/顾客实践和复制边界；不保存或通过切片重建报道全文，文中经营数字只对应报道时点。"
   }
 }

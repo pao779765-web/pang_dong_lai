@@ -107,6 +107,11 @@ test("builds the RAG index from the directory knowledge source of truth", async 
     "tsinghua-sem-pdl-freedom-love-csr-2025",
     "jiemian-pdl-freedom-love-origin-handbook-2026",
     "media-pdl-weiqu-award-company-response",
+    "xinhua-pdl-yonghui-learning-reform-2025",
+    "jiemian-pdl-cinema-half-refund-2023-04",
+    "thepaper-red-underwear-judgment-commentary-2025-05",
+    "media-yudonglai-rationality-red-underwear-2025-02",
+    "civiw-red-underwear-sentiment-monitor-2025-05",
   ]) {
     const document = backfilledDocuments.get(documentId);
     assert.equal(document?.ingestion.contentStatus, "partial_text");
@@ -321,6 +326,44 @@ test("retrieves Xinhua 6A scenic feature for spring-festival crowd questions", a
     const body = await response.text();
     assert.match(body, /"type":"sources"/);
     assert.match(body, /news\.cn|6A级景区/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("retrieves Yonghui reform material without treating it as Pangdonglai policy", async () => {
+  const originalFetch = globalThis.fetch;
+  let deepseekRequest;
+
+  globalThis.fetch = async (input, init) => {
+    if (String(input) === "https://api.deepseek.com/chat/completions") {
+      deepseekRequest = JSON.parse(init.body);
+      return new Response(
+        'data: {"choices":[{"delta":{"content":"这是永辉的调改实践"}}]}\n\ndata: [DONE]\n\n',
+        { headers: { "content-type": "text/event-stream" } },
+      );
+    }
+    return originalFetch(input, init);
+  };
+
+  try {
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          messages: [{ role: "user", content: "永辉鲁谷店学胖东来改了什么？这能说明学会自由与爱了吗？" }],
+        }),
+      },
+      { DEEPSEEK_API_KEY: "test-key" },
+    );
+
+    assert.equal(response.status, 200);
+    const prompt = deepseekRequest.messages[0].content;
+    assert.match(prompt, /永辉|鲁谷店|调改|照顾.*员工|服务.*顾客/);
+    assert.match(prompt, /不能证明|文化内核|组织条件|实施版本/);
+    assert.doesNotMatch(prompt, /本次检索没有命中任何已审核资料/);
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -656,6 +699,7 @@ test("retrieves red-underwear opinion materials for media-commentary questions",
     assert.match(prompt, /红色内裤掉色过敏争议与名誉权诉讼/);
     assert.match(prompt, /澎湃|马上评|维权依法|言论边界/);
     assert.match(prompt, /理性|放大.*情绪|于东来/);
+    assert.match(prompt, /15\.7\s*万|49\.5%|商业监测|识微/);
     assert.doesNotMatch(prompt, /茶叶苍蝇/);
   } finally {
     globalThis.fetch = originalFetch;

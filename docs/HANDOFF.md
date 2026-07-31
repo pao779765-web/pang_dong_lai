@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-07-31
 
-**当前执行者：** Codex 正按用户 2026-07-31 授权分批回填 23 份现有资料；前两批共 8 份升级为 `partial_text`，剩余 15 份待处理
+**当前执行者：** Codex 正按用户 2026-07-31 授权分批回填 23 份现有资料；前三批共 13 份升级为 `partial_text`，剩余 10 份待处理
 **分支：** `main`
 
 ---
@@ -56,7 +56,7 @@
 
 - [x] **RAG-ARCH-02（用户已授权）**：将单一 `pangdonglai_project/knowledge-base.json` 无损迁移为 `knowledge/manifest.json + sources/<id>/metadata.json/content.md + chunks/<id>.jsonl + cases/<id>.json`；23 份资料、53 个片段和 3 个案例全部保留，现有摘要统一标记 `summary_only`，Worker 改读构建生成的兼容索引，Docker 与结构回归测试通过。此次未抓取或伪造缺失原文。
 - [x] **RAG-CONTENT-AUDIT-01**：已逐篇审计现有 23 份资料的页面可访问性、正文保存权限与覆盖状态，结论见 `docs/SOURCE_AUDIT_08.md`；当前没有任何资料具有已核验的全文转载许可。
-- [ ] **RAG-CONTENT-BACKFILL-01（用户已授权）**：现有 23 份资料分批回填。前两批共 8 份由 `summary_only` 升级为 `partial_text`，片段总数由 53 增至 72；剩余 15 份按 V8 审计结论处理。不得变相复制新闻或图书全文，不得把媒体转载冒充企业原帖。
+- [ ] **RAG-CONTENT-BACKFILL-01（用户已授权）**：现有 23 份资料分批回填。前三批共 13 份由 `summary_only` 升级为 `partial_text`，片段总数由 53 增至 89；剩余 10 份按 V8 审计结论处理。不得变相复制新闻或图书全文，不得把媒体转载冒充企业原帖。
 - [x] **RAG-PLAN-01**：将“帮助网友理解自由与爱”的目标更新为共同路线图；明确六条文化主线、当前能力与缺口、R0～R7 推进顺序、验收标准和 Codex/Grok/用户分工，并加入共同必读入口。
 - [ ] **RAG-CULTURE-R0**：依据 `docs/RAG_CULTURE_ROADMAP.md` 建立正式文化问题地图和 40～60 道网友问题评测集，运行当前 BM25 基线，并把失败区分为资料缺口、检索错误和生成越界；完成前不修改 Query 改写算法、不接向量库。
 - [ ] **RAG-CULTURE-R1**：R0 基线完成并经用户确认后，从 C1“员工的尊严、自由与生活”开始首批资料检索、审核与用户批准；不得自动入库。
@@ -153,6 +153,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-07-31 | Codex | 完成第三批 5 份资料回填：永辉鲁谷店调改、影城半价退票、澎湃红内裤判决评论、于东来理性表态传播链、识微商业舆情指标；明确他企实践、媒体评论、人物表态和商业监测边界，片段增至 89，新增永辉边界测试后 22 项测试通过，未新增来源、未部署 | docs/SOURCE_AUDIT_08.md, pangdonglai_project/knowledge/**, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |
 | 2026-07-31 | Codex | 完成第二批 5 份文化资料回填：新华社“6A 景区”、新华网《觉醒胖东来》书评、清华管理评论、界面“自由·爱”线索、委屈奖媒体记录；均保留来源归因、时点和版权边界，知识片段增至 72，未新增来源、未部署 | docs/SOURCE_AUDIT_08.md, pangdonglai_project/knowledge/**, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |
 | 2026-07-31 | Codex | 完成现有 23 份来源的首轮正文权限与覆盖审计；首批将官网简介、官网门店页和人民日报访谈升级为 partial_text，以事实、必要短引文和段落定位生成 58 个检索片段；21 项测试与 lint 通过，未新增来源、未部署 | docs/SOURCE_AUDIT_08.md, pangdonglai_project/knowledge/**, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |
 | 2026-07-31 | Codex | 将 23 份资料、53 个片段和 3 个案例从单一 JSON 无损迁移为 manifest、来源元数据/内容、JSONL 切片和独立案例；现有内容标记 summary_only，构建自动生成兼容索引，21 项测试与 lint 通过 | pangdonglai_project/knowledge/**, site/scripts/build-knowledge.mjs, site/worker/index.ts, Dockerfile, .dockerignore, site/tests/rendered-html.test.mjs, docs/* |

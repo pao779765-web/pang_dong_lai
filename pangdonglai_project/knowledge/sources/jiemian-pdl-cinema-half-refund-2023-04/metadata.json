@@ -33,13 +33,13 @@
     "禁止把文中其他评论性财务数字、扩张判断当作已核验硬事实主依据。"
   ],
   "ingestion": {
-    "contentStatus": "summary_only",
-    "fullTextAllowed": "unknown",
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
     "contentFormat": "markdown",
     "contentPath": "sources/jiemian-pdl-cinema-half-refund-2023-04/content.md",
     "chunksPath": "chunks/jiemian-pdl-cinema-half-refund-2023-04.jsonl",
     "sourceSnapshotHash": null,
     "migratedAt": "2026-07-31",
-    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+    "notes": "2026-07-31 已依据界面转载页回填用户批准的影城半价退票范围、传播链和时效边界；不扩展到文章其他内容，不保存转载全文。"
   }
 }
