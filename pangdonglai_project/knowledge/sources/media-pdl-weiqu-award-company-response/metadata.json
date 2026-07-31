@@ -32,13 +32,13 @@
     "委屈奖说明「爱/尊重员工」如何可能落到制度，不能证明所有纠纷都发奖。"
   ],
   "ingestion": {
-    "contentStatus": "summary_only",
-    "fullTextAllowed": "unknown",
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
     "contentFormat": "markdown",
     "contentPath": "sources/media-pdl-weiqu-award-company-response/content.md",
     "chunksPath": "chunks/media-pdl-weiqu-award-company-response.jsonl",
     "sourceSnapshotHash": null,
     "migratedAt": "2026-07-31",
-    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+    "notes": "2026-07-31 已依据证券时报网转载页回填办公室回应、员工休息安排与创始人解释；只保存归因事实和必要短引文，不保存媒体全文，现行标准需重新核验。"
   }
 }

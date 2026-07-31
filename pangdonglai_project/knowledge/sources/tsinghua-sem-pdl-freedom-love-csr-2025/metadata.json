@@ -34,13 +34,13 @@
     "禁止整篇复制案例正文。"
   ],
   "ingestion": {
-    "contentStatus": "summary_only",
-    "fullTextAllowed": "unknown",
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
     "contentFormat": "markdown",
     "contentPath": "sources/tsinghua-sem-pdl-freedom-love-csr-2025/content.md",
     "chunksPath": "chunks/tsinghua-sem-pdl-freedom-love-csr-2025.jsonl",
     "sourceSnapshotHash": null,
     "migratedAt": "2026-07-31",
-    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+    "notes": "2026-07-31 已依据清华经管转载页回填文章身份、分析框架、机制清单与复制边界；不保存或通过切片重建评论全文，金额和经营数字不作现行事实。"
   }
 }

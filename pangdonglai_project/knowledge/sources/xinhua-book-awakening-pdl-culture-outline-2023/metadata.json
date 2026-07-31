@@ -32,13 +32,13 @@
     "官网知识库「可自由浏览」为 2023 年书评说法，链接可用性需再核。"
   ],
   "ingestion": {
-    "contentStatus": "summary_only",
-    "fullTextAllowed": "unknown",
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
     "contentFormat": "markdown",
     "contentPath": "sources/xinhua-book-awakening-pdl-culture-outline-2023/content.md",
     "chunksPath": "chunks/xinhua-book-awakening-pdl-culture-outline-2023.jsonl",
     "sourceSnapshotHash": null,
     "migratedAt": "2026-07-31",
-    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+    "notes": "2026-07-31 已依据新华网书评原页回填大纲转述、作者解释框架与历史性事实；不保存或通过切片重建书评及图书全文。"
   }
 }

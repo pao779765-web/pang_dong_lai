@@ -102,6 +102,11 @@ test("builds the RAG index from the directory knowledge source of truth", async 
     "official-company-profile-2026-07-27",
     "official-store-directory-2026-07-24",
     "peoples-daily-yudonglai-interview-2025-08-19",
+    "xinhua-qianbilou-pdl-6a-scenic-2025-03",
+    "xinhua-book-awakening-pdl-culture-outline-2023",
+    "tsinghua-sem-pdl-freedom-love-csr-2025",
+    "jiemian-pdl-freedom-love-origin-handbook-2026",
+    "media-pdl-weiqu-award-company-response",
   ]) {
     const document = backfilledDocuments.get(documentId);
     assert.equal(document?.ingestion.contentStatus, "partial_text");

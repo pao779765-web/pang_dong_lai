@@ -41,8 +41,8 @@ knowledge/
 ## 当前回填进度
 
 - 资料总数：23
-- 检索片段：58
-- `partial_text`：3（官网简介、官网门店页、人民日报访谈）
-- `summary_only`：20
+- 检索片段：72
+- `partial_text`：8（官网简介、官网门店页、人民日报访谈，以及第二批 5 份文化资料）
+- `summary_only`：15
 
 逐篇权限与覆盖审计见 `docs/SOURCE_AUDIT_08.md`。
