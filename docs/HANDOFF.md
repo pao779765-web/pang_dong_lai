@@ -2,9 +2,9 @@
 
 > **规则：** 谁做完谁更新本文件。下一位只认本文件 + Git，不靠聊天记录猜。
 
-**更新时间：** 2026-07-30
+**更新时间：** 2026-07-31
 
-**当前执行者：** Grok 已按用户定级入库红内裤案 L1 企业材料+L2 判决；社交原片待用户审链
+**当前执行者：** Codex 已更新“自由与爱”文化 RAG 路线；下一阶段为 R0 文化地图、网友问题评测集与当前检索基线
 **分支：** `main`
 
 ---
@@ -54,6 +54,9 @@
 
 ## 未完成 / 下一步
 
+- [x] **RAG-PLAN-01**：将“帮助网友理解自由与爱”的目标更新为共同路线图；明确六条文化主线、当前能力与缺口、R0～R7 推进顺序、验收标准和 Codex/Grok/用户分工，并加入共同必读入口。
+- [ ] **RAG-CULTURE-R0**：依据 `docs/RAG_CULTURE_ROADMAP.md` 建立正式文化问题地图和 40～60 道网友问题评测集，运行当前 BM25 基线，并把失败区分为资料缺口、检索错误和生成越界；完成前不修改 Query 改写算法、不接向量库。
+- [ ] **RAG-CULTURE-R1**：R0 基线完成并经用户确认后，从 C1“员工的尊严、自由与生活”开始首批资料检索、审核与用户批准；不得自动入库。
 - [x] **RAG-RESEARCH-01**：建立 Codex 与 Grok 强制共用的互联网资料检索与 RAG 入库规范；明确候选池、来源优先级、企业身份核验、转载去重、事件阶段、用户批准、版权边界、入库测试和向量库接入条件，并在 `AGENTS.md` 设置任务前必读入口。
 - [x] **Codex【RAG-CASE-01】**：按 Grok 审核顺序完成“案例档案 + 事件事实/文化理解双轨回答”：定义 `caseId`、`claimType`、`finality` schema；事件轨仅引用同案例资料，文化轨不得裁定具体客诉真伪；无 `final` 证据时禁止终局话术；界面展示案例来源的证据阶段；补充误召回与最终结论边界测试。
 - [x] **RAG-CASE-01 资料边界**：V3-1（茶叶反馈）和 V3-2（鲜鸡蛋争议）以用户批准的 `limited` 归因资料进入各自案例轨，只能说明企业公开的初步回应，不能作为终局结论；SOURCE_AUDIT_03 其余候选仍未入库。
@@ -100,19 +103,20 @@
 
 ### 给 Codex
 
-1. **只修 QA 报告列出的问题**；不要扩大范围做新栏目。
-2. 不修改原始 HTML。  
-3. 生产预览使用 `npm run start`；修完更新本 HANDOFF 并小步提交。
+1. RAG 下一项只执行 `RAG-CULTURE-R0`：文化问题地图、评测集和当前基线。
+2. R0 完成前不修改 Query 改写算法、不接向量库；不修改原始 HTML。
+3. 所有 RAG 工作先读 `docs/RAG_RESEARCH_PROTOCOL.md` 和 `docs/RAG_CULTURE_ROADMAP.md`；完成后更新本 HANDOFF 并小步提交。
 
 ### 给 Grok
 
-1. 首页 `f8090a0` 验收已写入 `docs/QA_REPORT.md`。  
-2. 下一项：来源核验 `SOURCE_AUDIT.md`；或等 Codex 修完 QA-01 后做生产预览回归。
+1. 先完整阅读 `docs/RAG_RESEARCH_PROTOCOL.md` 与 `docs/RAG_CULTURE_ROADMAP.md`。
+2. R0 阶段独立检查文化问题是否覆盖六条主线，并复核基线中的误召回、跨案例和最终结论边界。
+3. R1 开始后按用户选定主题搜索与审核候选资料；只输出候选卡和审核建议，未经用户批准不得入库。
 
 ### 给用户
 
-1. 确认浅色 hero、360 首屏与 **AI 对话区新气泡 UI** 是否可接受。  
-2. 门店图与发布仍待授权。
+1. 确认六条文化主线是否符合你对“自由与爱”的理解目标。
+2. R1 开始后批准、限制或拒绝候选资料；最终判断回答是否真正帮助普通网友理解。
 
 ---
 
@@ -121,6 +125,8 @@
 - 不修改：`pangdonglai_project/胖东来网页（7月22日1点34分）.html`
 - 网站源码：`pangdonglai_project/site/**`（生产预览入口：`scripts/start.mjs`、`wrangler.preview.json`）
 - 方案：`pangdonglai_project/PRODUCT_PLAN.md`、`docs/PLAN.md`
+- RAG 文化路线：`docs/RAG_CULTURE_ROADMAP.md`
+- RAG 资料规范：`docs/RAG_RESEARCH_PROTOCOL.md`
 - 交接：`docs/HANDOFF.md`
 - 质量报告：`docs/QA_REPORT.md`
 - 待写来源报告：`docs/SOURCE_AUDIT.md`
@@ -141,6 +147,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-07-31 | Codex | 将“帮助网友理解自由与爱”的目标整理为 RAG 主路线图：六条文化主线、R0～R7 顺序、验收标准与协作分工；同步总体计划、共同必读入口和交接任务 | docs/RAG_CULTURE_ROADMAP.md, docs/PLAN.md, AGENTS.md, docs/HANDOFF.md |
 | 2026-07-30 | Codex | 建立 Codex 与 Grok 强制共用的互联网资料检索与 RAG 入库规范，并在共同项目规则中设置检索、审核和入库前必读入口 | docs/RAG_RESEARCH_PROTOCOL.md, AGENTS.md, docs/HANDOFF.md |
 | 2026-07-22 | Grok | 协同基建 + Git 初始化 | README.md, AGENTS.md, docs/*, .gitignore |
 | 2026-07-22 | Codex | 产品与实施计划 | PRODUCT_PLAN.md, PLAN.md, HANDOFF.md |
