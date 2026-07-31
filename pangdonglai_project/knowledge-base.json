@@ -366,6 +366,279 @@
       ]
     },
     {
+      "id": "tsinghua-sem-pdl-freedom-love-csr-2025",
+      "title": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
+      "type": "academic_case_analysis",
+      "status": "limited",
+      "caseId": null,
+      "claimType": "third_party_analysis",
+      "finality": "not_applicable",
+      "evidenceLevel": "L3",
+      "evidenceLabel": "高校案例研究/商业分析（非企业制度原文）",
+      "answerMode": "attributed_claim",
+      "approval": {
+        "approvedBy": "user",
+        "approvedAt": "2026-07-31",
+        "basis": "用户选定方案丙：先入库够硬一批；SOURCE_AUDIT_07。"
+      },
+      "source": {
+        "publisher": "《清华管理评论》案例分析（清华大学经济管理学院网站转载）",
+        "sourceType": "academic",
+        "url": "https://www.sem.tsinghua.edu.cn/info/1173/37297.htm",
+        "publishedAt": "2025-04-07",
+        "verifiedAt": "2026-07-31",
+        "notes": "作者含肖勇波等；文中营收、门店数等可能滞后，硬事实以 L1 官网与更新报道为准。"
+      },
+      "scope": [
+        "第三方对「自由·爱」定义的归纳",
+        "员工/顾客/供应链/竞争者价值共创机制清单",
+        "模式可否简单复制的研究观点"
+      ],
+      "answeringRules": [
+        "必须写「据《清华管理评论》案例/清华经管学院转载案例分析」；不得写成胖东来官网制度原文。",
+        "文中「自由」「爱」定义为作者归纳，须与企业自述、媒体转述区分。",
+        "薪酬、利润分成比例等数字仅作文中所述，不能当作现行财务终局。",
+        "禁止整篇复制案例正文。"
+      ],
+      "chunks": [
+        {
+          "id": "tsinghua-freedom-love-definition",
+          "title": "案例中的「自由·爱」定义（作者归纳）",
+          "text": "据《清华管理评论》关于胖东来的案例分析：企业信仰被表述为「自由·爱」。文中归纳，「自由」指对员工、顾客、供应链伙伴乃至竞争对手的尊重与赋能，为利益相关者提供成长与选择空间；「爱」体现社会责任及对员工、顾客情感需求的关注。文章认为该信仰超越单纯以盈利为核心的传统价值观，强调为更广泛利益相关者创造价值。此为学术案例归纳，不是企业法律文件中的法定定义。",
+          "facts": {
+            "claimType": "第三方分析",
+            "topics": ["自由与爱", "自由·爱", "企业文化", "信仰", "利益相关者"]
+          }
+        },
+        {
+          "id": "tsinghua-employee-customer-practices",
+          "title": "案例中的员工与顾客侧机制（作者列举）",
+          "text": "据同一清华管理评论案例：在员工侧，文章列举高薪与利润分享、工时与春节闭店、不开心假、委屈奖、员工之家、透明竞聘等；在顾客侧，列举严格品控、价格透明、便民服务、退换货与客服奖励、中央厨房与自有商品等。作者用其说明「价值共创」闭环。这些是案例写作时的机制清单与分析框架，具体标准与金额须以企业公开制度或更新报道为准，不能由本文单独裁定现行细节。",
+          "facts": {
+            "claimType": "第三方分析",
+            "topics": ["员工", "顾客", "委屈奖", "休假", "退换货", "品控", "制度落地"]
+          }
+        },
+        {
+          "id": "tsinghua-replication-limits",
+          "title": "案例观点：模式能否简单复制",
+          "text": "据清华管理评论案例专节：文章引述于东来「学习胖东来最好的方法就是不要盲目崇拜胖东来」，并分析难复制之处包括——领导者人生观与分配意愿、深层文化变革成本、薪酬政策依赖财务与配套激励、以及不同市场成本与消费结构差异。结论取向是：应理解底层逻辑并内化，而非照搬表面做法。此为研究观点，不能证明任何企业「学不会」或「一定成功」。",
+          "facts": {
+            "claimType": "第三方分析",
+            "topics": ["可复制性", "学胖东来", "盲目崇拜", "边界", "领导价值观"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "jiemian-pdl-freedom-love-origin-handbook-2026",
+      "title": "界面新闻：自由·爱理念形成线索与《幸福生命手册》等公开叙述",
+      "type": "media_feature",
+      "status": "limited",
+      "caseId": null,
+      "claimType": "media_narrative",
+      "finality": "not_applicable",
+      "evidenceLevel": "L2",
+      "evidenceLabel": "商业媒体综合报道（含对历史与公开材料的转述）",
+      "answerMode": "attributed_claim",
+      "approval": {
+        "approvedBy": "user",
+        "approvedAt": "2026-07-31",
+        "basis": "方案丙首批入库；SOURCE_AUDIT_07。"
+      },
+      "source": {
+        "publisher": "界面新闻·镜相工作室",
+        "sourceType": "media",
+        "url": "https://m.jiemian.com/article/14080556.html",
+        "publishedAt": "2026-03-06",
+        "verifiedAt": "2026-07-31",
+        "notes": "主题为于东来退休与文化延续；其中理念起源与手册段落用于文化问答。营收/离职等数字仅作文中时间点叙述。"
+      },
+      "scope": [
+        "「自由·爱」标语出现背景的媒体叙述",
+        "《幸福生命手册》等公开材料的存在性叙述",
+        "理念落地的制度举例与争议边界"
+      ],
+      "answeringRules": [
+        "写「据界面新闻报道」；卢梭阅读与标语出现为报道叙述的时间线索，不是精确公文首发日期。",
+        "《幸福生命手册》以企业是否仍公开为准；本条只支持「媒体称官网曾发布」类表述。",
+        "不得用退休预测替代企业现行治理事实。"
+      ],
+      "chunks": [
+        {
+          "id": "jiemian-freedom-love-rousseau-origin",
+          "title": "媒体叙述：自由·爱理念形成的时间线索",
+          "text": "据界面新闻 2026 年报道：公开资料显示，于东来早年经历曲折，1995 年开店后逐步形成商业理念；约 2003 年前后因欣赏家乐福而关注法国，阅读卢梭《忏悔录》，爱与自由的理念逐渐形成，此后「自由·爱」（文中并写自由、平等、博爱）标语出现在商场与购物袋上。该内容是媒体对历史线索的整理，便于回答「谁提出/如何形成」，但不能当作唯一官方年表，亦非精确到日的法律文件。",
+          "facts": {
+            "claimType": "媒体历史叙述",
+            "topics": ["自由与爱", "自由·爱", "于东来", "卢梭", "提出", "标语"]
+          }
+        },
+        {
+          "id": "jiemian-handbook-and-institutions",
+          "title": "媒体叙述：手册公开与制度举例",
+          "text": "据同一界面报道：胖东来官网曾发布篇幅很长的《幸福生命手册》，阐述于东来提倡的价值观细则；制度落地举例包括毛利约束与成本利润公示、周二闭店、较高薪资、下班后不打工作电话、委屈奖，以及多种免费服务与宽松售后等。报道同时指出价值规范也可能引发争议（如劳动纪律、私人生活介入等争议案例）。回答「爱如何落地」时可引用为媒体归纳的机制清单，现行细节须交叉 L1/更新公开材料。",
+          "facts": {
+            "claimType": "媒体叙述",
+            "topics": ["幸福生命手册", "委屈奖", "周二闭店", "制度", "爱", "边界"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "media-pdl-weiqu-award-company-response",
+      "title": "媒体记录：胖东来「委屈奖」企业回应与于东来说明",
+      "type": "media_company_response",
+      "status": "limited",
+      "caseId": null,
+      "claimType": "media_attributed_company_rule",
+      "finality": "not_applicable",
+      "evidenceLevel": "L2",
+      "evidenceLabel": "媒体对企业办公室回应及创始人表态的记录",
+      "answerMode": "attributed_claim",
+      "approval": {
+        "approvedBy": "user",
+        "approvedAt": "2026-07-31",
+        "basis": "方案丙：委屈奖制度线索入库；SOURCE_AUDIT_07。"
+      },
+      "source": {
+        "publisher": "每日经济新闻 / 证券时报网等",
+        "sourceType": "media",
+        "url": "https://www.stcn.com/article/detail/825251.html",
+        "publishedAt": "2023-03-27",
+        "verifiedAt": "2026-07-31",
+        "notes": "办公室回应金额区间；于东来另有公开说明见每经等后续报道。金额与细则可能调整，须提示时效。"
+      },
+      "scope": [
+        "委屈奖是否存在、企业如何解释目的与金额区间",
+        "与「公平、自由、快乐、博爱」表述的关联（据报道）"
+      ],
+      "answeringRules": [
+        "写「据媒体报道，胖东来超市办公室回应/于东来表示」；不得写成现行薪酬制度全文。",
+        "金额以企业当时回应为准（报道多为 500–5000 元区间，否定网传 5000–8000 固定档）；现行标准以企业最新说明为准。",
+        "委屈奖说明「爱/尊重员工」如何可能落到制度，不能证明所有纠纷都发奖。"
+      ],
+      "chunks": [
+        {
+          "id": "weiqu-award-office-response",
+          "title": "企业办公室回应：确有委屈奖及金额区间",
+          "text": "据证券时报网转载每日经济新闻等 2023 年报道：针对网传薪资待遇图中的「委屈奖」，胖东来超市办公室回应称，公司确实设有「委屈奖」，意在鼓励员工做正确的事；奖励标准并非网传的 5000–8000 元固定说法，而是根据情况奖金约在 500 元到 5000 元不等。报道同时提到普通员工与管理层带薪年假天数等福利信息。该条仅支持「企业曾公开确认存在该奖项及大致金额区间」。",
+          "facts": {
+            "claimType": "企业回应（媒体记录）",
+            "topics": ["委屈奖", "员工", "福利", "制度", "爱"]
+          }
+        },
+        {
+          "id": "weiqu-award-yudonglai-purpose",
+          "title": "于东来谈委屈奖目的（媒体转述）",
+          "text": "据每日经济新闻等后续报道转述：于东来谈及委屈奖时表示，该奖已设立十几年，目标是培养健全的人格，在员工权益受损害时公司努力在制度上往这个方向进步；并称追求的文化是公平、自由、快乐、博爱，用这种理念展开战略规划。此为人物公开表述的媒体记录，用于回答「爱如何落实为制度」，不是判决或监管文件。",
+          "facts": {
+            "claimType": "人物表述（媒体转述）",
+            "topics": ["委屈奖", "于东来", "健全人格", "自由", "博爱", "制度"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "xinhua-pdl-yonghui-learning-reform-2025",
+      "title": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
+      "type": "media_feature",
+      "status": "limited",
+      "caseId": null,
+      "claimType": "media_narrative",
+      "finality": "not_applicable",
+      "evidenceLevel": "L2",
+      "evidenceLabel": "权威媒体对学习胖东来/调改的报道",
+      "answerMode": "attributed_claim",
+      "approval": {
+        "approvedBy": "user",
+        "approvedAt": "2026-07-31",
+        "basis": "方案丙：外界差异与可复制性材料；SOURCE_AUDIT_07。"
+      },
+      "source": {
+        "publisher": "新华网",
+        "sourceType": "media",
+        "url": "http://www.news.cn/food/20250826/1ad96ef426004cf0b5930a718f0151a3/c.html",
+        "publishedAt": "2025-08-26",
+        "verifiedAt": "2026-07-31"
+      },
+      "scope": [
+        "他企业如何公开表述学习胖东来",
+        "调改中的商品与体验细节（媒体叙述）",
+        "「不同」与「可学之处」的外部观察"
+      ],
+      "answeringRules": [
+        "写「据新华网报道」；对象是永辉调改店，不是胖东来门店本身。",
+        "可说明外界将其与「照顾员工、服务顾客」关联，不能证明学到了「自由与爱」文化内核。",
+        "调改业绩与商品价格等以该报道时点为准，不能外推所有调改店。"
+      ],
+      "chunks": [
+        {
+          "id": "xinhua-yonghui-learn-pdl-practices",
+          "title": "报道：深度学习胖东来与调改取向",
+          "text": "据新华网 2025 年 8 月报道：北京永辉鲁谷店完成自主调改重新开业，报道称结合此前经验、深度学习胖东来模式，从商品选品到场景体验、从员工培养到社区互动，全方位践行「照顾好员工、服务好顾客」的理念；并描述商品汰换、对标质价比、场景与试吃细节等。该文用于回答「外界为何觉得不同/别人学什么」，属于他企学习叙事，不能直接当作胖东来现行制度全文。",
+          "facts": {
+            "claimType": "媒体叙述",
+            "topics": ["学胖东来", "调改", "永辉", "员工", "顾客", "可复制性"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "xinhua-book-awakening-pdl-culture-outline-2023",
+      "title": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
+      "type": "media_book_review",
+      "status": "limited",
+      "caseId": null,
+      "claimType": "media_attributed_company_culture",
+      "finality": "not_applicable",
+      "evidenceLevel": "L2",
+      "evidenceLabel": "权威媒体书评对企业培训大纲的转述",
+      "answerMode": "attributed_claim",
+      "approval": {
+        "approvedBy": "user",
+        "approvedAt": "2026-07-31",
+        "basis": "方案丙：补「谁提出/如何解释」；SOURCE_AUDIT_07。"
+      },
+      "source": {
+        "publisher": "新华网（摘自《觉醒胖东来》推荐序）",
+        "sourceType": "media",
+        "url": "http://www.news.cn/book/20230817/c1a4bdfe85914b6b899d7ed46b4c4030/c.html",
+        "publishedAt": "2023-08-17",
+        "verifiedAt": "2026-07-31"
+      },
+      "scope": [
+        "培训大纲中的信仰/使命/愿景转述",
+        "爱在胖东来五层表述",
+        "文化·分配·运营公开分享的叙述"
+      ],
+      "answeringRules": [
+        "写「据新华网书评转述《文化理念培训大纲》」；若与企业现行大纲冲突，以企业最新公开文本为准。",
+        "三飞轮（文化、分配、运营）为书评作者分析框架。",
+        "官网知识库「可自由浏览」为 2023 年书评说法，链接可用性需再核。"
+      ],
+      "chunks": [
+        {
+          "id": "xinhua-culture-outline-faith-mission",
+          "title": "转述：信仰自由·爱、使命与愿景",
+          "text": "据新华网 2023 年书评文章转述：胖东来《文化理念培训大纲》提到，信仰是「自由·爱」，使命是「传播先进的文化理念」，愿景为「成就阳光个性的生命」；「爱在胖东来」被表述为爱自己、家人、员工、顾客、社会，是创始人于东来以人生经历凝练的经商之道。门店可见「爱在胖东来」「自由·爱」等标语。该条用于回答「是谁提出/企业如何解释」，出处为媒体对大纲的转述，不是本库收录的大纲全文。",
+          "facts": {
+            "claimType": "媒体转述企业大纲",
+            "topics": ["自由与爱", "自由·爱", "培训大纲", "使命", "愿景", "爱在胖东来"]
+          }
+        },
+        {
+          "id": "xinhua-culture-distribution-operations",
+          "title": "书评：文化、分配与运营及公开分享",
+          "text": "据同一新华网书评：作者认为胖东来受喜爱的底层逻辑是文化理念、分配体制与运营系统三者咬合；并称胖东来已将相关内容结晶成文，在官网和公众号知识库公开专业知识、手册、培训与规章制度等，近乎零成本供学习者参考。此为 2023 年书评叙述，用于「爱如何落地/为何显得不同」的外部观察，公开文档的现行入口需以官网实际页面为准。",
+          "facts": {
+            "claimType": "书评分析",
+            "topics": ["分配", "运营", "知识库", "公开分享", "怎么学"]
+          }
+        }
+      ]
+    },
+    {
       "id": "pdl-red-underwear-early-response-2025-02",
       "title": "胖东来就红色内裤争议的早期公开回应（下架、调查组与致歉）",
       "type": "company_public_statement",

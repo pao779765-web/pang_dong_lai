@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-07-31
 
-**当前执行者：** Codex 已更新“自由与爱”文化 RAG 路线；下一阶段为 R0 文化地图、网友问题评测集与当前检索基线
+**当前执行者：** Grok 已按方案丙入库「自由与爱」首批 5 份资料并开 V7 官网深挖候选；Codex 仍可推进 R0 评测基线
 **分支：** `main`
 
 ---
@@ -183,6 +183,7 @@
 | 2026-07-30 | Grok | 用户批准 C1+C4：入库新华社千笔楼（approved/L2，3 chunks）与界面影城半价退票（limited/L2，2 chunks）；补充召回测试 | knowledge-base.json, site/tests/rendered-html.test.mjs, docs/SOURCE_AUDIT_05.md, docs/HANDOFF.md |
 | 2026-07-30 | Grok | 红内裤案：用户定 L1 企业早期回应/报告/起诉公示 approved；判决 L2 approved；社交原片 candidate 待审；案例轨与 UI 阶段文案 | knowledge-base.json, site/worker/index.ts, site/app/page.tsx, site/tests/rendered-html.test.mjs, docs/SOURCE_AUDIT_06.md, docs/HANDOFF.md |
 | 2026-07-30 | Grok | 用户批准舆论表：澎湃马上评 L3 limited、识微情感占比 L4 limited、于东来要理性 L2 approved；网友抽样不进主库 | knowledge-base.json, docs/SOURCE_AUDIT_06.md, docs/HANDOFF.md |
+| 2026-07-31 | Grok | 用户选方案丙：入库清华自由·爱、界面理念起源、委屈奖、永辉调改、新华大纲转述；SOURCE_AUDIT_07 登记官网手册深挖缺口 | knowledge-base.json, docs/SOURCE_AUDIT_07.md, docs/HANDOFF.md |
 
 ---
 

@@ -520,6 +520,43 @@ test("marks approved media interview evidence as an attributed claim", async () 
   }
 });
 
+test("retrieves freedom-and-love culture materials for core culture questions", async () => {
+  const originalFetch = globalThis.fetch;
+  let deepseekRequest;
+
+  globalThis.fetch = async (input, init) => {
+    if (String(input) === "https://api.deepseek.com/chat/completions") {
+      deepseekRequest = JSON.parse(init.body);
+      return new Response(
+        'data: {"choices":[{"delta":{"content":"据资料"}}]}\n\ndata: [DONE]\n\n',
+        { headers: { "content-type": "text/event-stream" } },
+      );
+    }
+    return originalFetch(input, init);
+  };
+
+  try {
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          messages: [{ role: "user", content: "自由与爱是谁提出的？胖东来怎么解释？委屈奖是什么？" }],
+        }),
+      },
+      { DEEPSEEK_API_KEY: "test-key" },
+    );
+
+    assert.equal(response.status, 200);
+    const prompt = deepseekRequest.messages[0].content;
+    assert.match(prompt, /自由·爱|自由与爱|培训大纲|卢梭|清华|委屈奖/);
+    assert.doesNotMatch(prompt, /本次检索没有命中任何已审核资料/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test("retrieves red-underwear opinion materials for media-commentary questions", async () => {
   const originalFetch = globalThis.fetch;
   let deepseekRequest;
