@@ -32,13 +32,13 @@
     "本资料不能单独支持薪酬福利制度、财务数据、企业文化的深层阐释或第三方评价。"
   ],
   "ingestion": {
-    "contentStatus": "summary_only",
-    "fullTextAllowed": "unknown",
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
     "contentFormat": "markdown",
     "contentPath": "sources/official-company-profile-2026-07-27/content.md",
     "chunksPath": "chunks/official-company-profile-2026-07-27.jsonl",
     "sourceSnapshotHash": null,
     "migratedAt": "2026-07-31",
-    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+    "notes": "2026-07-31 重新核验官网页面。未发现明确的全文转载许可，因此只保存企业公开事实和必要短引文，不复制完整页面文案。"
   }
 }

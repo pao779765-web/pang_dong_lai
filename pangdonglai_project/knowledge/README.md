@@ -26,7 +26,7 @@ knowledge/
 2. `metadata.json` 只保存该来源的元数据和使用边界，不放检索片段。
 3. `content.md` 用于保存允许入库的规范化正文。没有取得正文时必须保留 `summary_only`，不得把摘要冒充原文。
 4. `chunks/*.jsonl` 用于检索；每行必须包含 `documentId`、唯一 `id`、`title`、`text` 和 `facts`。
-5. 当前由旧库迁移的片段标记为 `contentKind: reviewed_summary`。逐篇补全正文后再生成更细的原文片段，并填写 `sourceSpans`。
+5. 由旧库迁移且尚未回填的片段标记为 `contentKind: reviewed_summary`；已经依据原页回填的片段标记为 `contentKind: source_text`，并用 `sourceSpans` 定位到 `content.md` 的段落。
 6. 修改后在 `pangdonglai_project/site` 运行 `npm run knowledge:build`，再运行测试和 lint。
 
 ## 正文覆盖状态
@@ -37,3 +37,12 @@ knowledge/
 - `metadata_only`：只保留来源信息，不保存正文。
 
 是否允许保存全文必须逐篇判断。新闻、图书和视频资料不得因为能够访问就默认可以全文入库。
+
+## 当前回填进度
+
+- 资料总数：23
+- 检索片段：58
+- `partial_text`：3（官网简介、官网门店页、人民日报访谈）
+- `summary_only`：20
+
+逐篇权限与覆盖审计见 `docs/SOURCE_AUDIT_08.md`。

@@ -94,6 +94,20 @@ test("builds the RAG index from the directory knowledge source of truth", async 
     assert.ok(parsedChunks.every((chunk) => chunk.documentId === source.id));
     assert.ok(parsedChunks.every((chunk) => typeof chunk.contentKind === "string"));
   }
+
+  const backfilledDocuments = new Map(
+    compiled.documents.map((document) => [document.id, document]),
+  );
+  for (const documentId of [
+    "official-company-profile-2026-07-27",
+    "official-store-directory-2026-07-24",
+    "peoples-daily-yudonglai-interview-2025-08-19",
+  ]) {
+    const document = backfilledDocuments.get(documentId);
+    assert.equal(document?.ingestion.contentStatus, "partial_text");
+    assert.ok(document.chunks.every((chunk) => chunk.contentKind === "source_text"));
+    assert.ok(document.chunks.every((chunk) => chunk.sourceSpans.length > 0));
+  }
 });
 
 test("serves the built site through the CloudBase-compatible Node entrypoint", async (context) => {

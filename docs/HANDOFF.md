@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-07-31
 
-**当前执行者：** Codex 已完成用户批准的知识库目录化迁移；23 份现有资料均标记为 `summary_only`，下一资料任务是逐篇正文权限与覆盖审计
+**当前执行者：** Codex 已按用户 2026-07-31 授权启动 23 份现有资料的正文回填；首轮审计完成，3 份升级为 `partial_text`，剩余 20 份待分批回填
 **分支：** `main`
 
 ---
@@ -55,7 +55,8 @@
 ## 未完成 / 下一步
 
 - [x] **RAG-ARCH-02（用户已授权）**：将单一 `pangdonglai_project/knowledge-base.json` 无损迁移为 `knowledge/manifest.json + sources/<id>/metadata.json/content.md + chunks/<id>.jsonl + cases/<id>.json`；23 份资料、53 个片段和 3 个案例全部保留，现有摘要统一标记 `summary_only`，Worker 改读构建生成的兼容索引，Docker 与结构回归测试通过。此次未抓取或伪造缺失原文。
-- [ ] **RAG-CONTENT-AUDIT-01**：逐篇审计现有 23 份资料的原始页面可访问性、正文保存权限与内容覆盖率，确定 `metadata_only / summary_only / partial_text / full_text`，列出正文回填优先级；只做审计，未经用户批准不新增来源。
+- [x] **RAG-CONTENT-AUDIT-01**：已逐篇审计现有 23 份资料的页面可访问性、正文保存权限与覆盖状态，结论见 `docs/SOURCE_AUDIT_08.md`；当前没有任何资料具有已核验的全文转载许可。
+- [ ] **RAG-CONTENT-BACKFILL-01（用户已授权）**：现有 23 份资料分批回填。首批官网简介、官网门店页和人民日报访谈已由 `summary_only` 升级为 `partial_text`，片段总数由 53 增至 58；剩余 20 份按 V8 顺序处理。不得变相复制新闻或图书全文，不得把媒体转载冒充企业原帖。
 - [x] **RAG-PLAN-01**：将“帮助网友理解自由与爱”的目标更新为共同路线图；明确六条文化主线、当前能力与缺口、R0～R7 推进顺序、验收标准和 Codex/Grok/用户分工，并加入共同必读入口。
 - [ ] **RAG-CULTURE-R0**：依据 `docs/RAG_CULTURE_ROADMAP.md` 建立正式文化问题地图和 40～60 道网友问题评测集，运行当前 BM25 基线，并把失败区分为资料缺口、检索错误和生成越界；完成前不修改 Query 改写算法、不接向量库。
 - [ ] **RAG-CULTURE-R1**：R0 基线完成并经用户确认后，从 C1“员工的尊严、自由与生活”开始首批资料检索、审核与用户批准；不得自动入库。
@@ -106,7 +107,7 @@
 ### 给 Codex
 
 1. 资料架构只维护 `pangdonglai_project/knowledge/**`；禁止手工修改 `knowledge/compiled/knowledge-base.json` 或恢复旧根文件。
-2. 下一资料任务执行 `RAG-CONTENT-AUDIT-01`；RAG 能力任务仍执行 `RAG-CULTURE-R0`。两项完成前不改 Query 改写算法、不接向量库。
+2. 下一资料任务继续执行 `RAG-CONTENT-BACKFILL-01`；RAG 能力任务仍执行 `RAG-CULTURE-R0`。两项完成前不改 Query 改写算法、不接向量库。
 3. 所有 RAG 工作先读 `docs/RAG_RESEARCH_PROTOCOL.md` 和 `docs/RAG_CULTURE_ROADMAP.md`；不修改原始 HTML，完成后更新本 HANDOFF 并小步提交。
 
 ### 给 Grok
@@ -152,6 +153,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-07-31 | Codex | 完成现有 23 份来源的首轮正文权限与覆盖审计；首批将官网简介、官网门店页和人民日报访谈升级为 partial_text，以事实、必要短引文和段落定位生成 58 个检索片段；21 项测试与 lint 通过，未新增来源、未部署 | docs/SOURCE_AUDIT_08.md, pangdonglai_project/knowledge/**, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |
 | 2026-07-31 | Codex | 将 23 份资料、53 个片段和 3 个案例从单一 JSON 无损迁移为 manifest、来源元数据/内容、JSONL 切片和独立案例；现有内容标记 summary_only，构建自动生成兼容索引，21 项测试与 lint 通过 | pangdonglai_project/knowledge/**, site/scripts/build-knowledge.mjs, site/worker/index.ts, Dockerfile, .dockerignore, site/tests/rendered-html.test.mjs, docs/* |
 | 2026-07-31 | Codex | 将“帮助网友理解自由与爱”的目标整理为 RAG 主路线图：六条文化主线、R0～R7 顺序、验收标准与协作分工；同步总体计划、共同必读入口和交接任务 | docs/RAG_CULTURE_ROADMAP.md, docs/PLAN.md, AGENTS.md, docs/HANDOFF.md |
 | 2026-07-30 | Codex | 建立 Codex 与 Grok 强制共用的互联网资料检索与 RAG 入库规范，并在共同项目规则中设置检索、审核和入库前必读入口 | docs/RAG_RESEARCH_PROTOCOL.md, AGENTS.md, docs/HANDOFF.md |

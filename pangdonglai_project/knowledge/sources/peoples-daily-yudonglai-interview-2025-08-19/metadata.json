@@ -32,13 +32,13 @@
     "不得单独用本资料证明薪酬金额、门店实时信息、关店原因或“模式绝对不可复制”等结论。"
   ],
   "ingestion": {
-    "contentStatus": "summary_only",
-    "fullTextAllowed": "unknown",
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
     "contentFormat": "markdown",
     "contentPath": "sources/peoples-daily-yudonglai-interview-2025-08-19/content.md",
     "chunksPath": "chunks/peoples-daily-yudonglai-interview-2025-08-19.jsonl",
     "sourceSnapshotHash": null,
     "migratedAt": "2026-07-31",
-    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+    "notes": "2026-07-31 重新核验人民日报数字报原页。依据版权边界仅保存必要短引文、逐题事实归纳和段落定位，不保存或变相重建整篇访谈。"
   }
 }
