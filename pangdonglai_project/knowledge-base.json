@@ -585,6 +585,161 @@
       ]
     },
     {
+      "id": "official-pdl-baike-system-portal",
+      "title": "胖东来百科系统（企业公开知识门户）",
+      "type": "official_knowledge_portal",
+      "status": "approved",
+      "caseId": null,
+      "claimType": "official_directory",
+      "finality": "not_applicable",
+      "evidenceLevel": "L1",
+      "evidenceLabel": "企业自有域名公开系统入口（内容为前端应用，本库仅录门户存在性）",
+      "answerMode": "fact_with_source",
+      "approval": {
+        "approvedBy": "user",
+        "approvedAt": "2026-07-31",
+        "basis": "方案丙线甲：官网/百科深挖；用户选 1 继续。"
+      },
+      "source": {
+        "publisher": "胖东来（baike.azpdl.cn / baike.azpdl.com）",
+        "sourceType": "official",
+        "url": "https://baike.azpdl.cn/",
+        "publishedAt": "2025",
+        "verifiedAt": "2026-07-31",
+        "notes": "2026-07-31 核验：页面为 Vue SPA，无服务端可读正文，本库不伪称已收录百科全文。alternate: https://baike.azpdl.com/ 。飞书客户文称东来百科含文化、标准等模块。"
+      },
+      "scope": [
+        "企业公开知识库/百科系统入口存在",
+        "引导用户到官方渠道查手册与标准"
+      ],
+      "answeringRules": [
+        "可说明胖东来有自有域名的百科/知识系统入口；不得编造百科内未核验的条目正文。",
+        "具体制度条文须以可打开的原文页或经批准的转载摘要为准。"
+      ],
+      "chunks": [
+        {
+          "id": "pdl-baike-portal-exists",
+          "title": "企业百科门户：入口与使用边界",
+          "text": "经 2026-07-31 核验，胖东来运营企业侧「百科系统」公开入口（https://baike.azpdl.cn/ 及 https://baike.azpdl.com/）。页面为前端单页应用，公开抓取仅见站点壳，本库未收录其内部词条全文。飞书公开客户案例曾称「东来百科」分模块呈现企业文化、实操标准、专业知识、岗位规范等，供学习查询。回答「文化手册在哪看」时，应引导至上述官方入口并提示可能需登录/权限；不得伪造手册全文。",
+          "facts": {
+            "claimType": "官方门户核验",
+            "topics": ["东来百科", "知识库", "文化手册", "官网", "自由与爱"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "media-pdl-culture-system-2022-republish",
+      "title": "行业媒体转载：《胖东来企业文化制度》与考评奖励方案（2022）",
+      "type": "media_company_document_republish",
+      "status": "limited",
+      "caseId": null,
+      "claimType": "media_attributed_company_rule",
+      "finality": "not_applicable",
+      "evidenceLevel": "L2",
+      "evidenceLabel": "行业媒体转载的企业制度文本摘要（非官网现行页；可能已修订）",
+      "answerMode": "attributed_claim",
+      "approval": {
+        "approvedBy": "user",
+        "approvedAt": "2026-07-31",
+        "basis": "线甲深挖：最接近企业原文的可核验转载；SOURCE_AUDIT_07 续。"
+      },
+      "source": {
+        "publisher": "物流指闻（转载标注来源胖东来；2022-08-15）",
+        "sourceType": "media",
+        "url": "https://www.headscm.com/Fingertip/detail/id/31961.html",
+        "publishedAt": "2022-08-15",
+        "verifiedAt": "2026-07-31",
+        "notes": "文称 2022-07 更新企业文化制度及超市部考评奖励方案。私人生活类条款社会争议大；回答须标时效并提示可能已修订。"
+      },
+      "scope": [
+        "企业文化制度总则与目的表述",
+        "行为规范与生活准则的制度形态（摘要）",
+        "考评奖励「自愿申请」机制",
+        "文化落地与边界争议"
+      ],
+      "answeringRules": [
+        "必须写「据 2022 年行业媒体转载的胖东来企业文化制度文本」；不得写成 2026 年现行官网全文。",
+        "该制度把文化落到行为与生活模块，可说明「爱/自由如何可能成为考评」；同时须提示私人生活介入曾引发外界争议。",
+        "禁止大段复制条款全文；只用短摘要。",
+        "与劳动争议个案无自动对应关系。"
+      ],
+      "chunks": [
+        {
+          "id": "culture-system-purpose-and-principles",
+          "title": "制度总则：目的与原则（2022 转载文本）",
+          "text": "据物流指闻 2022 年 8 月转载、标注来源胖东来的《胖东来企业文化制度》：制定依据为企业文化理念；目的包括「用理性的方法，改变奴性、实现个性」；原则含先进性、引导性、实用性、开放性。先进性表述指向更健康文明氛围，让生活与生命品质往自由、轻松、阳光、个性、幸福方向进步；引导性以「培养健全的人格、成就阳光个性的生命」为核心。适用对象为正式员工。该条说明企业曾以成文制度承载文化目标，条文是否仍完全有效须以企业最新公开为准。",
+          "facts": {
+            "claimType": "企业制度转载摘要",
+            "period": "2022-07/08",
+            "topics": ["企业文化制度", "自由", "个性", "健全人格", "奴性"]
+          }
+        },
+        {
+          "id": "culture-system-behavior-and-life-modules",
+          "title": "行为规范与生活准则模块形态（2022 转载摘要）",
+          "text": "据同一转载文本：制度分「行为规范」与「生活准则」等。行为规范含真诚友善、禁止偏见私心与算计利用、敢于承担、禁止人身攻击、禁止家庭暴力、禁止违法违规、禁止恶意传播不实信息等方向（具体以原文为准）。生活准则分居家、爱情婚姻、孩子、父母、健康、理财、休假等模块，并与年终考评奖励比例挂钩；超市部另有《企业文化制度考评奖励方案》，员工可自由选择是否申请考评，强调真诚与公平。此类条款体现「文化进制度」的力度，也是外界讨论边界时的常见材料；回答须区分「企业曾公开此类规范」与「是否应照搬到其他企业」。",
+          "facts": {
+            "claimType": "企业制度转载摘要",
+            "topics": ["行为规范", "生活准则", "考评", "婚姻", "休假", "边界", "爱"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "media-pdl-shen-hongli-culture-happiness-handbook-2026",
+      "title": "媒体记录：胖东来管理层谈文化理念与《幸福生命状态手册》",
+      "type": "media_interview",
+      "status": "limited",
+      "caseId": null,
+      "claimType": "attributed_person_statement",
+      "finality": "not_applicable",
+      "evidenceLevel": "L2",
+      "evidenceLabel": "行业媒体对管理层公开分享的记录",
+      "answerMode": "attributed_claim",
+      "approval": {
+        "approvedBy": "user",
+        "approvedAt": "2026-07-31",
+        "basis": "线甲：补幸福生命手册与文化定义的管理层表述。"
+      },
+      "source": {
+        "publisher": "FoodTalks 等行业媒体（胖东来超市总经理申红丽相关公开分享）",
+        "sourceType": "media",
+        "url": "https://www.foodtalks.cn/news/61988",
+        "publishedAt": "2026-04-14",
+        "verifiedAt": "2026-07-31",
+        "notes": "公开检索摘要可见文化理念与幸福生命状态手册表述；完整页可能需浏览器渲染。"
+      },
+      "scope": [
+        "管理层对自由精神、爱的精神与文化目标的表述",
+        "《幸福生命状态手册》的功能定位（据报道）"
+      ],
+      "answeringRules": [
+        "写「据行业媒体记录的胖东来管理层公开分享」；不是于东来本人访谈全文。",
+        "手册名称报道或作「幸福生命状态手册」，与「幸福生命手册」可能为同一系文本的不同称呼，勿武断合并为同一文件版本。"
+      ],
+      "chunks": [
+        {
+          "id": "shen-culture-free-love-spirit",
+          "title": "管理层表述：自由精神、爱的精神与文化目标",
+          "text": "据 FoodTalks 等 2026 年对胖东来超市总经理申红丽相关公开分享的报道摘要：胖东来追求传播先进文化理念、培养健全人格；文化核心是追求自由的精神、爱的精神，包含独立人格、向善意志及践行传播美好理念，培养健全人格、成就阳光个性生命状态。报道还称，若把先进文化理念具象化，会联想到中华传统美德及多国积极生活气质等，但关键仍是围绕自由精神、爱的精神设计制度与决策原则。此为管理层公开表述的媒体记录，用于补充「企业如何解释自由与爱」。",
+          "facts": {
+            "claimType": "管理层表述（媒体记录）",
+            "topics": ["自由", "爱", "健全人格", "文化理念", "申红丽"]
+          }
+        },
+        {
+          "id": "shen-happiness-life-handbook",
+          "title": "《幸福生命状态手册》定位（媒体记录）",
+          "text": "据同一类报道摘要：文化建设与践行基于《幸福生命状态手册》，由胖东来文化理念沉淀，涵盖思想、工作、生活，并含与企业文化匹配的标准，涉及爱情、婚姻、居家、父母、孩子、休闲、理财、健康、安全等方面。可用于回答「爱如何落实为文本与标准」；手册全文应以企业百科/官网可核验文本为准，本库未收录全书。",
+          "facts": {
+            "claimType": "管理层表述（媒体记录）",
+            "topics": ["幸福生命手册", "幸福生命状态手册", "标准", "生活", "文化落地"]
+          }
+        }
+      ]
+    },
+    {
       "id": "xinhua-book-awakening-pdl-culture-outline-2023",
       "title": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
       "type": "media_book_review",

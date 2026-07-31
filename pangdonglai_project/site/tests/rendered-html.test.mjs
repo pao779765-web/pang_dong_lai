@@ -550,7 +550,7 @@ test("retrieves freedom-and-love culture materials for core culture questions", 
 
     assert.equal(response.status, 200);
     const prompt = deepseekRequest.messages[0].content;
-    assert.match(prompt, /自由·爱|自由与爱|培训大纲|卢梭|清华|委屈奖/);
+    assert.match(prompt, /自由·爱|自由与爱|培训大纲|卢梭|清华|委屈奖|百科|企业文化制度|幸福生命/);
     assert.doesNotMatch(prompt, /本次检索没有命中任何已审核资料/);
   } finally {
     globalThis.fetch = originalFetch;

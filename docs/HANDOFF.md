@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-07-31
 
-**当前执行者：** Grok 已按方案丙入库「自由与爱」首批 5 份资料并开 V7 官网深挖候选；Codex 仍可推进 R0 评测基线
+**当前执行者：** Grok 线甲续：已录东来百科门户 L1 + 企业文化制度转载；手册全文仍待官方可读页；Codex 可并行 R0
 **分支：** `main`
 
 ---
@@ -184,6 +184,7 @@
 | 2026-07-30 | Grok | 红内裤案：用户定 L1 企业早期回应/报告/起诉公示 approved；判决 L2 approved；社交原片 candidate 待审；案例轨与 UI 阶段文案 | knowledge-base.json, site/worker/index.ts, site/app/page.tsx, site/tests/rendered-html.test.mjs, docs/SOURCE_AUDIT_06.md, docs/HANDOFF.md |
 | 2026-07-30 | Grok | 用户批准舆论表：澎湃马上评 L3 limited、识微情感占比 L4 limited、于东来要理性 L2 approved；网友抽样不进主库 | knowledge-base.json, docs/SOURCE_AUDIT_06.md, docs/HANDOFF.md |
 | 2026-07-31 | Grok | 用户选方案丙：入库清华自由·爱、界面理念起源、委屈奖、永辉调改、新华大纲转述；SOURCE_AUDIT_07 登记官网手册深挖缺口 | knowledge-base.json, docs/SOURCE_AUDIT_07.md, docs/HANDOFF.md |
+| 2026-07-31 | Grok | 线甲：核验 baike.azpdl 百科门户；入库门户 L1、2022 企业文化制度媒体转载 L2、申红丽幸福生命手册表述 L2 | knowledge-base.json, docs/SOURCE_AUDIT_07.md, docs/HANDOFF.md |
 
 ---
 
