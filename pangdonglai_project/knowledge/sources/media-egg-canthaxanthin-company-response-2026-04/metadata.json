@@ -1,0 +1,48 @@
+{
+  "id": "media-egg-canthaxanthin-company-response-2026-04",
+  "title": "鲜鸡蛋角黄素网络争议中的企业公开回应与送检说明",
+  "type": "media_company_response",
+  "status": "limited",
+  "caseId": "egg-canthaxanthin-feedback-2026-04",
+  "claimType": "company_preliminary_response",
+  "finality": "no_regulatory_final",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "权威媒体对企业公开说明与自述送检的记录（非监管终局）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-07-27",
+    "basis": "docs/SOURCE_AUDIT_03_DRAFT.md V3-2；用户同意按 L2 + limited + 归因入库。"
+  },
+  "source": {
+    "publisher": "中国经济网 / 21世纪经济报道等转述；企业经抖音官方账号发情况说明（原帖 ID 本库未核验）",
+    "sourceType": "media",
+    "url": "https://www.ce.cn/cysc/sp/info/202604/t20260406_2883752.shtml",
+    "publishedAt": "2026-04-06",
+    "verifiedAt": "2026-07-27",
+    "alternateUrls": [
+      "https://www.21jingji.com/article/20260406/herald/f0b475f419894076ccaae613be6305cf.html"
+    ]
+  },
+  "scope": [
+    "企业针对网络视频争议的公开回应步骤",
+    "企业自述的第三方送检与结果表述",
+    "企业关于角黄素标准与维权的公开说法"
+  ],
+  "answeringRules": [
+    "必须使用「据媒体报道」「据企业公开说明」归因；企业送检结果不等于市场监管最终裁定。",
+    "禁止写「监管已认定鸡蛋绝对安全」或「已认定视频造假并结案」，除非另有监管通报原文入库。",
+    "可说明企业公开表示启动调查、送检、饲料抽检及拟依法维权等自述动作；不得把网络视频指控本身写成已证伪或已证实。",
+    "官方抖音原帖未核验前不得升为 L1。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-egg-canthaxanthin-company-response-2026-04/content.md",
+    "chunksPath": "chunks/media-egg-canthaxanthin-company-response-2026-04.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-07-31",
+    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+  }
+}

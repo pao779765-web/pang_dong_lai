@@ -43,11 +43,57 @@ test("keeps store content and chat contract outside their UI and Worker entrypoi
   assert.match(page, /@\/shared\/chat/);
   assert.doesNotMatch(page, /const storeRegions/);
   assert.match(worker, /from "\.\.\/shared\/chat"/);
+  assert.match(worker, /knowledge\/compiled\/knowledge-base\.json/);
+  assert.doesNotMatch(worker, /\.\.\/\.\.\/knowledge-base\.json/);
   assert.doesNotMatch(worker, /type ChatSource =/);
   assert.match(sharedChat, /export type ChatRequestMessage/);
 
   const regions = JSON.parse(storeDirectory);
   assert.equal(regions.flatMap((region) => region.stores).length, 14);
+});
+
+test("builds the RAG index from the directory knowledge source of truth", async () => {
+  const manifest = JSON.parse(
+    await readFile(new URL("../../knowledge/manifest.json", import.meta.url), "utf8"),
+  );
+  const compiled = JSON.parse(
+    await readFile(new URL("../../knowledge/compiled/knowledge-base.json", import.meta.url), "utf8"),
+  );
+
+  assert.equal(manifest.schemaVersion, "3.0");
+  assert.equal(manifest.sourceOfTruth, "directory");
+  assert.equal(manifest.sources.length, manifest.counts.sources);
+  assert.equal(manifest.cases.length, manifest.counts.cases);
+  assert.equal(compiled.generatedFrom, "knowledge/manifest.json");
+  assert.equal(compiled.documents.length, manifest.counts.sources);
+  assert.equal(compiled.cases.length, manifest.counts.cases);
+  assert.equal(
+    compiled.documents.reduce((count, document) => count + document.chunks.length, 0),
+    manifest.counts.chunks,
+  );
+
+  for (const source of manifest.sources) {
+    const [metadata, content, chunks] = await Promise.all([
+      readFile(new URL(`../../knowledge/${source.metadataPath}`, import.meta.url), "utf8"),
+      readFile(new URL(`../../knowledge/${source.contentPath}`, import.meta.url), "utf8"),
+      readFile(new URL(`../../knowledge/${source.chunksPath}`, import.meta.url), "utf8"),
+    ]);
+    const parsedMetadata = JSON.parse(metadata);
+    const parsedChunks = chunks.trim().split(/\r?\n/).map((line) => JSON.parse(line));
+
+    assert.equal(parsedMetadata.id, source.id);
+    assert.ok(
+      ["metadata_only", "summary_only", "partial_text", "full_text"].includes(
+        parsedMetadata.ingestion.contentStatus,
+      ),
+    );
+    if (parsedMetadata.ingestion.contentStatus === "summary_only") {
+      assert.match(content, /目前不是报道或文献的完整原文/);
+    }
+    assert.ok(parsedChunks.length > 0);
+    assert.ok(parsedChunks.every((chunk) => chunk.documentId === source.id));
+    assert.ok(parsedChunks.every((chunk) => typeof chunk.contentKind === "string"));
+  }
 });
 
 test("serves the built site through the CloudBase-compatible Node entrypoint", async (context) => {
@@ -99,13 +145,14 @@ test("packages a non-root CloudBase container without local secret files", async
   ]);
 
   assert.match(dockerfile, /RUN npm run build/);
-  assert.match(dockerfile, /COPY knowledge-base\.json \/app\/knowledge-base\.json/);
+  assert.match(dockerfile, /COPY knowledge \/app\/knowledge/);
   assert.match(dockerfile, /USER site/);
   assert.match(dockerfile, /EXPOSE 3000/);
   assert.doesNotMatch(dockerfile, /DEEPSEEK_API_KEY\s*=/);
   assert.match(dockerignore, /^site\/\.dev\.vars$/m);
   assert.match(dockerignore, /^site\/\.env\.\*$/m);
-  assert.match(dockerignore, /^!knowledge-base\.json$/m);
+  assert.match(dockerignore, /^!knowledge\/$/m);
+  assert.match(dockerignore, /^knowledge\/legacy$/m);
   assert.doesNotMatch(dockerignore, /^site\/\.openai$/m);
 });
 

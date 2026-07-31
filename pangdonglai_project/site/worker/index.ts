@@ -1,7 +1,7 @@
 /** Cloudflare Worker entry point for the vinext-starter template. */
 import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } from "vinext/server/image-optimization";
 import handler from "vinext/server/app-router-entry";
-import knowledgeBase from "../../knowledge-base.json";
+import knowledgeBase from "../../knowledge/compiled/knowledge-base.json";
 import { CHAT_ROLES, type ChatRequestMessage, type ChatRole, type ChatSource } from "../shared/chat";
 
 interface Env {

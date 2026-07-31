@@ -1,0 +1,44 @@
+{
+  "id": "xinhua-book-awakening-pdl-culture-outline-2023",
+  "title": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
+  "type": "media_book_review",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "media_attributed_company_culture",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "权威媒体书评对企业培训大纲的转述",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-07-31",
+    "basis": "方案丙：补「谁提出/如何解释」；SOURCE_AUDIT_07。"
+  },
+  "source": {
+    "publisher": "新华网（摘自《觉醒胖东来》推荐序）",
+    "sourceType": "media",
+    "url": "http://www.news.cn/book/20230817/c1a4bdfe85914b6b899d7ed46b4c4030/c.html",
+    "publishedAt": "2023-08-17",
+    "verifiedAt": "2026-07-31"
+  },
+  "scope": [
+    "培训大纲中的信仰/使命/愿景转述",
+    "爱在胖东来五层表述",
+    "文化·分配·运营公开分享的叙述"
+  ],
+  "answeringRules": [
+    "写「据新华网书评转述《文化理念培训大纲》」；若与企业现行大纲冲突，以企业最新公开文本为准。",
+    "三飞轮（文化、分配、运营）为书评作者分析框架。",
+    "官网知识库「可自由浏览」为 2023 年书评说法，链接可用性需再核。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/xinhua-book-awakening-pdl-culture-outline-2023/content.md",
+    "chunksPath": "chunks/xinhua-book-awakening-pdl-culture-outline-2023.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-07-31",
+    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+  }
+}

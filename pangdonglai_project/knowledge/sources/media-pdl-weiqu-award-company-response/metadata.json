@@ -1,0 +1,44 @@
+{
+  "id": "media-pdl-weiqu-award-company-response",
+  "title": "媒体记录：胖东来「委屈奖」企业回应与于东来说明",
+  "type": "media_company_response",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "media_attributed_company_rule",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "媒体对企业办公室回应及创始人表态的记录",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-07-31",
+    "basis": "方案丙：委屈奖制度线索入库；SOURCE_AUDIT_07。"
+  },
+  "source": {
+    "publisher": "每日经济新闻 / 证券时报网等",
+    "sourceType": "media",
+    "url": "https://www.stcn.com/article/detail/825251.html",
+    "publishedAt": "2023-03-27",
+    "verifiedAt": "2026-07-31",
+    "notes": "办公室回应金额区间；于东来另有公开说明见每经等后续报道。金额与细则可能调整，须提示时效。"
+  },
+  "scope": [
+    "委屈奖是否存在、企业如何解释目的与金额区间",
+    "与「公平、自由、快乐、博爱」表述的关联（据报道）"
+  ],
+  "answeringRules": [
+    "写「据媒体报道，胖东来超市办公室回应/于东来表示」；不得写成现行薪酬制度全文。",
+    "金额以企业当时回应为准（报道多为 500–5000 元区间，否定网传 5000–8000 固定档）；现行标准以企业最新说明为准。",
+    "委屈奖说明「爱/尊重员工」如何可能落到制度，不能证明所有纠纷都发奖。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-pdl-weiqu-award-company-response/content.md",
+    "chunksPath": "chunks/media-pdl-weiqu-award-company-response.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-07-31",
+    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+  }
+}

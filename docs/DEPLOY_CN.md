@@ -29,7 +29,7 @@ npm run start:cloudbase
 
 ## CloudBase 云托管参数
 
-腾讯云控制台中选择 CloudBase 云托管，从 `pangdonglai_project` 目录的最小部署包构建。该构建范围同时包含 `site` 与其依赖的 `knowledge-base.json`：
+腾讯云控制台中选择 CloudBase 云托管，从 `pangdonglai_project` 目录的最小部署包构建。该构建范围同时包含 `site` 与其依赖的 `knowledge/` 目录；构建时会从 manifest、sources、chunks 和 cases 自动生成兼容索引：
 
 | 配置 | 值 |
 |---|---|

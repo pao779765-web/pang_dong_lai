@@ -6,6 +6,7 @@
 - A「向下探索」和 B「与胖东来对话」双锚点
 - `#explore` 详情承接区
 - `#ai-dialogue` 非官方 AI 文化问答概念区
+- 目录化 RAG 资料库、BM25 检索、来源绑定与事件阶段保护
 - 移动端适配、键盘焦点与减少动态效果模式
 
 原始单文件网页保存在上一级目录，本工程不覆盖它。
@@ -32,6 +33,8 @@ npm run build
 npm test
 npm run lint
 ```
+
+知识库源文件位于上一级 `knowledge/`。`npm run dev`、`npm run build` 和 `npm run lint` 会先执行 `npm run knowledge:build`，从目录化资料生成只读兼容索引。不要直接编辑 `knowledge/compiled/knowledge-base.json`。
 
 生产预览（包含 Worker 与静态资源绑定）：
 
@@ -97,4 +100,4 @@ npm run dev
 
 即便如此，Cloudflare / vinext 本地开发仍**优先推荐 `.dev.vars`**，最稳、可跨终端复用。
 
-AI 对话会调用 DeepSeek；回答为**非官方**，当前未接资料库检索。
+AI 对话会调用 DeepSeek；回答为**非官方**，具体事实只能依据目录化资料库检索到的已审核内容。

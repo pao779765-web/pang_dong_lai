@@ -1,0 +1,46 @@
+{
+  "id": "official-store-directory-2026-07-24",
+  "title": "胖东来各门店信息",
+  "type": "official_directory",
+  "status": "approved",
+  "caseId": null,
+  "claimType": "official_directory",
+  "finality": "not_applicable",
+  "evidenceLevel": "L1",
+  "evidenceLabel": "可核验原始资料",
+  "answerMode": "fact_with_source",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-07-24",
+    "basis": "docs/SOURCE_AUDIT.md 的建议；用户明确批准。"
+  },
+  "source": {
+    "publisher": "胖东来网站（web.azpdl.cn）",
+    "sourceType": "official",
+    "url": "https://web.azpdl.cn/contact",
+    "publishedAt": null,
+    "verifiedAt": "2026-07-24"
+  },
+  "scope": [
+    "门店名称",
+    "门店地址",
+    "门店联系方式",
+    "常规营业时间",
+    "周二闭店说明"
+  ],
+  "answeringRules": [
+    "仅回答本资料列出的门店信息，不推断未列出的门店或扩张计划。",
+    "电话、地址和营业时间可能变化；回答时必须附原始链接和核验日期，并提示以官网最新信息或到店通知为准。",
+    "本资料不能单独支持企业文化、员工制度、经营业绩或外界评价类问题。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/official-store-directory-2026-07-24/content.md",
+    "chunksPath": "chunks/official-store-directory-2026-07-24.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-07-31",
+    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+  }
+}

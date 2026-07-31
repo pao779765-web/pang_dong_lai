@@ -5,7 +5,7 @@ COPY site/package.json site/package-lock.json ./
 RUN npm ci
 
 COPY site ./
-COPY knowledge-base.json /app/knowledge-base.json
+COPY knowledge /app/knowledge
 RUN npm run build
 
 FROM node:22-alpine AS runner

@@ -1,0 +1,45 @@
+{
+  "id": "jiemian-pdl-freedom-love-origin-handbook-2026",
+  "title": "界面新闻：自由·爱理念形成线索与《幸福生命手册》等公开叙述",
+  "type": "media_feature",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "media_narrative",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "商业媒体综合报道（含对历史与公开材料的转述）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-07-31",
+    "basis": "方案丙首批入库；SOURCE_AUDIT_07。"
+  },
+  "source": {
+    "publisher": "界面新闻·镜相工作室",
+    "sourceType": "media",
+    "url": "https://m.jiemian.com/article/14080556.html",
+    "publishedAt": "2026-03-06",
+    "verifiedAt": "2026-07-31",
+    "notes": "主题为于东来退休与文化延续；其中理念起源与手册段落用于文化问答。营收/离职等数字仅作文中时间点叙述。"
+  },
+  "scope": [
+    "「自由·爱」标语出现背景的媒体叙述",
+    "《幸福生命手册》等公开材料的存在性叙述",
+    "理念落地的制度举例与争议边界"
+  ],
+  "answeringRules": [
+    "写「据界面新闻报道」；卢梭阅读与标语出现为报道叙述的时间线索，不是精确公文首发日期。",
+    "《幸福生命手册》以企业是否仍公开为准；本条只支持「媒体称官网曾发布」类表述。",
+    "不得用退休预测替代企业现行治理事实。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/jiemian-pdl-freedom-love-origin-handbook-2026/content.md",
+    "chunksPath": "chunks/jiemian-pdl-freedom-love-origin-handbook-2026.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-07-31",
+    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+  }
+}

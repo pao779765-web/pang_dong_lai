@@ -1,0 +1,42 @@
+{
+  "id": "pdl-red-underwear-lawsuit-notice-2025-04",
+  "title": "胖东来关于「红内裤」事件博主名誉权诉讼的处理公示",
+  "type": "company_public_statement",
+  "status": "approved",
+  "caseId": "red-underwear-color-libel-2025",
+  "claimType": "company_litigation_notice",
+  "finality": "litigation_stage",
+  "evidenceLevel": "L1",
+  "evidenceLabel": "企业诉讼公示要点（官方公众号等；自写摘要）",
+  "answerMode": "fact_with_source",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-07-30",
+    "basis": "docs/SOURCE_AUDIT_06.md；与企业公开材料一并 L1+approved。"
+  },
+  "source": {
+    "publisher": "胖东来商贸集团公众号等官方渠道（处理公示）",
+    "sourceType": "official",
+    "url": "https://news.cctv.com/2025/04/06/ARTIL6LyM2RCmvIBetSuMnLg250406.shtml",
+    "publishedAt": "2025-04-05",
+    "verifiedAt": "2026-07-30",
+    "notes": "2025-04-05 晚公示起诉段某（网名两个小段等）。主链为央视网转载入口。"
+  },
+  "scope": [
+    "企业以名誉权起诉博主、追责金额表态"
+  ],
+  "answeringRules": [
+    "写「据胖东来 2025 年 4 月处理公示」；起诉主张不等于已判决结果。",
+    "判决结果须引用判决类资料，不得用本条代替一审结论。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/pdl-red-underwear-lawsuit-notice-2025-04/content.md",
+    "chunksPath": "chunks/pdl-red-underwear-lawsuit-notice-2025-04.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-07-31",
+    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+  }
+}

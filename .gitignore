@@ -35,6 +35,9 @@ tmp/
 # local review workspace
 .tmp_manual_review/
 
+# generated RAG compatibility index
+/pangdonglai_project/knowledge/compiled/
+
 # local worker secrets (Cloudflare / vinext)
 .dev.vars
 **/.dev.vars

@@ -2,15 +2,16 @@
 
 ## 2026-07-24：第一批资料
 
-用户已阅读 Grok 的 [`SOURCE_AUDIT.md`](./SOURCE_AUDIT.md)，并批准以下条目进入本地 JSON 资料库：
+用户已阅读 Grok 的 [`SOURCE_AUDIT.md`](./SOURCE_AUDIT.md)，并批准以下条目进入本地资料库：
 
 | 来源 | 状态 | 可回答范围 |
 | --- | --- | --- |
 | `https://web.azpdl.cn/contact` | `approved` | 门店名称、地址、联系方式、常规营业安排与周二闭店说明 |
 
-本次批准生成的资料文件：
+本次批准内容现已迁移到目录化资料库：
 
-- [`pangdonglai_project/knowledge-base.json`](../pangdonglai_project/knowledge-base.json)
+- [`pangdonglai_project/knowledge/manifest.json`](../pangdonglai_project/knowledge/manifest.json)
+- [`pangdonglai_project/knowledge/sources/official-store-directory-2026-07-24/metadata.json`](../pangdonglai_project/knowledge/sources/official-store-directory-2026-07-24/metadata.json)
 
 仍保持候选状态、尚未写入资料库：
 

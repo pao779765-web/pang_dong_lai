@@ -1,0 +1,48 @@
+{
+  "id": "book-how-to-learn-pdl-wanghuizhong",
+  "title": "《胖东来，你要怎么学？》（王慧中）",
+  "type": "book_analysis",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "third_party_analysis",
+  "finality": "not_applicable",
+  "evidenceLevel": "L3",
+  "evidenceLabel": "专业/商业图书解读（第三方观点，非企业原文）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-07-29",
+    "basis": "docs/SOURCE_AUDIT_04.md V4-1；用户要求增补更多主题摘要；仍仅自写摘要 chunks，不存全书正文；硬事实以官网与已批 L1/L2 为准。"
+  },
+  "source": {
+    "publisher": "王慧中 著；科学出版社，ISBN 9787508843438（公开书目；另有再版信息以版权页为准）",
+    "sourceType": "book",
+    "url": "https://book.douban.com/subject/26269190/",
+    "publishedAt": "2014-08-25",
+    "verifiedAt": "2026-07-29",
+    "notes": "用户持有扫描 PDF 于本机（约 256 页）。本库不收录全书 OCR/全文，仅存按公开目录与议题结构自写的主题摘要。url 为公开书目页。回答须在正文注明「据《胖东来，你要怎么学？》作者观点/书中讨论」，并由接口附带来源列表。"
+  },
+  "scope": [
+    "第三方视角下如何讨论学习胖东来",
+    "公开目录对应的成长脉络、人性化管理、顾客满意、文化立企等议题概括",
+    "学表面动作与学文化/底层逻辑、可复制性局限（作者论述）",
+    "员工、服务、福利与商业逻辑闭环的概括性讨论（须归因书中观点）"
+  ],
+  "answeringRules": [
+    "正文必须使用「据《胖东来，你要怎么学？》作者观点/书中讨论」等归因，不得写成胖东来官方现行制度或官网规定。",
+    "回答结束时依赖系统附带的「相关资料/来源」展示书名与书目链接；不要伪造页码或暗示已收录全书原文。",
+    "硬事实（门店地址、电话、营业时间、企业简介现行数字、监管/司法终局、具体客诉真伪）一律以已批 L1/L2 资料为准，禁止用本书覆盖。",
+    "本书约 2014 年初版，书中规模、门店数、具体福利数字可能过时；涉及现行制度细节须提示以官网与更新权威来源为准。",
+    "禁止大段复述或暗示已收录全书正文；本库仅为按章节主题整理的自写摘要。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/book-how-to-learn-pdl-wanghuizhong/content.md",
+    "chunksPath": "chunks/book-how-to-learn-pdl-wanghuizhong.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-07-31",
+    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+  }
+}

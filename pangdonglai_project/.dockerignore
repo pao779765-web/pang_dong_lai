@@ -1,8 +1,12 @@
 *
 !Dockerfile
-!knowledge-base.json
+!knowledge/
+!knowledge/**
 !site/
 !site/**
+
+knowledge/compiled
+knowledge/legacy
 
 site/.dev.vars
 site/.dev.vars.*

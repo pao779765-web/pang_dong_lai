@@ -1,0 +1,47 @@
+{
+  "id": "xinhua-qianbilou-pdl-6a-scenic-2025-03",
+  "title": "新华社千笔楼：卖东西的胖东来，咋卖成了“6A级景区”？",
+  "type": "media_feature",
+  "status": "approved",
+  "caseId": null,
+  "claimType": "media_narrative",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "权威媒体综合报道与评论（非企业制度原文）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-07-30",
+    "basis": "docs/SOURCE_AUDIT_05.md C1；用户批准入库。自写摘要，不存全文。"
+  },
+  "source": {
+    "publisher": "新华社（新华网转载页）",
+    "sourceType": "media",
+    "url": "http://www.news.cn/fortune/20250302/be74292d8264467d97737c5f514777da/c.html",
+    "publishedAt": "2025-03-02",
+    "verifiedAt": "2026-07-30",
+    "notes": "千笔楼栏目；记者孙清清、李文哲。文中客流、营收等数字为报道当时叙述，须带日期归因，不能当作永久实时数据。"
+  },
+  "scope": [
+    "2025 年春节前后胖东来热度、外地顾客与排队等媒体叙述",
+    "报道中归纳的服务与员工管理举措（媒体转述）",
+    "学习胖东来、调改与「不可简单抄作业」的评论取向"
+  ],
+  "answeringRules": [
+    "必须使用「据新华社 2025 年 3 月千笔楼报道」等归因，不得写成企业官网实时数据或永久制度。",
+    "客流、营收、利润等数字必须写明报道所涉时间段（如 2025 年春节、2024 年营收），不得外推为「当前一定仍是」。",
+    "「6A级景区」是网友/媒体修辞，不能写成文旅部门正式评定。",
+    "门店地址、营业时间以 L1 门店页为准；与本文冲突时以 L1 为准。",
+    "禁止大段复制报道原文。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/xinhua-qianbilou-pdl-6a-scenic-2025-03/content.md",
+    "chunksPath": "chunks/xinhua-qianbilou-pdl-6a-scenic-2025-03.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-07-31",
+    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+  }
+}

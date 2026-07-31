@@ -1,0 +1,166 @@
+{
+  "schemaVersion": "3.0",
+  "collection": "pangdonglai-rag-local",
+  "description": "目录化知识库：来源元数据、可回填正文、检索切片与案例分开维护；compiled/knowledge-base.json 仅为构建产物。",
+  "sourceOfTruth": "directory",
+  "generatedIndex": "compiled/knowledge-base.json",
+  "counts": {
+    "cases": 3,
+    "sources": 23,
+    "chunks": 53
+  },
+  "cases": [
+    {
+      "id": "tea-fly-feedback-2026-01",
+      "path": "cases/tea-fly-feedback-2026-01.json"
+    },
+    {
+      "id": "egg-canthaxanthin-feedback-2026-04",
+      "path": "cases/egg-canthaxanthin-feedback-2026-04.json"
+    },
+    {
+      "id": "red-underwear-color-libel-2025",
+      "path": "cases/red-underwear-color-libel-2025.json"
+    }
+  ],
+  "sources": [
+    {
+      "id": "official-store-directory-2026-07-24",
+      "metadataPath": "sources/official-store-directory-2026-07-24/metadata.json",
+      "contentPath": "sources/official-store-directory-2026-07-24/content.md",
+      "chunksPath": "chunks/official-store-directory-2026-07-24.jsonl"
+    },
+    {
+      "id": "official-company-profile-2026-07-27",
+      "metadataPath": "sources/official-company-profile-2026-07-27/metadata.json",
+      "contentPath": "sources/official-company-profile-2026-07-27/content.md",
+      "chunksPath": "chunks/official-company-profile-2026-07-27.jsonl"
+    },
+    {
+      "id": "peoples-daily-yudonglai-interview-2025-08-19",
+      "metadataPath": "sources/peoples-daily-yudonglai-interview-2025-08-19/metadata.json",
+      "contentPath": "sources/peoples-daily-yudonglai-interview-2025-08-19/content.md",
+      "chunksPath": "chunks/peoples-daily-yudonglai-interview-2025-08-19.jsonl"
+    },
+    {
+      "id": "xinhua-qianbilou-pdl-6a-scenic-2025-03",
+      "metadataPath": "sources/xinhua-qianbilou-pdl-6a-scenic-2025-03/metadata.json",
+      "contentPath": "sources/xinhua-qianbilou-pdl-6a-scenic-2025-03/content.md",
+      "chunksPath": "chunks/xinhua-qianbilou-pdl-6a-scenic-2025-03.jsonl"
+    },
+    {
+      "id": "jiemian-pdl-cinema-half-refund-2023-04",
+      "metadataPath": "sources/jiemian-pdl-cinema-half-refund-2023-04/metadata.json",
+      "contentPath": "sources/jiemian-pdl-cinema-half-refund-2023-04/content.md",
+      "chunksPath": "chunks/jiemian-pdl-cinema-half-refund-2023-04.jsonl"
+    },
+    {
+      "id": "tsinghua-sem-pdl-freedom-love-csr-2025",
+      "metadataPath": "sources/tsinghua-sem-pdl-freedom-love-csr-2025/metadata.json",
+      "contentPath": "sources/tsinghua-sem-pdl-freedom-love-csr-2025/content.md",
+      "chunksPath": "chunks/tsinghua-sem-pdl-freedom-love-csr-2025.jsonl"
+    },
+    {
+      "id": "jiemian-pdl-freedom-love-origin-handbook-2026",
+      "metadataPath": "sources/jiemian-pdl-freedom-love-origin-handbook-2026/metadata.json",
+      "contentPath": "sources/jiemian-pdl-freedom-love-origin-handbook-2026/content.md",
+      "chunksPath": "chunks/jiemian-pdl-freedom-love-origin-handbook-2026.jsonl"
+    },
+    {
+      "id": "media-pdl-weiqu-award-company-response",
+      "metadataPath": "sources/media-pdl-weiqu-award-company-response/metadata.json",
+      "contentPath": "sources/media-pdl-weiqu-award-company-response/content.md",
+      "chunksPath": "chunks/media-pdl-weiqu-award-company-response.jsonl"
+    },
+    {
+      "id": "xinhua-pdl-yonghui-learning-reform-2025",
+      "metadataPath": "sources/xinhua-pdl-yonghui-learning-reform-2025/metadata.json",
+      "contentPath": "sources/xinhua-pdl-yonghui-learning-reform-2025/content.md",
+      "chunksPath": "chunks/xinhua-pdl-yonghui-learning-reform-2025.jsonl"
+    },
+    {
+      "id": "official-pdl-baike-system-portal",
+      "metadataPath": "sources/official-pdl-baike-system-portal/metadata.json",
+      "contentPath": "sources/official-pdl-baike-system-portal/content.md",
+      "chunksPath": "chunks/official-pdl-baike-system-portal.jsonl"
+    },
+    {
+      "id": "media-pdl-culture-system-2022-republish",
+      "metadataPath": "sources/media-pdl-culture-system-2022-republish/metadata.json",
+      "contentPath": "sources/media-pdl-culture-system-2022-republish/content.md",
+      "chunksPath": "chunks/media-pdl-culture-system-2022-republish.jsonl"
+    },
+    {
+      "id": "media-pdl-shen-hongli-culture-happiness-handbook-2026",
+      "metadataPath": "sources/media-pdl-shen-hongli-culture-happiness-handbook-2026/metadata.json",
+      "contentPath": "sources/media-pdl-shen-hongli-culture-happiness-handbook-2026/content.md",
+      "chunksPath": "chunks/media-pdl-shen-hongli-culture-happiness-handbook-2026.jsonl"
+    },
+    {
+      "id": "xinhua-book-awakening-pdl-culture-outline-2023",
+      "metadataPath": "sources/xinhua-book-awakening-pdl-culture-outline-2023/metadata.json",
+      "contentPath": "sources/xinhua-book-awakening-pdl-culture-outline-2023/content.md",
+      "chunksPath": "chunks/xinhua-book-awakening-pdl-culture-outline-2023.jsonl"
+    },
+    {
+      "id": "pdl-red-underwear-early-response-2025-02",
+      "metadataPath": "sources/pdl-red-underwear-early-response-2025-02/metadata.json",
+      "contentPath": "sources/pdl-red-underwear-early-response-2025-02/content.md",
+      "chunksPath": "chunks/pdl-red-underwear-early-response-2025-02.jsonl"
+    },
+    {
+      "id": "pdl-red-underwear-investigation-report-2025-02-14",
+      "metadataPath": "sources/pdl-red-underwear-investigation-report-2025-02-14/metadata.json",
+      "contentPath": "sources/pdl-red-underwear-investigation-report-2025-02-14/content.md",
+      "chunksPath": "chunks/pdl-red-underwear-investigation-report-2025-02-14.jsonl"
+    },
+    {
+      "id": "pdl-red-underwear-lawsuit-notice-2025-04",
+      "metadataPath": "sources/pdl-red-underwear-lawsuit-notice-2025-04/metadata.json",
+      "contentPath": "sources/pdl-red-underwear-lawsuit-notice-2025-04/content.md",
+      "chunksPath": "chunks/pdl-red-underwear-lawsuit-notice-2025-04.jsonl"
+    },
+    {
+      "id": "media-red-underwear-civil-judgment-2025-05",
+      "metadataPath": "sources/media-red-underwear-civil-judgment-2025-05/metadata.json",
+      "contentPath": "sources/media-red-underwear-civil-judgment-2025-05/content.md",
+      "chunksPath": "chunks/media-red-underwear-civil-judgment-2025-05.jsonl"
+    },
+    {
+      "id": "thepaper-red-underwear-judgment-commentary-2025-05",
+      "metadataPath": "sources/thepaper-red-underwear-judgment-commentary-2025-05/metadata.json",
+      "contentPath": "sources/thepaper-red-underwear-judgment-commentary-2025-05/content.md",
+      "chunksPath": "chunks/thepaper-red-underwear-judgment-commentary-2025-05.jsonl"
+    },
+    {
+      "id": "civiw-red-underwear-sentiment-monitor-2025-05",
+      "metadataPath": "sources/civiw-red-underwear-sentiment-monitor-2025-05/metadata.json",
+      "contentPath": "sources/civiw-red-underwear-sentiment-monitor-2025-05/content.md",
+      "chunksPath": "chunks/civiw-red-underwear-sentiment-monitor-2025-05.jsonl"
+    },
+    {
+      "id": "media-yudonglai-rationality-red-underwear-2025-02",
+      "metadataPath": "sources/media-yudonglai-rationality-red-underwear-2025-02/metadata.json",
+      "contentPath": "sources/media-yudonglai-rationality-red-underwear-2025-02/content.md",
+      "chunksPath": "chunks/media-yudonglai-rationality-red-underwear-2025-02.jsonl"
+    },
+    {
+      "id": "media-tea-fly-preliminary-response-2026-01",
+      "metadataPath": "sources/media-tea-fly-preliminary-response-2026-01/metadata.json",
+      "contentPath": "sources/media-tea-fly-preliminary-response-2026-01/content.md",
+      "chunksPath": "chunks/media-tea-fly-preliminary-response-2026-01.jsonl"
+    },
+    {
+      "id": "media-egg-canthaxanthin-company-response-2026-04",
+      "metadataPath": "sources/media-egg-canthaxanthin-company-response-2026-04/metadata.json",
+      "contentPath": "sources/media-egg-canthaxanthin-company-response-2026-04/content.md",
+      "chunksPath": "chunks/media-egg-canthaxanthin-company-response-2026-04.jsonl"
+    },
+    {
+      "id": "book-how-to-learn-pdl-wanghuizhong",
+      "metadataPath": "sources/book-how-to-learn-pdl-wanghuizhong/metadata.json",
+      "contentPath": "sources/book-how-to-learn-pdl-wanghuizhong/content.md",
+      "chunksPath": "chunks/book-how-to-learn-pdl-wanghuizhong.jsonl"
+    }
+  ]
+}

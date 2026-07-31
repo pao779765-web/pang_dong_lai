@@ -1,0 +1,48 @@
+{
+  "id": "media-tea-fly-preliminary-response-2026-01",
+  "title": "顾客抖音反馈茶叶问题后的企业公开初步说明",
+  "type": "media_company_response",
+  "status": "limited",
+  "caseId": "tea-fly-feedback-2026-01",
+  "claimType": "company_preliminary_response",
+  "finality": "preliminary",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "权威媒体对企业公开说明的记录（非最终调查结论）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-07-27",
+    "basis": "docs/SOURCE_AUDIT_03_DRAFT.md V3-1；用户同意按 L2 + limited + 归因入库。"
+  },
+  "source": {
+    "publisher": "人民网河南等媒体转述；企业 2026-01-05 公开发布情况说明（官方抖音原帖本库未核验 ID）",
+    "sourceType": "media",
+    "url": "https://ha.people.com.cn/n2/2026/0106/c351638-41465164.html",
+    "publishedAt": "2026-01-06",
+    "verifiedAt": "2026-07-27",
+    "alternateUrls": [
+      "https://www.thepaper.cn/newsDetail_forward_32324722"
+    ]
+  },
+  "scope": [
+    "企业公开的初步调查与处置动作",
+    "客服流程致歉的公开表述",
+    "调查完成前对商品与供应商的排查表述"
+  ],
+  "answeringRules": [
+    "必须使用「据媒体报道」「据企业公开情况说明」等归因措辞，并带日期。",
+    "仅描述企业公开表示采取的初步动作（如组建调查组、下架排查、访厂复核、客服致歉）；禁止写成事件最终结论、苍蝇来源已查清或质量问题已定性。",
+    "禁止用本资料概括抖音舆论整体倾向；禁止推断全部商品或全部客服情况。",
+    "官方抖音原帖 permalink 未入库核验前，不得表述为 L1 企业原件。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-tea-fly-preliminary-response-2026-01/content.md",
+    "chunksPath": "chunks/media-tea-fly-preliminary-response-2026-01.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-07-31",
+    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+  }
+}

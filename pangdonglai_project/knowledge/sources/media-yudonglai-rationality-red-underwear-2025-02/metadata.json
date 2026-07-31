@@ -1,0 +1,43 @@
+{
+  "id": "media-yudonglai-rationality-red-underwear-2025-02",
+  "title": "媒体转述：于东来就红内裤追责谈「要有理性」",
+  "type": "media_attributed_person_statement",
+  "status": "approved",
+  "caseId": "red-underwear-color-libel-2025",
+  "claimType": "attributed_person_statement",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "权威/主流媒体对创始人公开表述的转述（非判决）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-07-30",
+    "basis": "用户批准舆论表：于东来「要理性」可挂 L2 企业/人物表述，须归因，非判决。"
+  },
+  "source": {
+    "publisher": "每日经济新闻等转述大象新闻报道",
+    "sourceType": "media",
+    "url": "https://www.nbd.com.cn/articles/2025-02-28/3771691.html",
+    "publishedAt": "2025-02-28",
+    "verifiedAt": "2026-07-30",
+    "notes": "报道称于东来回应追责红内裤事件的公开说法。属人物公开表述的媒体记录，不是法院判决理由全文。"
+  },
+  "scope": [
+    "于东来就追责表态的公开说法（媒体转述）"
+  ],
+  "answeringRules": [
+    "必须写「据媒体报道，于东来表示/回应称」；不得写成判决主文或监管结论。",
+    "该表述是价值取向提醒，不能单独证明商品质量或侵权是否成立。",
+    "案件事实与判决结果以 L1 企业材料与 L2 判决资料为准。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-yudonglai-rationality-red-underwear-2025-02/content.md",
+    "chunksPath": "chunks/media-yudonglai-rationality-red-underwear-2025-02.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-07-31",
+    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+  }
+}

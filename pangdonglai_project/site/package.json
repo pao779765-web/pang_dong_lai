@@ -6,11 +6,17 @@
     "node": ">=22.13.0"
   },
   "scripts": {
+    "knowledge:build": "node scripts/build-knowledge.mjs",
+    "predev": "npm run knowledge:build",
     "dev": "vinext dev",
+    "prebuild": "npm run knowledge:build",
     "build": "vinext build",
+    "prestart": "npm run knowledge:build",
     "start": "node scripts/start.mjs",
+    "prestart:cloudbase": "npm run knowledge:build",
     "start:cloudbase": "node scripts/cloudbase-server.mjs",
     "test": "npm run build && node --test tests/rendered-html.test.mjs",
+    "prelint": "npm run knowledge:build",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next"
   },
   "dependencies": {

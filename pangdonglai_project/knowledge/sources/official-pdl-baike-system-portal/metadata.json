@@ -1,0 +1,43 @@
+{
+  "id": "official-pdl-baike-system-portal",
+  "title": "胖东来百科系统（企业公开知识门户）",
+  "type": "official_knowledge_portal",
+  "status": "approved",
+  "caseId": null,
+  "claimType": "official_directory",
+  "finality": "not_applicable",
+  "evidenceLevel": "L1",
+  "evidenceLabel": "企业自有域名公开系统入口（内容为前端应用，本库仅录门户存在性）",
+  "answerMode": "fact_with_source",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-07-31",
+    "basis": "方案丙线甲：官网/百科深挖；用户选 1 继续。"
+  },
+  "source": {
+    "publisher": "胖东来（baike.azpdl.cn / baike.azpdl.com）",
+    "sourceType": "official",
+    "url": "https://baike.azpdl.cn/",
+    "publishedAt": "2025",
+    "verifiedAt": "2026-07-31",
+    "notes": "2026-07-31 核验：页面为 Vue SPA，无服务端可读正文，本库不伪称已收录百科全文。alternate: https://baike.azpdl.com/ 。飞书客户文称东来百科含文化、标准等模块。"
+  },
+  "scope": [
+    "企业公开知识库/百科系统入口存在",
+    "引导用户到官方渠道查手册与标准"
+  ],
+  "answeringRules": [
+    "可说明胖东来有自有域名的百科/知识系统入口；不得编造百科内未核验的条目正文。",
+    "具体制度条文须以可打开的原文页或经批准的转载摘要为准。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/official-pdl-baike-system-portal/content.md",
+    "chunksPath": "chunks/official-pdl-baike-system-portal.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-07-31",
+    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+  }
+}

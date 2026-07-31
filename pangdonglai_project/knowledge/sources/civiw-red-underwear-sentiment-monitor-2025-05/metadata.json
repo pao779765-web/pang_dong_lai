@@ -1,0 +1,44 @@
+{
+  "id": "civiw-red-underwear-sentiment-monitor-2025-05",
+  "title": "商业舆情监测摘要：红内裤事件信息量与情感占比（某机构）",
+  "type": "sentiment_monitor_secondary",
+  "status": "limited",
+  "caseId": "red-underwear-color-libel-2025",
+  "claimType": "third_party_sentiment_stats",
+  "finality": "not_applicable",
+  "evidenceLevel": "L4",
+  "evidenceLabel": "第三方商业舆情监测数字（方法论不透明，仅作参考）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-07-30",
+    "basis": "用户批准舆论表：识微等情感占比 L4 慎用，最多「某机构监测称」。"
+  },
+  "source": {
+    "publisher": "识微科技·识微商情等公开舆情文章",
+    "sourceType": "commercial_monitor",
+    "url": "https://m.civiw.com/business/20250530163337915",
+    "publishedAt": "2025-05-30",
+    "verifiedAt": "2026-07-30",
+    "notes": "商业监测产品公开页；样本、算法与情感标注规则未充分公开，禁止写成「全国民意调查」或「法院认定」。"
+  },
+  "scope": [
+    "某机构给出的信息量、渠道与情感占比数字（有时段）"
+  ],
+  "answeringRules": [
+    "必须写「据某商业舆情监测机构公开文章称」或「据识微商情等监测材料称」；数字仅对应该文所述监测时段。",
+    "禁止把负面/正面占比写成「全国舆论一边倒」；负面口径可能混合批评企业、批评博主、批评网暴等。",
+    "不得用本资料证明案件事实真伪或判决对错。",
+    "网友具体评论抽样未入库；最多概括「存在多类声音」。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/civiw-red-underwear-sentiment-monitor-2025-05/content.md",
+    "chunksPath": "chunks/civiw-red-underwear-sentiment-monitor-2025-05.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-07-31",
+    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "id": "media-pdl-shen-hongli-culture-happiness-handbook-2026",
+  "title": "媒体记录：胖东来管理层谈文化理念与《幸福生命状态手册》",
+  "type": "media_interview",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "attributed_person_statement",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "行业媒体对管理层公开分享的记录",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-07-31",
+    "basis": "线甲：补幸福生命手册与文化定义的管理层表述。"
+  },
+  "source": {
+    "publisher": "FoodTalks 等行业媒体（胖东来超市总经理申红丽相关公开分享）",
+    "sourceType": "media",
+    "url": "https://www.foodtalks.cn/news/61988",
+    "publishedAt": "2026-04-14",
+    "verifiedAt": "2026-07-31",
+    "notes": "公开检索摘要可见文化理念与幸福生命状态手册表述；完整页可能需浏览器渲染。"
+  },
+  "scope": [
+    "管理层对自由精神、爱的精神与文化目标的表述",
+    "《幸福生命状态手册》的功能定位（据报道）"
+  ],
+  "answeringRules": [
+    "写「据行业媒体记录的胖东来管理层公开分享」；不是于东来本人访谈全文。",
+    "手册名称报道或作「幸福生命状态手册」，与「幸福生命手册」可能为同一系文本的不同称呼，勿武断合并为同一文件版本。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-pdl-shen-hongli-culture-happiness-handbook-2026/content.md",
+    "chunksPath": "chunks/media-pdl-shen-hongli-culture-happiness-handbook-2026.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-07-31",
+    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+  }
+}

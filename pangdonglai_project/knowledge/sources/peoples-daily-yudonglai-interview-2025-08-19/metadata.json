@@ -1,0 +1,44 @@
+{
+  "id": "peoples-daily-yudonglai-interview-2025-08-19",
+  "title": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
+  "type": "media_interview",
+  "status": "approved",
+  "caseId": null,
+  "claimType": "attributed_culture_statement",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "权威记录与访谈",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-07-27",
+    "basis": "docs/SOURCE_AUDIT_02.md 的 V2-2；用户明确批准。"
+  },
+  "source": {
+    "publisher": "人民日报数字报",
+    "sourceType": "media",
+    "url": "https://paper.people.com.cn/rmrb/pc/content/202508/19/content_30097056.html",
+    "publishedAt": "2025-08-19",
+    "verifiedAt": "2026-07-27"
+  },
+  "scope": [
+    "于东来在访谈中的公开表述",
+    "员工与顾客关系的自述",
+    "品质、规模、诚信与投诉处理的自述"
+  ],
+  "answeringRules": [
+    "回答必须使用“据《人民日报》2025 年访谈”“于东来在访谈中表示”等归因措辞。",
+    "不得把受访者自述写成已独立核验的财务事实、制度全文或所有门店的实时做法。",
+    "不得单独用本资料证明薪酬金额、门店实时信息、关店原因或“模式绝对不可复制”等结论。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/peoples-daily-yudonglai-interview-2025-08-19/content.md",
+    "chunksPath": "chunks/peoples-daily-yudonglai-interview-2025-08-19.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-07-31",
+    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "id": "tsinghua-sem-pdl-freedom-love-csr-2025",
+  "title": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
+  "type": "academic_case_analysis",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "third_party_analysis",
+  "finality": "not_applicable",
+  "evidenceLevel": "L3",
+  "evidenceLabel": "高校案例研究/商业分析（非企业制度原文）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-07-31",
+    "basis": "用户选定方案丙：先入库够硬一批；SOURCE_AUDIT_07。"
+  },
+  "source": {
+    "publisher": "《清华管理评论》案例分析（清华大学经济管理学院网站转载）",
+    "sourceType": "academic",
+    "url": "https://www.sem.tsinghua.edu.cn/info/1173/37297.htm",
+    "publishedAt": "2025-04-07",
+    "verifiedAt": "2026-07-31",
+    "notes": "作者含肖勇波等；文中营收、门店数等可能滞后，硬事实以 L1 官网与更新报道为准。"
+  },
+  "scope": [
+    "第三方对「自由·爱」定义的归纳",
+    "员工/顾客/供应链/竞争者价值共创机制清单",
+    "模式可否简单复制的研究观点"
+  ],
+  "answeringRules": [
+    "必须写「据《清华管理评论》案例/清华经管学院转载案例分析」；不得写成胖东来官网制度原文。",
+    "文中「自由」「爱」定义为作者归纳，须与企业自述、媒体转述区分。",
+    "薪酬、利润分成比例等数字仅作文中所述，不能当作现行财务终局。",
+    "禁止整篇复制案例正文。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/tsinghua-sem-pdl-freedom-love-csr-2025/content.md",
+    "chunksPath": "chunks/tsinghua-sem-pdl-freedom-love-csr-2025.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-07-31",
+    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+  }
+}

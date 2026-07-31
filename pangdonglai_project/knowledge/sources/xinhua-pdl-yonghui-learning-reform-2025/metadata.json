@@ -1,0 +1,44 @@
+{
+  "id": "xinhua-pdl-yonghui-learning-reform-2025",
+  "title": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
+  "type": "media_feature",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "media_narrative",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "权威媒体对学习胖东来/调改的报道",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-07-31",
+    "basis": "方案丙：外界差异与可复制性材料；SOURCE_AUDIT_07。"
+  },
+  "source": {
+    "publisher": "新华网",
+    "sourceType": "media",
+    "url": "http://www.news.cn/food/20250826/1ad96ef426004cf0b5930a718f0151a3/c.html",
+    "publishedAt": "2025-08-26",
+    "verifiedAt": "2026-07-31"
+  },
+  "scope": [
+    "他企业如何公开表述学习胖东来",
+    "调改中的商品与体验细节（媒体叙述）",
+    "「不同」与「可学之处」的外部观察"
+  ],
+  "answeringRules": [
+    "写「据新华网报道」；对象是永辉调改店，不是胖东来门店本身。",
+    "可说明外界将其与「照顾员工、服务顾客」关联，不能证明学到了「自由与爱」文化内核。",
+    "调改业绩与商品价格等以该报道时点为准，不能外推所有调改店。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/xinhua-pdl-yonghui-learning-reform-2025/content.md",
+    "chunksPath": "chunks/xinhua-pdl-yonghui-learning-reform-2025.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-07-31",
+    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+  }
+}

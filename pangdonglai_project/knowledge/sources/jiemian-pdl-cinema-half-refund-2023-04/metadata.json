@@ -1,0 +1,45 @@
+{
+  "id": "jiemian-pdl-cinema-half-refund-2023-04",
+  "title": "界面新闻转述：胖东来影城「电影难看可退一半票价」等规定",
+  "type": "media_service_detail",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "media_attributed_company_rule",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "商业媒体对企业服务规定的转述（须归因；非现行制度原文）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-07-30",
+    "basis": "docs/SOURCE_AUDIT_05.md C4；用户批准 limited 入库。仅影城退票相关摘要，不整篇入库。"
+  },
+  "source": {
+    "publisher": "界面新闻（转载《商业评论》等）",
+    "sourceType": "media",
+    "url": "https://www.jiemian.com/article/9321561.html",
+    "publishedAt": "2023-04-27",
+    "verifiedAt": "2026-07-30",
+    "notes": "文中称消费者社交媒体反馈后，胖东来影城表示确有该规定。本库未核验企业现行影城告示原文；回答须提示以门店/影城最新公示为准。"
+  },
+  "scope": [
+    "媒体记录的胖东来影城观影不满意退一半票价说法",
+    "服务细节讨论中的归因边界"
+  ],
+  "answeringRules": [
+    "必须使用「据 2023 年界面新闻等报道」「报道称胖东来影城表示」等归因，不得写成官网现行制度全文。",
+    "须提示：规定是否仍有效、适用范围与办理条件，应以影城/企业最新现场公示为准；本文不能证明 2023 年后规则未改。",
+    "不得用本资料裁定具体客诉、退款个案真伪或监管结论。",
+    "禁止把文中其他评论性财务数字、扩张判断当作已核验硬事实主依据。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/jiemian-pdl-cinema-half-refund-2023-04/content.md",
+    "chunksPath": "chunks/jiemian-pdl-cinema-half-refund-2023-04.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-07-31",
+    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+  }
+}

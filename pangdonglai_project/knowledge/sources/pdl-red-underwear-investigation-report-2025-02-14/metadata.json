@@ -1,0 +1,44 @@
+{
+  "id": "pdl-red-underwear-investigation-report-2025-02-14",
+  "title": "胖东来《关于“红色内裤掉色、过敏以及部门处理过程”的调查报告》要点",
+  "type": "company_investigation_report",
+  "status": "approved",
+  "caseId": "red-underwear-color-libel-2025",
+  "claimType": "company_investigation_report",
+  "finality": "company_report_stage",
+  "evidenceLevel": "L1",
+  "evidenceLabel": "企业调查报告要点（官方发布；本库存自写摘要，非报告全文）",
+  "answerMode": "fact_with_source",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-07-30",
+    "basis": "docs/SOURCE_AUDIT_06.md；用户要求企业报告 L1+approved、不加 limited。"
+  },
+  "source": {
+    "publisher": "许昌市胖东来商贸集团有限公司（官方抖音发布约 53 页调查报告）",
+    "sourceType": "official",
+    "url": "https://news.cctv.com/2025/04/06/ARTIL6LyM2RCmvIBetSuMnLg250406.shtml",
+    "publishedAt": "2025-02-14",
+    "verifiedAt": "2026-07-30",
+    "notes": "报告标题与要点经央视网等权威转载核验。本库不收录 53 页全文，仅自写摘要。原发布渠道为企业官方抖音。"
+  },
+  "scope": [
+    "企业调查报告中的送检结论表述、内部处理、对顾客措施、拟追责表态"
+  ],
+  "answeringRules": [
+    "必须写「据胖东来 2025 年 2 月 14 日公开调查报告」；检测合格等为报告所载，不是本库独立复检。",
+    "报告阶段不等于法院判决；后续判决须引用判决类资料。",
+    "不得把企业拟追责金额写成已判决金额（判决为另一阶段）。",
+    "禁止大段复制报告原文。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/pdl-red-underwear-investigation-report-2025-02-14/content.md",
+    "chunksPath": "chunks/pdl-red-underwear-investigation-report-2025-02-14.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-07-31",
+    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+  }
+}

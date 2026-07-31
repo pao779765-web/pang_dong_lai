@@ -1,0 +1,47 @@
+{
+  "id": "media-pdl-culture-system-2022-republish",
+  "title": "行业媒体转载：《胖东来企业文化制度》与考评奖励方案（2022）",
+  "type": "media_company_document_republish",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "media_attributed_company_rule",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "行业媒体转载的企业制度文本摘要（非官网现行页；可能已修订）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-07-31",
+    "basis": "线甲深挖：最接近企业原文的可核验转载；SOURCE_AUDIT_07 续。"
+  },
+  "source": {
+    "publisher": "物流指闻（转载标注来源胖东来；2022-08-15）",
+    "sourceType": "media",
+    "url": "https://www.headscm.com/Fingertip/detail/id/31961.html",
+    "publishedAt": "2022-08-15",
+    "verifiedAt": "2026-07-31",
+    "notes": "文称 2022-07 更新企业文化制度及超市部考评奖励方案。私人生活类条款社会争议大；回答须标时效并提示可能已修订。"
+  },
+  "scope": [
+    "企业文化制度总则与目的表述",
+    "行为规范与生活准则的制度形态（摘要）",
+    "考评奖励「自愿申请」机制",
+    "文化落地与边界争议"
+  ],
+  "answeringRules": [
+    "必须写「据 2022 年行业媒体转载的胖东来企业文化制度文本」；不得写成 2026 年现行官网全文。",
+    "该制度把文化落到行为与生活模块，可说明「爱/自由如何可能成为考评」；同时须提示私人生活介入曾引发外界争议。",
+    "禁止大段复制条款全文；只用短摘要。",
+    "与劳动争议个案无自动对应关系。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-pdl-culture-system-2022-republish/content.md",
+    "chunksPath": "chunks/media-pdl-culture-system-2022-republish.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-07-31",
+    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+  }
+}
