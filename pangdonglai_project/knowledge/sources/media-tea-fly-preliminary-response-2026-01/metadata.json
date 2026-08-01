@@ -7,33 +7,37 @@
   "claimType": "company_preliminary_response",
   "finality": "preliminary",
   "evidenceLevel": "L2",
-  "evidenceLabel": "权威媒体对企业公开说明的记录（非最终调查结论）",
+  "evidenceLabel": "权威/主流媒体对企业公开说明的记录（非最终调查结论）",
   "answerMode": "attributed_claim",
   "approval": {
     "approvedBy": "user",
     "approvedAt": "2026-07-27",
-    "basis": "docs/SOURCE_AUDIT_03_DRAFT.md V3-1；用户同意按 L2 + limited + 归因入库。"
+    "basis": "docs/SOURCE_AUDIT_03_DRAFT.md V3-1；用户同意 L2+limited。2026-08-01 用户要求调查并入库：加厚正文与交叉源，仍无终局材料。"
   },
   "source": {
-    "publisher": "人民网河南等媒体转述；企业 2026-01-05 公开发布情况说明（官方抖音原帖本库未核验 ID）",
+    "publisher": "人民网－河南频道等转述；企业 2026-01-05 情况说明（一）（官方抖音原帖 ID 未核验）",
     "sourceType": "media",
     "url": "https://ha.people.com.cn/n2/2026/0106/c351638-41465164.html",
     "publishedAt": "2026-01-06",
     "verifiedAt": "2026-08-01",
     "alternateUrls": [
-      "https://www.thepaper.cn/newsDetail_forward_32324722"
+      "https://www.thepaper.cn/newsDetail_forward_32324722",
+      "https://news.qq.com/rain/a/20260105A0581100",
+      "https://finance.sina.com.cn/tech/roll/2026-01-05/doc-inhffwpr8122370.shtml"
     ]
   },
   "scope": [
     "企业公开的初步调查与处置动作",
     "客服流程致歉的公开表述",
-    "调查完成前对商品与供应商的排查表述"
+    "调查完成前对商品与供应商的排查表述",
+    "公开检索未见后续终局报告的边界说明"
   ],
   "answeringRules": [
     "必须使用「据媒体报道」「据企业公开情况说明」等归因措辞，并带日期。",
-    "仅描述企业公开表示采取的初步动作（如组建调查组、下架排查、访厂复核、客服致歉）；禁止写成事件最终结论、苍蝇来源已查清或质量问题已定性。",
+    "仅描述企业公开表示采取的初步动作（组建调查组、下架排查、访厂复核、客服致歉）；禁止写成事件最终结论、苍蝇来源已查清或质量问题已定性。",
+    "若用户问后续结果：须说明截至核验日公开检索未见可核验的情况说明（二）或完整最终调查报告。",
     "禁止用本资料概括抖音舆论整体倾向；禁止推断全部商品或全部客服情况。",
-    "官方抖音原帖 permalink 未入库核验前，不得表述为 L1 企业原件。"
+    "官方抖音原帖 permalink 未入库核验前，不得表述为 L1 企业原件；不得用其他案例裁定本事件。"
   ],
   "ingestion": {
     "contentStatus": "partial_text",
@@ -43,6 +47,6 @@
     "chunksPath": "chunks/media-tea-fly-preliminary-response-2026-01.jsonl",
     "sourceSnapshotHash": null,
     "migratedAt": "2026-07-31",
-    "notes": "2026-08-01 已依据人民网河南可读报道回填报道身份、企业承诺的调查安排、下架访厂动作、客服流程致歉与终局边界；企业抖音原帖 ID 仍未核验，保持 L2 limited。"
+    "notes": "2026-08-01 调查复核并加厚：交叉澎湃/腾讯新闻等；明确未见情况说明（二）与终局报告；企业抖音原帖 ID 仍未核验，保持 L2 limited。"
   }
 }

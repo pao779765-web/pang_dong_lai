@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-08-01
 
-**当前执行者：** Codex 已完成 23 份现有资料终轮回填；下一项 RAG 能力工作为 `RAG-CULTURE-R0` 文化问题地图与评测基线
+**当前执行者：** Grok 已复核并加厚「茶叶苍蝇」案例入库；Codex 下一项仍为 `RAG-CULTURE-R0` 评测基线
 **分支：** `main`
 
 ---
@@ -154,6 +154,7 @@
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
 | 2026-08-01 | Codex | 完成最后 10 份资料终轮处理：文化制度转载、红内裤一审报道、茶叶初步回应、鸡蛋送检报道升级为 `partial_text`；百科门户、申红丽页面、3 份缺企业原帖的红内裤材料和图书保留 `summary_only` 并记录原因。现有 23 份资料全部处理完毕，共 100 个片段；新增鸡蛋监管终局边界测试，23 项测试与 lint 通过，未新增来源、未部署 | docs/SOURCE_AUDIT_08.md, pangdonglai_project/knowledge/**, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |
+| 2026-08-01 | Grok | 调查茶叶苍蝇：未见情况说明（二）/终局报告；加厚 V3-1 正文与 6 条 chunks（共 103 片段）；案例别名扩展 | docs/SOURCE_AUDIT_TEA_FLY.md, knowledge/cases/tea-fly*, knowledge/sources/media-tea-fly*, knowledge/chunks/media-tea-fly*, knowledge/manifest.json, docs/HANDOFF.md |
 | 2026-07-31 | Codex | 完成第三批 5 份资料回填：永辉鲁谷店调改、影城半价退票、澎湃红内裤判决评论、于东来理性表态传播链、识微商业舆情指标；明确他企实践、媒体评论、人物表态和商业监测边界，片段增至 89，新增永辉边界测试后 22 项测试通过，未新增来源、未部署 | docs/SOURCE_AUDIT_08.md, pangdonglai_project/knowledge/**, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |
 | 2026-07-31 | Codex | 完成第二批 5 份文化资料回填：新华社“6A 景区”、新华网《觉醒胖东来》书评、清华管理评论、界面“自由·爱”线索、委屈奖媒体记录；均保留来源归因、时点和版权边界，知识片段增至 72，未新增来源、未部署 | docs/SOURCE_AUDIT_08.md, pangdonglai_project/knowledge/**, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |
 | 2026-07-31 | Codex | 完成现有 23 份来源的首轮正文权限与覆盖审计；首批将官网简介、官网门店页和人民日报访谈升级为 partial_text，以事实、必要短引文和段落定位生成 58 个检索片段；21 项测试与 lint 通过，未新增来源、未部署 | docs/SOURCE_AUDIT_08.md, pangdonglai_project/knowledge/**, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |
