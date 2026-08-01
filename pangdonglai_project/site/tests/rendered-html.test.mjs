@@ -44,6 +44,8 @@ test("keeps store content and chat contract outside their UI and Worker entrypoi
   assert.doesNotMatch(page, /const storeRegions/);
   assert.match(worker, /from "\.\.\/shared\/chat"/);
   assert.match(worker, /knowledge\/compiled\/knowledge-base\.json/);
+  assert.match(worker, /createKnowledgeRetriever/);
+  assert.doesNotMatch(worker, /const BM25_K1/);
   assert.doesNotMatch(worker, /\.\.\/\.\.\/knowledge-base\.json/);
   assert.doesNotMatch(worker, /type ChatSource =/);
   assert.match(sharedChat, /export type ChatRequestMessage/);
@@ -166,6 +168,31 @@ test("keeps the first culture question set balanced and linked to real chunks", 
   ]) {
     assert.ok(evaluation.questions.some((question) => question.expectedCaseId === caseId));
   }
+});
+
+test("records a reproducible BM25 baseline against the culture question set", async () => {
+  const [evaluation, baseline, report, packageJson] = await Promise.all([
+    readFile(new URL("../../evaluation/rag-culture-questions-v1.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../evaluation/rag-culture-bm25-baseline-v1.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../../docs/RAG_CULTURE_BASELINE_V1.md", import.meta.url), "utf8"),
+    readFile(new URL("../package.json", import.meta.url), "utf8").then(JSON.parse),
+  ]);
+
+  assert.equal(baseline.schemaVersion, "1.0");
+  assert.equal(baseline.evaluationSet, evaluation.id);
+  assert.equal(baseline.summary.total, evaluation.questions.length);
+  assert.deepEqual(
+    baseline.results.map((result) => result.id),
+    evaluation.questions.map((question) => question.id),
+  );
+  assert.equal(baseline.knowledgeSnapshot.sources, 30);
+  assert.equal(baseline.knowledgeSnapshot.chunks, 135);
+  assert.equal(baseline.knowledgeSnapshot.cases, 6);
+  assert.equal(baseline.retrievalConfiguration.queryRewrite, "none");
+  assert.match(baseline.retrievalConfiguration.answerGeneration, /not executed/);
+  assert.ok(baseline.results.every((result) => typeof result.checks.baselinePass === "boolean"));
+  assert.match(report, /当前 BM25 基线通过 28\/54 题/);
+  assert.match(packageJson.scripts["rag:evaluate"], /evaluate-rag-baseline\.mjs/);
 });
 
 test("serves the built site through the CloudBase-compatible Node entrypoint", async (context) => {
