@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-08-01
 
-**当前执行者：** Codex 已完成 54 题 BM25 基线：28/54（51.8%），R0 交付物齐全；下一项为依据缺口进入 R1/R2，暂不修改 Query 或接向量库
+**当前执行者：** Codex 按用户明确要求先完成上下文继承、终局意图和已知资料缺口闸门；同题集由 28/54 提升到 39/54，无退步。下一项回到 R1/R2，暂不接向量库
 **分支：** `main`
 
 ---
@@ -59,6 +59,7 @@
 - [x] **RAG-CONTENT-BACKFILL-01（用户已授权）**：现有 23 份资料已全部逐篇处理。17 份升级为 `partial_text`，6 份因企业原帖/报告缺失、页面不可定位或图书版权边界保留 `summary_only`；片段总数由 53 增至 100。保留摘要是终轮审计结论，不是遗漏；详见 `docs/SOURCE_AUDIT_08.md`。
 - [x] **RAG-PLAN-01**：将“帮助网友理解自由与爱”的目标更新为共同路线图；明确六条文化主线、当前能力与缺口、R0～R7 推进顺序、验收标准和 Codex/Grok/用户分工，并加入共同必读入口。
 - [x] **RAG-CULTURE-R0**：正式文化知识地图、54 道网友问题试卷与可重复运行的 BM25 基线均已建立；当前通过 28/54（51.8%），有正例问题召回 32/47，案例/轨道路由 50/54，无答案问题安全 0/6。资料缺口、检索错误和生成越界风险清单见 `docs/RAG_CULTURE_BASELINE_V1.md`；本轮未修改 Query 改写算法、未接向量库。
+- [x] **RAG-CULTURE-R3A（用户明确要求提前执行）**：检索只在追问需要时继承最近两条用户问题；扩充自然终局表达并避免把“企业后来怎么解释”误判为终局；为已确认缺失的薪酬表、权限表、通用调查流程、供应商名单、财务计划和全部投诉结论增加资料充分性闸门。同一 54 题当前评测为 39/54（72.2%），比冻结基线增加 11 题、无退步；终局意图 54/54、无答案安全 6/6。该闸门不是通用事实判断器，错别字和语义召回仍待后续完整 R3。
 - [ ] **RAG-CULTURE-R1**：用户已批准 C1“员工的尊严、自由与生活”首批两组资料。7 份资料、32 个片段和 3 个独立案例已按 `approved` / `limited` 范围入库，审核与结果见 `docs/SOURCE_AUDIT_C1_01.md`；知识库现有 30 份资料、135 个片段和 6 个案例。本阶段尚未完成后续 C1 一手资料主干，不得自动扩充。
 - [x] **RAG-RESEARCH-01**：建立 Codex 与 Grok 强制共用的互联网资料检索与 RAG 入库规范；明确候选池、来源优先级、企业身份核验、转载去重、事件阶段、用户批准、版权边界、入库测试和向量库接入条件，并在 `AGENTS.md` 设置任务前必读入口。
 - [x] **Codex【RAG-CASE-01】**：按 Grok 审核顺序完成“案例档案 + 事件事实/文化理解双轨回答”：定义 `caseId`、`claimType`、`finality` schema；事件轨仅引用同案例资料，文化轨不得裁定具体客诉真伪；无 `final` 证据时禁止终局话术；界面展示案例来源的证据阶段；补充误召回与最终结论边界测试。
@@ -107,7 +108,7 @@
 ### 给 Codex
 
 1. 资料架构只维护 `pangdonglai_project/knowledge/**`；禁止手工修改 `knowledge/compiled/knowledge-base.json` 或恢复旧根文件。
-2. `RAG-CULTURE-R0` 已完成；下一项依据 `docs/RAG_CULTURE_BASELINE_V1.md` 进入 R1/R2，有针对性补资料并建立文化知识字段。Query 改写 V1 必须保留 28/54 基线作对照，在无答案保护与案例边界稳定前不接向量库。
+2. `RAG-CULTURE-R0` 与用户指定的 `RAG-CULTURE-R3A` 已完成；下一项依据冻结基线和 `docs/RAG_CULTURE_CURRENT_EVALUATION.md` 回到 R1/R2，有针对性补资料并建立文化知识字段。错别字、同义词和通用充分性判断仍未完成，在这些边界稳定前不接向量库。
 3. 所有 RAG 工作先读 `docs/RAG_RESEARCH_PROTOCOL.md` 和 `docs/RAG_CULTURE_ROADMAP.md`；不修改原始 HTML，完成后更新本 HANDOFF 并小步提交。
 
 ### 给 Grok
@@ -153,6 +154,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-01 | Codex | 按用户明确要求提前处理上下文、终局意图和资料不足噪声：仅对追问继承最近用户话题，增加自然终局表达规则，并以可维护的已知缺口闸门阻止薪酬表、权限表、供应商名单等无依据请求进入生成上下文；冻结基线保持 28/54，当前同题集升至 39/54（72.2%）、无退步，终局意图 54/54、无答案安全 6/6；31 项测试与 lint 通过，未接向量库、未部署 | site/shared/retrieval.mjs, site/worker/index.ts, site/scripts/evaluate-rag-baseline.mjs, evaluation/rag-culture-current-evaluation.json, docs/RAG_CULTURE_CURRENT_EVALUATION.md, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |
 | 2026-08-01 | Codex | 抽取网站与评测共用的原样 BM25/案例路由模块，建立可重复运行的 54 题基线脚本与逐题结果；当前通过 28/54（51.8%），有正例召回 32/47、路由 50/54、隔离 49/54、无答案安全 0/6，已输出资料缺口、检索错误和生成越界风险清单；29 项测试与 lint 通过。本轮未调用 DeepSeek、未修改 Query、未接向量库、未部署 | site/shared/retrieval.mjs, site/scripts/evaluate-rag-baseline.mjs, evaluation/rag-culture-bm25-baseline-v1.json, docs/RAG_CULTURE_BASELINE_V1.md, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_*, docs/HANDOFF.md |
 | 2026-08-01 | Codex | 用户批准 C1 首批两组资料后，正式入库新华社员工之家、特定招聘公告、夜班报平安产品案例，以及尝面员工处分、彩礼倡议、降薪传言三组现实边界资料；新增 7 份资料、32 个片段和 3 个独立案例，试卷由 48 题扩为 54 题。知识构建得到 30 份资料、135 个片段、6 个案例；28 项测试与 lint 通过，未部署 | docs/SOURCE_AUDIT_C1_01.md, docs/RAG_CULTURE_*, pangdonglai_project/knowledge/**, pangdonglai_project/evaluation/rag-culture-questions-v1.json, site/worker/index.ts, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-01 | Codex | 建立六条主线的“自由与爱”文化知识地图和 48 题首批网友问题试卷；随后按用户要求检索 C1 员工主题，筛选 30 余个结果、深审 7 组候选并形成批准清单。候选尚未获用户逐项批准，未写入正式知识库、未部署 | docs/RAG_CULTURE_KNOWLEDGE_MAP.md, pangdonglai_project/evaluation/rag-culture-questions-v1.json, docs/SOURCE_AUDIT_C1_01.md, docs/HANDOFF.md |

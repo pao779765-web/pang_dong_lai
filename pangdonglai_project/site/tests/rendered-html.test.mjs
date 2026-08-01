@@ -45,6 +45,7 @@ test("keeps store content and chat contract outside their UI and Worker entrypoi
   assert.match(worker, /from "\.\.\/shared\/chat"/);
   assert.match(worker, /knowledge\/compiled\/knowledge-base\.json/);
   assert.match(worker, /createKnowledgeRetriever/);
+  assert.match(worker, /previousUserQuestions/);
   assert.doesNotMatch(worker, /const BM25_K1/);
   assert.doesNotMatch(worker, /\.\.\/\.\.\/knowledge-base\.json/);
   assert.doesNotMatch(worker, /type ChatSource =/);
@@ -171,10 +172,12 @@ test("keeps the first culture question set balanced and linked to real chunks", 
 });
 
 test("records a reproducible BM25 baseline against the culture question set", async () => {
-  const [evaluation, baseline, report, packageJson] = await Promise.all([
+  const [evaluation, baseline, current, report, currentReport, packageJson] = await Promise.all([
     readFile(new URL("../../evaluation/rag-culture-questions-v1.json", import.meta.url), "utf8").then(JSON.parse),
     readFile(new URL("../../evaluation/rag-culture-bm25-baseline-v1.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../evaluation/rag-culture-current-evaluation.json", import.meta.url), "utf8").then(JSON.parse),
     readFile(new URL("../../../docs/RAG_CULTURE_BASELINE_V1.md", import.meta.url), "utf8"),
+    readFile(new URL("../../../docs/RAG_CULTURE_CURRENT_EVALUATION.md", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8").then(JSON.parse),
   ]);
 
@@ -192,7 +195,83 @@ test("records a reproducible BM25 baseline against the culture question set", as
   assert.match(baseline.retrievalConfiguration.answerGeneration, /not executed/);
   assert.ok(baseline.results.every((result) => typeof result.checks.baselinePass === "boolean"));
   assert.match(report, /当前 BM25 基线通过 28\/54 题/);
+  assert.equal(current.comparisonToBaseline.baselinePassed, 28);
+  assert.equal(current.summary.passed, 39);
+  assert.equal(current.summary.finalityIntentPassed, 54);
+  assert.equal(current.summary.noAnswerSafetyPassed, 6);
+  assert.deepEqual(current.comparisonToBaseline.regressedQuestionIds, []);
+  assert.match(currentReport, /当前检索通过 39\/54 题/);
   assert.match(packageJson.scripts["rag:evaluate"], /evaluate-rag-baseline\.mjs/);
+  assert.match(packageJson.scripts["rag:evaluate"], /--current/);
+});
+
+test("uses recent user context only when a follow-up needs it", async () => {
+  const [{ createKnowledgeRetriever }, compiled] = await Promise.all([
+    import("../shared/retrieval.mjs"),
+    readFile(new URL("../../knowledge/compiled/knowledge-base.json", import.meta.url), "utf8").then(JSON.parse),
+  ]);
+  const retriever = createKnowledgeRetriever(compiled);
+
+  const teaFollowUp = retriever.searchKnowledge("后来到底查清没有？", [
+    "茶叶反馈后，企业发布了情况说明（一）。",
+  ]);
+  assert.equal(teaFollowUp.track, "case");
+  assert.equal(teaFollowUp.caseRecord.id, "tea-fly-feedback-2026-01");
+  assert.equal(teaFollowUp.contextApplied, true);
+  assert.equal(teaFollowUp.asksForFinality, true);
+
+  const generalFollowUp = retriever.searchKnowledge("那要是他判断错了呢？", [
+    "为什么一线员工可以直接处理顾客问题？",
+  ]);
+  assert.equal(generalFollowUp.track, "general");
+  assert.equal(generalFollowUp.contextApplied, true);
+  assert.ok(
+    generalFollowUp.retrieved.some((item) =>
+      ["interview-frontline-trust-responsibility-and-society", "interview-operating-manuals-and-execution"].includes(item.chunkId),
+    ),
+  );
+
+  const unrelatedQuestion = retriever.searchKnowledge("胖东来为什么不盲目扩张？", [
+    "茶叶反馈后，企业发布了情况说明（一）。",
+  ]);
+  assert.equal(unrelatedQuestion.track, "general");
+  assert.equal(unrelatedQuestion.contextApplied, false);
+});
+
+test("recognizes natural finality intent and blocks known unsupported detail requests", async () => {
+  const [{ createKnowledgeRetriever }, compiled] = await Promise.all([
+    import("../shared/retrieval.mjs"),
+    readFile(new URL("../../knowledge/compiled/knowledge-base.json", import.meta.url), "utf8").then(JSON.parse),
+  ]);
+  const retriever = createKnowledgeRetriever(compiled);
+
+  assert.equal(
+    retriever.searchKnowledge("尝面员工后来还是被开除了吗？").asksForFinality,
+    true,
+  );
+  assert.equal(
+    retriever.searchKnowledge("企业后来怎么解释降薪传言？").asksForFinality,
+    false,
+  );
+  assert.equal(
+    retriever.searchKnowledge("那是不是监管部门已经证明这些鸡蛋没问题？", [
+      "胖东来公布了鲜鸡蛋样品的送检结果。",
+    ]).asksForFinality,
+    true,
+  );
+
+  for (const question of [
+    "请给我一份胖东来 2026 年每个岗位最新工资和奖金表。",
+    "胖东来每个岗位分别能自主赔付多少元？请列出权限表。",
+    "请列出胖东来当前所有供应商的审核分数和淘汰名单。",
+    "胖东来今年净利润率多少，未来三年准备开多少家店？",
+    "胖东来历史上所有投诉最后分别是谁对谁错？",
+  ]) {
+    const plan = retriever.searchKnowledge(question);
+    assert.equal(plan.track, "general");
+    assert.equal(plan.retrieved.length, 0);
+    assert.ok(plan.insufficientReason);
+  }
 });
 
 test("serves the built site through the CloudBase-compatible Node entrypoint", async (context) => {

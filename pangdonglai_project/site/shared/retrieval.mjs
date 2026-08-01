@@ -126,8 +126,61 @@ export function createKnowledgeRetriever(knowledgeBase) {
     );
   }
 
+  function isContextDependent(question) {
+    const normalized = question.replace(/\s+/g, "");
+    return /^(那|那么|后来|然后|所以|它|这个|这件事|该事件|还|又)/.test(normalized) ||
+      /那是不是|那要是|又该怎么|后来到底|后续怎么样|接下来呢/.test(normalized);
+  }
+
   function asksForFinality(question) {
-    return /最终|结论|定性|查清|结案|调查结果|监管认定/.test(question);
+    const normalized = question.replace(/\s+/g, "");
+    return /最终|结论|定性|查清|结案|调查结果|监管认定|怎么判|如何判|判的|正式制度|正式生效|已经生效|已经证明|谁对谁错|监管部门.{0,6}(?:证明|认定)/.test(
+      normalized,
+    ) || /还(?:是|会|有没有).*?(?:开除|辞退|处理|处罚)/.test(normalized);
+  }
+
+  function detectKnownEvidenceGap(question) {
+    const normalized = question.replace(/\s+/g, "");
+
+    if (
+      /(工资|薪酬|奖金)/.test(normalized) &&
+      /(每个岗位|各个岗位|全部岗位|最新|明细|表)/.test(normalized)
+    ) {
+      return "当前资料库没有完整、最新的岗位薪酬与奖金表。";
+    }
+    if (
+      /(权限|赔付)/.test(normalized) &&
+      /(每个岗位|分别|多少|金额|明细|权限表)/.test(normalized)
+    ) {
+      return "当前资料库没有各岗位的完整赔付权限与金额表。";
+    }
+    if (
+      /自有品牌/.test(normalized) &&
+      /(内部|流程|到底怎么|如何).*(调查|查|审核)/.test(normalized)
+    ) {
+      return "当前资料库没有适用于全部自有商品的完整内部调查流程。";
+    }
+    if (
+      /供应商/.test(normalized) &&
+      /(审核分数|评分|淘汰名单|全部名单|所有.*名单)/.test(normalized)
+    ) {
+      return "当前资料库没有完整的供应商审核分数或淘汰名单。";
+    }
+    if (
+      /净利润率|利润率/.test(normalized) ||
+      /(?:未来|今后).{0,6}(?:三年|3年).{0,10}(?:开店|多少家|计划)/.test(normalized)
+    ) {
+      return "当前资料库没有最新净利润率或未来三年开店计划。";
+    }
+    if (
+      /(?:所有|全部|历史上).{0,8}(?:投诉|客诉).{0,12}(?:谁对谁错|结果|结论)/.test(
+        normalized,
+      )
+    ) {
+      return "当前资料库不覆盖历史上的全部投诉，不能逐一判断谁对谁错。";
+    }
+
+    return null;
   }
 
   function searchCase(caseRecord) {
@@ -215,21 +268,50 @@ export function createKnowledgeRetriever(knowledgeBase) {
       .slice(0, 5);
   }
 
-  function searchKnowledge(question) {
-    const caseRecord = findCase(question);
+  function searchKnowledge(question, context = []) {
+    const contextQuestions = context
+      .filter((item) => typeof item === "string" && item.trim())
+      .map((item) => item.trim())
+      .slice(-2);
+    const contextDependent = isContextDependent(question);
+    const directCaseRecord = findCase(question);
+    const contextualCaseRecord = contextDependent
+      ? [...contextQuestions].reverse().map(findCase).find(Boolean)
+      : undefined;
+    const caseRecord = directCaseRecord ?? contextualCaseRecord;
     if (caseRecord) {
       return {
         track: "case",
         caseRecord,
         asksForFinality: asksForFinality(question),
+        contextApplied: !directCaseRecord && Boolean(contextualCaseRecord),
+        queryText: question,
         retrieved: searchCase(caseRecord),
       };
     }
 
+    const insufficientReason = detectKnownEvidenceGap(question);
+    if (insufficientReason) {
+      return {
+        track: "general",
+        asksForFinality: asksForFinality(question),
+        contextApplied: false,
+        queryText: question,
+        insufficientReason,
+        retrieved: [],
+      };
+    }
+
+    const queryText = contextDependent && contextQuestions.length
+      ? `${contextQuestions.join("\n")}\n${question}`
+      : question;
+
     return {
       track: "general",
       asksForFinality: asksForFinality(question),
-      retrieved: searchGeneralKnowledge(question),
+      contextApplied: queryText !== question,
+      queryText,
+      retrieved: searchGeneralKnowledge(queryText),
     };
   }
 

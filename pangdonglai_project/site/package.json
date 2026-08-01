@@ -7,7 +7,7 @@
   },
   "scripts": {
     "knowledge:build": "node scripts/build-knowledge.mjs",
-    "rag:evaluate": "npm run knowledge:build && node scripts/evaluate-rag-baseline.mjs",
+    "rag:evaluate": "npm run knowledge:build && node scripts/evaluate-rag-baseline.mjs --current",
     "predev": "npm run knowledge:build",
     "dev": "vinext dev",
     "prebuild": "npm run knowledge:build",

@@ -3,8 +3,14 @@ import { createKnowledgeRetriever } from "../shared/retrieval.mjs";
 
 const evaluationUrl = new URL("../../evaluation/rag-culture-questions-v1.json", import.meta.url);
 const knowledgeUrl = new URL("../../knowledge/compiled/knowledge-base.json", import.meta.url);
-const resultUrl = new URL("../../evaluation/rag-culture-bm25-baseline-v1.json", import.meta.url);
-const reportUrl = new URL("../../../docs/RAG_CULTURE_BASELINE_V1.md", import.meta.url);
+const frozenBaselineUrl = new URL("../../evaluation/rag-culture-bm25-baseline-v1.json", import.meta.url);
+const isCurrentEvaluation = process.argv.includes("--current");
+const resultUrl = isCurrentEvaluation
+  ? new URL("../../evaluation/rag-culture-current-evaluation.json", import.meta.url)
+  : frozenBaselineUrl;
+const reportUrl = isCurrentEvaluation
+  ? new URL("../../../docs/RAG_CULTURE_CURRENT_EVALUATION.md", import.meta.url)
+  : new URL("../../../docs/RAG_CULTURE_BASELINE_V1.md", import.meta.url);
 
 const [evaluation, knowledgeBase] = await Promise.all([
   readFile(evaluationUrl, "utf8").then(JSON.parse),
@@ -18,9 +24,8 @@ function roundRate(passed, total) {
 }
 
 function evaluateQuestion(question) {
-  // This deliberately sends only the latest question because that is what the current Worker does.
-  // Context-related failures therefore remain visible in the baseline instead of being hidden here.
-  const plan = retriever.searchKnowledge(question.question);
+  const context = isCurrentEvaluation ? question.context : [];
+  const plan = retriever.searchKnowledge(question.question, context);
   const retrievedChunkIds = plan.retrieved.map((item) => item.chunkId);
   const expectedChunks = question.mustRecallAnyOf;
   const forbiddenHits = question.mustNotRecallChunkIds.filter((id) => retrievedChunkIds.includes(id));
@@ -65,6 +70,9 @@ function evaluateQuestion(question) {
       track: plan.track,
       caseId: actualCaseId,
       asksForFinality: plan.asksForFinality,
+      contextApplied: plan.contextApplied,
+      queryText: plan.queryText,
+      insufficientReason: plan.insufficientReason ?? null,
       retrievedChunkIds,
       retrieved: plan.retrieved.map((item) => ({
         chunkId: item.chunkId,
@@ -136,9 +144,44 @@ const failureSummary = {
     .map((result) => result.id),
 };
 
+const frozenBaseline = isCurrentEvaluation
+  ? JSON.parse(await readFile(frozenBaselineUrl, "utf8"))
+  : null;
+const comparisonToBaseline = frozenBaseline
+  ? {
+      baselineId: frozenBaseline.id,
+      baselinePassed: frozenBaseline.summary.passed,
+      currentPassed: passed,
+      passedDelta: passed - frozenBaseline.summary.passed,
+      baselinePassRate: frozenBaseline.summary.passRate,
+      currentPassRate: roundRate(passed, results.length),
+      passRateDelta: Number(
+        (roundRate(passed, results.length) - frozenBaseline.summary.passRate).toFixed(4),
+      ),
+      newlyPassedQuestionIds: results
+        .filter((result) => {
+          const oldResult = frozenBaseline.results.find((item) => item.id === result.id);
+          return result.checks.baselinePass && !oldResult?.checks.baselinePass;
+        })
+        .map((result) => result.id),
+      regressedQuestionIds: results
+        .filter((result) => {
+          const oldResult = frozenBaseline.results.find((item) => item.id === result.id);
+          return !result.checks.baselinePass && oldResult?.checks.baselinePass;
+        })
+        .map((result) => result.id),
+    }
+  : null;
+
 const patternSummary = {
   failedContextQuestionIds: results
-    .filter((result) => result.context.length > 0 && !result.checks.baselinePass)
+    .filter(
+      (result) =>
+        result.context.length > 0 &&
+        (!result.checks.trackPass ||
+          !result.checks.casePass ||
+          !result.checks.positiveRecallPass),
+    )
     .map((result) => result.id),
   failedTypoQuestionIds: results
     .filter((result) => result.forms.includes("typo") && !result.checks.baselinePass)
@@ -156,7 +199,9 @@ const patternSummary = {
 
 const baseline = {
   schemaVersion: "1.0",
-  id: "rag-culture-bm25-baseline-v1",
+  id: isCurrentEvaluation
+    ? "rag-culture-current-evaluation"
+    : "rag-culture-bm25-baseline-v1",
   evaluatedAt: new Date().toISOString(),
   evaluationSet: evaluation.id,
   knowledgeSnapshot: {
@@ -171,8 +216,12 @@ const baseline = {
     algorithm: "BM25 over continuous Chinese bigrams",
     topK: 5,
     caseRouting: "substring match against reviewed case aliases",
-    queryRewrite: "none",
-    contextUsage: "none; current Worker retrieves only with the latest user message",
+    queryRewrite: isCurrentEvaluation
+      ? "rules for contextual follow-ups, finality intent and known evidence gaps"
+      : "none",
+    contextUsage: isCurrentEvaluation
+      ? "up to two previous user messages, only for context-dependent follow-ups"
+      : "none; baseline Worker retrieved only with the latest user message",
     answerGeneration: "not executed; this baseline is deterministic and incurs no model calls",
   },
   scoringNotes: {
@@ -205,6 +254,7 @@ const baseline = {
   byTheme,
   failureSummary,
   patternSummary,
+  comparisonToBaseline,
   results,
 };
 
@@ -228,7 +278,14 @@ const failedRows = results
     return `| ${result.id} | ${result.theme} | ${reasons.join("；")} | ${result.actual.retrievedChunkIds.slice(0, 5).join("、") || "无"} |`;
   });
 
-const report = `# RAG 文化问答 BM25 基线 V1
+const reportTitle = isCurrentEvaluation
+  ? "RAG 文化问答当前检索评测"
+  : "RAG 文化问答 BM25 基线 V1";
+const comparisonParagraph = comparisonToBaseline
+  ? `冻结基线为 ${comparisonToBaseline.baselinePassed}/${results.length}，本次提高 ${comparisonToBaseline.passedDelta} 题；新增通过：${renderQuestionList(comparisonToBaseline.newlyPassedQuestionIds)}；退步：${renderQuestionList(comparisonToBaseline.regressedQuestionIds)}。`
+  : "这是修改 Query、上下文或检索门槛之前的冻结基线。";
+
+const report = `# ${reportTitle}
 
 > 评测集：\`${evaluation.id}\`（${results.length} 题）
 >
@@ -238,9 +295,9 @@ const report = `# RAG 文化问答 BM25 基线 V1
 
 ## 1. 结论
 
-当前 BM25 基线通过 ${passed}/${results.length} 题，综合通过率为 **${percent(baseline.summary.passRate)}**。本次只运行确定性的检索与路由，不调用 DeepSeek，因此不会产生费用；“生成越界”只记录检索结果可能带来的风险，不把风险写成已经发生的回答错误。
+当前检索通过 ${passed}/${results.length} 题，综合通过率为 **${percent(baseline.summary.passRate)}**。${comparisonParagraph}本次只运行确定性的检索与路由，不调用 DeepSeek，因此不会产生费用；“生成越界”只记录检索结果可能带来的风险，不把风险写成已经发生的回答错误。
 
-在完成失败分析前，不修改 Query 改写算法，也不接入向量库。
+原始 28/54 基线文件保持不变，当前结果单独保存；本轮仍不接入向量库。
 
 ## 2. 核心指标
 
@@ -281,10 +338,10 @@ ${failedRows.length ? failedRows.join("\n") : "| — | — | 无 | — |"}
 
 ## 6. 基线暴露出的主要问题
 
-1. **无答案保护是当前最明显的短板。** 6 道要求“知识库没有答案”的题全部召回了噪声：${renderQuestionList(patternSummary.noAnswerNoiseQuestionIds)}。这些片段可能诱导生成模型用相近资料拼答案。
-2. **当前检索不使用对话上下文。** 带上下文且未通过的题为：${renderQuestionList(patternSummary.failedContextQuestionIds)}。其中“后来到底查清没有”无法仅凭当前句恢复茶叶案例。
+1. **无答案保护。** ${patternSummary.noAnswerNoiseQuestionIds.length ? `仍召回噪声的题为：${renderQuestionList(patternSummary.noAnswerNoiseQuestionIds)}。这些片段可能诱导生成模型用相近资料拼答案。` : "6 道明确缺少结构化资料的问题均被资料充分性闸门拦截，没有把相似片段交给生成模型。"}
+2. **对话上下文。** ${patternSummary.failedContextQuestionIds.length ? `仍未正确继承上下文的题为：${renderQuestionList(patternSummary.failedContextQuestionIds)}。` : "评测集中的上下文追问均能继承最近用户话题，并进入预期案例或召回预期片段。"}
 3. **错别字会破坏案例路由。** 错别字题中未通过的是：${renderQuestionList(patternSummary.failedTypoQuestionIds)}；例如“鲜鸡旦角黄诉”“红内库”没有命中对应案例别名。
-4. **终局意图词表过窄。** 未识别终局意图的题为：${renderQuestionList(patternSummary.failedFinalityIntentQuestionIds)}；“后来还是被开除”“正式制度”“怎么判”“最后谁对谁错”等表达尚未覆盖。
+4. **终局意图。** ${patternSummary.failedFinalityIntentQuestionIds.length ? `仍未正确识别的题为：${renderQuestionList(patternSummary.failedFinalityIntentQuestionIds)}。` : "本轮题集中的终局表达已全部正确识别，同时避免把“企业后来怎么解释”误判成终局问题。"}
 5. **案例路由总体较稳但仍有缺口。** 错误路由题为：${renderQuestionList(patternSummary.wrongRouteQuestionIds)}，主要集中在追问和错别字，不应通过放宽跨案例检索来弥补。
 6. **一般文化问题存在语义错配。** “完整的人”“放权如何兜底”“顾客是否什么都得照办”“为什么不开遍全国”等问题容易被连续双字匹配带到表面相似、实质不支持的片段。
 
@@ -297,7 +354,7 @@ ${failedRows.length ? failedRows.join("\n") : "| — | — | 无 | — |"}
 3. 完成文化知识字段和 Query 改写 V1 后，用同一试卷重跑；
 4. 基线可重复且边界测试稳定后，再建立 BM25 + 向量 + 案例路由的混合检索原型。
 
-完整逐题结果见 \`pangdonglai_project/evaluation/rag-culture-bm25-baseline-v1.json\`。
+完整逐题结果见 \`pangdonglai_project/evaluation/${isCurrentEvaluation ? "rag-culture-current-evaluation.json" : "rag-culture-bm25-baseline-v1.json"}\`。
 `;
 
 await Promise.all([
@@ -306,5 +363,5 @@ await Promise.all([
 ]);
 
 console.log(
-  `BM25 基线完成：${passed}/${results.length}（${percent(baseline.summary.passRate)}），报告已写入 ${reportUrl.pathname}`,
+  `${isCurrentEvaluation ? "当前检索评测" : "BM25 基线"}完成：${passed}/${results.length}（${percent(baseline.summary.passRate)}），报告已写入 ${reportUrl.pathname}`,
 );
