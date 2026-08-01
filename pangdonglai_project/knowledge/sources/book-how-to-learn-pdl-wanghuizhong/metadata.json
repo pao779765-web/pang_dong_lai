@@ -19,7 +19,7 @@
     "sourceType": "book",
     "url": "https://book.douban.com/subject/26269190/",
     "publishedAt": "2014-08-25",
-    "verifiedAt": "2026-07-29",
+    "verifiedAt": "2026-08-01",
     "notes": "用户持有扫描 PDF 于本机（约 256 页）。本库不收录全书 OCR/全文，仅存按公开目录与议题结构自写的主题摘要。url 为公开书目页。回答须在正文注明「据《胖东来，你要怎么学？》作者观点/书中讨论」，并由接口附带来源列表。"
   },
   "scope": [
@@ -43,6 +43,6 @@
     "chunksPath": "chunks/book-how-to-learn-pdl-wanghuizhong.jsonl",
     "sourceSnapshotHash": null,
     "migratedAt": "2026-07-31",
-    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+    "notes": "2026-08-01 终轮处理决定：保持 summary_only。公开书目只能支持元数据与目录；用户持有扫描件不等于取得复制传播权，不进行整本 OCR 或分片重建，现有 12 条均为明确归因的自写主题摘要。"
   }
 }

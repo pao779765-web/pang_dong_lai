@@ -19,7 +19,7 @@
     "sourceType": "media",
     "url": "https://ha.people.com.cn/n2/2026/0106/c351638-41465164.html",
     "publishedAt": "2026-01-06",
-    "verifiedAt": "2026-07-27",
+    "verifiedAt": "2026-08-01",
     "alternateUrls": [
       "https://www.thepaper.cn/newsDetail_forward_32324722"
     ]
@@ -36,13 +36,13 @@
     "官方抖音原帖 permalink 未入库核验前，不得表述为 L1 企业原件。"
   ],
   "ingestion": {
-    "contentStatus": "summary_only",
-    "fullTextAllowed": "unknown",
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
     "contentFormat": "markdown",
     "contentPath": "sources/media-tea-fly-preliminary-response-2026-01/content.md",
     "chunksPath": "chunks/media-tea-fly-preliminary-response-2026-01.jsonl",
     "sourceSnapshotHash": null,
     "migratedAt": "2026-07-31",
-    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+    "notes": "2026-08-01 已依据人民网河南可读报道回填报道身份、企业承诺的调查安排、下架访厂动作、客服流程致歉与终局边界；企业抖音原帖 ID 仍未核验，保持 L2 limited。"
   }
 }

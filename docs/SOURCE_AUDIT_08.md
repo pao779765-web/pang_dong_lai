@@ -1,6 +1,6 @@
 # 资料源审计 V8 — 23 份现有材料正文回填
 
-> **核验日期：** 2026-07-31
+> **核验日期：** 2026-08-01（终轮复核完成）
 >
 > **用户决定：** 开始对现有 23 份材料回填原文依据
 >
@@ -23,26 +23,26 @@
 | 1 | `official-company-profile-2026-07-27` | 官网简介页可读取 | 未见全文转载许可；可保存公开事实和必要短引文 | **已升级 `partial_text`** |
 | 2 | `official-store-directory-2026-07-24` | 官网门店页可读取 | 地址、营业时间、服务电话属于必要运营事实；不复制页面表达和设计 | **已升级 `partial_text`** |
 | 3 | `peoples-daily-yudonglai-interview-2025-08-19` | 人民日报数字报原页可读取 | 人民网版权作品，不保存或重建全文 | **已升级 `partial_text`**，保存逐题详细归纳和少量短引文 |
-| 4 | `official-pdl-baike-system-portal` | 官方百科为前端应用，搜索可见目录，正文入口需继续定位 | 页脚标明版权所有；当前文档只证明门户存在 | 保持 `summary_only`；不得把整个百科抓取为单一文档 |
-| 5 | `pdl-red-underwear-early-response-2025-02` | 当前链接为央视网转载，不是企业原帖 | 无稳定企业原帖 ID，不能按官方原文保存 | 保持 `summary_only`；寻找企业永久原链 |
-| 6 | `pdl-red-underwear-investigation-report-2025-02-14` | 当前链接为央视网对 53 页报告的摘要转载 | 未取得完整、稳定的企业报告原件 | 保持 `summary_only`；找到原报告后再判断章节级回填 |
-| 7 | `pdl-red-underwear-lawsuit-notice-2025-04` | 当前链接为央视网转载企业公示 | 未取得企业公众号或其他稳定原帖 | 保持 `summary_only`；寻找企业永久原链 |
-| 8 | `media-red-underwear-civil-judgment-2025-05` | 当前为媒体报道，不是裁判文书原文 | 不保存媒体全文；媒体报道不能冒充法院文书 | 保持 `summary_only`；优先寻找法院正式公开文本 |
+| 4 | `official-pdl-baike-system-portal` | 官方百科仍为前端应用，抓取只见应用壳 | 当前文档只能证明门户存在，内部词条可能需登录或权限 | **终轮保持 `summary_only`**；不得把整个百科抓取为单一文档 |
+| 5 | `pdl-red-underwear-early-response-2025-02` | 当前链接为央视网转载，不是企业原帖 | 无稳定企业原帖 ID，不能按官方原文保存 | **终轮保持 `summary_only`**；已记录最终原因 |
+| 6 | `pdl-red-underwear-investigation-report-2025-02-14` | 当前链接为央视网对约 53 页报告的部分转述 | 未取得完整、稳定的企业报告原件 | **终轮保持 `summary_only`**；不得据转载重建报告 |
+| 7 | `pdl-red-underwear-lawsuit-notice-2025-04` | 当前链接为央视网转载企业公示 | 未取得企业公众号稳定原帖 | **终轮保持 `summary_only`**；与后续判决隔离使用 |
+| 8 | `media-red-underwear-civil-judgment-2025-05` | 观察者网移动页可读取，引用法院公众号公告 | 不保存媒体全文；媒体报道仍不能冒充法院文书 | **已升级 `partial_text`**，保存判决主文、时间线、说理与终局边界 |
 | 9 | `thepaper-red-underwear-judgment-commentary-2025-05` | 澎湃评论页可读取 | 原创评论有明确版权边界 | **已升级 `partial_text`**，只存评论身份、观点结构、案件背景定位与适用边界 |
 | 10 | `civiw-red-underwear-sentiment-monitor-2025-05` | 商业舆情公开页可读取部分数据 | 商业监测报告、图表和网友评论不保存 | **已升级 `partial_text`**，仅保存公开指标、监测窗口、口径与方法局限 |
 | 11 | `media-yudonglai-rationality-red-underwear-2025-02` | 每日经济新闻页面可读取，且注明未经授权禁止转载 | 不保存全文；原话又来自大象新闻转述 | **已升级 `partial_text`**，保留来源链、人物表态、依法处理关系与事件边界 |
-| 12 | `media-tea-fly-preliminary-response-2026-01` | 本次访问返回错误；原企业抖音帖 ID 仍未核验 | 不能按企业原文保存，也不能支持最终结论 | 保持 `summary_only` 和 `limited` |
-| 13 | `media-egg-canthaxanthin-company-response-2026-04` | 本次访问未取得稳定正文；原企业账号帖子 ID 未核验 | 不能按企业原文保存，也不能支持最终结论 | 保持 `summary_only` 和 `limited` |
+| 12 | `media-tea-fly-preliminary-response-2026-01` | 人民网河南正文可经搜索缓存稳定核验；企业抖音帖 ID 仍未核验 | 可保存媒体记录的关键事实，不能按企业原文或最终结论使用 | **已升级 `partial_text`**，继续保持 `limited` 与 `preliminary` |
+| 13 | `media-egg-canthaxanthin-company-response-2026-04` | 中国经济网正文可稳定核验；企业账号帖子 ID 仍未核验 | 可保存媒体记录的企业送检与回应，不能支持监管终局 | **已升级 `partial_text`**，继续保持 `limited` 与 `no_regulatory_final` |
 | 14 | `jiemian-pdl-cinema-half-refund-2023-04` | 界面新闻页面可读取 | 界面明确要求书面授权，禁止复制或展示局部/全部内容 | **已升级 `partial_text`**，仅按用户批准范围保存传播链、半价退票规则、媒体解释和时效边界 |
 | 15 | `jiemian-pdl-freedom-love-origin-handbook-2026` | 界面财经号页面可读取 | 同上，不得保存全文 | **已升级 `partial_text`**，按历史线索、制度举例、治理观察和争议边界切片 |
 | 16 | `media-pdl-weiqu-award-company-response` | 证券时报页面可读取 | 媒体报道，不默认取得全文许可 | **已升级 `partial_text`**，明确办公室回应、历史制度信息与人物表述 |
-| 17 | `media-pdl-culture-system-2022-republish` | 行业媒体转载页可读取 | 转载页不能替代原企业制度授权，不得保存所谓“全文” | 保持 `summary_only`；优先寻找企业现行制度原页 |
-| 18 | `media-pdl-shen-hongli-culture-happiness-handbook-2026` | 本次未取得稳定正文 | 行业媒体内容不默认允许全文使用 | 保持 `summary_only`；重新核验页面及原分享 |
+| 17 | `media-pdl-culture-system-2022-republish` | 行业媒体转载页可完整读取，并标注转载需经同意 | 不保存或通过切片重建所谓“全文”；可保存历史版本的结构化事实 | **已升级 `partial_text`**，明确 2022 时点、制度结构和管理边界 |
+| 18 | `media-pdl-shen-hongli-culture-happiness-handbook-2026` | FoodTalks 仍只返回需要 JavaScript 的应用壳 | 行业媒体内容不默认允许全文使用，现有摘要不足以定位段落 | **终轮保持 `summary_only`** |
 | 19 | `tsinghua-sem-pdl-freedom-love-csr-2025` | 清华经管页面可读取 | 高校发布的管理评论仍受版权保护 | **已升级 `partial_text`**，保存文章身份、分析框架、机制清单和复制边界 |
 | 20 | `xinhua-book-awakening-pdl-culture-outline-2023` | 新华网页面可读取 | 新华网明确禁止未经授权转载、摘编或其他方式使用 | **已升级 `partial_text`**，保存大纲转述、作者解释框架和历史性描述 |
 | 21 | `xinhua-pdl-yonghui-learning-reform-2025` | 新华网页面可读取 | 同上，不保存全文 | **已升级 `partial_text`**，区分永辉商品/服务/员工实践、时点成效与胖东来文化内核 |
 | 22 | `xinhua-qianbilou-pdl-6a-scenic-2025-03` | 新华社稿件页面可读取 | 同上，不保存全文 | **已升级 `partial_text`**，按称呼边界、时点客流、服务员工、文化和可复制性切片 |
-| 23 | `book-how-to-learn-pdl-wanghuizhong` | 公开书目页可读取；用户持有扫描件 | 持有图书不等于获得复制和网络传播权，不进行整本 OCR 入库 | 保持 `summary_only`；只用公开目录、自写章节摘要和极少量必要引文 |
+| 23 | `book-how-to-learn-pdl-wanghuizhong` | 公开书目页可读取；用户持有扫描件 | 持有图书不等于获得复制和网络传播权，不进行整本 OCR 入库 | **终轮保持 `summary_only`**；12 条内容继续标明为公开目录与自写主题摘要 |
 
 ## 3. 本轮已回填内容
 
@@ -83,16 +83,19 @@
 - 识微商业监测只保存监测窗口、信息量、平台/情感/信息类型指标及方法局限，不保存图表和网友评论，不写成全国民调；
 - 五份材料均升级为 `partial_text`，知识片段总数增至 89。
 
+### 终轮 10 份资料
+
+- 将 2022 年企业文化制度转载拆分为文档时点、总则、行为规范、生活模块与考评机制，明确历史版本和私人生活管理边界；
+- 将红内裤一审媒体记录拆分为来源身份、判决主文、处理时间线、送检与传播事实、法院说理，始终与裁判文书、监管食安终局和医学因果隔离；
+- 将茶叶反馈材料拆分为初步阶段、调查/下架/访厂动作、客服致歉，所有片段保留“尚无后续调查结论”约束；
+- 将鸡蛋角黄素材料拆分为报道阶段、企业公布的多品牌送检、其他检测背景和维权表态，禁止写成监管结案；
+- 上述 4 份升级为 `partial_text`；百科门户、申红丽 FoodTalks 页面、3 份缺企业原帖的红内裤材料和图书共 6 份完成终轮审计后保留 `summary_only`；
+- 23 份现有资料已全部处理完毕：17 份 `partial_text`、6 份 `summary_only`，知识片段总数为 100。保留摘要是审计结论，不代表任务遗漏。
+
 ## 4. 审计中发现但未入库的新线索
 
 审计时发现胖东来当前官网存在独立的企业文化页面、幸福生命手册入口和文化 PDF。它们与现有 23 份材料并非同一来源记录，因此本轮没有自动加入正式知识库。后续应另建候选卡，完成来源、版本、版权和用户批准后再入库。
 
-## 5. 下一批顺序
+## 5. 本任务完成后的边界
 
-1. 复核媒体版红内裤民事判决记录，继续与法院原文边界隔离；
-2. 复核官方百科门户，按可访问栏目拆分，不抓取整站；
-3. 复核企业文化制度转载页，只保存能够归因的历史性内容；
-4. 复核《怎样学习胖东来》公开目录与现有 12 条摘要，不进行整本 OCR；
-5. 对其余企业原帖缺失、页面不稳定的 6 份材料做终轮核验；找不到原始来源的继续保留 `summary_only`，不为完成数量而伪造正文。
-
-每份只回填能够合法使用的内容，并继续保留企业自述、媒体观察、作者观点和事件结论之间的边界。
+`RAG-CONTENT-BACKFILL-01` 已完成。后续若取得企业原帖永久链接、法院原文、可定位的 FoodTalks 正文或明确转载授权，应按新证据重新建审核记录，而不是直接覆盖本轮结论。下一项能力工作转入 `RAG-CULTURE-R0`：先建立文化问题地图和评测基线，再决定是否补新来源、改 Query 改写或接向量库。

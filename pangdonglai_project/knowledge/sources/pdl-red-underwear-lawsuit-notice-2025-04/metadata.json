@@ -19,8 +19,8 @@
     "sourceType": "official",
     "url": "https://news.cctv.com/2025/04/06/ARTIL6LyM2RCmvIBetSuMnLg250406.shtml",
     "publishedAt": "2025-04-05",
-    "verifiedAt": "2026-07-30",
-    "notes": "2025-04-05 晚公示起诉段某（网名两个小段等）。主链为央视网转载入口。"
+    "verifiedAt": "2026-08-01",
+    "notes": "2026-08-01 终轮复核央视网转载页：可核到 2025-04-05 晚企业公示提起名誉权诉讼及追责表态，但企业公众号原文永久链接仍未取得。"
   },
   "scope": [
     "企业以名誉权起诉博主、追责金额表态"
@@ -37,6 +37,6 @@
     "chunksPath": "chunks/pdl-red-underwear-lawsuit-notice-2025-04.jsonl",
     "sourceSnapshotHash": null,
     "migratedAt": "2026-07-31",
-    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+    "notes": "2026-08-01 终轮处理决定：保持 summary_only。当前稳定链接是央视网转述，不是企业公众号原帖；起诉公示必须与后续一审判决分开使用。"
   }
 }

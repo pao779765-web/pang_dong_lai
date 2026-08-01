@@ -19,8 +19,8 @@
     "sourceType": "media",
     "url": "https://www.foodtalks.cn/news/61988",
     "publishedAt": "2026-04-14",
-    "verifiedAt": "2026-07-31",
-    "notes": "公开检索摘要可见文化理念与幸福生命状态手册表述；完整页可能需浏览器渲染。"
+    "verifiedAt": "2026-08-01",
+    "notes": "2026-08-01 终轮复核：FoodTalks 页面仍只返回需要 JavaScript 的应用壳；公开检索摘要可见相关表述，但不足以定位完整段落。"
   },
   "scope": [
     "管理层对自由精神、爱的精神与文化目标的表述",
@@ -38,6 +38,6 @@
     "chunksPath": "chunks/media-pdl-shen-hongli-culture-happiness-handbook-2026.jsonl",
     "sourceSnapshotHash": null,
     "migratedAt": "2026-07-31",
-    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+    "notes": "2026-08-01 终轮处理决定：保持 summary_only。原页面正文仍不可稳定读取，现有内容只作为已审核媒体摘要，不冒充演讲全文或手册正文。"
   }
 }

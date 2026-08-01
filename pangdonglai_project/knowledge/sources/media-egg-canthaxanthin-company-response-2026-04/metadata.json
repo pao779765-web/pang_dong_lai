@@ -19,7 +19,7 @@
     "sourceType": "media",
     "url": "https://www.ce.cn/cysc/sp/info/202604/t20260406_2883752.shtml",
     "publishedAt": "2026-04-06",
-    "verifiedAt": "2026-07-27",
+    "verifiedAt": "2026-08-01",
     "alternateUrls": [
       "https://www.21jingji.com/article/20260406/herald/f0b475f419894076ccaae613be6305cf.html"
     ]
@@ -36,13 +36,13 @@
     "官方抖音原帖未核验前不得升为 L1。"
   ],
   "ingestion": {
-    "contentStatus": "summary_only",
-    "fullTextAllowed": "unknown",
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
     "contentFormat": "markdown",
     "contentPath": "sources/media-egg-canthaxanthin-company-response-2026-04/content.md",
     "chunksPath": "chunks/media-egg-canthaxanthin-company-response-2026-04.jsonl",
     "sourceSnapshotHash": null,
     "migratedAt": "2026-07-31",
-    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+    "notes": "2026-08-01 已依据中国经济网可读报道回填报道身份、企业发布的多品牌检测、自述维权及监管终局边界；企业原帖 ID 与监管结案原文仍未核验，保持 L2 limited。"
   }
 }

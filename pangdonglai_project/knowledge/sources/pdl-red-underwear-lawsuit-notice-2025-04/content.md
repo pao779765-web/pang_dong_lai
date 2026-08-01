@@ -7,7 +7,7 @@
 - 文档 ID：`pdl-red-underwear-lawsuit-notice-2025-04`
 - 原始来源：https://news.cctv.com/2025/04/06/ARTIL6LyM2RCmvIBetSuMnLg250406.shtml
 - 发布者：胖东来商贸集团公众号等官方渠道（处理公示）
-- 核验日期：2026-07-30
+- 核验日期：2026-08-01
 
 ## 当前已审核内容
 

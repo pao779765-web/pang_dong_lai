@@ -19,8 +19,8 @@
     "sourceType": "official",
     "url": "https://news.cctv.com/2025/04/06/ARTIL6LyM2RCmvIBetSuMnLg250406.shtml",
     "publishedAt": "2025-02-14",
-    "verifiedAt": "2026-07-30",
-    "notes": "报告标题与要点经央视网等权威转载核验。本库不收录 53 页全文，仅自写摘要。原发布渠道为企业官方抖音。"
+    "verifiedAt": "2026-08-01",
+    "notes": "2026-08-01 终轮复核：报告标题与部分要点可由央视网转载核验，但未取得企业官方抖音发布的约 53 页报告原件或稳定永久链接。"
   },
   "scope": [
     "企业调查报告中的送检结论表述、内部处理、对顾客措施、拟追责表态"
@@ -39,6 +39,6 @@
     "chunksPath": "chunks/pdl-red-underwear-investigation-report-2025-02-14.jsonl",
     "sourceSnapshotHash": null,
     "migratedAt": "2026-07-31",
-    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+    "notes": "2026-08-01 终轮处理决定：保持 summary_only。央视网只转述报告部分要点，不能据此重建约 53 页企业报告；现有内容保持企业报告自述摘要与司法阶段隔离。"
   }
 }

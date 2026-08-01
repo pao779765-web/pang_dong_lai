@@ -7,7 +7,7 @@
 - 文档 ID：`media-pdl-shen-hongli-culture-happiness-handbook-2026`
 - 原始来源：https://www.foodtalks.cn/news/61988
 - 发布者：FoodTalks 等行业媒体（胖东来超市总经理申红丽相关公开分享）
-- 核验日期：2026-07-31
+- 核验日期：2026-08-01
 
 ## 当前已审核内容
 

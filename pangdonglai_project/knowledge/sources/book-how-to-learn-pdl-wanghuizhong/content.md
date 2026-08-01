@@ -7,7 +7,7 @@
 - 文档 ID：`book-how-to-learn-pdl-wanghuizhong`
 - 原始来源：https://book.douban.com/subject/26269190/
 - 发布者：王慧中 著；科学出版社，ISBN 9787508843438（公开书目；另有再版信息以版权页为准）
-- 核验日期：2026-07-29
+- 核验日期：2026-08-01
 
 ## 当前已审核内容
 

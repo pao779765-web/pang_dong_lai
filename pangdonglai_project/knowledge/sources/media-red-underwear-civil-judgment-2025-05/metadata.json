@@ -19,8 +19,8 @@
     "sourceType": "media",
     "url": "https://www.guancha.cn/politics/2025_05_30_777673.shtml",
     "publishedAt": "2025-05-30",
-    "verifiedAt": "2026-07-30",
-    "notes": "报道引用魏都区法院 2025-05-29 前后公告：5 月 28 日开庭并当庭宣判。河南高院 2026-03 另有案情披露转述可作交叉。"
+    "verifiedAt": "2026-08-01",
+    "notes": "2026-08-01 复核到观察者网移动版可读正文；报道引用魏都区法院 2025-05-29 前后公告，记录 5 月 28 日开庭并当庭宣判。它仍是媒体对法院信息的转述，不是裁判文书全文。"
   },
   "scope": [
     "一审名誉权判决结果与法院认定要点（媒体记录）"
@@ -31,13 +31,13 @@
     "不得引申为「消费者不能批评企业」。"
   ],
   "ingestion": {
-    "contentStatus": "summary_only",
-    "fullTextAllowed": "unknown",
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
     "contentFormat": "markdown",
     "contentPath": "sources/media-red-underwear-civil-judgment-2025-05/content.md",
     "chunksPath": "chunks/media-red-underwear-civil-judgment-2025-05.jsonl",
     "sourceSnapshotHash": null,
     "migratedAt": "2026-07-31",
-    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+    "notes": "2026-08-01 已依据可读报道回填报道身份、判决主文、法院所述处理时间线、费用与传播事实、裁判说理及适用边界；不保存媒体全文，不冒充法院裁判文书。"
   }
 }

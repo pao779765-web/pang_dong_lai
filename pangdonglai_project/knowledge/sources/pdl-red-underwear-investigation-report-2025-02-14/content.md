@@ -7,7 +7,7 @@
 - 文档 ID：`pdl-red-underwear-investigation-report-2025-02-14`
 - 原始来源：https://news.cctv.com/2025/04/06/ARTIL6LyM2RCmvIBetSuMnLg250406.shtml
 - 发布者：许昌市胖东来商贸集团有限公司（官方抖音发布约 53 页调查报告）
-- 核验日期：2026-07-30
+- 核验日期：2026-08-01
 
 ## 当前已审核内容
 

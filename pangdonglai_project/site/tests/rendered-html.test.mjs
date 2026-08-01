@@ -112,6 +112,10 @@ test("builds the RAG index from the directory knowledge source of truth", async 
     "thepaper-red-underwear-judgment-commentary-2025-05",
     "media-yudonglai-rationality-red-underwear-2025-02",
     "civiw-red-underwear-sentiment-monitor-2025-05",
+    "media-pdl-culture-system-2022-republish",
+    "media-red-underwear-civil-judgment-2025-05",
+    "media-tea-fly-preliminary-response-2026-01",
+    "media-egg-canthaxanthin-company-response-2026-04",
   ]) {
     const document = backfilledDocuments.get(documentId);
     assert.equal(document?.ingestion.contentStatus, "partial_text");
@@ -790,6 +794,45 @@ test("keeps a limited event response inside its case and forbids finality langua
     assert.match(body, /顾客抖音反馈茶叶问题后的企业公开初步说明/);
     assert.match(body, /"claimType":"company_preliminary_response"/);
     assert.match(body, /"finality":"preliminary"/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("keeps company egg testing separate from a regulatory final conclusion", async () => {
+  const originalFetch = globalThis.fetch;
+  let deepseekRequest;
+
+  globalThis.fetch = async (input, init) => {
+    if (String(input) === "https://api.deepseek.com/chat/completions") {
+      deepseekRequest = JSON.parse(init.body);
+      return new Response(
+        'data: {"choices":[{"delta":{"content":"企业送检回应"}}]}\n\ndata: [DONE]\n\n',
+        { headers: { "content-type": "text/event-stream" } },
+      );
+    }
+    return originalFetch(input, init);
+  };
+
+  try {
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ messages: [{ role: "user", content: "胖东来鸡蛋角黄素怎么回应的，监管最终结案了吗？" }] }),
+      },
+      { DEEPSEEK_API_KEY: "test-key" },
+    );
+
+    const body = await response.text();
+    const prompt = deepseekRequest.messages[0].content;
+    assert.match(prompt, /鲜鸡蛋角黄素网络争议中的企业公开回应/);
+    assert.match(prompt, /企业送检|黄天鹅|华测检测|角黄素/);
+    assert.match(prompt, /监管.*最终|监管.*结案|市场监管/);
+    assert.match(prompt, /不得引用其他案例或企业理念资料来裁定本案例事实/);
+    assert.doesNotMatch(prompt, /茶叶苍蝇|人民日报于东来访谈/);
+    assert.match(body, /"finality":"no_regulatory_final"/);
   } finally {
     globalThis.fetch = originalFetch;
   }

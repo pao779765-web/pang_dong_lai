@@ -18,8 +18,6 @@ knowledge/
 
 `scripts/migrate-knowledge-v2.mjs` 是一次性迁移工具，默认拒绝运行，避免覆盖后续新增资料。只有明确需要从 v2 快照完全重建时才使用其强制参数。
 
-`scripts/migrate-knowledge-v2.mjs` 是一次性迁移工具，默认拒绝运行，避免覆盖后续新增资料。只有明确需要从 v2 快照完全重建时才使用其强制参数。
-
 ## 维护规则
 
 1. 新资料先执行 `docs/RAG_RESEARCH_PROTOCOL.md` 的候选、审核和用户批准流程。
@@ -41,8 +39,8 @@ knowledge/
 ## 当前回填进度
 
 - 资料总数：23
-- 检索片段：89
-- `partial_text`：13（前三批已完成回填）
-- `summary_only`：10
+- 检索片段：100
+- `partial_text`：17
+- `summary_only`：6（均已完成终轮审计；保留摘要是来源或版权边界结论，不是遗漏）
 
 逐篇权限与覆盖审计见 `docs/SOURCE_AUDIT_08.md`。

@@ -19,8 +19,8 @@
     "sourceType": "official",
     "url": "https://baike.azpdl.cn/",
     "publishedAt": "2025",
-    "verifiedAt": "2026-07-31",
-    "notes": "2026-07-31 核验：页面为 Vue SPA，无服务端可读正文，本库不伪称已收录百科全文。alternate: https://baike.azpdl.com/ 。飞书客户文称东来百科含文化、标准等模块。"
+    "verifiedAt": "2026-08-01",
+    "notes": "2026-08-01 终轮复核：页面仍为前端应用，公开抓取无可定位词条正文，本库只保留门户存在性，不伪称已收录百科全文。alternate: https://baike.azpdl.com/ 。"
   },
   "scope": [
     "企业公开知识库/百科系统入口存在",
@@ -38,6 +38,6 @@
     "chunksPath": "chunks/official-pdl-baike-system-portal.jsonl",
     "sourceSnapshotHash": null,
     "migratedAt": "2026-07-31",
-    "notes": "由 schema 2.0 摘要知识库无损迁移；尚未取得或核验完整正文。"
+    "notes": "2026-08-01 终轮处理决定：保持 summary_only。门户存在可核验，但内部词条正文不可定位且可能需要登录或权限；不得抓取整站或伪造手册全文。"
   }
 }
