@@ -445,6 +445,15 @@ function describeSourceForReader(item: RetrievedChunk) {
 function describeCaseStage(caseRecord: CaseRecord) {
   if (caseRecord.finality === "preliminary") return "目前能看到的是企业当时的公开回应，后续调查结论尚未见到。";
   if (caseRecord.finality === "no_regulatory_final") return "目前能看到的是企业公开回应，尚未见到相关部门的最终公开结论。";
+  if (caseRecord.finality === "company_internal_reconsideration") {
+    return "目前能看到企业对该次员工处分作出的后续内部复议结果和媒体法律评论，尚未见到劳动仲裁或法院结论。";
+  }
+  if (caseRecord.finality === "proposal_not_policy") {
+    return "现有资料显示相关说法当时尚未形成企业规章制度；能看到的是企业回应和媒体专家讨论，不是司法或行政结论。";
+  }
+  if (caseRecord.finality === "company_clarification_only") {
+    return "目前能看到的是企业对降薪传言的公开澄清；这不能证明每名员工实际薪酬从未变化，也不是劳动监管结论。";
+  }
   if (caseRecord.finality === "civil_judgment_public") {
     return "本案已有公开的民事一审判决报道；企业调查报告、起诉主张与法院判决是不同阶段，不能混为一谈，也不等于监管食安或医学因果终局。";
   }

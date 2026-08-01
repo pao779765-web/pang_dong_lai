@@ -116,11 +116,55 @@ test("builds the RAG index from the directory knowledge source of truth", async 
     "media-red-underwear-civil-judgment-2025-05",
     "media-tea-fly-preliminary-response-2026-01",
     "media-egg-canthaxanthin-company-response-2026-04",
+    "xinhua-employee-home-rest-2025-04",
+    "zhengzhou-pdl-recruitment-life-2025-08",
+    "cnfin-feishu-night-shift-care-2024-12",
+    "workercn-noodle-dismissal-critique-2024-02-17",
+    "workercn-noodle-reconsideration-2024-02-23",
+    "nbd-bride-price-boundary-2024-11",
+    "jiemian-salary-policy-clarification-2026-06",
   ]) {
     const document = backfilledDocuments.get(documentId);
     assert.equal(document?.ingestion.contentStatus, "partial_text");
     assert.ok(document.chunks.every((chunk) => chunk.contentKind === "source_text"));
     assert.ok(document.chunks.every((chunk) => chunk.sourceSpans.length > 0));
+  }
+});
+
+test("keeps the first culture question set balanced and linked to real chunks", async () => {
+  const [evaluation, compiled] = await Promise.all([
+    readFile(new URL("../../evaluation/rag-culture-questions-v1.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../knowledge/compiled/knowledge-base.json", import.meta.url), "utf8").then(JSON.parse),
+  ]);
+
+  assert.equal(evaluation.schemaVersion, "1.0");
+  assert.equal(evaluation.questions.length, 54);
+  assert.equal(new Set(evaluation.questions.map((question) => question.id)).size, 54);
+
+  const counts = Object.fromEntries(
+    Object.keys(evaluation.themeDistribution).map((theme) => [
+      theme,
+      evaluation.questions.filter((question) => question.theme === theme).length,
+    ]),
+  );
+  assert.deepEqual(counts, evaluation.themeDistribution);
+  assert.ok(Object.values(counts).every((count) => count >= 6));
+
+  const chunkIds = new Set(
+    compiled.documents.flatMap((document) => document.chunks.map((chunk) => chunk.id)),
+  );
+  for (const question of evaluation.questions) {
+    for (const chunkId of [...question.mustRecallAnyOf, ...question.mustNotRecallChunkIds]) {
+      assert.ok(chunkIds.has(chunkId), `${question.id} 引用了不存在的片段 ${chunkId}`);
+    }
+  }
+
+  for (const caseId of [
+    "employee-noodle-tasting-discipline-2024-02",
+    "employee-bride-price-boundary-2024-11",
+    "employee-salary-policy-rumor-2026-06",
+  ]) {
+    assert.ok(evaluation.questions.some((question) => question.expectedCaseId === caseId));
   }
 });
 
@@ -833,6 +877,155 @@ test("keeps company egg testing separate from a regulatory final conclusion", as
     assert.match(prompt, /不得引用其他案例或企业理念资料来裁定本案例事实/);
     assert.doesNotMatch(prompt, /茶叶苍蝇|人民日报于东来访谈/);
     assert.match(body, /"finality":"no_regulatory_final"/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("retrieves newly approved employee rest practices on the general track", async () => {
+  const originalFetch = globalThis.fetch;
+  let deepseekRequest;
+
+  globalThis.fetch = async (input, init) => {
+    if (String(input) === "https://api.deepseek.com/chat/completions") {
+      deepseekRequest = JSON.parse(init.body);
+      return new Response(
+        'data: {"choices":[{"delta":{"content":"员工休息安排"}}]}\n\ndata: [DONE]\n\n',
+        { headers: { "content-type": "text/event-stream" } },
+      );
+    }
+    return originalFetch(input, init);
+  };
+
+  try {
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ messages: [{ role: "user", content: "胖东来员工不开心假和下班后的生活边界具体怎么做？" }] }),
+      },
+      { DEEPSEEK_API_KEY: "test-key" },
+    );
+
+    assert.equal(response.status, 200);
+    const prompt = deepseekRequest.messages[0].content;
+    assert.match(prompt, /新华社民营经济观察：胖东来员工之家与工作生活边界/);
+    assert.match(prompt, /10 天不开心假|下班后不允许给员工打工作电话/);
+    assert.doesNotMatch(prompt, /【这次问题的回答边界】/);
+    assert.doesNotMatch(prompt, /尝面员工|员工彩礼|降薪传言/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("keeps the noodle-employee discipline timeline inside its own case", async () => {
+  const originalFetch = globalThis.fetch;
+  let deepseekRequest;
+
+  globalThis.fetch = async (input, init) => {
+    if (String(input) === "https://api.deepseek.com/chat/completions") {
+      deepseekRequest = JSON.parse(init.body);
+      return new Response(
+        'data: {"choices":[{"delta":{"content":"处分与复议"}}]}\n\ndata: [DONE]\n\n',
+        { headers: { "content-type": "text/event-stream" } },
+      );
+    }
+    return originalFetch(input, init);
+  };
+
+  try {
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ messages: [{ role: "user", content: "尝面员工后来还是被开除了吗？最终怎么处理的？" }] }),
+      },
+      { DEEPSEEK_API_KEY: "test-key" },
+    );
+
+    assert.equal(response.status, 200);
+    const prompt = deepseekRequest.messages[0].content;
+    assert.match(prompt, /美食城员工试吃操作违规后的处分与复议/);
+    assert.match(prompt, /后续内部复议结果/);
+    assert.match(prompt, /降学习期三个月|转为非食品加工岗位/);
+    assert.match(prompt, /尚未见到劳动仲裁或法院结论/);
+    assert.doesNotMatch(prompt, /红内裤|茶叶苍蝇|员工彩礼/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("keeps the bride-price discussion at the proposal-not-policy stage", async () => {
+  const originalFetch = globalThis.fetch;
+  let deepseekRequest;
+
+  globalThis.fetch = async (input, init) => {
+    if (String(input) === "https://api.deepseek.com/chat/completions") {
+      deepseekRequest = JSON.parse(init.body);
+      return new Response(
+        'data: {"choices":[{"delta":{"content":"倡议边界"}}]}\n\ndata: [DONE]\n\n',
+        { headers: { "content-type": "text/event-stream" } },
+      );
+    }
+    return originalFetch(input, init);
+  };
+
+  try {
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ messages: [{ role: "user", content: "胖东来不让员工收彩礼已经是正式制度了吗？" }] }),
+      },
+      { DEEPSEEK_API_KEY: "test-key" },
+    );
+
+    assert.equal(response.status, 200);
+    const prompt = deepseekRequest.messages[0].content;
+    assert.match(prompt, /员工彩礼倡议与私人生活边界讨论/);
+    assert.match(prompt, /尚未形成企业规章制度/);
+    assert.match(prompt, /私人生活|合法福利|制度形成程序/);
+    assert.doesNotMatch(prompt, /尝面员工|大幅降薪|茶叶苍蝇/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("treats the no-pay-cut statement as a company clarification only", async () => {
+  const originalFetch = globalThis.fetch;
+  let deepseekRequest;
+
+  globalThis.fetch = async (input, init) => {
+    if (String(input) === "https://api.deepseek.com/chat/completions") {
+      deepseekRequest = JSON.parse(init.body);
+      return new Response(
+        'data: {"choices":[{"delta":{"content":"工资澄清"}}]}\n\ndata: [DONE]\n\n',
+        { headers: { "content-type": "text/event-stream" } },
+      );
+    }
+    return originalFetch(input, init);
+  };
+
+  try {
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ messages: [{ role: "user", content: "胖东来真的大幅降薪了吗，企业怎么回应的？" }] }),
+      },
+      { DEEPSEEK_API_KEY: "test-key" },
+    );
+
+    assert.equal(response.status, 200);
+    const prompt = deepseekRequest.messages[0].content;
+    assert.match(prompt, /员工降薪传言与企业公开澄清/);
+    assert.match(prompt, /从未作出降薪决定|未作出调降工资决定/);
+    assert.match(prompt, /不能证明每名员工实际薪酬从未变化/);
+    assert.doesNotMatch(prompt, /尝面员工|员工彩礼|红内裤/);
   } finally {
     globalThis.fetch = originalFetch;
   }

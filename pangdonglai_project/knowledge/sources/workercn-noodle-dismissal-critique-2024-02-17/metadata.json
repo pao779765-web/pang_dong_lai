@@ -1,0 +1,46 @@
+{
+  "id": "workercn-noodle-dismissal-critique-2024-02-17",
+  "title": "工人日报：尝面员工初次辞退处理与比例原则质疑",
+  "type": "media_legal_analysis",
+  "status": "limited",
+  "caseId": "employee-noodle-tasting-discipline-2024-02",
+  "claimType": "media_expert_critique",
+  "finality": "initial_company_action",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "工人日报原创采访与专家观点（非裁判结论）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-01",
+    "basis": "docs/SOURCE_AUDIT_C1_01.md C1-A3；用户批准两组全部入库，按案例 limited 使用。"
+  },
+  "source": {
+    "publisher": "工人日报客户端 / 中工网，记者杨召奎",
+    "sourceType": "media",
+    "url": "https://www.workercn.cn/c/2024-02-17/8151539.shtml",
+    "publishedAt": "2024-02-17",
+    "verifiedAt": "2026-08-01",
+    "notes": "报道采访多位劳动法专业人士；企业情况说明由媒体转述，专家意见不是法院或仲裁结论。"
+  },
+  "scope": [
+    "尝面员工事件的企业初次处分阶段",
+    "受访劳动法专业人士对比例原则和最后手段原则的观点",
+    "食品安全纪律与劳动者权益之间的讨论"
+  ],
+  "answeringRules": [
+    "只能在 employee-noodle-tasting-discipline-2024-02 案例中使用，不得裁定其他员工处分。",
+    "必须把企业初次处理、媒体转述和专家观点分开归因。",
+    "专家认为处罚过重不等于法院、劳动仲裁或监管已经认定违法。",
+    "不得据此裁定视频全部事实或员工主观过错。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/workercn-noodle-dismissal-critique-2024-02-17/content.md",
+    "chunksPath": "chunks/workercn-noodle-dismissal-critique-2024-02-17.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-01",
+    "notes": "保存必要时间线与专家观点摘要，不复制报道全文。"
+  }
+}

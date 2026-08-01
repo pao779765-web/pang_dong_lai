@@ -1,0 +1,46 @@
+{
+  "id": "jiemian-salary-policy-clarification-2026-06",
+  "title": "界面新闻：降薪传言与企业公开澄清",
+  "type": "media_company_response",
+  "status": "limited",
+  "caseId": "employee-salary-policy-rumor-2026-06",
+  "claimType": "company_clarification_reported",
+  "finality": "company_clarification_only",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "媒体对企业公开说明与人物表述的记录",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-01",
+    "basis": "docs/SOURCE_AUDIT_C1_01.md C1-A6；用户批准两组全部入库，按案例 limited 使用。"
+  },
+  "source": {
+    "publisher": "界面新闻，作者彭朋",
+    "sourceType": "media",
+    "url": "https://www.jiemian.com/article/14575217.html",
+    "publishedAt": "2026-06-12",
+    "verifiedAt": "2026-08-01",
+    "notes": "报道引用胖东来公开说明和于东来社交发文；本轮未取得企业声明稳定网页原帖。"
+  },
+  "scope": [
+    "2026 年 6 月网络降薪讨论的起因",
+    "企业公开称未作出调降工资决定",
+    "企业把薪酬、公平、价值和能力成长联系起来的公开解释"
+  ],
+  "answeringRules": [
+    "只能在 employee-salary-policy-rumor-2026-06 案例中使用。",
+    "必须使用「据界面新闻记录的企业公开说明」等归因，不得伪装成已取得企业原帖。",
+    "企业称没有降薪决定只能说明其公开立场，不能证明每名员工实际工资从未变化。",
+    "不得使用本轮未逐项核验的资产、工资和利润数字回答具体薪酬问题。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/jiemian-salary-policy-clarification-2026-06/content.md",
+    "chunksPath": "chunks/jiemian-salary-policy-clarification-2026-06.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-01",
+    "notes": "仅保存争议上下文、企业澄清和证据边界；不收录未逐项核验的延伸数字。"
+  }
+}

@@ -38,9 +38,9 @@ knowledge/
 
 ## 当前回填进度
 
-- 资料总数：23
-- 检索片段：100
-- `partial_text`：17
+- 资料总数：30
+- 检索片段：135
+- `partial_text`：24
 - `summary_only`：6（均已完成终轮审计；保留摘要是来源或版权边界结论，不是遗漏）
 
-逐篇权限与覆盖审计见 `docs/SOURCE_AUDIT_08.md`。
+原有 23 份资料的逐篇权限与覆盖审计见 `docs/SOURCE_AUDIT_08.md`；C1 员工文化首批 7 份新增资料的审核与入库结果见 `docs/SOURCE_AUDIT_C1_01.md`。

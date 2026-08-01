@@ -1,0 +1,46 @@
+{
+  "id": "workercn-noodle-reconsideration-2024-02-23",
+  "title": "工人日报：尝面员工由辞退改为转岗的内部复议",
+  "type": "media_followup",
+  "status": "limited",
+  "caseId": "employee-noodle-tasting-discipline-2024-02",
+  "claimType": "company_internal_reconsideration_reported",
+  "finality": "company_internal_reconsideration",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "工人日报对企业后续内部决议的记录（非仲裁或法院结论）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-01",
+    "basis": "docs/SOURCE_AUDIT_C1_01.md C1-A4；用户批准两组全部入库，按案例 limited 使用。"
+  },
+  "source": {
+    "publisher": "工人日报，记者杨召奎",
+    "sourceType": "media",
+    "url": "https://www.workercn.cn/papers/grrb/2024/02/23/5/news-1.html",
+    "publishedAt": "2024-02-23",
+    "verifiedAt": "2026-08-01",
+    "notes": "报道记录企业 13 页调查报告和民主决议结果；本库未取得企业报告稳定原帖。"
+  },
+  "scope": [
+    "尝面员工处分从辞退到转岗的事件后续",
+    "媒体记录的民主研讨与投票过程",
+    "受访专家关于罚责相当和民主管理的分析"
+  ],
+  "answeringRules": [
+    "只能在 employee-noodle-tasting-discipline-2024-02 案例中使用。",
+    "应说「据工人日报对企业报告的记录」，不得伪装成已取得企业报告原文。",
+    "内部复议结果不是劳动仲裁、法院判决或监管结论。",
+    "不得把该次民主程序外推为企业所有处分的固定流程。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/workercn-noodle-reconsideration-2024-02-23/content.md",
+    "chunksPath": "chunks/workercn-noodle-reconsideration-2024-02-23.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-01",
+    "notes": "保存后续处理和专家分析摘要，不复制报道或企业报告全文。"
+  }
+}

@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-08-01
 
-**当前执行者：** Codex 已建立文化知识地图与 48 题首批试卷，并完成 C1 首批互联网候选审核；正式入库等待用户批准
+**当前执行者：** Codex 已完成 C1 首批 7 份资料入库、3 个案例隔离与 54 题试卷更新；下一项仍为当前 BM25 基线
 **分支：** `main`
 
 ---
@@ -58,8 +58,8 @@
 - [x] **RAG-CONTENT-AUDIT-01**：已逐篇审计现有 23 份资料的页面可访问性、正文保存权限与覆盖状态，结论见 `docs/SOURCE_AUDIT_08.md`；当前没有任何资料具有已核验的全文转载许可。
 - [x] **RAG-CONTENT-BACKFILL-01（用户已授权）**：现有 23 份资料已全部逐篇处理。17 份升级为 `partial_text`，6 份因企业原帖/报告缺失、页面不可定位或图书版权边界保留 `summary_only`；片段总数由 53 增至 100。保留摘要是终轮审计结论，不是遗漏；详见 `docs/SOURCE_AUDIT_08.md`。
 - [x] **RAG-PLAN-01**：将“帮助网友理解自由与爱”的目标更新为共同路线图；明确六条文化主线、当前能力与缺口、R0～R7 推进顺序、验收标准和 Codex/Grok/用户分工，并加入共同必读入口。
-- [ ] **RAG-CULTURE-R0**：正式文化知识地图与首批 48 道网友问题试卷已经建立；尚需运行当前 BM25 基线，并把失败区分为资料缺口、检索错误和生成越界。完成前不修改 Query 改写算法、不接向量库。
-- [ ] **RAG-CULTURE-R1**：用户要求开始检索“网友真正关心的问题”和“具体做法与文化逻辑”；已按 C1“员工的尊严、自由与生活”筛选并深审 7 组候选，审核见 `docs/SOURCE_AUDIT_C1_01.md`。未经用户对具体候选作出批准、限制或拒绝前，不得写入正式知识库。
+- [ ] **RAG-CULTURE-R0**：正式文化知识地图与首批 54 道网友问题试卷已经建立；尚需运行当前 BM25 基线，并把失败区分为资料缺口、检索错误和生成越界。完成前不修改 Query 改写算法、不接向量库。
+- [ ] **RAG-CULTURE-R1**：用户已批准 C1“员工的尊严、自由与生活”首批两组资料。7 份资料、32 个片段和 3 个独立案例已按 `approved` / `limited` 范围入库，审核与结果见 `docs/SOURCE_AUDIT_C1_01.md`；知识库现有 30 份资料、135 个片段和 6 个案例。本阶段尚未完成后续 C1 一手资料主干，不得自动扩充。
 - [x] **RAG-RESEARCH-01**：建立 Codex 与 Grok 强制共用的互联网资料检索与 RAG 入库规范；明确候选池、来源优先级、企业身份核验、转载去重、事件阶段、用户批准、版权边界、入库测试和向量库接入条件，并在 `AGENTS.md` 设置任务前必读入口。
 - [x] **Codex【RAG-CASE-01】**：按 Grok 审核顺序完成“案例档案 + 事件事实/文化理解双轨回答”：定义 `caseId`、`claimType`、`finality` schema；事件轨仅引用同案例资料，文化轨不得裁定具体客诉真伪；无 `final` 证据时禁止终局话术；界面展示案例来源的证据阶段；补充误召回与最终结论边界测试。
 - [x] **RAG-CASE-01 资料边界**：V3-1（茶叶反馈）和 V3-2（鲜鸡蛋争议）以用户批准的 `limited` 归因资料进入各自案例轨，只能说明企业公开的初步回应，不能作为终局结论；SOURCE_AUDIT_03 其余候选仍未入库。
@@ -153,6 +153,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-01 | Codex | 用户批准 C1 首批两组资料后，正式入库新华社员工之家、特定招聘公告、夜班报平安产品案例，以及尝面员工处分、彩礼倡议、降薪传言三组现实边界资料；新增 7 份资料、32 个片段和 3 个独立案例，试卷由 48 题扩为 54 题。知识构建得到 30 份资料、135 个片段、6 个案例；28 项测试与 lint 通过，未部署 | docs/SOURCE_AUDIT_C1_01.md, docs/RAG_CULTURE_*, pangdonglai_project/knowledge/**, pangdonglai_project/evaluation/rag-culture-questions-v1.json, site/worker/index.ts, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-01 | Codex | 建立六条主线的“自由与爱”文化知识地图和 48 题首批网友问题试卷；随后按用户要求检索 C1 员工主题，筛选 30 余个结果、深审 7 组候选并形成批准清单。候选尚未获用户逐项批准，未写入正式知识库、未部署 | docs/RAG_CULTURE_KNOWLEDGE_MAP.md, pangdonglai_project/evaluation/rag-culture-questions-v1.json, docs/SOURCE_AUDIT_C1_01.md, docs/HANDOFF.md |
 | 2026-08-01 | Codex | 完成最后 10 份资料终轮处理：文化制度转载、红内裤一审报道、茶叶初步回应、鸡蛋送检报道升级为 `partial_text`；百科门户、申红丽页面、3 份缺企业原帖的红内裤材料和图书保留 `summary_only` 并记录原因。现有 23 份资料全部处理完毕，共 100 个片段；新增鸡蛋监管终局边界测试，23 项测试与 lint 通过，未新增来源、未部署 | docs/SOURCE_AUDIT_08.md, pangdonglai_project/knowledge/**, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |
 | 2026-08-01 | Grok | 调查茶叶苍蝇：未见情况说明（二）/终局报告；加厚 V3-1 正文与 6 条 chunks（共 103 片段）；案例别名扩展 | docs/SOURCE_AUDIT_TEA_FLY.md, knowledge/cases/tea-fly*, knowledge/sources/media-tea-fly*, knowledge/chunks/media-tea-fly*, knowledge/manifest.json, docs/HANDOFF.md |

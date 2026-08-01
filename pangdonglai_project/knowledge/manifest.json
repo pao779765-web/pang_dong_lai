@@ -5,9 +5,9 @@
   "sourceOfTruth": "directory",
   "generatedIndex": "compiled/knowledge-base.json",
   "counts": {
-    "cases": 3,
-    "sources": 23,
-    "chunks": 103
+    "cases": 6,
+    "sources": 30,
+    "chunks": 135
   },
   "cases": [
     {
@@ -21,6 +21,18 @@
     {
       "id": "red-underwear-color-libel-2025",
       "path": "cases/red-underwear-color-libel-2025.json"
+    },
+    {
+      "id": "employee-noodle-tasting-discipline-2024-02",
+      "path": "cases/employee-noodle-tasting-discipline-2024-02.json"
+    },
+    {
+      "id": "employee-bride-price-boundary-2024-11",
+      "path": "cases/employee-bride-price-boundary-2024-11.json"
+    },
+    {
+      "id": "employee-salary-policy-rumor-2026-06",
+      "path": "cases/employee-salary-policy-rumor-2026-06.json"
     }
   ],
   "sources": [
@@ -47,6 +59,24 @@
       "metadataPath": "sources/xinhua-qianbilou-pdl-6a-scenic-2025-03/metadata.json",
       "contentPath": "sources/xinhua-qianbilou-pdl-6a-scenic-2025-03/content.md",
       "chunksPath": "chunks/xinhua-qianbilou-pdl-6a-scenic-2025-03.jsonl"
+    },
+    {
+      "id": "xinhua-employee-home-rest-2025-04",
+      "metadataPath": "sources/xinhua-employee-home-rest-2025-04/metadata.json",
+      "contentPath": "sources/xinhua-employee-home-rest-2025-04/content.md",
+      "chunksPath": "chunks/xinhua-employee-home-rest-2025-04.jsonl"
+    },
+    {
+      "id": "zhengzhou-pdl-recruitment-life-2025-08",
+      "metadataPath": "sources/zhengzhou-pdl-recruitment-life-2025-08/metadata.json",
+      "contentPath": "sources/zhengzhou-pdl-recruitment-life-2025-08/content.md",
+      "chunksPath": "chunks/zhengzhou-pdl-recruitment-life-2025-08.jsonl"
+    },
+    {
+      "id": "cnfin-feishu-night-shift-care-2024-12",
+      "metadataPath": "sources/cnfin-feishu-night-shift-care-2024-12/metadata.json",
+      "contentPath": "sources/cnfin-feishu-night-shift-care-2024-12/content.md",
+      "chunksPath": "chunks/cnfin-feishu-night-shift-care-2024-12.jsonl"
     },
     {
       "id": "jiemian-pdl-cinema-half-refund-2023-04",
@@ -155,6 +185,30 @@
       "metadataPath": "sources/media-egg-canthaxanthin-company-response-2026-04/metadata.json",
       "contentPath": "sources/media-egg-canthaxanthin-company-response-2026-04/content.md",
       "chunksPath": "chunks/media-egg-canthaxanthin-company-response-2026-04.jsonl"
+    },
+    {
+      "id": "workercn-noodle-dismissal-critique-2024-02-17",
+      "metadataPath": "sources/workercn-noodle-dismissal-critique-2024-02-17/metadata.json",
+      "contentPath": "sources/workercn-noodle-dismissal-critique-2024-02-17/content.md",
+      "chunksPath": "chunks/workercn-noodle-dismissal-critique-2024-02-17.jsonl"
+    },
+    {
+      "id": "workercn-noodle-reconsideration-2024-02-23",
+      "metadataPath": "sources/workercn-noodle-reconsideration-2024-02-23/metadata.json",
+      "contentPath": "sources/workercn-noodle-reconsideration-2024-02-23/content.md",
+      "chunksPath": "chunks/workercn-noodle-reconsideration-2024-02-23.jsonl"
+    },
+    {
+      "id": "nbd-bride-price-boundary-2024-11",
+      "metadataPath": "sources/nbd-bride-price-boundary-2024-11/metadata.json",
+      "contentPath": "sources/nbd-bride-price-boundary-2024-11/content.md",
+      "chunksPath": "chunks/nbd-bride-price-boundary-2024-11.jsonl"
+    },
+    {
+      "id": "jiemian-salary-policy-clarification-2026-06",
+      "metadataPath": "sources/jiemian-salary-policy-clarification-2026-06/metadata.json",
+      "contentPath": "sources/jiemian-salary-policy-clarification-2026-06/content.md",
+      "chunksPath": "chunks/jiemian-salary-policy-clarification-2026-06.jsonl"
     },
     {
       "id": "book-how-to-learn-pdl-wanghuizhong",

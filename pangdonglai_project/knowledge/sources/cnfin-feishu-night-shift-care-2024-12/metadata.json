@@ -1,0 +1,46 @@
+{
+  "id": "cnfin-feishu-night-shift-care-2024-12",
+  "title": "新华财经飞书案例：夜班报平安与文化工具化",
+  "type": "media_product_case",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "product_case_narrative",
+  "finality": "not_applicable",
+  "evidenceLevel": "L3",
+  "evidenceLabel": "媒体平台刊载的产品案例（效果未经独立审计）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-01",
+    "basis": "docs/SOURCE_AUDIT_C1_01.md C1-A7；用户批准两组全部入库，按 limited 使用。"
+  },
+  "source": {
+    "publisher": "新华财经，署名王一鹏",
+    "sourceType": "media_product_case",
+    "url": "https://www.cnfin.com/cmjj-lb/detail/20241218/4159218_1.html",
+    "publishedAt": "2024-12-18",
+    "verifiedAt": "2026-08-01",
+    "notes": "内容具有明显飞书产品案例属性，只用于理解公开描述的工作场景和流程，不作为独立效果评估。"
+  },
+  "scope": [
+    "零售不同业态夜班和轮班场景",
+    "案例所述夜班员工报平安流程",
+    "知识、排班和整改流程进入协作工具的公开案例"
+  ],
+  "answeringRules": [
+    "必须明确这是带产品案例属性的材料，不能把宣传性效果写成独立审计结论。",
+    "可用于修正「所有员工固定时间下班」的简单印象，但不能据此判断全部岗位工时是否合规。",
+    "关于人数、效率和效果的说法必须归因于该案例，不得泛化。",
+    "不得用本资料回答员工最新薪酬或全部休假制度。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/cnfin-feishu-night-shift-care-2024-12/content.md",
+    "chunksPath": "chunks/cnfin-feishu-night-shift-care-2024-12.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-01",
+    "notes": "只保存与夜班、知识平台和流程工具化有关的必要摘要，不复制产品案例全文。"
+  }
+}

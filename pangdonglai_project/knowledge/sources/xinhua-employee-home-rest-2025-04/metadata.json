@@ -1,0 +1,46 @@
+{
+  "id": "xinhua-employee-home-rest-2025-04",
+  "title": "新华社民营经济观察：胖东来员工之家与工作生活边界",
+  "type": "media_feature",
+  "status": "approved",
+  "caseId": null,
+  "claimType": "media_observation",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "新华社记者实地观察与采访（非企业制度全文）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-01",
+    "basis": "docs/SOURCE_AUDIT_C1_01.md C1-A1；用户批准两组全部入库。"
+  },
+  "source": {
+    "publisher": "新华社国内部 / 新华网客户端",
+    "sourceType": "media",
+    "url": "https://app.xinhuanet.com/news/article.html?articleId=724b23c8e4955ca68f009d7c62252c34",
+    "publishedAt": "2025-04-08",
+    "verifiedAt": "2026-08-01",
+    "notes": "新华社综合报道中的胖东来段落；记者实地描述员工之家并采访员工。"
+  },
+  "scope": [
+    "员工之家及休息空间的媒体实地观察",
+    "2025 年报道列举的闭店休息、下班后不打工作电话和不开心假",
+    "员工休息状态与顾客服务状态之间的媒体解释"
+  ],
+  "answeringRules": [
+    "必须使用「据新华社 2025 年 4 月报道」等归因，并保留报道时点。",
+    "不得把报道归纳写成企业制度全文，也不得断言所有门店、岗位和时期完全一致执行。",
+    "员工受访感受只代表受访者公开表达，不能外推为所有员工体验。",
+    "与当前营业安排有关的问题仍以企业官方门店页和临时公告为准。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/xinhua-employee-home-rest-2025-04/content.md",
+    "chunksPath": "chunks/xinhua-employee-home-rest-2025-04.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-01",
+    "notes": "只保存胖东来相关事实摘要与必要定位，不复制新华社综合报道全文。"
+  }
+}

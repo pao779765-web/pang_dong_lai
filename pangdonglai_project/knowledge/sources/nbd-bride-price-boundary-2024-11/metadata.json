@@ -1,0 +1,46 @@
+{
+  "id": "nbd-bride-price-boundary-2024-11",
+  "title": "每日经济新闻：彩礼倡议与员工私人生活边界",
+  "type": "media_analysis",
+  "status": "limited",
+  "caseId": "employee-bride-price-boundary-2024-11",
+  "claimType": "policy_discussion_and_company_response",
+  "finality": "proposal_not_policy",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "媒体原创采访、企业回应转述与相反专家观点",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-01",
+    "basis": "docs/SOURCE_AUDIT_C1_01.md C1-A5；用户批准两组全部入库，按案例 limited 使用。"
+  },
+  "source": {
+    "publisher": "每日经济新闻，记者黄博文",
+    "sourceType": "media",
+    "url": "https://www.nbd.com.cn/articles/2024-11-22/3656127.html",
+    "publishedAt": "2024-11-22",
+    "verifiedAt": "2026-08-01",
+    "notes": "报道采访法律与品牌专家，并转述企业行政管理部门称相关说法当时尚未形成规章制度。"
+  },
+  "scope": [
+    "于东来个人社交表述引发的彩礼和婚礼倡议争议",
+    "企业当时称尚未形成规章制度的公开回应",
+    "员工私人生活、合法福利和制度形成程序的不同专家观点"
+  ],
+  "answeringRules": [
+    "只能在 employee-bride-price-boundary-2024-11 案例中使用。",
+    "必须明确区分个人社交表述、企业行政部门回应和专家观点。",
+    "必须说明企业当时称尚未形成规章制度，不得写成已经实施的正式制度。",
+    "不同专家意见不能改写成司法或行政机关结论，也不得声称员工群体持有统一态度。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/nbd-bride-price-boundary-2024-11/content.md",
+    "chunksPath": "chunks/nbd-bride-price-boundary-2024-11.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-01",
+    "notes": "保存争议焦点、企业回应和相反观点摘要，不复制报道全文。"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "id": "zhengzhou-pdl-recruitment-life-2025-08",
+  "title": "郑州市市场监管局网站：新乡三胖招聘中的文化与生活考量",
+  "type": "government_republished_notice",
+  "status": "approved",
+  "caseId": null,
+  "claimType": "recruitment_notice",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "政府网站刊载的特定批次招聘公告",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-01",
+    "basis": "docs/SOURCE_AUDIT_C1_01.md C1-A2；用户批准两组全部入库。"
+  },
+  "source": {
+    "publisher": "郑州市个体私营经济发展促进中心 / 郑州市市场监督管理局网站",
+    "sourceType": "government",
+    "url": "https://amr.zhengzhou.gov.cn/jycyzl/9558187.jhtml",
+    "publishedAt": "2025-08-21",
+    "verifiedAt": "2026-08-01",
+    "notes": "页面刊载新乡胖东来三胖特定批次招聘公告，指向企业官方投递渠道；不是所有招聘批次的永久规则。"
+  },
+  "scope": [
+    "2025 年新乡三胖招聘中的文化认知要求",
+    "退伍边防军人和刑释人员专项投递通道",
+    "本地就业与家庭生活的公告解释",
+    "该批招聘的简历数据保留安排"
+  ],
+  "answeringRules": [
+    "必须写明这是 2025 年新乡三胖特定招聘批次，不得外推为所有岗位和所有时期。",
+    "公告只能说明招聘方公开设置的标准和理由，不能证明应聘者入职后的实际体验。",
+    "描述文化答题、本地限制或专项通道时应保持事实与评价分开。",
+    "不得把政府网站刊载误写成监管部门对招聘合理性的认证。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/zhengzhou-pdl-recruitment-life-2025-08/content.md",
+    "chunksPath": "chunks/zhengzhou-pdl-recruitment-life-2025-08.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-01",
+    "notes": "保存必要招聘事实与边界，不复制公告全部岗位和报名细节。"
+  }
+}

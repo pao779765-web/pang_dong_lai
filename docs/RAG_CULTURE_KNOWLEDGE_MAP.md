@@ -69,6 +69,10 @@
 - `interview-people-employees-and-replication`
 - `media-pdl-weiqu-award-company-response` 下的工时、闭店、委屈奖与边界片段
 - `culture-system-behavior-and-reward`、`culture-system-voluntary-assessment`
+- `xinhua-employee-home-facilities`、`xinhua-work-life-boundaries`、`xinhua-rest-to-service-mechanism`
+- `recruitment-culture-screening`、`recruitment-local-life-rationale`
+- `cnfin-night-shift-reality`、`cnfin-night-shift-safety-flow`（产品案例，受限使用）
+- 尝面员工处分、员工彩礼倡议和降薪传言三个独立案例轨
 
 ### 关键缺口与边界
 
