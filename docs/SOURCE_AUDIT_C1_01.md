@@ -1,8 +1,11 @@
 # C1“员工的尊严、自由与生活”首批候选资料审核
 
-> **检索日期：** 2026-08-01  
-> **状态：** 等待用户批准；尚未写入正式知识库  
-> **对应地图：** `docs/RAG_CULTURE_KNOWLEDGE_MAP.md` C1  
+> **检索日期：** 2026-08-01
+>
+> **状态：** 等待用户批准；尚未写入正式知识库
+>
+> **对应地图：** `docs/RAG_CULTURE_KNOWLEDGE_MAP.md` C1
+>
 > **执行规范：** `docs/RAG_RESEARCH_PROTOCOL.md`
 
 ## 1. 本轮范围
@@ -160,4 +163,3 @@
 - C1-A6 降薪传言与企业澄清：`limited`
 
 用户可以整组批准，也可以逐条批准、限制或拒绝。批准前，这些资料不得写入 `pangdonglai_project/knowledge/**`。
-
