@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
-  "id": "rag-culture-current-evaluation",
-  "evaluatedAt": "2026-08-02T09:34:37.058Z",
+  "id": "rag-culture-pre-purpose-filter-control",
+  "evaluatedAt": "2026-08-02T08:43:29.548Z",
   "evaluationSet": "rag-culture-questions-v1",
   "knowledgeSnapshot": {
     "sources": 30,
@@ -13,7 +13,6 @@
     "cultureAnnotationSearch": "disabled",
     "cultureThemeRerank": "disabled",
     "queryRewriteV1": "reviewed fixed typo corrections plus reviewed phrase-to-search-term expansions; original query retained for audit",
-    "answerPurposeFilterV1": "reviewed answer-purpose detection; candidates must directly support compensation-vs-culture, replication-proof, or customer-complaint-award intent; generic company self-testing finality is gated",
     "topK": 5,
     "caseRouting": "substring match against reviewed case aliases",
     "queryRewrite": "reviewed Query rewrite V1 plus rules for contextual follow-ups, finality intent and known evidence gaps",
@@ -27,17 +26,17 @@
   },
   "summary": {
     "total": 54,
-    "passed": 54,
-    "passRate": 1,
-    "retrievalPassed": 54,
-    "retrievalPassRate": 1,
-    "positiveRecallPassed": 47,
+    "passed": 50,
+    "passRate": 0.9259,
+    "retrievalPassed": 50,
+    "retrievalPassRate": 0.9259,
+    "positiveRecallPassed": 46,
     "positiveRecallTotal": 47,
-    "positiveRecallRate": 1,
+    "positiveRecallRate": 0.9787,
     "routePassed": 54,
     "routeAccuracy": 1,
-    "isolationPassed": 54,
-    "isolationAccuracy": 1,
+    "isolationPassed": 51,
+    "isolationAccuracy": 0.9444,
     "finalityIntentPassed": 54,
     "finalityIntentAccuracy": 1,
     "noAnswerSafetyPassed": 6,
@@ -50,27 +49,35 @@
   "byTheme": {
     "C1": {
       "total": 14,
-      "passed": 14,
-      "passRate": 1,
-      "failedQuestionIds": []
+      "passed": 13,
+      "passRate": 0.9286,
+      "failedQuestionIds": [
+        "C1-06"
+      ]
     },
     "C2": {
       "total": 8,
-      "passed": 8,
-      "passRate": 1,
-      "failedQuestionIds": []
+      "passed": 7,
+      "passRate": 0.875,
+      "failedQuestionIds": [
+        "C2-07"
+      ]
     },
     "C3": {
       "total": 8,
-      "passed": 8,
-      "passRate": 1,
-      "failedQuestionIds": []
+      "passed": 7,
+      "passRate": 0.875,
+      "failedQuestionIds": [
+        "C3-08"
+      ]
     },
     "C4": {
       "total": 8,
-      "passed": 8,
-      "passRate": 1,
-      "failedQuestionIds": []
+      "passed": 7,
+      "passRate": 0.875,
+      "failedQuestionIds": [
+        "C4-06"
+      ]
     },
     "C5": {
       "total": 8,
@@ -103,8 +110,17 @@
       "C6-07",
       "C6-08"
     ],
-    "retrievalErrorQuestionIds": [],
-    "generationBoundaryRiskQuestionIds": []
+    "retrievalErrorQuestionIds": [
+      "C1-06",
+      "C2-07",
+      "C3-08",
+      "C4-06"
+    ],
+    "generationBoundaryRiskQuestionIds": [
+      "C2-07",
+      "C3-08",
+      "C4-06"
+    ]
   },
   "patternSummary": {
     "failedContextQuestionIds": [],
@@ -116,30 +132,26 @@
   "comparisonToBaseline": {
     "baselineId": "rag-culture-bm25-baseline-v1",
     "baselinePassed": 28,
-    "currentPassed": 54,
-    "passedDelta": 26,
+    "currentPassed": 50,
+    "passedDelta": 22,
     "baselinePassRate": 0.5185,
-    "currentPassRate": 1,
-    "passRateDelta": 0.4815,
+    "currentPassRate": 0.9259,
+    "passRateDelta": 0.4074,
     "newlyPassedQuestionIds": [
       "C1-01",
-      "C1-06",
       "C1-07",
       "C1-08",
       "C1-12",
       "C1-13",
       "C2-02",
       "C2-04",
-      "C2-07",
       "C2-08",
       "C3-01",
       "C3-02",
       "C3-03",
-      "C3-08",
       "C4-03",
       "C4-04",
       "C4-05",
-      "C4-06",
       "C4-08",
       "C5-02",
       "C5-03",
@@ -195,48 +207,6 @@
       "C6-05"
     ]
   },
-  "answerPurposeFilterSummary": {
-    "detectedQuestionIds": [
-      "C1-06",
-      "C2-07",
-      "C3-08"
-    ],
-    "filteredQuestionIds": [
-      "C2-07",
-      "C3-08"
-    ],
-    "boostedQuestionIds": [
-      "C1-06"
-    ],
-    "filteredChunkIdsByQuestion": {
-      "C2-07": [
-        "xinhua-yonghui-performance-boundary",
-        "xinhua-yonghui-learn-pdl-practices",
-        "interview-frontline-trust-responsibility-and-society",
-        "culture-system-document-and-period",
-        "xinhua-culture-outline-faith-mission",
-        "cnfin-process-not-outcome",
-        "recruitment-special-groups",
-        "xinhua-yonghui-product-restructure",
-        "cnfin-knowledge-platforms",
-        "xinhua-yonghui-scene-service",
-        "recruitment-data-retention",
-        "xinhua-yonghui-employee-community",
-        "xinhua-employee-practices-boundary",
-        "jiemian-cinema-source-chain",
-        "weiqu-award-office-response",
-        "culture-system-purpose-and-principles",
-        "xinhua-book-source-nature",
-        "yudonglai-red-underwear-track-boundary",
-        "interview-trust-returns-and-complaints"
-      ],
-      "C3-08": [
-        "weiqu-award-office-response",
-        "jiemian-cinema-rule-boundary",
-        "red-underwear-report-customer-and-legal"
-      ]
-    }
-  },
   "results": [
     {
       "id": "C1-01",
@@ -279,9 +249,6 @@
         ],
         "queryRewriteApplied": true,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "xinhua-6a-quality-before-scale",
@@ -389,9 +356,6 @@
         ],
         "queryRewriteApplied": true,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "book-learn-pdl-ch3-humanistic-management",
@@ -492,9 +456,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "tsinghua-employee-customer-practices",
@@ -596,9 +557,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "weiqu-award-cultural-meaning-boundary",
@@ -707,9 +665,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": true,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "weiqu-award-work-rest-data",
@@ -815,28 +770,13 @@
         ],
         "queryRewriteApplied": true,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [
-          "employee-culture-beyond-compensation"
-        ],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [
-          "book-learn-pdl-ch3-humanistic-management",
-          "book-learn-pdl-flywheel-logic",
-          "xinhua-culture-love-five-levels",
-          "shen-culture-free-love-spirit",
-          "tsinghua-employee-customer-practices",
-          "xinhua-culture-outline-faith-mission",
-          "shen-happiness-life-handbook",
-          "culture-system-purpose-and-principles",
-          "xinhua-culture-distribution-operations"
-        ],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "book-learn-pdl-ch3-humanistic-management",
+          "tsinghua-freedom-love-definition",
           "book-learn-pdl-flywheel-logic",
-          "xinhua-culture-love-five-levels",
-          "shen-culture-free-love-spirit",
-          "tsinghua-employee-customer-practices"
+          "book-learn-pdl-toc-and-structure",
+          "xinhua-culture-love-five-levels"
         ],
         "retrieved": [
           {
@@ -848,11 +788,27 @@
             "cultureThemeMatches": 0
           },
           {
+            "chunkId": "tsinghua-freedom-love-definition",
+            "chunkTitle": "案例作者对“自由·爱”的利益相关者解释",
+            "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
+            "score": 15.06459,
+            "baseScore": 15.06459,
+            "cultureThemeMatches": 0
+          },
+          {
             "chunkId": "book-learn-pdl-flywheel-logic",
             "chunkTitle": "员工—顾客—经营闭环（书中常被讨论的逻辑）",
             "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
             "score": 14.406364,
             "baseScore": 14.406364,
+            "cultureThemeMatches": 0
+          },
+          {
+            "chunkId": "book-learn-pdl-toc-and-structure",
+            "chunkTitle": "公开目录与全书结构概览",
+            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
+            "score": 11.114905,
+            "baseScore": 11.114905,
             "cultureThemeMatches": 0
           },
           {
@@ -862,38 +818,22 @@
             "score": 11.072609,
             "baseScore": 11.072609,
             "cultureThemeMatches": 0
-          },
-          {
-            "chunkId": "shen-culture-free-love-spirit",
-            "chunkTitle": "管理层表述：自由精神、爱的精神与文化目标",
-            "sourceTitle": "媒体记录：胖东来管理层谈文化理念与《幸福生命状态手册》",
-            "score": 9.775871,
-            "baseScore": 9.775871,
-            "cultureThemeMatches": 0
-          },
-          {
-            "chunkId": "tsinghua-employee-customer-practices",
-            "chunkTitle": "员工价值共创：物质支持、精神尊重与能力培养",
-            "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
-            "score": 7.927955,
-            "baseScore": 7.927955,
-            "cultureThemeMatches": 0
           }
         ]
       },
       "checks": {
         "trackPass": true,
         "casePass": true,
-        "positiveRecallPass": true,
+        "positiveRecallPass": false,
         "isolationPass": true,
         "finalityIntentPass": true,
         "noAnswerSafetyPass": true,
-        "retrievalPass": true,
-        "baselinePass": true
+        "retrievalPass": false,
+        "baselinePass": false
       },
       "forbiddenHits": [],
       "failureTypes": [
-        "none"
+        "检索错误"
       ]
     },
     {
@@ -935,9 +875,6 @@
         ],
         "queryRewriteApplied": true,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "culture-system-behavior-and-reward",
@@ -1035,9 +972,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": "当前资料库没有完整、最新的岗位薪酬与奖金表。",
         "retrievedChunkIds": [],
         "retrieved": []
@@ -1091,9 +1025,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "recruitment-culture-screening",
@@ -1193,9 +1124,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "recruitment-local-life-rationale",
@@ -1296,9 +1224,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "cnfin-night-shift-reality",
@@ -1401,9 +1326,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "noodle-initial-dismissal",
@@ -1542,9 +1464,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "bride-price-statement",
@@ -1647,9 +1566,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "salary-rumor-context",
@@ -1739,9 +1655,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "interview-frontline-trust-responsibility-and-society",
@@ -1846,9 +1759,6 @@
         ],
         "queryRewriteApplied": true,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "interview-frontline-trust-responsibility-and-society",
@@ -1947,9 +1857,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "interview-trust-returns-and-complaints",
@@ -2050,9 +1957,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "interview-frontline-trust-responsibility-and-society",
@@ -2161,9 +2065,6 @@
         ],
         "queryRewriteApplied": true,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "interview-frontline-trust-responsibility-and-society",
@@ -2263,9 +2164,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "xinhua-culture-love-five-levels",
@@ -2366,46 +2264,37 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [
-          "replication-proof-boundary"
-        ],
-        "purposeFilteredOutChunkIds": [
-          "xinhua-yonghui-performance-boundary",
-          "xinhua-yonghui-learn-pdl-practices",
-          "interview-frontline-trust-responsibility-and-society",
-          "culture-system-document-and-period",
-          "xinhua-culture-outline-faith-mission",
-          "cnfin-process-not-outcome",
-          "recruitment-special-groups",
-          "xinhua-yonghui-product-restructure",
-          "cnfin-knowledge-platforms",
-          "xinhua-yonghui-scene-service",
-          "recruitment-data-retention",
-          "xinhua-yonghui-employee-community",
-          "xinhua-employee-practices-boundary",
-          "jiemian-cinema-source-chain",
-          "weiqu-award-office-response",
-          "culture-system-purpose-and-principles",
-          "xinhua-book-source-nature",
-          "yudonglai-red-underwear-track-boundary",
-          "interview-trust-returns-and-complaints"
-        ],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
+          "xinhua-yonghui-performance-boundary",
           "xinhua-yonghui-replication-boundary",
+          "xinhua-yonghui-learn-pdl-practices",
           "book-learn-pdl-surface-vs-culture",
-          "book-learn-pdl-ch2-influence",
-          "interview-people-employees-and-replication",
-          "tsinghua-replication-limits"
+          "book-learn-pdl-ch2-influence"
         ],
         "retrieved": [
+          {
+            "chunkId": "xinhua-yonghui-performance-boundary",
+            "chunkTitle": "调改经营成效属于报道时点说法",
+            "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
+            "score": 14.672388,
+            "baseScore": 14.672388,
+            "cultureThemeMatches": 0
+          },
           {
             "chunkId": "xinhua-yonghui-replication-boundary",
             "chunkTitle": "可见动作不等于复制文化内核",
             "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
             "score": 13.977573,
             "baseScore": 13.977573,
+            "cultureThemeMatches": 0
+          },
+          {
+            "chunkId": "xinhua-yonghui-learn-pdl-practices",
+            "chunkTitle": "永辉鲁谷店调改称深度学习胖东来",
+            "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
+            "score": 12.813173,
+            "baseScore": 12.813173,
             "cultureThemeMatches": 0
           },
           {
@@ -2423,22 +2312,6 @@
             "score": 10.447724,
             "baseScore": 10.447724,
             "cultureThemeMatches": 0
-          },
-          {
-            "chunkId": "interview-people-employees-and-replication",
-            "chunkTitle": "访谈：重视人、员工顾客循环与不可照搬",
-            "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
-            "score": 6.721704,
-            "baseScore": 6.721704,
-            "cultureThemeMatches": 0
-          },
-          {
-            "chunkId": "tsinghua-replication-limits",
-            "chunkTitle": "复制模式要理解价值分配和组织条件",
-            "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
-            "score": 6.012656,
-            "baseScore": 6.012656,
-            "cultureThemeMatches": 0
           }
         ]
       },
@@ -2446,15 +2319,18 @@
         "trackPass": true,
         "casePass": true,
         "positiveRecallPass": true,
-        "isolationPass": true,
+        "isolationPass": false,
         "finalityIntentPass": true,
         "noAnswerSafetyPass": true,
-        "retrievalPass": true,
-        "baselinePass": true
+        "retrievalPass": false,
+        "baselinePass": false
       },
-      "forbiddenHits": [],
+      "forbiddenHits": [
+        "xinhua-yonghui-performance-boundary"
+      ],
       "failureTypes": [
-        "none"
+        "检索错误",
+        "生成越界风险"
       ]
     },
     {
@@ -2487,9 +2363,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": "当前资料库没有各岗位的完整赔付权限与金额表。",
         "retrievedChunkIds": [],
         "retrieved": []
@@ -2547,9 +2420,6 @@
         ],
         "queryRewriteApplied": true,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "interview-trust-returns-and-complaints",
@@ -2654,9 +2524,6 @@
         ],
         "queryRewriteApplied": true,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "interview-trust-returns-and-complaints",
@@ -2761,9 +2628,6 @@
         ],
         "queryRewriteApplied": true,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "interview-trust-returns-and-complaints",
@@ -2854,9 +2718,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "interview-trust-returns-and-complaints",
@@ -2959,9 +2820,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": true,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "interview-trust-returns-and-complaints",
@@ -3061,9 +2919,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "book-learn-pdl-ch4-customer",
@@ -3165,9 +3020,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "tea-fly-timeline",
@@ -3276,18 +3128,12 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [
-          "customer-complaint-award"
-        ],
-        "purposeFilteredOutChunkIds": [
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "interview-trust-returns-and-complaints",
           "weiqu-award-office-response",
           "jiemian-cinema-rule-boundary",
           "red-underwear-report-customer-and-legal"
-        ],
-        "purposeBoostedChunkIds": [],
-        "insufficientReason": null,
-        "retrievedChunkIds": [
-          "interview-trust-returns-and-complaints"
         ],
         "retrieved": [
           {
@@ -3297,6 +3143,30 @@
             "score": 9.676792,
             "baseScore": 9.676792,
             "cultureThemeMatches": 0
+          },
+          {
+            "chunkId": "weiqu-award-office-response",
+            "chunkTitle": "2023 年办公室回应确认“委屈奖”存在及金额范围",
+            "sourceTitle": "媒体记录：胖东来「委屈奖」企业回应与于东来说明",
+            "score": 7.854926,
+            "baseScore": 7.854926,
+            "cultureThemeMatches": 0
+          },
+          {
+            "chunkId": "jiemian-cinema-rule-boundary",
+            "chunkTitle": "半价退票规定的现行和个案边界",
+            "sourceTitle": "界面新闻转述：胖东来影城「电影难看可退一半票价」等规定",
+            "score": 5.571194,
+            "baseScore": 5.571194,
+            "cultureThemeMatches": 0
+          },
+          {
+            "chunkId": "red-underwear-report-customer-and-legal",
+            "chunkTitle": "报告要点：对顾客措施与拟依法追责",
+            "sourceTitle": "胖东来《关于“红色内裤掉色、过敏以及部门处理过程”的调查报告》要点",
+            "score": 4.447946,
+            "baseScore": 4.447946,
+            "cultureThemeMatches": 0
           }
         ]
       },
@@ -3304,15 +3174,19 @@
         "trackPass": true,
         "casePass": true,
         "positiveRecallPass": true,
-        "isolationPass": true,
+        "isolationPass": false,
         "finalityIntentPass": true,
         "noAnswerSafetyPass": true,
-        "retrievalPass": true,
-        "baselinePass": true
+        "retrievalPass": false,
+        "baselinePass": false
       },
-      "forbiddenHits": [],
+      "forbiddenHits": [
+        "weiqu-award-office-response"
+      ],
       "failureTypes": [
-        "资料缺口"
+        "资料缺口",
+        "检索错误",
+        "生成越界风险"
       ]
     },
     {
@@ -3348,9 +3222,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "interview-quality-suppliers-and-scale",
@@ -3451,9 +3322,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "tsinghua-supply-chain-competitor-value",
@@ -3542,9 +3410,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": "当前资料库没有适用于全部自有商品的完整内部调查流程。",
         "retrievedChunkIds": [],
         "retrieved": []
@@ -3601,9 +3466,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "egg-canthaxanthin-report-stage",
@@ -3704,9 +3566,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": true,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "egg-canthaxanthin-report-stage",
@@ -3795,26 +3654,73 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
-        "insufficientReason": "企业自行送检和公开结果不能单独构成监管或司法最终结论；问题未指明具体事件，当前资料不足以给出终局判断。",
-        "retrievedChunkIds": [],
-        "retrieved": []
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "yudonglai-red-underwear-track-boundary",
+          "red-underwear-report-testing-and-staff",
+          "red-underwear-judgment-testing-loss-and-reach",
+          "xinhua-culture-love-five-levels",
+          "weiqu-award-cultural-meaning-boundary"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "yudonglai-red-underwear-track-boundary",
+            "chunkTitle": "文化价值表态不能代替事件事实和最终裁判",
+            "sourceTitle": "媒体转述：于东来就红内裤追责谈「要有理性」",
+            "score": 7.407791,
+            "baseScore": 7.407791,
+            "cultureThemeMatches": 0
+          },
+          {
+            "chunkId": "red-underwear-report-testing-and-staff",
+            "chunkTitle": "报告要点：送检合格表述与内部处理",
+            "sourceTitle": "胖东来《关于“红色内裤掉色、过敏以及部门处理过程”的调查报告》要点",
+            "score": 6.804562,
+            "baseScore": 6.804562,
+            "cultureThemeMatches": 0
+          },
+          {
+            "chunkId": "red-underwear-judgment-testing-loss-and-reach",
+            "chunkTitle": "送检支出与传播范围进入损失考量",
+            "sourceTitle": "红内裤案一审判决公开报道：赔偿 40 万并道歉",
+            "score": 6.31436,
+            "baseScore": 6.31436,
+            "cultureThemeMatches": 0
+          },
+          {
+            "chunkId": "xinhua-culture-love-five-levels",
+            "chunkTitle": "作者把“爱”解释为自己、家人、员工、顾客和社会",
+            "sourceTitle": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
+            "score": 5.42194,
+            "baseScore": 5.42194,
+            "cultureThemeMatches": 0
+          },
+          {
+            "chunkId": "weiqu-award-cultural-meaning-boundary",
+            "chunkTitle": "委屈奖表达组织支持，但不能预判个案结果",
+            "sourceTitle": "媒体记录：胖东来「委屈奖」企业回应与于东来说明",
+            "score": 5.347128,
+            "baseScore": 5.347128,
+            "cultureThemeMatches": 0
+          }
+        ]
       },
       "checks": {
         "trackPass": true,
         "casePass": true,
         "positiveRecallPass": true,
-        "isolationPass": true,
+        "isolationPass": false,
         "finalityIntentPass": true,
         "noAnswerSafetyPass": true,
-        "retrievalPass": true,
-        "baselinePass": true
+        "retrievalPass": false,
+        "baselinePass": false
       },
-      "forbiddenHits": [],
+      "forbiddenHits": [
+        "red-underwear-report-testing-and-staff"
+      ],
       "failureTypes": [
-        "none"
+        "检索错误",
+        "生成越界风险"
       ]
     },
     {
@@ -3851,9 +3757,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "tea-fly-timeline",
@@ -3960,9 +3863,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": "当前资料库没有完整的供应商审核分数或淘汰名单。",
         "retrievedChunkIds": [],
         "retrieved": []
@@ -4015,9 +3915,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "interview-quality-suppliers-and-scale"
@@ -4087,9 +3984,6 @@
         ],
         "queryRewriteApplied": true,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "interview-quality-suppliers-and-scale",
@@ -4194,9 +4088,6 @@
         ],
         "queryRewriteApplied": true,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "interview-quality-suppliers-and-scale",
@@ -4298,9 +4189,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "interview-quality-suppliers-and-scale",
@@ -4405,9 +4293,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": true,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "interview-quality-suppliers-and-scale",
@@ -4507,9 +4392,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "xinhua-6a-quality-before-scale",
@@ -4583,9 +4465,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "xinhua-yonghui-learn-pdl-practices",
@@ -4683,9 +4562,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": "当前资料库没有最新净利润率或未来三年开店计划。",
         "retrievedChunkIds": [],
         "retrieved": []
@@ -4740,9 +4616,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "yudonglai-red-underwear-track-boundary",
@@ -4842,9 +4715,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "book-learn-pdl-surface-vs-culture",
@@ -4951,9 +4821,6 @@
         ],
         "queryRewriteApplied": true,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "yudonglai-red-underwear-track-boundary",
@@ -5058,9 +4925,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "tea-fly-timeline",
@@ -5176,9 +5040,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": true,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "red-underwear-early-takedown-and-team",
@@ -5460,9 +5321,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "yudonglai-red-underwear-track-boundary",
@@ -5563,9 +5421,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "tea-fly-timeline",
@@ -5673,9 +5528,6 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
         "insufficientReason": "当前资料库不覆盖历史上的全部投诉，不能逐一判断谁对谁错。",
         "retrievedChunkIds": [],
         "retrieved": []

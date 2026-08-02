@@ -7,10 +7,11 @@
   },
   "scripts": {
     "knowledge:build": "node scripts/build-knowledge.mjs",
-    "rag:evaluate": "npm run knowledge:build && node scripts/evaluate-rag-baseline.mjs --current --adopt-query-rewrite-v1",
+    "rag:evaluate": "npm run knowledge:build && node scripts/evaluate-rag-baseline.mjs --current --adopt-query-rewrite-v1 --adopt-answer-purpose-filter-v1",
     "rag:evaluate:culture-v1": "npm run rag:evaluate && node scripts/evaluate-rag-baseline.mjs --current --culture-v1",
     "rag:evaluate:theme-rerank": "npm run rag:evaluate && node scripts/evaluate-rag-baseline.mjs --current --culture-rerank=0.05",
     "rag:evaluate:query-rewrite-v1": "npm run knowledge:build && node scripts/evaluate-rag-baseline.mjs --current --query-rewrite-v1",
+    "rag:evaluate:answer-purpose-filter-v1": "npm run knowledge:build && node scripts/evaluate-rag-baseline.mjs --current --adopt-query-rewrite-v1 --answer-purpose-filter-v1",
     "predev": "npm run knowledge:build",
     "dev": "vinext dev",
     "prebuild": "npm run knowledge:build",

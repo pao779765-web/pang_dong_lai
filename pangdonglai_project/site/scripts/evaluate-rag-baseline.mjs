@@ -16,18 +16,40 @@ const usesCultureRerank = cultureRerankWeight > 0;
 const isQueryRewriteExperiment = process.argv.includes("--query-rewrite-v1");
 const adoptsQueryRewriteV1 = process.argv.includes("--adopt-query-rewrite-v1");
 const usesQueryRewriteV1 = isQueryRewriteExperiment || adoptsQueryRewriteV1;
-const isExperiment = includesCultureV1 || usesCultureRerank || isQueryRewriteExperiment;
+const isAnswerPurposeFilterExperiment = process.argv.includes("--answer-purpose-filter-v1");
+const adoptsAnswerPurposeFilterV1 = process.argv.includes("--adopt-answer-purpose-filter-v1");
+const usesAnswerPurposeFilterV1 =
+  isAnswerPurposeFilterExperiment || adoptsAnswerPurposeFilterV1;
+const isExperiment =
+  includesCultureV1 ||
+  usesCultureRerank ||
+  isQueryRewriteExperiment ||
+  isAnswerPurposeFilterExperiment;
 if (isExperiment && !isCurrentEvaluation) {
   throw new Error("文化检索实验必须与 --current 一起运行，以保留相同的上下文和安全规则。");
 }
-if ([includesCultureV1, usesCultureRerank, usesQueryRewriteV1].filter(Boolean).length > 1) {
-  throw new Error("字段直接拼接、主题重排和 Query 改写必须分开评测，不能同时启用。");
+if (
+  [includesCultureV1, usesCultureRerank].filter(Boolean).length > 1 ||
+  ((includesCultureV1 || usesCultureRerank) &&
+    (usesQueryRewriteV1 || usesAnswerPurposeFilterV1))
+) {
+  throw new Error("字段直接拼接、主题重排与正式 Query 管线必须分开评测。");
 }
 if (adoptsQueryRewriteV1 && !isCurrentEvaluation) {
   throw new Error("正式启用 Query 改写 V1 时必须与 --current 一起运行。");
 }
+if (usesAnswerPurposeFilterV1 && !usesQueryRewriteV1) {
+  throw new Error("回答用途过滤 V1 必须建立在 Query 改写 V1 之上。");
+}
+if (adoptsAnswerPurposeFilterV1 && !isCurrentEvaluation) {
+  throw new Error("正式启用回答用途过滤 V1 时必须与 --current 一起运行。");
+}
 const preQueryRewriteControlUrl = new URL(
   "../../evaluation/rag-culture-pre-query-rewrite-control.json",
+  import.meta.url,
+);
+const prePurposeFilterControlUrl = new URL(
+  "../../evaluation/rag-culture-pre-purpose-filter-control.json",
   import.meta.url,
 );
 const cultureExperimentUrl = new URL(
@@ -42,7 +64,13 @@ const queryRewriteExperimentUrl = new URL(
   "../../evaluation/rag-culture-query-rewrite-v1-experiment.json",
   import.meta.url,
 );
-const resultUrl = isQueryRewriteExperiment
+const answerPurposeFilterExperimentUrl = new URL(
+  "../../evaluation/rag-culture-answer-purpose-filter-v1-experiment.json",
+  import.meta.url,
+);
+const resultUrl = isAnswerPurposeFilterExperiment
+  ? answerPurposeFilterExperimentUrl
+  : isQueryRewriteExperiment
   ? queryRewriteExperimentUrl
   : usesCultureRerank
   ? cultureRerankExperimentUrl
@@ -51,7 +79,9 @@ const resultUrl = isQueryRewriteExperiment
   : isCurrentEvaluation
   ? new URL("../../evaluation/rag-culture-current-evaluation.json", import.meta.url)
   : frozenBaselineUrl;
-const reportUrl = isQueryRewriteExperiment
+const reportUrl = isAnswerPurposeFilterExperiment
+  ? new URL("../../../docs/RAG_CULTURE_ANSWER_PURPOSE_FILTER_V1_EXPERIMENT.md", import.meta.url)
+  : isQueryRewriteExperiment
   ? new URL("../../../docs/RAG_CULTURE_QUERY_REWRITE_V1_EXPERIMENT.md", import.meta.url)
   : usesCultureRerank
   ? new URL("../../../docs/RAG_CULTURE_BM25_THEME_RERANK_EXPERIMENT.md", import.meta.url)
@@ -70,6 +100,7 @@ const retriever = createKnowledgeRetriever(knowledgeBase, {
   includeCultureAnnotations: includesCultureV1,
   cultureRerankWeight,
   queryRewriteV1: usesQueryRewriteV1,
+  answerPurposeFilterV1: usesAnswerPurposeFilterV1,
 });
 
 function roundRate(passed, total) {
@@ -130,6 +161,9 @@ function evaluateQuestion(question) {
       queryExpansions: plan.queryExpansions ?? [],
       queryRewriteApplied: plan.queryRewriteApplied ?? false,
       detectedCultureThemes: plan.detectedCultureThemes ?? [],
+      detectedAnswerPurposes: plan.detectedAnswerPurposes ?? [],
+      purposeFilteredOutChunkIds: plan.purposeFilteredOutChunkIds ?? [],
+      purposeBoostedChunkIds: plan.purposeBoostedChunkIds ?? [],
       insufficientReason: plan.insufficientReason ?? null,
       retrievedChunkIds,
       retrieved: plan.retrieved.map((item) => ({
@@ -206,7 +240,14 @@ const failureSummary = {
 
 const comparisonReference = isCurrentEvaluation
   ? JSON.parse(
-      await readFile(isExperiment ? preQueryRewriteControlUrl : frozenBaselineUrl, "utf8"),
+      await readFile(
+        isAnswerPurposeFilterExperiment
+          ? prePurposeFilterControlUrl
+          : isExperiment
+            ? preQueryRewriteControlUrl
+            : frozenBaselineUrl,
+        "utf8",
+      ),
     )
   : null;
 const comparisonToBaseline = comparisonReference
@@ -275,6 +316,24 @@ const queryRewriteSummary = usesQueryRewriteV1
         .map((result) => result.id),
     }
   : null;
+const answerPurposeFilterSummary = usesAnswerPurposeFilterV1
+  ? {
+      detectedQuestionIds: results
+        .filter((result) => result.actual.detectedAnswerPurposes.length > 0)
+        .map((result) => result.id),
+      filteredQuestionIds: results
+        .filter((result) => result.actual.purposeFilteredOutChunkIds.length > 0)
+        .map((result) => result.id),
+      boostedQuestionIds: results
+        .filter((result) => result.actual.purposeBoostedChunkIds.length > 0)
+        .map((result) => result.id),
+      filteredChunkIdsByQuestion: Object.fromEntries(
+        results
+          .filter((result) => result.actual.purposeFilteredOutChunkIds.length > 0)
+          .map((result) => [result.id, result.actual.purposeFilteredOutChunkIds]),
+      ),
+    }
+  : null;
 
 const experimentDecision = isExperiment
   ? {
@@ -298,7 +357,9 @@ const experimentDecision = isExperiment
 const baseline = {
   schemaVersion: "1.0",
   id: isCurrentEvaluation
-    ? isQueryRewriteExperiment
+    ? isAnswerPurposeFilterExperiment
+      ? "rag-culture-answer-purpose-filter-v1-experiment"
+      : isQueryRewriteExperiment
       ? "rag-culture-query-rewrite-v1-experiment"
       : usesCultureRerank
       ? "rag-culture-bm25-theme-rerank-experiment"
@@ -326,6 +387,9 @@ const baseline = {
       : "disabled",
     queryRewriteV1: usesQueryRewriteV1
       ? "reviewed fixed typo corrections plus reviewed phrase-to-search-term expansions; original query retained for audit"
+      : "disabled",
+    answerPurposeFilterV1: usesAnswerPurposeFilterV1
+      ? "reviewed answer-purpose detection; candidates must directly support compensation-vs-culture, replication-proof, or customer-complaint-award intent; generic company self-testing finality is gated"
       : "disabled",
     topK: 5,
     caseRouting: "substring match against reviewed case aliases",
@@ -377,6 +441,7 @@ const baseline = {
   comparisonToBaseline,
   experimentDecision,
   queryRewriteSummary,
+  answerPurposeFilterSummary,
   results,
 };
 
@@ -400,7 +465,9 @@ const failedRows = results
     return `| ${result.id} | ${result.theme} | ${reasons.join("；")} | ${result.actual.retrievedChunkIds.slice(0, 5).join("、") || "无"} |`;
   });
 
-const reportTitle = isQueryRewriteExperiment
+const reportTitle = isAnswerPurposeFilterExperiment
+  ? "RAG 回答用途过滤 V1 对照实验"
+  : isQueryRewriteExperiment
   ? "RAG Query 改写 V1 对照实验"
   : usesCultureRerank
   ? "RAG 文化主线小权重重排对照实验"
@@ -410,7 +477,7 @@ const reportTitle = isQueryRewriteExperiment
   ? "RAG 文化问答当前检索评测"
   : "RAG 文化问答 BM25 基线 V1";
 const comparisonParagraph = comparisonToBaseline
-  ? `${isExperiment ? "Query 改写启用前控制组" : "冻结基线"}为 ${comparisonToBaseline.baselinePassed}/${results.length}，本次变化 ${comparisonToBaseline.passedDelta} 题；新增通过：${renderQuestionList(comparisonToBaseline.newlyPassedQuestionIds)}；退步：${renderQuestionList(comparisonToBaseline.regressedQuestionIds)}。`
+  ? `${isAnswerPurposeFilterExperiment ? "用途过滤启用前控制组" : isExperiment ? "Query 改写启用前控制组" : "冻结基线"}为 ${comparisonToBaseline.baselinePassed}/${results.length}，本次变化 ${comparisonToBaseline.passedDelta} 题；新增通过：${renderQuestionList(comparisonToBaseline.newlyPassedQuestionIds)}；退步：${renderQuestionList(comparisonToBaseline.regressedQuestionIds)}。`
   : "这是修改 Query、上下文或检索门槛之前的冻结基线。";
 const experimentDecisionSection = isExperiment
   ? `
@@ -418,15 +485,22 @@ const experimentDecisionSection = isExperiment
 
 **结论：${experimentDecision.recommendedForProduction ? "建议进入本地正式检索，等待用户验收后再部署" : "不启用到网站正式检索"}。** 启用门槛是“综合通过题数提高、零退步，并且隔离、终局意图、无答案安全均不下降”。本次新增通过 ${renderQuestionList(experimentDecision.newlyPassedQuestionIds)}，但退步 ${renderQuestionList(experimentDecision.regressedQuestionIds)}，禁用片段隔离由 ${experimentDecision.controlIsolationPassed}/${results.length} 变为 ${experimentDecision.experimentIsolationPassed}/${results.length}。${experimentDecision.recommendedForProduction ? "该实验满足自动门槛，但仍需检查新增通过题和真实用户问法。" : "因此网站继续使用控制组配置；实验开关只用于后续复测。"}
 
-${isQueryRewriteExperiment ? `本实验只使用固定错别字表和经过审核的短语扩展；原问题完整保留。发生错字修正的题为 ${renderQuestionList(queryRewriteSummary.correctedQuestionIds)}，发生口语/同义扩展的题为 ${renderQuestionList(queryRewriteSummary.expandedQuestionIds)}。案例路由只使用纠错后的原问，不使用扩展词。` : usesCultureRerank ? `主题识别命中题集预期主线 ${themeDetectionPassed}/${results.length}；重排权重为 ${cultureRerankWeight}，只调整原 BM25 已通过证据门槛的非案例候选，不扩充候选、不改变案例路由。` : "这说明标注本身仍然有价值，但把所有语义字段直接拼进 BM25 会重复通用词并改变排序。下一轮应测试“Query 主题识别 + 小权重重排”，而不是继续扩长 BM25 文本。"}
+${isAnswerPurposeFilterExperiment ? `本实验识别“薪酬福利能否等同文化”“经营表现能否证明文化可复制”“顾客投诉奖是否存在当前固定金额”三类回答用途：第一类只把直接支持文化与实践关系的候选前置，不删除其他相关资料；后两类要求候选直接支持所问结论。未指定案例的企业自行送检终局问题进入资料不足闸门。命中用途的题为 ${renderQuestionList(answerPurposeFilterSummary.detectedQuestionIds)}，发生候选前置的题为 ${renderQuestionList(answerPurposeFilterSummary.boostedQuestionIds)}，实际过滤候选的题为 ${renderQuestionList(answerPurposeFilterSummary.filteredQuestionIds)}。` : isQueryRewriteExperiment ? `本实验只使用固定错别字表和经过审核的短语扩展；原问题完整保留。发生错字修正的题为 ${renderQuestionList(queryRewriteSummary.correctedQuestionIds)}，发生口语/同义扩展的题为 ${renderQuestionList(queryRewriteSummary.expandedQuestionIds)}。案例路由只使用纠错后的原问，不使用扩展词。` : usesCultureRerank ? `主题识别命中题集预期主线 ${themeDetectionPassed}/${results.length}；重排权重为 ${cultureRerankWeight}，只调整原 BM25 已通过证据门槛的非案例候选，不扩充候选、不改变案例路由。` : "这说明标注本身仍然有价值，但把所有语义字段直接拼进 BM25 会重复通用词并改变排序。下一轮应测试“Query 主题识别 + 小权重重排”，而不是继续扩长 BM25 文本。"}
 `
   : "";
-const resultStorageParagraph = isQueryRewriteExperiment
+const resultStorageParagraph = isAnswerPurposeFilterExperiment
+  ? "原始 28/54 基线、Query 改写启用前 39/54 控制组和用途过滤启用前 50/54 控制组均保持不变；本实验结果单独保存，本轮仍不接入向量库。"
+  : isQueryRewriteExperiment
   ? "原始 28/54 基线和 Query 改写启用前 39/54 控制组均保持不变；本实验结果单独保存，本地正式检索已按启用门槛采用 Query 改写 V1，本轮仍不接入向量库。"
   : isExperiment
     ? "原始 28/54 基线和 Query 改写启用前 39/54 控制组均保持不变；本实验结果单独保存，不改变本地正式检索配置，本轮仍不接入向量库。"
     : "原始 28/54 基线文件保持不变，当前结果单独保存；本轮仍不接入向量库。";
-const nextStepSection = usesQueryRewriteV1
+const nextStepSection = usesAnswerPurposeFilterV1
+  ? `1. 保留用途过滤启用前控制组和当前结果，不修改评测预期美化分数；
+2. 检查过滤掉的候选是否确实不能支持用户所问结论；
+3. 进入 R4 文化型回答结构评测，验证检索资料能否转化成普通用户真正看得懂的回答；
+4. 回答边界稳定后，再建立 BM25 + 向量 + 案例路由的混合检索原型。`
+  : usesQueryRewriteV1
   ? `1. 保留 Query 改写启用前控制组和当前结果，不修改评测预期美化分数；
 2. 处理 \`C1-06\` 的正例召回，以及 \`C2-07\`、\`C3-08\`、\`C4-06\` 的禁用片段隔离；
 3. 进入 R4 文化型回答结构评测，验证检索资料能否转化成普通用户真正看得懂的回答；
@@ -464,6 +538,7 @@ ${experimentDecisionSection}
 | 无答案问题安全 | ${noAnswerPassed}/${noAnswerQuestions.length}（${percent(baseline.summary.noAnswerSafetyRate)}） |
 ${usesCultureRerank ? `| Query 文化主线识别 | ${themeDetectionPassed}/${results.length}（${percent(baseline.summary.themeDetectionRate)}） |` : ""}
 ${isQueryRewriteExperiment ? `| 发生可审计 Query 改写 | ${queryRewriteSummary.rewrittenQuestionIds.length}/${results.length} |` : ""}
+${isAnswerPurposeFilterExperiment ? `| 检测到明确回答用途 | ${answerPurposeFilterSummary.detectedQuestionIds.length}/${results.length} |` : ""}
 
 ## 3. 分主题结果
 
@@ -496,8 +571,8 @@ ${failedRows.length ? failedRows.join("\n") : "| — | — | 无 | — |"}
 2. **对话上下文。** ${patternSummary.failedContextQuestionIds.length ? `仍未正确继承上下文的题为：${renderQuestionList(patternSummary.failedContextQuestionIds)}。` : "评测集中的上下文追问均能继承最近用户话题，并进入预期案例或召回预期片段。"}
 3. **错别字会破坏案例路由。** 错别字题中未通过的是：${renderQuestionList(patternSummary.failedTypoQuestionIds)}；${usesQueryRewriteV1 ? "当前配置会先记录并修正审核过的领域错字，再做案例别名匹配。" : "例如“鲜鸡旦角黄诉”“红内库”没有命中对应案例别名。"}
 4. **终局意图。** ${patternSummary.failedFinalityIntentQuestionIds.length ? `仍未正确识别的题为：${renderQuestionList(patternSummary.failedFinalityIntentQuestionIds)}。` : "本轮题集中的终局表达已全部正确识别，同时避免把“企业后来怎么解释”误判成终局问题。"}
-5. **案例路由总体较稳但仍有缺口。** 错误路由题为：${renderQuestionList(patternSummary.wrongRouteQuestionIds)}，主要集中在追问和错别字，不应通过放宽跨案例检索来弥补。
-6. **一般文化问题存在语义错配。** ${usesQueryRewriteV1 ? "Query 改写已解决本轮大部分口语表达，但“工资福利是否等于自由与爱”仍未命中题集指定的实践片段；另外三题需要更严格的用途与案例隔离，而不是继续扩展词表。" : "“完整的人”“放权如何兜底”“顾客是否什么都得照办”“为什么不开遍全国”等问题容易被连续双字匹配带到表面相似、实质不支持的片段。"}
+5. **案例路由。** ${patternSummary.wrongRouteQuestionIds.length ? `错误路由题为：${renderQuestionList(patternSummary.wrongRouteQuestionIds)}，主要集中在追问和错别字，不应通过放宽跨案例检索来弥补。` : "本轮固定试卷的案例与一般文化问题均进入正确轨道；后续新增案例仍须补充相似事件和错别字负例。"}
+6. **一般文化问题存在语义错配。** ${usesAnswerPurposeFilterV1 ? "回答用途过滤已区分文化与薪酬福利、经营表现与文化复制、顾客投诉奖与员工委屈奖，并拦截未指定案例的企业自行送检终局问题；这只覆盖已审核用途，不等于能够自动判断任意问题的资料充分性。" : usesQueryRewriteV1 ? "Query 改写已解决本轮大部分口语表达，但“工资福利是否等于自由与爱”仍未命中题集指定的实践片段；另外三题需要更严格的用途与案例隔离，而不是继续扩展词表。" : "“完整的人”“放权如何兜底”“顾客是否什么都得照办”“为什么不开遍全国”等问题容易被连续双字匹配带到表面相似、实质不支持的片段。"}
 
 以上是当前算法的真实能力快照，不在本轮通过修改 Query 改写、别名或排序来美化分数。
 
@@ -505,7 +580,7 @@ ${failedRows.length ? failedRows.join("\n") : "| — | — | 无 | — |"}
 
 ${nextStepSection}
 
-完整逐题结果见 \`pangdonglai_project/evaluation/${isQueryRewriteExperiment ? "rag-culture-query-rewrite-v1-experiment.json" : usesCultureRerank ? "rag-culture-bm25-theme-rerank-experiment.json" : includesCultureV1 ? "rag-culture-bm25-culture-v1-experiment.json" : isCurrentEvaluation ? "rag-culture-current-evaluation.json" : "rag-culture-bm25-baseline-v1.json"}\`。
+完整逐题结果见 \`pangdonglai_project/evaluation/${isAnswerPurposeFilterExperiment ? "rag-culture-answer-purpose-filter-v1-experiment.json" : isQueryRewriteExperiment ? "rag-culture-query-rewrite-v1-experiment.json" : usesCultureRerank ? "rag-culture-bm25-theme-rerank-experiment.json" : includesCultureV1 ? "rag-culture-bm25-culture-v1-experiment.json" : isCurrentEvaluation ? "rag-culture-current-evaluation.json" : "rag-culture-bm25-baseline-v1.json"}\`。
 `;
 
 await Promise.all([
@@ -514,5 +589,5 @@ await Promise.all([
 ]);
 
 console.log(
-  `${isQueryRewriteExperiment ? "Query 改写 V1 实验" : usesCultureRerank ? "文化主线重排实验" : includesCultureV1 ? "culture-v1 BM25 实验" : isCurrentEvaluation ? "当前检索评测" : "BM25 基线"}完成：${passed}/${results.length}（${percent(baseline.summary.passRate)}），报告已写入 ${reportUrl.pathname}`,
+  `${isAnswerPurposeFilterExperiment ? "回答用途过滤 V1 实验" : isQueryRewriteExperiment ? "Query 改写 V1 实验" : usesCultureRerank ? "文化主线重排实验" : includesCultureV1 ? "culture-v1 BM25 实验" : isCurrentEvaluation ? "当前检索评测" : "BM25 基线"}完成：${passed}/${results.length}（${percent(baseline.summary.passRate)}），报告已写入 ${reportUrl.pathname}`,
 );

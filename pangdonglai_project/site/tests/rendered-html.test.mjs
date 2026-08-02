@@ -46,6 +46,7 @@ test("keeps store content and chat contract outside their UI and Worker entrypoi
   assert.match(worker, /knowledge\/compiled\/knowledge-base\.json/);
   assert.match(worker, /createKnowledgeRetriever/);
   assert.match(worker, /queryRewriteV1: true/);
+  assert.match(worker, /answerPurposeFilterV1: true/);
   assert.match(worker, /previousUserQuestions/);
   assert.doesNotMatch(worker, /const BM25_K1/);
   assert.doesNotMatch(worker, /\.\.\/\.\.\/knowledge-base\.json/);
@@ -233,15 +234,17 @@ test("records a reproducible BM25 baseline against the culture question set", as
   assert.ok(baseline.results.every((result) => typeof result.checks.baselinePass === "boolean"));
   assert.match(report, /当前 BM25 基线通过 28\/54 题/);
   assert.equal(current.comparisonToBaseline.baselinePassed, 28);
-  assert.equal(current.summary.passed, 50);
+  assert.equal(current.summary.passed, 54);
   assert.equal(current.summary.finalityIntentPassed, 54);
   assert.equal(current.summary.noAnswerSafetyPassed, 6);
   assert.deepEqual(current.comparisonToBaseline.regressedQuestionIds, []);
   assert.match(current.retrievalConfiguration.queryRewriteV1, /reviewed fixed typo corrections/);
-  assert.match(currentReport, /当前检索通过 50\/54 题/);
+  assert.equal(current.summary.isolationPassed, 54);
+  assert.match(currentReport, /当前检索通过 54\/54 题/);
   assert.match(packageJson.scripts["rag:evaluate"], /evaluate-rag-baseline\.mjs/);
   assert.match(packageJson.scripts["rag:evaluate"], /--current/);
   assert.match(packageJson.scripts["rag:evaluate"], /--adopt-query-rewrite-v1/);
+  assert.match(packageJson.scripts["rag:evaluate"], /--adopt-answer-purpose-filter-v1/);
 });
 
 test("keeps the culture-v1 BM25 expansion experimental when it regresses", async () => {
@@ -325,7 +328,7 @@ test("adopts auditable Query rewrite V1 only after a zero-regression experiment"
 
   assert.equal(control.summary.passed, 39);
   assert.equal(experiment.summary.passed, 50);
-  assert.equal(current.summary.passed, 50);
+  assert.equal(current.summary.passed, 54);
   assert.deepEqual(experiment.comparisonToBaseline.regressedQuestionIds, []);
   assert.equal(experiment.summary.isolationPassed, control.summary.isolationPassed);
   assert.equal(experiment.summary.finalityIntentPassed, control.summary.finalityIntentPassed);
@@ -336,6 +339,75 @@ test("adopts auditable Query rewrite V1 only after a zero-regression experiment"
   ]);
   assert.match(report, /建议进入本地正式检索/);
   assert.match(packageJson.scripts["rag:evaluate:query-rewrite-v1"], /--query-rewrite-v1/);
+});
+
+test("adopts answer-purpose filtering after improving all remaining boundary questions", async () => {
+  const [control, current, experiment, report, packageJson, retrieval, compiled] = await Promise.all([
+    readFile(new URL("../../evaluation/rag-culture-pre-purpose-filter-control.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../evaluation/rag-culture-current-evaluation.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../evaluation/rag-culture-answer-purpose-filter-v1-experiment.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../../docs/RAG_CULTURE_ANSWER_PURPOSE_FILTER_V1_EXPERIMENT.md", import.meta.url), "utf8"),
+    readFile(new URL("../package.json", import.meta.url), "utf8").then(JSON.parse),
+    import("../shared/retrieval.mjs"),
+    readFile(new URL("../../knowledge/compiled/knowledge-base.json", import.meta.url), "utf8").then(JSON.parse),
+  ]);
+
+  assert.deepEqual(
+    retrieval.detectAnswerPurposes("工资高、福利好就能叫自由与爱了吗？"),
+    ["employee-culture-beyond-compensation"],
+  );
+  assert.deepEqual(
+    retrieval.detectAnswerPurposes("永辉照着胖东来改店，能证明授权文化可以直接复制吗？"),
+    ["replication-proof-boundary"],
+  );
+  assert.deepEqual(
+    retrieval.detectAnswerPurposes("永辉学胖东来后生意变好，能证明谁学都成功吗？"),
+    [],
+  );
+
+  const retriever = retrieval.createKnowledgeRetriever(compiled, {
+    queryRewriteV1: true,
+    answerPurposeFilterV1: true,
+  });
+  const replication = retriever.searchKnowledge(
+    "永辉照着胖东来改店，能证明这套授权文化可以直接复制吗？",
+  );
+  assert.ok(replication.retrieved.some((item) => item.chunkId === "xinhua-yonghui-replication-boundary"));
+  assert.ok(!replication.retrieved.some((item) => item.chunkId === "xinhua-yonghui-performance-boundary"));
+  assert.ok(replication.purposeFilteredOutChunkIds.includes("xinhua-yonghui-performance-boundary"));
+
+  const customerAward = retriever.searchKnowledge("现在投诉胖东来一次，顾客固定能拿多少奖励？");
+  assert.deepEqual(customerAward.retrieved.map((item) => item.chunkId), [
+    "interview-trust-returns-and-complaints",
+  ]);
+  assert.ok(customerAward.purposeFilteredOutChunkIds.includes("weiqu-award-office-response"));
+  assert.ok(customerAward.purposeFilteredOutChunkIds.includes("red-underwear-report-customer-and-legal"));
+
+  const selfTesting = retriever.searchKnowledge("企业自己送检、自己公布结果，这能算最终结论吗？");
+  assert.equal(selfTesting.retrieved.length, 0);
+  assert.match(selfTesting.insufficientReason, /不能单独构成监管或司法最终结论/);
+
+  const businessOutcome = retriever.searchKnowledge(
+    "永辉学胖东来后生意变好，是否证明这套模式谁学都能成功？",
+  );
+  assert.ok(businessOutcome.retrieved.some((item) => item.chunkId === "xinhua-yonghui-performance-boundary"));
+
+  assert.equal(control.summary.passed, 50);
+  assert.equal(experiment.summary.passed, 54);
+  assert.equal(current.summary.passed, 54);
+  assert.deepEqual(experiment.comparisonToBaseline.newlyPassedQuestionIds, [
+    "C1-06", "C2-07", "C3-08", "C4-06",
+  ]);
+  assert.deepEqual(experiment.comparisonToBaseline.regressedQuestionIds, []);
+  assert.equal(experiment.summary.isolationPassed, 54);
+  assert.equal(experiment.summary.finalityIntentPassed, 54);
+  assert.equal(experiment.summary.noAnswerSafetyPassed, 6);
+  assert.equal(experiment.experimentDecision.recommendedForProduction, true);
+  assert.deepEqual(experiment.answerPurposeFilterSummary.detectedQuestionIds, [
+    "C1-06", "C2-07", "C3-08",
+  ]);
+  assert.match(report, /建议进入本地正式检索/);
+  assert.match(packageJson.scripts["rag:evaluate:answer-purpose-filter-v1"], /--answer-purpose-filter-v1/);
 });
 
 test("uses recent user context only when a follow-up needs it", async () => {

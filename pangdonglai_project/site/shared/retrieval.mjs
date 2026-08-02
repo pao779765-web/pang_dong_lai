@@ -152,6 +152,59 @@ export function detectCultureThemes(value) {
     .map(([theme]) => theme);
 }
 
+export function detectAnswerPurposes(value) {
+  const normalized = value.toLowerCase().replace(/\s+/g, "");
+  const purposes = [];
+
+  if (
+    /(?:工资|薪酬).{0,8}(?:福利).{0,12}(?:自由与爱|文化)|(?:自由与爱|文化).{0,12}(?:工资|薪酬).{0,8}福利/.test(
+      normalized,
+    )
+  ) {
+    purposes.push("employee-culture-beyond-compensation");
+  }
+  if (
+    /(?:复制|照搬|照着.{0,6}(?:改|学)).{0,18}(?:证明|文化|直接)|(?:证明|文化).{0,18}(?:复制|照搬)/.test(
+      normalized,
+    )
+  ) {
+    purposes.push("replication-proof-boundary");
+  }
+  if (
+    /(?:顾客).{0,16}(?:投诉).{0,16}(?:奖励|多少|金额)|(?:投诉).{0,16}(?:顾客).{0,16}(?:奖励|多少|金额)/.test(
+      normalized,
+    )
+  ) {
+    purposes.push("customer-complaint-award");
+  }
+
+  return purposes;
+}
+
+function supportsAnswerPurposes(item, purposes) {
+  const normalized = item.evidenceText.toLowerCase().replace(/\s+/g, "");
+
+  return purposes.every((purpose) => {
+    if (purpose === "employee-culture-beyond-compensation") {
+      return (
+        item.cultureRelevance !== "context_only" &&
+        /精神尊重|能力培养|健全人格|文化理念|文化理想|自由精神|爱的精神|人性化管理/.test(
+          normalized,
+        )
+      );
+    }
+    if (purpose === "replication-proof-boundary") {
+      return /复制|照搬|可复制|文化内核|组织条件|情境差异|长期信任|学不来/.test(normalized);
+    }
+    if (purpose === "customer-complaint-award") {
+      const supportsCustomerComplaint = /投诉奖|顾客.{0,12}投诉|投诉.{0,12}顾客/.test(normalized);
+      const confusesEmployeeGrievance = /委屈奖/.test(normalized) && !/投诉奖/.test(normalized);
+      return !item.caseId && supportsCustomerComplaint && !confusesEmployeeGrievance;
+    }
+    return true;
+  });
+}
+
 function makeCultureSearchContent(culture) {
   if (!culture || culture.annotationVersion !== "culture-v1") return "";
 
@@ -252,6 +305,7 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
   const includeCultureAnnotations = options.includeCultureAnnotations === true;
   const cultureRerankWeight = Number(options.cultureRerankWeight ?? 0);
   const queryRewriteV1 = options.queryRewriteV1 === true;
+  const answerPurposeFilterV1 = options.answerPurposeFilterV1 === true;
   if (!Number.isFinite(cultureRerankWeight) || cultureRerankWeight < 0 || cultureRerankWeight > 0.25) {
     throw new Error("cultureRerankWeight 必须是 0 到 0.25 之间的有限数值。");
   }
@@ -298,6 +352,14 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
 
   function detectKnownEvidenceGap(question) {
     const normalized = question.replace(/\s+/g, "");
+
+    if (
+      answerPurposeFilterV1 &&
+      /(?:企业|公司).{0,8}(?:自己|自行).{0,4}送检|(?:自己|自行)送检/.test(normalized) &&
+      /最终|终局|正式结论|监管认定/.test(normalized)
+    ) {
+      return "企业自行送检和公开结果不能单独构成监管或司法最终结论；问题未指明具体事件，当前资料不足以给出终局判断。";
+    }
 
     if (
       /(工资|薪酬|奖金)/.test(normalized) &&
@@ -358,9 +420,11 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
     return false;
   }
 
-  function searchGeneralKnowledge(question, detectedCultureThemes) {
+  function searchGeneralKnowledge(question, detectedCultureThemes, detectedAnswerPurposes) {
     const queryTerms = makeSearchTerms(question);
-    if (queryTerms.length === 0) return [];
+    if (queryTerms.length === 0) {
+      return { retrieved: [], purposeFilteredOutChunkIds: [], purposeBoostedChunkIds: [] };
+    }
 
     const indexedChunks = knowledgeBase.documents
       .filter(isSearchableInGeneralTrack)
@@ -378,11 +442,14 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
             terms: makeSearchTerms(searchContent),
             evidenceTerms: makeSearchTerms(evidenceContent),
             cultureThemes: document.caseId ? [] : (chunk.culture?.cultureTheme ?? []),
+            cultureRelevance: chunk.culture?.relevance ?? null,
           };
         }),
       );
 
-    if (indexedChunks.length === 0) return [];
+    if (indexedChunks.length === 0) {
+      return { retrieved: [], purposeFilteredOutChunkIds: [], purposeBoostedChunkIds: [] };
+    }
 
     const documentFrequencies = new Map();
     const sourceFrequencies = new Map();
@@ -400,7 +467,7 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
     const averageDocumentLength =
       indexedChunks.reduce((sum, item) => sum + item.terms.length, 0) / indexedChunks.length;
 
-    return indexedChunks
+    const scored = indexedChunks
       .map(({ terms, evidenceTerms, cultureThemes, ...item }) => {
         const matchingDistinctiveTerms = queryTerms.filter(
           (term) => isDistinctiveQueryTerm(term) && evidenceTerms.includes(term),
@@ -429,11 +496,51 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
           baseScore,
           cultureThemeMatches,
           hasDistinctiveEvidence,
+          evidenceText: `${item.content}\n${JSON.stringify(item.facts ?? {})}`,
         };
       })
       .filter((item) => item.score > 0 && item.hasDistinctiveEvidence)
-      .sort((left, right) => right.score - left.score)
-      .slice(0, 5);
+      .sort((left, right) => right.score - left.score);
+    const softRankingPurposes = detectedAnswerPurposes.filter(
+      (purpose) => purpose === "employee-culture-beyond-compensation",
+    );
+    const hardFilterPurposes = detectedAnswerPurposes.filter(
+      (purpose) => purpose !== "employee-culture-beyond-compensation",
+    );
+    const purposeFilteredOutChunkIds = answerPurposeFilterV1 && hardFilterPurposes.length
+      ? scored
+          .filter((item) => !supportsAnswerPurposes(item, hardFilterPurposes))
+          .map((item) => item.chunkId)
+      : [];
+    const purposeBoostedChunkIds = answerPurposeFilterV1 && softRankingPurposes.length
+      ? scored
+          .filter((item) => supportsAnswerPurposes(item, softRankingPurposes))
+          .map((item) => item.chunkId)
+      : [];
+    const eligible = scored
+      .filter(
+        (item) =>
+          !answerPurposeFilterV1 ||
+          hardFilterPurposes.length === 0 ||
+          supportsAnswerPurposes(item, hardFilterPurposes),
+      );
+    const purposeRanked = answerPurposeFilterV1 && softRankingPurposes.length
+      ? eligible.sort((left, right) => {
+          const supportDelta =
+            Number(supportsAnswerPurposes(right, softRankingPurposes)) -
+            Number(supportsAnswerPurposes(left, softRankingPurposes));
+          return supportDelta || right.score - left.score;
+        })
+      : eligible;
+    const retrieved = purposeRanked
+      .slice(0, 5)
+      .map((item) => {
+        const retrievedItem = { ...item };
+        delete retrievedItem.evidenceText;
+        return retrievedItem;
+      });
+
+    return { retrieved, purposeFilteredOutChunkIds, purposeBoostedChunkIds };
   }
 
   function searchKnowledge(question, context = []) {
@@ -466,6 +573,9 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
     const detectedCultureThemes = cultureRerankWeight > 0
       ? detectCultureThemes(themeDetectionText)
       : [];
+    const detectedAnswerPurposes = answerPurposeFilterV1
+      ? detectAnswerPurposes(currentRewrite.corrected)
+      : [];
     const directCaseRecord = findCase(currentRewrite.corrected);
     const contextualCaseRecord = contextDependent
       ? [...contextRewrites].reverse().map((item) => findCase(item.corrected)).find(Boolean)
@@ -483,6 +593,9 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
         queryExpansions: [],
         queryRewriteApplied: currentRewrite.corrections.length > 0,
         detectedCultureThemes,
+        detectedAnswerPurposes,
+        purposeFilteredOutChunkIds: [],
+        purposeBoostedChunkIds: [],
         retrieved: searchCase(caseRecord),
       };
     }
@@ -500,12 +613,20 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
         queryRewriteApplied:
           currentRewrite.corrections.length > 0 || currentRewrite.expansions.length > 0,
         detectedCultureThemes,
+        detectedAnswerPurposes,
+        purposeFilteredOutChunkIds: [],
+        purposeBoostedChunkIds: [],
         insufficientReason,
         retrieved: [],
       };
     }
 
     const queryText = themeDetectionText;
+    const generalSearch = searchGeneralKnowledge(
+      queryText,
+      detectedCultureThemes,
+      detectedAnswerPurposes,
+    );
 
     return {
       track: "general",
@@ -528,7 +649,10 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
           (item) => item.corrections.length > 0 || item.expansions.length > 0,
         )),
       detectedCultureThemes,
-      retrieved: searchGeneralKnowledge(queryText, detectedCultureThemes),
+      detectedAnswerPurposes,
+      purposeFilteredOutChunkIds: generalSearch.purposeFilteredOutChunkIds,
+      purposeBoostedChunkIds: generalSearch.purposeBoostedChunkIds,
+      retrieved: generalSearch.retrieved,
     };
   }
 
