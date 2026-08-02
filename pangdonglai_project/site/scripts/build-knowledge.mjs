@@ -6,6 +6,17 @@ const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectDirectory = path.resolve(scriptDirectory, "../..");
 const knowledgeDirectory = path.join(projectDirectory, "knowledge");
 const manifestPath = path.join(knowledgeDirectory, "manifest.json");
+const cultureThemes = new Set(["C1", "C2", "C3", "C4", "C5", "C6"]);
+const cultureRelevance = new Set(["direct", "supporting", "context_only", "boundary"]);
+const cultureStakeholders = new Set([
+  "员工",
+  "顾客",
+  "供应商",
+  "管理者",
+  "公众",
+  "监管与司法",
+  "同行企业",
+]);
 
 function resolveKnowledgePath(relativePath) {
   if (
@@ -36,6 +47,41 @@ async function readJsonLines(relativePath) {
         throw new Error(`${relativePath} 第 ${index + 1} 行不是有效 JSON：${error.message}`);
       }
     });
+}
+
+function validateCultureAnnotation(chunk) {
+  const annotation = chunk.culture;
+  if (!annotation || annotation.annotationVersion !== "culture-v1") {
+    throw new Error(`片段缺少 culture-v1 标注：${chunk.id}`);
+  }
+  if (!cultureRelevance.has(annotation.relevance)) {
+    throw new Error(`片段文化关联级别无效：${chunk.id}`);
+  }
+  if (
+    !Array.isArray(annotation.cultureTheme) ||
+    annotation.cultureTheme.some((theme) => !cultureThemes.has(theme)) ||
+    new Set(annotation.cultureTheme).size !== annotation.cultureTheme.length
+  ) {
+    throw new Error(`片段文化主线标注无效：${chunk.id}`);
+  }
+  if (
+    !Array.isArray(annotation.stakeholders) ||
+    annotation.stakeholders.some((stakeholder) => !cultureStakeholders.has(stakeholder)) ||
+    new Set(annotation.stakeholders).size !== annotation.stakeholders.length
+  ) {
+    throw new Error(`片段利益相关者标注无效：${chunk.id}`);
+  }
+  for (const field of ["practice", "mechanism", "valueMeaning", "tension", "effectiveAt"]) {
+    if (!(field in annotation) || (annotation[field] !== null && typeof annotation[field] !== "string")) {
+      throw new Error(`片段文化字段 ${field} 无效：${chunk.id}`);
+    }
+  }
+  if (annotation.relevance === "boundary" && !annotation.tension) {
+    throw new Error(`边界材料必须说明现实张力：${chunk.id}`);
+  }
+  if (annotation.valueMeaning && !/^可用于(?:理解|检验)/.test(annotation.valueMeaning)) {
+    throw new Error(`文化含义必须保持解释性措辞：${chunk.id}`);
+  }
 }
 
 const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
@@ -95,6 +141,7 @@ for (const reference of manifest.sources) {
     if (seenChunkIds.has(chunk.id)) {
       throw new Error(`片段 id 重复：${chunk.id}`);
     }
+    validateCultureAnnotation(chunk);
     seenChunkIds.add(chunk.id);
   }
 

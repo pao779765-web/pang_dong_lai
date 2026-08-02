@@ -23,9 +23,10 @@ knowledge/
 1. 新资料先执行 `docs/RAG_RESEARCH_PROTOCOL.md` 的候选、审核和用户批准流程。
 2. `metadata.json` 只保存该来源的元数据和使用边界，不放检索片段。
 3. `content.md` 用于保存允许入库的规范化正文。没有取得正文时必须保留 `summary_only`，不得把摘要冒充原文。
-4. `chunks/*.jsonl` 用于检索；每行必须包含 `documentId`、唯一 `id`、`title`、`text` 和 `facts`。
+4. `chunks/*.jsonl` 用于检索；每行必须包含 `documentId`、唯一 `id`、`title`、`text`、`facts` 和 `culture`。`culture` 使用 `culture-v1`，字段规则与统计见 `docs/RAG_CULTURE_ANNOTATION_V1.md`。
 5. 由旧库迁移且尚未回填的片段标记为 `contentKind: reviewed_summary`；已经依据原页回填的片段标记为 `contentKind: source_text`，并用 `sourceSpans` 定位到 `content.md` 的段落。
-6. 修改后在 `pangdonglai_project/site` 运行 `npm run knowledge:build`，再运行测试和 lint。
+6. 没有依据的 `practice`、`mechanism`、`valueMeaning` 或 `tension` 使用 `null`，不得为了填满字段而把编辑解释冒充来源事实。
+7. 修改后在 `pangdonglai_project/site` 运行 `npm run knowledge:build`，再运行测试和 lint。构建脚本会检查文化标注版本、枚举、边界材料和解释性措辞。
 
 ## 正文覆盖状态
 
@@ -40,6 +41,7 @@ knowledge/
 
 - 资料总数：30
 - 检索片段：135
+- `culture-v1` 已标注片段：135
 - `partial_text`：24
 - `summary_only`：6（均已完成终轮审计；保留摘要是来源或版权边界结论，不是遗漏）
 

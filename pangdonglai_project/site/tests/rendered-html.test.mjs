@@ -75,6 +75,42 @@ test("builds the RAG index from the directory knowledge source of truth", async 
     manifest.counts.chunks,
   );
 
+  const cultureThemes = new Set(["C1", "C2", "C3", "C4", "C5", "C6"]);
+  const cultureRelevance = new Set(["direct", "supporting", "context_only", "boundary"]);
+  const allChunks = compiled.documents.flatMap((document) => document.chunks);
+  assert.equal(allChunks.length, 135);
+  for (const chunk of allChunks) {
+    assert.equal(chunk.culture.annotationVersion, "culture-v1");
+    assert.ok(cultureRelevance.has(chunk.culture.relevance));
+    assert.ok(chunk.culture.cultureTheme.every((theme) => cultureThemes.has(theme)));
+    assert.equal(
+      new Set(chunk.culture.cultureTheme).size,
+      chunk.culture.cultureTheme.length,
+    );
+    if (chunk.culture.relevance === "boundary") {
+      assert.ok(chunk.culture.tension);
+    }
+    if (chunk.culture.valueMeaning) {
+      assert.match(chunk.culture.valueMeaning, /^可用于(?:理解|检验)/);
+    }
+  }
+  for (const theme of cultureThemes) {
+    assert.ok(
+      allChunks.filter((chunk) => chunk.culture.cultureTheme.includes(theme)).length >= 10,
+      `${theme} 的文化标注覆盖不足`,
+    );
+  }
+  assert.ok(
+    allChunks.some(
+      (chunk) =>
+        chunk.culture.relevance === "context_only" &&
+        chunk.culture.cultureTheme.length === 0,
+    ),
+  );
+  for (const document of compiled.documents.filter((item) => item.caseId)) {
+    assert.ok(document.chunks.every((chunk) => chunk.culture.cultureTheme.includes("C6")));
+  }
+
   for (const source of manifest.sources) {
     const [metadata, content, chunks] = await Promise.all([
       readFile(new URL(`../../knowledge/${source.metadataPath}`, import.meta.url), "utf8"),
