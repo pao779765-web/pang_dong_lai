@@ -1,5 +1,13 @@
 const BM25_K1 = 1.2;
 const BM25_B = 0.75;
+const CULTURE_THEME_LABELS = {
+  C1: "员工的尊严自由与生活",
+  C2: "信任一线授权与责任",
+  C3: "顾客关系与真诚服务",
+  C4: "商品品质与供应链",
+  C5: "利润规模与经营节制",
+  C6: "争议中的文化检验",
+};
 
 export function makeSearchTerms(value) {
   const text = value.toLowerCase().replace(/[^\u4e00-\u9fff0-9a-z]/g, "");
@@ -14,6 +22,21 @@ export function makeSearchTerms(value) {
   }
 
   return terms;
+}
+
+function makeCultureSearchContent(culture) {
+  if (!culture || culture.annotationVersion !== "culture-v1") return "";
+
+  return [
+    ...culture.cultureTheme.map((theme) => CULTURE_THEME_LABELS[theme]).filter(Boolean),
+    culture.practice,
+    culture.mechanism,
+    culture.valueMeaning,
+    ...culture.stakeholders,
+    culture.tension,
+  ]
+    .filter(Boolean)
+    .join("\n");
 }
 
 const GENERIC_BRAND_TERMS = new Set(makeSearchTerms("胖东来"));
@@ -97,7 +120,8 @@ function scoreBm25(queryTerms, documentTerms, documentFrequencies, totalDocument
   return score;
 }
 
-export function createKnowledgeRetriever(knowledgeBase) {
+export function createKnowledgeRetriever(knowledgeBase, options = {}) {
+  const includeCultureAnnotations = options.includeCultureAnnotations === true;
   function toRetrievedChunk(document, chunk, score, caseRecord) {
     const content = `${document.title}\n${chunk.title}\n${chunk.text}`;
     return {
@@ -210,8 +234,11 @@ export function createKnowledgeRetriever(knowledgeBase) {
       .flatMap((document) =>
         document.chunks.map((chunk) => {
           const content = `${document.title}\n${chunk.title}\n${chunk.text}`;
-          const searchContent = `${content}\n${JSON.stringify(chunk.facts)}`;
-          const evidenceContent = `${chunk.title}\n${chunk.text}\n${JSON.stringify(chunk.facts)}`;
+          const cultureSearchContent = includeCultureAnnotations && !document.caseId
+            ? makeCultureSearchContent(chunk.culture)
+            : "";
+          const searchContent = `${content}\n${JSON.stringify(chunk.facts)}\n${cultureSearchContent}`;
+          const evidenceContent = `${chunk.title}\n${chunk.text}\n${JSON.stringify(chunk.facts)}\n${cultureSearchContent}`;
 
           return {
             ...toRetrievedChunk(document, chunk, 0),

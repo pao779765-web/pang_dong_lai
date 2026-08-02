@@ -8,6 +8,7 @@
   "scripts": {
     "knowledge:build": "node scripts/build-knowledge.mjs",
     "rag:evaluate": "npm run knowledge:build && node scripts/evaluate-rag-baseline.mjs --current",
+    "rag:evaluate:culture-v1": "npm run rag:evaluate && node scripts/evaluate-rag-baseline.mjs --current --culture-v1",
     "predev": "npm run knowledge:build",
     "dev": "vinext dev",
     "prebuild": "npm run knowledge:build",

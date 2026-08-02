@@ -241,6 +241,28 @@ test("records a reproducible BM25 baseline against the culture question set", as
   assert.match(packageJson.scripts["rag:evaluate"], /--current/);
 });
 
+test("keeps the culture-v1 BM25 expansion experimental when it regresses", async () => {
+  const [current, experiment, report, packageJson] = await Promise.all([
+    readFile(new URL("../../evaluation/rag-culture-current-evaluation.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../evaluation/rag-culture-bm25-culture-v1-experiment.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../../docs/RAG_CULTURE_BM25_CULTURE_V1_EXPERIMENT.md", import.meta.url), "utf8"),
+    readFile(new URL("../package.json", import.meta.url), "utf8").then(JSON.parse),
+  ]);
+
+  assert.equal(current.summary.passed, 39);
+  assert.equal(experiment.summary.passed, 38);
+  assert.equal(experiment.comparisonToBaseline.baselineId, current.id);
+  assert.deepEqual(experiment.comparisonToBaseline.newlyPassedQuestionIds, ["C5-02"]);
+  assert.deepEqual(experiment.comparisonToBaseline.regressedQuestionIds, ["C4-02", "C6-02"]);
+  assert.equal(experiment.summary.noAnswerSafetyPassed, current.summary.noAnswerSafetyPassed);
+  assert.equal(experiment.summary.finalityIntentPassed, current.summary.finalityIntentPassed);
+  assert.ok(experiment.summary.isolationPassed < current.summary.isolationPassed);
+  assert.equal(experiment.experimentDecision.recommendedForProduction, false);
+  assert.match(experiment.retrievalConfiguration.cultureAnnotationSearch, /non-case culture-v1/);
+  assert.match(report, /不启用到网站正式检索/);
+  assert.match(packageJson.scripts["rag:evaluate:culture-v1"], /--culture-v1/);
+});
+
 test("uses recent user context only when a follow-up needs it", async () => {
   const [{ createKnowledgeRetriever }, compiled] = await Promise.all([
     import("../shared/retrieval.mjs"),

@@ -5,10 +5,26 @@ const evaluationUrl = new URL("../../evaluation/rag-culture-questions-v1.json", 
 const knowledgeUrl = new URL("../../knowledge/compiled/knowledge-base.json", import.meta.url);
 const frozenBaselineUrl = new URL("../../evaluation/rag-culture-bm25-baseline-v1.json", import.meta.url);
 const isCurrentEvaluation = process.argv.includes("--current");
-const resultUrl = isCurrentEvaluation
+const includesCultureV1 = process.argv.includes("--culture-v1");
+if (includesCultureV1 && !isCurrentEvaluation) {
+  throw new Error("culture-v1 实验必须与 --current 一起运行，以保留相同的上下文和安全规则。");
+}
+const currentEvaluationUrl = new URL(
+  "../../evaluation/rag-culture-current-evaluation.json",
+  import.meta.url,
+);
+const cultureExperimentUrl = new URL(
+  "../../evaluation/rag-culture-bm25-culture-v1-experiment.json",
+  import.meta.url,
+);
+const resultUrl = includesCultureV1
+  ? cultureExperimentUrl
+  : isCurrentEvaluation
   ? new URL("../../evaluation/rag-culture-current-evaluation.json", import.meta.url)
   : frozenBaselineUrl;
-const reportUrl = isCurrentEvaluation
+const reportUrl = includesCultureV1
+  ? new URL("../../../docs/RAG_CULTURE_BM25_CULTURE_V1_EXPERIMENT.md", import.meta.url)
+  : isCurrentEvaluation
   ? new URL("../../../docs/RAG_CULTURE_CURRENT_EVALUATION.md", import.meta.url)
   : new URL("../../../docs/RAG_CULTURE_BASELINE_V1.md", import.meta.url);
 
@@ -17,7 +33,9 @@ const [evaluation, knowledgeBase] = await Promise.all([
   readFile(knowledgeUrl, "utf8").then(JSON.parse),
 ]);
 
-const retriever = createKnowledgeRetriever(knowledgeBase);
+const retriever = createKnowledgeRetriever(knowledgeBase, {
+  includeCultureAnnotations: includesCultureV1,
+});
 
 function roundRate(passed, total) {
   return total === 0 ? 1 : Number((passed / total).toFixed(4));
@@ -144,29 +162,31 @@ const failureSummary = {
     .map((result) => result.id),
 };
 
-const frozenBaseline = isCurrentEvaluation
-  ? JSON.parse(await readFile(frozenBaselineUrl, "utf8"))
+const comparisonReference = isCurrentEvaluation
+  ? JSON.parse(
+      await readFile(includesCultureV1 ? currentEvaluationUrl : frozenBaselineUrl, "utf8"),
+    )
   : null;
-const comparisonToBaseline = frozenBaseline
+const comparisonToBaseline = comparisonReference
   ? {
-      baselineId: frozenBaseline.id,
-      baselinePassed: frozenBaseline.summary.passed,
+      baselineId: comparisonReference.id,
+      baselinePassed: comparisonReference.summary.passed,
       currentPassed: passed,
-      passedDelta: passed - frozenBaseline.summary.passed,
-      baselinePassRate: frozenBaseline.summary.passRate,
+      passedDelta: passed - comparisonReference.summary.passed,
+      baselinePassRate: comparisonReference.summary.passRate,
       currentPassRate: roundRate(passed, results.length),
       passRateDelta: Number(
-        (roundRate(passed, results.length) - frozenBaseline.summary.passRate).toFixed(4),
+        (roundRate(passed, results.length) - comparisonReference.summary.passRate).toFixed(4),
       ),
       newlyPassedQuestionIds: results
         .filter((result) => {
-          const oldResult = frozenBaseline.results.find((item) => item.id === result.id);
+          const oldResult = comparisonReference.results.find((item) => item.id === result.id);
           return result.checks.baselinePass && !oldResult?.checks.baselinePass;
         })
         .map((result) => result.id),
       regressedQuestionIds: results
         .filter((result) => {
-          const oldResult = frozenBaseline.results.find((item) => item.id === result.id);
+          const oldResult = comparisonReference.results.find((item) => item.id === result.id);
           return !result.checks.baselinePass && oldResult?.checks.baselinePass;
         })
         .map((result) => result.id),
@@ -197,10 +217,31 @@ const patternSummary = {
     .map((result) => result.id),
 };
 
+const experimentDecision = includesCultureV1
+  ? {
+      recommendedForProduction:
+        passed > comparisonReference.summary.passed &&
+        comparisonToBaseline.regressedQuestionIds.length === 0 &&
+        isolationPassed >= comparisonReference.summary.isolationPassed &&
+        finalityPassed >= comparisonReference.summary.finalityIntentPassed &&
+        noAnswerPassed >= comparisonReference.summary.noAnswerSafetyPassed,
+      adoptionGate:
+        "综合通过题数必须提高、不得有退步题，且隔离、终局意图和无答案安全均不得下降。",
+      controlPassed: comparisonReference.summary.passed,
+      experimentPassed: passed,
+      newlyPassedQuestionIds: comparisonToBaseline.newlyPassedQuestionIds,
+      regressedQuestionIds: comparisonToBaseline.regressedQuestionIds,
+      controlIsolationPassed: comparisonReference.summary.isolationPassed,
+      experimentIsolationPassed: isolationPassed,
+    }
+  : null;
+
 const baseline = {
   schemaVersion: "1.0",
   id: isCurrentEvaluation
-    ? "rag-culture-current-evaluation"
+    ? includesCultureV1
+      ? "rag-culture-bm25-culture-v1-experiment"
+      : "rag-culture-current-evaluation"
     : "rag-culture-bm25-baseline-v1",
   evaluatedAt: new Date().toISOString(),
   evaluationSet: evaluation.id,
@@ -214,6 +255,9 @@ const baseline = {
   },
   retrievalConfiguration: {
     algorithm: "BM25 over continuous Chinese bigrams",
+    cultureAnnotationSearch: includesCultureV1
+      ? "non-case culture-v1 theme labels, practice, mechanism, qualified value meaning, stakeholders and tension; case annotations excluded from general-track expansion"
+      : "disabled",
     topK: 5,
     caseRouting: "substring match against reviewed case aliases",
     queryRewrite: isCurrentEvaluation
@@ -255,6 +299,7 @@ const baseline = {
   failureSummary,
   patternSummary,
   comparisonToBaseline,
+  experimentDecision,
   results,
 };
 
@@ -278,12 +323,23 @@ const failedRows = results
     return `| ${result.id} | ${result.theme} | ${reasons.join("；")} | ${result.actual.retrievedChunkIds.slice(0, 5).join("、") || "无"} |`;
   });
 
-const reportTitle = isCurrentEvaluation
+const reportTitle = includesCultureV1
+  ? "RAG culture-v1 字段 BM25 对照实验"
+  : isCurrentEvaluation
   ? "RAG 文化问答当前检索评测"
   : "RAG 文化问答 BM25 基线 V1";
 const comparisonParagraph = comparisonToBaseline
-  ? `冻结基线为 ${comparisonToBaseline.baselinePassed}/${results.length}，本次提高 ${comparisonToBaseline.passedDelta} 题；新增通过：${renderQuestionList(comparisonToBaseline.newlyPassedQuestionIds)}；退步：${renderQuestionList(comparisonToBaseline.regressedQuestionIds)}。`
+  ? `${includesCultureV1 ? "未读取文化字段的当前控制组" : "冻结基线"}为 ${comparisonToBaseline.baselinePassed}/${results.length}，本次变化 ${comparisonToBaseline.passedDelta} 题；新增通过：${renderQuestionList(comparisonToBaseline.newlyPassedQuestionIds)}；退步：${renderQuestionList(comparisonToBaseline.regressedQuestionIds)}。`
   : "这是修改 Query、上下文或检索门槛之前的冻结基线。";
+const experimentDecisionSection = includesCultureV1
+  ? `
+### 是否启用
+
+**结论：${experimentDecision.recommendedForProduction ? "建议启用" : "不启用到网站正式检索"}。** 启用门槛是“综合通过题数提高、零退步，并且隔离、终局意图、无答案安全均不下降”。本次新增通过 ${renderQuestionList(experimentDecision.newlyPassedQuestionIds)}，但退步 ${renderQuestionList(experimentDecision.regressedQuestionIds)}，禁用片段隔离由 ${experimentDecision.controlIsolationPassed}/${results.length} 变为 ${experimentDecision.experimentIsolationPassed}/${results.length}。因此网站继续使用未读取文化字段的控制组配置；实验开关只用于后续复测。
+
+这说明标注本身仍然有价值，但把所有语义字段直接拼进 BM25 会重复通用词并改变排序。下一轮应测试“Query 主题识别 + 小权重重排”，而不是继续扩长 BM25 文本。
+`
+  : "";
 
 const report = `# ${reportTitle}
 
@@ -297,7 +353,8 @@ const report = `# ${reportTitle}
 
 当前检索通过 ${passed}/${results.length} 题，综合通过率为 **${percent(baseline.summary.passRate)}**。${comparisonParagraph}本次只运行确定性的检索与路由，不调用 DeepSeek，因此不会产生费用；“生成越界”只记录检索结果可能带来的风险，不把风险写成已经发生的回答错误。
 
-原始 28/54 基线文件保持不变，当前结果单独保存；本轮仍不接入向量库。
+原始 28/54 基线文件保持不变，${includesCultureV1 ? "本实验也不覆盖当前 39/54 控制组" : "当前结果单独保存"}；本轮仍不接入向量库。
+${experimentDecisionSection}
 
 ## 2. 核心指标
 
@@ -354,7 +411,7 @@ ${failedRows.length ? failedRows.join("\n") : "| — | — | 无 | — |"}
 3. 完成文化知识字段和 Query 改写 V1 后，用同一试卷重跑；
 4. 基线可重复且边界测试稳定后，再建立 BM25 + 向量 + 案例路由的混合检索原型。
 
-完整逐题结果见 \`pangdonglai_project/evaluation/${isCurrentEvaluation ? "rag-culture-current-evaluation.json" : "rag-culture-bm25-baseline-v1.json"}\`。
+完整逐题结果见 \`pangdonglai_project/evaluation/${includesCultureV1 ? "rag-culture-bm25-culture-v1-experiment.json" : isCurrentEvaluation ? "rag-culture-current-evaluation.json" : "rag-culture-bm25-baseline-v1.json"}\`。
 `;
 
 await Promise.all([
@@ -363,5 +420,5 @@ await Promise.all([
 ]);
 
 console.log(
-  `${isCurrentEvaluation ? "当前检索评测" : "BM25 基线"}完成：${passed}/${results.length}（${percent(baseline.summary.passRate)}），报告已写入 ${reportUrl.pathname}`,
+  `${includesCultureV1 ? "culture-v1 BM25 实验" : isCurrentEvaluation ? "当前检索评测" : "BM25 基线"}完成：${passed}/${results.length}（${percent(baseline.summary.passRate)}），报告已写入 ${reportUrl.pathname}`,
 );

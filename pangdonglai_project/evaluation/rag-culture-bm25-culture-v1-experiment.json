@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
-  "id": "rag-culture-current-evaluation",
-  "evaluatedAt": "2026-08-02T07:32:31.547Z",
+  "id": "rag-culture-bm25-culture-v1-experiment",
+  "evaluatedAt": "2026-08-02T07:32:32.038Z",
   "evaluationSet": "rag-culture-questions-v1",
   "knowledgeSnapshot": {
     "sources": 30,
@@ -10,7 +10,7 @@
   },
   "retrievalConfiguration": {
     "algorithm": "BM25 over continuous Chinese bigrams",
-    "cultureAnnotationSearch": "disabled",
+    "cultureAnnotationSearch": "non-case culture-v1 theme labels, practice, mechanism, qualified value meaning, stakeholders and tension; case annotations excluded from general-track expansion",
     "topK": 5,
     "caseRouting": "substring match against reviewed case aliases",
     "queryRewrite": "rules for contextual follow-ups, finality intent and known evidence gaps",
@@ -24,17 +24,17 @@
   },
   "summary": {
     "total": 54,
-    "passed": 39,
-    "passRate": 0.7222,
-    "retrievalPassed": 39,
-    "retrievalPassRate": 0.7222,
+    "passed": 38,
+    "passRate": 0.7037,
+    "retrievalPassed": 38,
+    "retrievalPassRate": 0.7037,
     "positiveRecallPassed": 35,
     "positiveRecallTotal": 47,
     "positiveRecallRate": 0.7447,
     "routePassed": 52,
     "routeAccuracy": 0.963,
-    "isolationPassed": 51,
-    "isolationAccuracy": 0.9444,
+    "isolationPassed": 50,
+    "isolationAccuracy": 0.9259,
     "finalityIntentPassed": 54,
     "finalityIntentAccuracy": 1,
     "noAnswerSafetyPassed": 6,
@@ -74,27 +74,28 @@
     },
     "C4": {
       "total": 8,
-      "passed": 6,
-      "passRate": 0.75,
+      "passed": 5,
+      "passRate": 0.625,
       "failedQuestionIds": [
+        "C4-02",
         "C4-05",
         "C4-06"
       ]
     },
     "C5": {
       "total": 8,
-      "passed": 6,
-      "passRate": 0.75,
+      "passed": 7,
+      "passRate": 0.875,
       "failedQuestionIds": [
-        "C5-02",
         "C5-03"
       ]
     },
     "C6": {
       "total": 8,
-      "passed": 6,
-      "passRate": 0.75,
+      "passed": 5,
+      "passRate": 0.625,
       "failedQuestionIds": [
+        "C6-02",
         "C6-03",
         "C6-05"
       ]
@@ -128,16 +129,18 @@
       "C3-02",
       "C3-03",
       "C3-08",
+      "C4-02",
       "C4-05",
       "C4-06",
-      "C5-02",
       "C5-03",
+      "C6-02",
       "C6-03",
       "C6-05"
     ],
     "generationBoundaryRiskQuestionIds": [
       "C2-07",
       "C3-08",
+      "C4-02",
       "C4-05",
       "C4-06",
       "C6-05"
@@ -157,29 +160,36 @@
     ]
   },
   "comparisonToBaseline": {
-    "baselineId": "rag-culture-bm25-baseline-v1",
-    "baselinePassed": 28,
-    "currentPassed": 39,
-    "passedDelta": 11,
-    "baselinePassRate": 0.5185,
-    "currentPassRate": 0.7222,
-    "passRateDelta": 0.2037,
+    "baselineId": "rag-culture-current-evaluation",
+    "baselinePassed": 39,
+    "currentPassed": 38,
+    "passedDelta": -1,
+    "baselinePassRate": 0.7222,
+    "currentPassRate": 0.7037,
+    "passRateDelta": -0.0185,
     "newlyPassedQuestionIds": [
-      "C1-08",
-      "C1-12",
-      "C1-13",
-      "C2-04",
-      "C2-08",
-      "C4-03",
-      "C4-04",
-      "C4-08",
-      "C5-08",
-      "C6-04",
-      "C6-08"
+      "C5-02"
     ],
-    "regressedQuestionIds": []
+    "regressedQuestionIds": [
+      "C4-02",
+      "C6-02"
+    ]
   },
-  "experimentDecision": null,
+  "experimentDecision": {
+    "recommendedForProduction": false,
+    "adoptionGate": "综合通过题数必须提高、不得有退步题，且隔离、终局意图和无答案安全均不得下降。",
+    "controlPassed": 39,
+    "experimentPassed": 38,
+    "newlyPassedQuestionIds": [
+      "C5-02"
+    ],
+    "regressedQuestionIds": [
+      "C4-02",
+      "C6-02"
+    ],
+    "controlIsolationPassed": 51,
+    "experimentIsolationPassed": 50
+  },
   "results": [
     {
       "id": "C1-01",
@@ -215,41 +225,41 @@
         "insufficientReason": null,
         "retrievedChunkIds": [
           "jiemian-freedom-love-rousseau-origin",
-          "xinhua-6a-quality-before-scale",
           "book-learn-pdl-ch2-influence",
-          "xinhua-culture-love-five-levels",
-          "xinhua-yonghui-replication-boundary"
+          "book-learn-pdl-ch3-humanistic-management",
+          "xinhua-6a-quality-before-scale",
+          "jiemian-handbook-and-institutions"
         ],
         "retrieved": [
           {
             "chunkId": "jiemian-freedom-love-rousseau-origin",
             "chunkTitle": "媒体整理的“自由·爱”形成时间线",
             "sourceTitle": "界面新闻：自由·爱理念形成线索与《幸福生命手册》等公开叙述",
-            "score": 14.023271
-          },
-          {
-            "chunkId": "xinhua-6a-quality-before-scale",
-            "chunkTitle": "质量优先于规模的文化解释",
-            "sourceTitle": "新华社千笔楼：卖东西的胖东来，咋卖成了“6A级景区”？",
-            "score": 12.804054
+            "score": 12.149107
           },
           {
             "chunkId": "book-learn-pdl-ch2-influence",
             "chunkTitle": "第二章议题：灯一样的企业与影响力（书中叙述）",
             "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 10.482739
+            "score": 10.527241
           },
           {
-            "chunkId": "xinhua-culture-love-five-levels",
-            "chunkTitle": "作者把“爱”解释为自己、家人、员工、顾客和社会",
-            "sourceTitle": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
-            "score": 9.832544
+            "chunkId": "book-learn-pdl-ch3-humanistic-management",
+            "chunkTitle": "第三章议题：人性化管理与员工（书中讨论）",
+            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
+            "score": 10.476386
           },
           {
-            "chunkId": "xinhua-yonghui-replication-boundary",
-            "chunkTitle": "可见动作不等于复制文化内核",
-            "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
-            "score": 9.743262
+            "chunkId": "xinhua-6a-quality-before-scale",
+            "chunkTitle": "质量优先于规模的文化解释",
+            "sourceTitle": "新华社千笔楼：卖东西的胖东来，咋卖成了“6A级景区”？",
+            "score": 9.540075
+          },
+          {
+            "chunkId": "jiemian-handbook-and-institutions",
+            "chunkTitle": "《幸福生命手册》与价值观的制度化载体",
+            "sourceTitle": "界面新闻：自由·爱理念形成线索与《幸福生命手册》等公开叙述",
+            "score": 6.64036
           }
         ]
       },
@@ -302,8 +312,8 @@
         "insufficientReason": null,
         "retrievedChunkIds": [
           "book-learn-pdl-ch3-humanistic-management",
-          "xinhua-rest-to-service-mechanism",
           "book-learn-pdl-toc-and-structure",
+          "xinhua-rest-to-service-mechanism",
           "weiqu-award-cultural-meaning-boundary",
           "weiqu-award-yudonglai-purpose"
         ],
@@ -312,31 +322,31 @@
             "chunkId": "book-learn-pdl-ch3-humanistic-management",
             "chunkTitle": "第三章议题：人性化管理与员工（书中讨论）",
             "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 17.118872
-          },
-          {
-            "chunkId": "xinhua-rest-to-service-mechanism",
-            "chunkTitle": "报道把员工休息状态与服务状态联系起来",
-            "sourceTitle": "新华社民营经济观察：胖东来员工之家与工作生活边界",
-            "score": 8.835228
+            "score": 16.482689
           },
           {
             "chunkId": "book-learn-pdl-toc-and-structure",
             "chunkTitle": "公开目录与全书结构概览",
             "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 8.791281
+            "score": 9.159242
+          },
+          {
+            "chunkId": "xinhua-rest-to-service-mechanism",
+            "chunkTitle": "报道把员工休息状态与服务状态联系起来",
+            "sourceTitle": "新华社民营经济观察：胖东来员工之家与工作生活边界",
+            "score": 8.578547
           },
           {
             "chunkId": "weiqu-award-cultural-meaning-boundary",
             "chunkTitle": "委屈奖表达组织支持，但不能预判个案结果",
             "sourceTitle": "媒体记录：胖东来「委屈奖」企业回应与于东来说明",
-            "score": 8.651975
+            "score": 7.983226
           },
           {
             "chunkId": "weiqu-award-yudonglai-purpose",
             "chunkTitle": "于东来把闭店休息与幸福生活联系起来",
             "sourceTitle": "媒体记录：胖东来「委屈奖」企业回应与于东来说明",
-            "score": 6.66351
+            "score": 7.636786
           }
         ]
       },
@@ -389,39 +399,39 @@
           "tsinghua-employee-customer-practices",
           "xinhua-work-life-boundaries",
           "xinhua-6a-service-and-employee-practices",
-          "xinhua-rest-to-service-mechanism",
-          "red-underwear-judgment-outcome"
+          "red-underwear-judgment-outcome",
+          "xinhua-rest-to-service-mechanism"
         ],
         "retrieved": [
           {
             "chunkId": "tsinghua-employee-customer-practices",
             "chunkTitle": "员工价值共创：物质支持、精神尊重与能力培养",
             "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
-            "score": 18.012145
+            "score": 17.063457
           },
           {
             "chunkId": "xinhua-work-life-boundaries",
             "chunkTitle": "闭店休息、下班不联系与不开心假",
             "sourceTitle": "新华社民营经济观察：胖东来员工之家与工作生活边界",
-            "score": 12.008787
+            "score": 12.788324
           },
           {
             "chunkId": "xinhua-6a-service-and-employee-practices",
             "chunkTitle": "报道列举的顾客服务与员工安排",
             "sourceTitle": "新华社千笔楼：卖东西的胖东来，咋卖成了“6A级景区”？",
-            "score": 10.708268
-          },
-          {
-            "chunkId": "xinhua-rest-to-service-mechanism",
-            "chunkTitle": "报道把员工休息状态与服务状态联系起来",
-            "sourceTitle": "新华社民营经济观察：胖东来员工之家与工作生活边界",
-            "score": 6.016135
+            "score": 9.987154
           },
           {
             "chunkId": "red-underwear-judgment-outcome",
             "chunkTitle": "一审判决要求道歉并赔偿 40 万元",
             "sourceTitle": "红内裤案一审判决公开报道：赔偿 40 万并道歉",
-            "score": 5.867604
+            "score": 6.14319
+          },
+          {
+            "chunkId": "xinhua-rest-to-service-mechanism",
+            "chunkTitle": "报道把员工休息状态与服务状态联系起来",
+            "sourceTitle": "新华社民营经济观察：胖东来员工之家与工作生活边界",
+            "score": 5.104118
           }
         ]
       },
@@ -483,31 +493,31 @@
             "chunkId": "weiqu-award-cultural-meaning-boundary",
             "chunkTitle": "委屈奖表达组织支持，但不能预判个案结果",
             "sourceTitle": "媒体记录：胖东来「委屈奖」企业回应与于东来说明",
-            "score": 11.057211
+            "score": 11.263226
           },
           {
             "chunkId": "weiqu-award-office-response",
             "chunkTitle": "2023 年办公室回应确认“委屈奖”存在及金额范围",
             "sourceTitle": "媒体记录：胖东来「委屈奖」企业回应与于东来说明",
-            "score": 10.909574
+            "score": 10.888751
           },
           {
             "chunkId": "xinhua-culture-distribution-operations",
             "chunkTitle": "文化、分配与运营相互咬合的“三飞轮”分析",
             "sourceTitle": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
-            "score": 9.688321
+            "score": 9.232394
           },
           {
             "chunkId": "tsinghua-employee-customer-practices",
             "chunkTitle": "员工价值共创：物质支持、精神尊重与能力培养",
             "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
-            "score": 9.600659
+            "score": 8.861116
           },
           {
             "chunkId": "jiemian-handbook-and-institutions",
             "chunkTitle": "《幸福生命手册》与价值观的制度化载体",
             "sourceTitle": "界面新闻：自由·爱理念形成线索与《幸福生命手册》等公开叙述",
-            "score": 7.944392
+            "score": 8.18071
           }
         ]
       },
@@ -564,13 +574,13 @@
             "chunkId": "xinhua-yonghui-employee-community",
             "chunkTitle": "员工培养、工作环境与社区互动",
             "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
-            "score": 8.584795
+            "score": 8.464318
           },
           {
             "chunkId": "weiqu-award-work-rest-data",
             "chunkTitle": "报道中的工时、闭店和年假安排有 2023 年时点边界",
             "sourceTitle": "媒体记录：胖东来「委屈奖」企业回应与于东来说明",
-            "score": 6.379712
+            "score": 7.545831
           }
         ]
       },
@@ -620,42 +630,42 @@
         "queryText": "工资高、福利好就能叫‘自由与爱’了吗？",
         "insufficientReason": null,
         "retrievedChunkIds": [
-          "tsinghua-supply-chain-competitor-value",
-          "yudonglai-red-underwear-track-boundary",
-          "xinhua-culture-love-five-levels",
-          "xinhua-yonghui-replication-boundary",
-          "xinhua-6a-quality-before-scale"
+          "book-learn-pdl-surface-vs-culture",
+          "book-learn-pdl-limits-of-copying",
+          "interview-people-employees-and-replication",
+          "recruitment-batch-boundary",
+          "book-learn-pdl-ch3-humanistic-management"
         ],
         "retrieved": [
           {
-            "chunkId": "tsinghua-supply-chain-competitor-value",
-            "chunkTitle": "供应链与同行价值共创：公平合作和知识分享",
-            "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
-            "score": 8.611489
+            "chunkId": "book-learn-pdl-surface-vs-culture",
+            "chunkTitle": "学表面与学文化的区分（书中核心问题意识）",
+            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
+            "score": 8.201554
           },
           {
-            "chunkId": "yudonglai-red-underwear-track-boundary",
-            "chunkTitle": "文化价值表态不能代替事件事实和最终裁判",
-            "sourceTitle": "媒体转述：于东来就红内裤追责谈「要有理性」",
-            "score": 8.265074
+            "chunkId": "book-learn-pdl-limits-of-copying",
+            "chunkTitle": "简单照搬的局限与情境差异（书中议题）",
+            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
+            "score": 8.11729
           },
           {
-            "chunkId": "xinhua-culture-love-five-levels",
-            "chunkTitle": "作者把“爱”解释为自己、家人、员工、顾客和社会",
-            "sourceTitle": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
-            "score": 7.983582
+            "chunkId": "interview-people-employees-and-replication",
+            "chunkTitle": "访谈：重视人、员工顾客循环与不可照搬",
+            "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
+            "score": 7.565561
           },
           {
-            "chunkId": "xinhua-yonghui-replication-boundary",
-            "chunkTitle": "可见动作不等于复制文化内核",
-            "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
-            "score": 7.908167
+            "chunkId": "recruitment-batch-boundary",
+            "chunkTitle": "政府网站刊载不等于为全部招聘规则背书",
+            "sourceTitle": "郑州市市场监管局网站：新乡三胖招聘中的文化与生活考量",
+            "score": 7.28002
           },
           {
-            "chunkId": "xinhua-6a-quality-before-scale",
-            "chunkTitle": "质量优先于规模的文化解释",
-            "sourceTitle": "新华社千笔楼：卖东西的胖东来，咋卖成了“6A级景区”？",
-            "score": 7.710474
+            "chunkId": "book-learn-pdl-ch3-humanistic-management",
+            "chunkTitle": "第三章议题：人性化管理与员工（书中讨论）",
+            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
+            "score": 7.132907
           }
         ]
       },
@@ -705,42 +715,42 @@
         "queryText": "尊重员工自由，会不会导致大家都不守规矩？",
         "insufficientReason": null,
         "retrievedChunkIds": [
-          "xinhua-rest-to-service-mechanism",
           "recruitment-special-groups",
+          "xinhua-rest-to-service-mechanism",
           "interview-people-employees-and-replication",
           "tsinghua-employee-customer-practices",
-          "tsinghua-freedom-love-definition"
+          "red-underwear-judgment-reasoning"
         ],
         "retrieved": [
-          {
-            "chunkId": "xinhua-rest-to-service-mechanism",
-            "chunkTitle": "报道把员工休息状态与服务状态联系起来",
-            "sourceTitle": "新华社民营经济观察：胖东来员工之家与工作生活边界",
-            "score": 8.939004
-          },
           {
             "chunkId": "recruitment-special-groups",
             "chunkTitle": "退伍边防军人与刑释人员专项投递通道",
             "sourceTitle": "郑州市市场监管局网站：新乡三胖招聘中的文化与生活考量",
-            "score": 8.066559
+            "score": 9.164458
+          },
+          {
+            "chunkId": "xinhua-rest-to-service-mechanism",
+            "chunkTitle": "报道把员工休息状态与服务状态联系起来",
+            "sourceTitle": "新华社民营经济观察：胖东来员工之家与工作生活边界",
+            "score": 8.398264
           },
           {
             "chunkId": "interview-people-employees-and-replication",
             "chunkTitle": "访谈：重视人、员工顾客循环与不可照搬",
             "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
-            "score": 7.663763
+            "score": 7.619286
           },
           {
             "chunkId": "tsinghua-employee-customer-practices",
             "chunkTitle": "员工价值共创：物质支持、精神尊重与能力培养",
             "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
-            "score": 6.471155
+            "score": 5.027477
           },
           {
-            "chunkId": "tsinghua-freedom-love-definition",
-            "chunkTitle": "案例作者对“自由·爱”的利益相关者解释",
-            "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
-            "score": 6.239531
+            "chunkId": "red-underwear-judgment-reasoning",
+            "chunkTitle": "判决针对具体未核实表达，不否定依法维权",
+            "sourceTitle": "红内裤案一审判决公开报道：赔偿 40 万并道歉",
+            "score": 4.650535
           }
         ]
       },
@@ -846,31 +856,31 @@
             "chunkId": "recruitment-culture-screening",
             "chunkTitle": "特定招聘批次设置文化答题和面试提问",
             "sourceTitle": "郑州市市场监管局网站：新乡三胖招聘中的文化与生活考量",
-            "score": 23.072813
+            "score": 23.379005
           },
           {
             "chunkId": "recruitment-special-groups",
             "chunkTitle": "退伍边防军人与刑释人员专项投递通道",
             "sourceTitle": "郑州市市场监管局网站：新乡三胖招聘中的文化与生活考量",
-            "score": 10.44744
+            "score": 10.327701
           },
           {
             "chunkId": "xinhua-culture-distribution-operations",
             "chunkTitle": "文化、分配与运营相互咬合的“三飞轮”分析",
             "sourceTitle": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
-            "score": 10.330782
+            "score": 9.756601
           },
           {
             "chunkId": "recruitment-data-retention",
             "chunkTitle": "该批招聘公开的简历信息保留安排",
             "sourceTitle": "郑州市市场监管局网站：新乡三胖招聘中的文化与生活考量",
-            "score": 6.569157
+            "score": 6.664698
           },
           {
             "chunkId": "recruitment-batch-boundary",
             "chunkTitle": "政府网站刊载不等于为全部招聘规则背书",
             "sourceTitle": "郑州市市场监管局网站：新乡三胖招聘中的文化与生活考量",
-            "score": 6.235269
+            "score": 6.322002
           }
         ]
       },
@@ -920,41 +930,41 @@
         "insufficientReason": null,
         "retrievedChunkIds": [
           "recruitment-local-life-rationale",
+          "recruitment-special-groups",
           "xinhua-employee-home-facilities",
           "xinhua-rest-to-service-mechanism",
-          "recruitment-special-groups",
-          "recruitment-batch-boundary"
+          "interview-people-employees-and-replication"
         ],
         "retrieved": [
           {
             "chunkId": "recruitment-local-life-rationale",
             "chunkTitle": "公告把本地就业与家庭生活联系起来",
             "sourceTitle": "郑州市市场监管局网站：新乡三胖招聘中的文化与生活考量",
-            "score": 15.709757
-          },
-          {
-            "chunkId": "xinhua-employee-home-facilities",
-            "chunkTitle": "新华社记者实地看到的员工之家",
-            "sourceTitle": "新华社民营经济观察：胖东来员工之家与工作生活边界",
-            "score": 11.250602
-          },
-          {
-            "chunkId": "xinhua-rest-to-service-mechanism",
-            "chunkTitle": "报道把员工休息状态与服务状态联系起来",
-            "sourceTitle": "新华社民营经济观察：胖东来员工之家与工作生活边界",
-            "score": 10.621925
+            "score": 15.086329
           },
           {
             "chunkId": "recruitment-special-groups",
             "chunkTitle": "退伍边防军人与刑释人员专项投递通道",
             "sourceTitle": "郑州市市场监管局网站：新乡三胖招聘中的文化与生活考量",
-            "score": 10.306425
+            "score": 10.324793
           },
           {
-            "chunkId": "recruitment-batch-boundary",
-            "chunkTitle": "政府网站刊载不等于为全部招聘规则背书",
-            "sourceTitle": "郑州市市场监管局网站：新乡三胖招聘中的文化与生活考量",
-            "score": 8.654049
+            "chunkId": "xinhua-employee-home-facilities",
+            "chunkTitle": "新华社记者实地看到的员工之家",
+            "sourceTitle": "新华社民营经济观察：胖东来员工之家与工作生活边界",
+            "score": 9.506278
+          },
+          {
+            "chunkId": "xinhua-rest-to-service-mechanism",
+            "chunkTitle": "报道把员工休息状态与服务状态联系起来",
+            "sourceTitle": "新华社民营经济观察：胖东来员工之家与工作生活边界",
+            "score": 8.989515
+          },
+          {
+            "chunkId": "interview-people-employees-and-replication",
+            "chunkTitle": "访谈：重视人、员工顾客循环与不可照搬",
+            "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
+            "score": 7.748612
           }
         ]
       },
@@ -1005,41 +1015,41 @@
         "insufficientReason": null,
         "retrievedChunkIds": [
           "cnfin-night-shift-reality",
-          "tsinghua-customer-value-creation",
           "company-profile-footprint-business-and-employment",
+          "tsinghua-customer-value-creation",
           "interview-trust-returns-and-complaints",
-          "xinhua-employee-home-facilities"
+          "xinhua-work-life-boundaries"
         ],
         "retrieved": [
           {
             "chunkId": "cnfin-night-shift-reality",
             "chunkTitle": "不同业态存在夜班、轮班和较晚下班场景",
             "sourceTitle": "新华财经飞书案例：夜班报平安与文化工具化",
-            "score": 39.012927
-          },
-          {
-            "chunkId": "tsinghua-customer-value-creation",
-            "chunkTitle": "顾客价值共创：品质、透明、便民与售后",
-            "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
-            "score": 13.794948
+            "score": 38.004071
           },
           {
             "chunkId": "company-profile-footprint-business-and-employment",
             "chunkTitle": "官网公开的区域、业态、配套与用工规模",
             "sourceTitle": "胖东来简介",
-            "score": 12.988218
+            "score": 14.014565
+          },
+          {
+            "chunkId": "tsinghua-customer-value-creation",
+            "chunkTitle": "顾客价值共创：品质、透明、便民与售后",
+            "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
+            "score": 13.69004
           },
           {
             "chunkId": "interview-trust-returns-and-complaints",
             "chunkTitle": "访谈：诚信、退换货、投诉奖与民生商品",
             "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
-            "score": 11.696297
+            "score": 11.688265
           },
           {
-            "chunkId": "xinhua-employee-home-facilities",
-            "chunkTitle": "新华社记者实地看到的员工之家",
+            "chunkId": "xinhua-work-life-boundaries",
+            "chunkTitle": "闭店休息、下班不联系与不开心假",
             "sourceTitle": "新华社民营经济观察：胖东来员工之家与工作生活边界",
-            "score": 10.954135
+            "score": 10.846133
           }
         ]
       },
@@ -1369,42 +1379,42 @@
         "queryText": "胖东来为什么愿意让一线员工直接处理顾客问题？",
         "insufficientReason": null,
         "retrievedChunkIds": [
-          "interview-frontline-trust-responsibility-and-society",
-          "xinhua-yonghui-employee-community",
+          "xinhua-culture-distribution-operations",
+          "interview-trust-returns-and-complaints",
           "red-underwear-early-apology",
           "book-learn-pdl-time-lag-and-crosscheck",
-          "book-learn-pdl-flywheel-logic"
+          "interview-frontline-trust-responsibility-and-society"
         ],
         "retrieved": [
           {
-            "chunkId": "interview-frontline-trust-responsibility-and-society",
-            "chunkTitle": "访谈：一线授权、责任与社会角色",
-            "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
-            "score": 12.7402
+            "chunkId": "xinhua-culture-distribution-operations",
+            "chunkTitle": "文化、分配与运营相互咬合的“三飞轮”分析",
+            "sourceTitle": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
+            "score": 10.630139
           },
           {
-            "chunkId": "xinhua-yonghui-employee-community",
-            "chunkTitle": "员工培养、工作环境与社区互动",
-            "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
-            "score": 10.569124
+            "chunkId": "interview-trust-returns-and-complaints",
+            "chunkTitle": "访谈：诚信、退换货、投诉奖与民生商品",
+            "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
+            "score": 8.681197
           },
           {
             "chunkId": "red-underwear-early-apology",
             "chunkTitle": "2 月 6 日：承认客诉处理问题并致歉（企业公开）",
             "sourceTitle": "胖东来就红色内裤争议的早期公开回应（下架、调查组与致歉）",
-            "score": 9.571048
+            "score": 8.443105
           },
           {
             "chunkId": "book-learn-pdl-time-lag-and-crosscheck",
             "chunkTitle": "时效提醒：与现行资料交叉验证",
             "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 8.370443
+            "score": 8.177739
           },
           {
-            "chunkId": "book-learn-pdl-flywheel-logic",
-            "chunkTitle": "员工—顾客—经营闭环（书中常被讨论的逻辑）",
-            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 8.153408
+            "chunkId": "interview-frontline-trust-responsibility-and-society",
+            "chunkTitle": "访谈：一线授权、责任与社会角色",
+            "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
+            "score": 7.905663
           }
         ]
       },
@@ -1455,26 +1465,40 @@
         "retrievedChunkIds": [
           "weiqu-award-yudonglai-purpose",
           "xinhua-culture-distribution-operations",
-          "book-learn-pdl-how-to-learn-method"
+          "book-learn-pdl-ch2-influence",
+          "book-learn-pdl-toc-and-structure",
+          "book-learn-pdl-time-lag-and-crosscheck"
         ],
         "retrieved": [
           {
             "chunkId": "weiqu-award-yudonglai-purpose",
             "chunkTitle": "于东来把闭店休息与幸福生活联系起来",
             "sourceTitle": "媒体记录：胖东来「委屈奖」企业回应与于东来说明",
-            "score": 9.53101
+            "score": 10.437492
           },
           {
             "chunkId": "xinhua-culture-distribution-operations",
             "chunkTitle": "文化、分配与运营相互咬合的“三飞轮”分析",
             "sourceTitle": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
-            "score": 8.656125
+            "score": 8.517677
           },
           {
-            "chunkId": "book-learn-pdl-how-to-learn-method",
-            "chunkTitle": "怎么学：可操作的学习提醒（书中取向摘要）",
+            "chunkId": "book-learn-pdl-ch2-influence",
+            "chunkTitle": "第二章议题：灯一样的企业与影响力（书中叙述）",
             "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 5.829118
+            "score": 6.285966
+          },
+          {
+            "chunkId": "book-learn-pdl-toc-and-structure",
+            "chunkTitle": "公开目录与全书结构概览",
+            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
+            "score": 5.559846
+          },
+          {
+            "chunkId": "book-learn-pdl-time-lag-and-crosscheck",
+            "chunkTitle": "时效提醒：与现行资料交叉验证",
+            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
+            "score": 5.128911
           }
         ]
       },
@@ -1533,31 +1557,31 @@
             "chunkId": "interview-trust-returns-and-complaints",
             "chunkTitle": "访谈：诚信、退换货、投诉奖与民生商品",
             "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
-            "score": 12.019692
+            "score": 12.8376
           },
           {
             "chunkId": "xinhua-culture-love-five-levels",
             "chunkTitle": "作者把“爱”解释为自己、家人、员工、顾客和社会",
             "sourceTitle": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
-            "score": 10.428357
+            "score": 9.706798
           },
           {
             "chunkId": "tsinghua-customer-value-creation",
             "chunkTitle": "顾客价值共创：品质、透明、便民与售后",
             "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
-            "score": 9.787407
+            "score": 9.15501
           },
           {
             "chunkId": "weiqu-award-yudonglai-purpose",
             "chunkTitle": "于东来把闭店休息与幸福生活联系起来",
             "sourceTitle": "媒体记录：胖东来「委屈奖」企业回应与于东来说明",
-            "score": 6.773277
+            "score": 6.512591
           },
           {
             "chunkId": "xinhua-yonghui-learn-pdl-practices",
             "chunkTitle": "永辉鲁谷店调改称深度学习胖东来",
             "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
-            "score": 5.942191
+            "score": 5.390557
           }
         ]
       },
@@ -1607,42 +1631,42 @@
         "queryText": "胖东来强调信任一线员工，让他们及时处理问题。\n那要是他判断错了呢？",
         "insufficientReason": null,
         "retrievedChunkIds": [
-          "interview-frontline-trust-responsibility-and-society",
           "red-underwear-early-apology",
-          "xinhua-yonghui-employee-community",
+          "book-learn-pdl-surface-vs-culture",
+          "interview-frontline-trust-responsibility-and-society",
           "book-learn-pdl-limits-of-copying",
-          "interview-criticism-traffic-and-correction"
+          "culture-system-purpose-and-principles"
         ],
         "retrieved": [
-          {
-            "chunkId": "interview-frontline-trust-responsibility-and-society",
-            "chunkTitle": "访谈：一线授权、责任与社会角色",
-            "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
-            "score": 15.556603
-          },
           {
             "chunkId": "red-underwear-early-apology",
             "chunkTitle": "2 月 6 日：承认客诉处理问题并致歉（企业公开）",
             "sourceTitle": "胖东来就红色内裤争议的早期公开回应（下架、调查组与致歉）",
-            "score": 13.848359
+            "score": 13.48165
           },
           {
-            "chunkId": "xinhua-yonghui-employee-community",
-            "chunkTitle": "员工培养、工作环境与社区互动",
-            "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
-            "score": 9.450993
+            "chunkId": "book-learn-pdl-surface-vs-culture",
+            "chunkTitle": "学表面与学文化的区分（书中核心问题意识）",
+            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
+            "score": 10.462844
+          },
+          {
+            "chunkId": "interview-frontline-trust-responsibility-and-society",
+            "chunkTitle": "访谈：一线授权、责任与社会角色",
+            "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
+            "score": 9.580536
           },
           {
             "chunkId": "book-learn-pdl-limits-of-copying",
             "chunkTitle": "简单照搬的局限与情境差异（书中议题）",
             "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 8.649337
+            "score": 9.430266
           },
           {
-            "chunkId": "interview-criticism-traffic-and-correction",
-            "chunkTitle": "访谈：网络流量、合理质疑与企业维权",
-            "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
-            "score": 8.541119
+            "chunkId": "culture-system-purpose-and-principles",
+            "chunkTitle": "制度总则把文化理想转写为组织目标",
+            "sourceTitle": "行业媒体转载：《胖东来企业文化制度》与考评奖励方案（2022）",
+            "score": 7.236212
           }
         ]
       },
@@ -1690,14 +1714,42 @@
         "queryText": "一线授全和责任是怎么配套的？",
         "insufficientReason": null,
         "retrievedChunkIds": [
-          "interview-frontline-trust-responsibility-and-society"
+          "interview-frontline-trust-responsibility-and-society",
+          "book-learn-pdl-limits-of-copying",
+          "book-learn-pdl-surface-vs-culture",
+          "book-learn-pdl-ch3-humanistic-management",
+          "xinhua-culture-distribution-operations"
         ],
         "retrieved": [
           {
             "chunkId": "interview-frontline-trust-responsibility-and-society",
             "chunkTitle": "访谈：一线授权、责任与社会角色",
             "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
-            "score": 20.950062
+            "score": 11.529008
+          },
+          {
+            "chunkId": "book-learn-pdl-limits-of-copying",
+            "chunkTitle": "简单照搬的局限与情境差异（书中议题）",
+            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
+            "score": 8.382595
+          },
+          {
+            "chunkId": "book-learn-pdl-surface-vs-culture",
+            "chunkTitle": "学表面与学文化的区分（书中核心问题意识）",
+            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
+            "score": 6.094158
+          },
+          {
+            "chunkId": "book-learn-pdl-ch3-humanistic-management",
+            "chunkTitle": "第三章议题：人性化管理与员工（书中讨论）",
+            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
+            "score": 5.469139
+          },
+          {
+            "chunkId": "xinhua-culture-distribution-operations",
+            "chunkTitle": "文化、分配与运营相互咬合的“三飞轮”分析",
+            "sourceTitle": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
+            "score": 5.22625
           }
         ]
       },
@@ -1746,42 +1798,42 @@
         "queryText": "所谓‘信任员工’会不会只是老板个人魅力，老板退休就没了？",
         "insufficientReason": null,
         "retrievedChunkIds": [
-          "xinhua-culture-love-five-levels",
           "jiemian-retirement-culture-question",
-          "culture-system-voluntary-assessment",
-          "book-learn-pdl-flywheel-logic",
-          "interview-frontline-trust-responsibility-and-society"
+          "recruitment-special-groups",
+          "xinhua-culture-love-five-levels",
+          "jiemian-culture-boundary-and-disputes",
+          "culture-system-voluntary-assessment"
         ],
         "retrieved": [
-          {
-            "chunkId": "xinhua-culture-love-five-levels",
-            "chunkTitle": "作者把“爱”解释为自己、家人、员工、顾客和社会",
-            "sourceTitle": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
-            "score": 7.801262
-          },
           {
             "chunkId": "jiemian-retirement-culture-question",
             "chunkTitle": "报道以创始人退休检验文化能否组织化",
             "sourceTitle": "界面新闻：自由·爱理念形成线索与《幸福生命手册》等公开叙述",
-            "score": 6.699404
+            "score": 10.364195
+          },
+          {
+            "chunkId": "recruitment-special-groups",
+            "chunkTitle": "退伍边防军人与刑释人员专项投递通道",
+            "sourceTitle": "郑州市市场监管局网站：新乡三胖招聘中的文化与生活考量",
+            "score": 6.552993
+          },
+          {
+            "chunkId": "xinhua-culture-love-five-levels",
+            "chunkTitle": "作者把“爱”解释为自己、家人、员工、顾客和社会",
+            "sourceTitle": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
+            "score": 6.196402
+          },
+          {
+            "chunkId": "jiemian-culture-boundary-and-disputes",
+            "chunkTitle": "“以爱管理”仍需接受规则与个人边界检验",
+            "sourceTitle": "界面新闻：自由·爱理念形成线索与《幸福生命手册》等公开叙述",
+            "score": 6.170055
           },
           {
             "chunkId": "culture-system-voluntary-assessment",
             "chunkTitle": "自愿申请考评不等于制度完全无约束",
             "sourceTitle": "行业媒体转载：《胖东来企业文化制度》与考评奖励方案（2022）",
-            "score": 5.111606
-          },
-          {
-            "chunkId": "book-learn-pdl-flywheel-logic",
-            "chunkTitle": "员工—顾客—经营闭环（书中常被讨论的逻辑）",
-            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 4.606989
-          },
-          {
-            "chunkId": "interview-frontline-trust-responsibility-and-society",
-            "chunkTitle": "访谈：一线授权、责任与社会角色",
-            "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
-            "score": 4.586372
+            "score": 5.693571
           }
         ]
       },
@@ -1831,42 +1883,42 @@
         "queryText": "永辉照着胖东来改店，能证明这套授权文化可以直接复制吗？",
         "insufficientReason": null,
         "retrievedChunkIds": [
-          "xinhua-yonghui-performance-boundary",
           "xinhua-yonghui-replication-boundary",
-          "xinhua-yonghui-learn-pdl-practices",
+          "xinhua-yonghui-performance-boundary",
           "book-learn-pdl-surface-vs-culture",
-          "book-learn-pdl-ch2-influence"
+          "book-learn-pdl-ch2-influence",
+          "xinhua-yonghui-learn-pdl-practices"
         ],
         "retrieved": [
-          {
-            "chunkId": "xinhua-yonghui-performance-boundary",
-            "chunkTitle": "调改经营成效属于报道时点说法",
-            "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
-            "score": 14.672388
-          },
           {
             "chunkId": "xinhua-yonghui-replication-boundary",
             "chunkTitle": "可见动作不等于复制文化内核",
             "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
-            "score": 13.977573
+            "score": 14.971695
           },
           {
-            "chunkId": "xinhua-yonghui-learn-pdl-practices",
-            "chunkTitle": "永辉鲁谷店调改称深度学习胖东来",
+            "chunkId": "xinhua-yonghui-performance-boundary",
+            "chunkTitle": "调改经营成效属于报道时点说法",
             "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
-            "score": 12.813173
+            "score": 14.716191
           },
           {
             "chunkId": "book-learn-pdl-surface-vs-culture",
             "chunkTitle": "学表面与学文化的区分（书中核心问题意识）",
             "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 12.254662
+            "score": 12.866456
           },
           {
             "chunkId": "book-learn-pdl-ch2-influence",
             "chunkTitle": "第二章议题：灯一样的企业与影响力（书中叙述）",
             "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 10.447724
+            "score": 10.499069
+          },
+          {
+            "chunkId": "xinhua-yonghui-learn-pdl-practices",
+            "chunkTitle": "永辉鲁谷店调改称深度学习胖东来",
+            "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
+            "score": 9.998085
           }
         ]
       },
@@ -1962,42 +2014,42 @@
         "queryText": "胖东来的真诚服务具体有哪些做法？",
         "insufficientReason": null,
         "retrievedChunkIds": [
-          "jiemian-cinema-service-meaning",
-          "xinhua-yonghui-employee-community",
           "book-learn-pdl-ch4-customer",
-          "xinhua-work-life-boundaries",
-          "tsinghua-customer-value-creation"
+          "xinhua-yonghui-employee-community",
+          "tsinghua-customer-value-creation",
+          "xinhua-employee-practices-boundary",
+          "xinhua-work-life-boundaries"
         ],
         "retrieved": [
           {
-            "chunkId": "jiemian-cinema-service-meaning",
-            "chunkTitle": "媒体把半价退票理解为为顾客体验承担成本",
-            "sourceTitle": "界面新闻转述：胖东来影城「电影难看可退一半票价」等规定",
-            "score": 11.67754
+            "chunkId": "book-learn-pdl-ch4-customer",
+            "chunkTitle": "第四章议题：让顾客满意（书中讨论）",
+            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
+            "score": 10.871722
           },
           {
             "chunkId": "xinhua-yonghui-employee-community",
             "chunkTitle": "员工培养、工作环境与社区互动",
             "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
-            "score": 8.364876
-          },
-          {
-            "chunkId": "book-learn-pdl-ch4-customer",
-            "chunkTitle": "第四章议题：让顾客满意（书中讨论）",
-            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 7.966353
-          },
-          {
-            "chunkId": "xinhua-work-life-boundaries",
-            "chunkTitle": "闭店休息、下班不联系与不开心假",
-            "sourceTitle": "新华社民营经济观察：胖东来员工之家与工作生活边界",
-            "score": 7.595966
+            "score": 10.236016
           },
           {
             "chunkId": "tsinghua-customer-value-creation",
             "chunkTitle": "顾客价值共创：品质、透明、便民与售后",
             "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
-            "score": 7.181827
+            "score": 10.205298
+          },
+          {
+            "chunkId": "xinhua-employee-practices-boundary",
+            "chunkTitle": "员工做法的时点、范围与证据边界",
+            "sourceTitle": "新华社民营经济观察：胖东来员工之家与工作生活边界",
+            "score": 7.904067
+          },
+          {
+            "chunkId": "xinhua-work-life-boundaries",
+            "chunkTitle": "闭店休息、下班不联系与不开心假",
+            "sourceTitle": "新华社民营经济观察：胖东来员工之家与工作生活边界",
+            "score": 7.535082
           }
         ]
       },
@@ -2047,41 +2099,41 @@
         "insufficientReason": null,
         "retrievedChunkIds": [
           "book-learn-pdl-flywheel-logic",
-          "xinhua-rest-to-service-mechanism",
-          "yudonglai-red-underwear-track-boundary",
           "book-learn-pdl-toc-and-structure",
-          "book-learn-pdl-time-lag-and-crosscheck"
+          "yudonglai-red-underwear-track-boundary",
+          "xinhua-culture-distribution-operations",
+          "xinhua-rest-to-service-mechanism"
         ],
         "retrieved": [
           {
             "chunkId": "book-learn-pdl-flywheel-logic",
             "chunkTitle": "员工—顾客—经营闭环（书中常被讨论的逻辑）",
             "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 7.01525
-          },
-          {
-            "chunkId": "xinhua-rest-to-service-mechanism",
-            "chunkTitle": "报道把员工休息状态与服务状态联系起来",
-            "sourceTitle": "新华社民营经济观察：胖东来员工之家与工作生活边界",
-            "score": 5.921601
-          },
-          {
-            "chunkId": "yudonglai-red-underwear-track-boundary",
-            "chunkTitle": "文化价值表态不能代替事件事实和最终裁判",
-            "sourceTitle": "媒体转述：于东来就红内裤追责谈「要有理性」",
-            "score": 5.908704
+            "score": 6.214047
           },
           {
             "chunkId": "book-learn-pdl-toc-and-structure",
             "chunkTitle": "公开目录与全书结构概览",
             "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 5.731183
+            "score": 5.976207
           },
           {
-            "chunkId": "book-learn-pdl-time-lag-and-crosscheck",
-            "chunkTitle": "时效提醒：与现行资料交叉验证",
-            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 4.471623
+            "chunkId": "yudonglai-red-underwear-track-boundary",
+            "chunkTitle": "文化价值表态不能代替事件事实和最终裁判",
+            "sourceTitle": "媒体转述：于东来就红内裤追责谈「要有理性」",
+            "score": 5.814752
+          },
+          {
+            "chunkId": "xinhua-culture-distribution-operations",
+            "chunkTitle": "文化、分配与运营相互咬合的“三飞轮”分析",
+            "sourceTitle": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
+            "score": 5.663951
+          },
+          {
+            "chunkId": "xinhua-rest-to-service-mechanism",
+            "chunkTitle": "报道把员工休息状态与服务状态联系起来",
+            "sourceTitle": "新华社民营经济观察：胖东来员工之家与工作生活边界",
+            "score": 5.326394
           }
         ]
       },
@@ -2180,40 +2232,40 @@
         "retrievedChunkIds": [
           "interview-trust-returns-and-complaints",
           "book-learn-pdl-toc-and-structure",
-          "book-learn-pdl-ch3-humanistic-management",
           "culture-system-behavior-and-reward",
-          "culture-system-document-and-period"
+          "book-learn-pdl-ch3-humanistic-management",
+          "culture-system-life-modules"
         ],
         "retrieved": [
           {
             "chunkId": "interview-trust-returns-and-complaints",
             "chunkTitle": "访谈：诚信、退换货、投诉奖与民生商品",
             "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
-            "score": 8.60447
+            "score": 8.70397
           },
           {
             "chunkId": "book-learn-pdl-toc-and-structure",
             "chunkTitle": "公开目录与全书结构概览",
             "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 7.359064
-          },
-          {
-            "chunkId": "book-learn-pdl-ch3-humanistic-management",
-            "chunkTitle": "第三章议题：人性化管理与员工（书中讨论）",
-            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 5.406472
+            "score": 7.445743
           },
           {
             "chunkId": "culture-system-behavior-and-reward",
             "chunkTitle": "行为规范与全年奖励资格相联系",
             "sourceTitle": "行业媒体转载：《胖东来企业文化制度》与考评奖励方案（2022）",
-            "score": 5.227728
+            "score": 5.204543
           },
           {
-            "chunkId": "culture-system-document-and-period",
-            "chunkTitle": "2022 年转载文本的身份与时效边界",
+            "chunkId": "book-learn-pdl-ch3-humanistic-management",
+            "chunkTitle": "第三章议题：人性化管理与员工（书中讨论）",
+            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
+            "score": 5.173507
+          },
+          {
+            "chunkId": "culture-system-life-modules",
+            "chunkTitle": "生活准则包含七个模块及奖励比例",
             "sourceTitle": "行业媒体转载：《胖东来企业文化制度》与考评奖励方案（2022）",
-            "score": 5.078572
+            "score": 4.855376
           }
         ]
       },
@@ -2263,39 +2315,39 @@
           "interview-trust-returns-and-complaints",
           "tsinghua-customer-value-creation",
           "book-learn-pdl-toc-and-structure",
-          "red-underwear-early-apology",
-          "yudonglai-red-underwear-track-boundary"
+          "store-directory-hours",
+          "red-underwear-early-apology"
         ],
         "retrieved": [
           {
             "chunkId": "interview-trust-returns-and-complaints",
             "chunkTitle": "访谈：诚信、退换货、投诉奖与民生商品",
             "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
-            "score": 12.019692
+            "score": 12.8376
           },
           {
             "chunkId": "tsinghua-customer-value-creation",
             "chunkTitle": "顾客价值共创：品质、透明、便民与售后",
             "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
-            "score": 9.787407
+            "score": 9.15501
           },
           {
             "chunkId": "book-learn-pdl-toc-and-structure",
             "chunkTitle": "公开目录与全书结构概览",
             "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 8.372216
+            "score": 8.78927
+          },
+          {
+            "chunkId": "store-directory-hours",
+            "chunkTitle": "常规营业安排与周二闭店说明",
+            "sourceTitle": "胖东来各门店信息",
+            "score": 2.769113
           },
           {
             "chunkId": "red-underwear-early-apology",
             "chunkTitle": "2 月 6 日：承认客诉处理问题并致歉（企业公开）",
             "sourceTitle": "胖东来就红色内裤争议的早期公开回应（下架、调查组与致歉）",
-            "score": 3.052352
-          },
-          {
-            "chunkId": "yudonglai-red-underwear-track-boundary",
-            "chunkTitle": "文化价值表态不能代替事件事实和最终裁判",
-            "sourceTitle": "媒体转述：于东来就红内裤追责谈「要有理性」",
-            "score": 2.919289
+            "score": 2.684196
           }
         ]
       },
@@ -2355,31 +2407,31 @@
             "chunkId": "book-learn-pdl-ch4-customer",
             "chunkTitle": "第四章议题：让顾客满意（书中讨论）",
             "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 13.875143
+            "score": 13.574984
           },
           {
             "chunkId": "xinhua-6a-quality-before-scale",
             "chunkTitle": "质量优先于规模的文化解释",
             "sourceTitle": "新华社千笔楼：卖东西的胖东来，咋卖成了“6A级景区”？",
-            "score": 10.659978
+            "score": 10.142177
           },
           {
             "chunkId": "book-learn-pdl-how-to-learn-method",
             "chunkTitle": "怎么学：可操作的学习提醒（书中取向摘要）",
             "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 8.23605
+            "score": 8.142039
           },
           {
             "chunkId": "interview-criticism-traffic-and-correction",
             "chunkTitle": "访谈：网络流量、合理质疑与企业维权",
             "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
-            "score": 5.606547
+            "score": 6.095566
           },
           {
             "chunkId": "xinhua-culture-love-five-levels",
             "chunkTitle": "作者把“爱”解释为自己、家人、员工、顾客和社会",
             "sourceTitle": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
-            "score": 5.202694
+            "score": 4.897579
           }
         ]
       },
@@ -2524,6 +2576,7 @@
           "interview-trust-returns-and-complaints",
           "weiqu-award-office-response",
           "jiemian-cinema-rule-boundary",
+          "jiemian-freedom-love-rousseau-origin",
           "red-underwear-report-customer-and-legal"
         ],
         "retrieved": [
@@ -2531,25 +2584,31 @@
             "chunkId": "interview-trust-returns-and-complaints",
             "chunkTitle": "访谈：诚信、退换货、投诉奖与民生商品",
             "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
-            "score": 9.676792
+            "score": 9.923337
           },
           {
             "chunkId": "weiqu-award-office-response",
             "chunkTitle": "2023 年办公室回应确认“委屈奖”存在及金额范围",
             "sourceTitle": "媒体记录：胖东来「委屈奖」企业回应与于东来说明",
-            "score": 7.854926
+            "score": 7.601476
           },
           {
             "chunkId": "jiemian-cinema-rule-boundary",
             "chunkTitle": "半价退票规定的现行和个案边界",
             "sourceTitle": "界面新闻转述：胖东来影城「电影难看可退一半票价」等规定",
-            "score": 5.571194
+            "score": 5.426
+          },
+          {
+            "chunkId": "jiemian-freedom-love-rousseau-origin",
+            "chunkTitle": "媒体整理的“自由·爱”形成时间线",
+            "sourceTitle": "界面新闻：自由·爱理念形成线索与《幸福生命手册》等公开叙述",
+            "score": 4.361763
           },
           {
             "chunkId": "red-underwear-report-customer-and-legal",
             "chunkTitle": "报告要点：对顾客措施与拟依法追责",
             "sourceTitle": "胖东来《关于“红色内裤掉色、过敏以及部门处理过程”的调查报告》要点",
-            "score": 4.447946
+            "score": 4.302168
           }
         ]
       },
@@ -2602,42 +2661,42 @@
         "queryText": "胖东来怎样理解商品品质、价格和供应商之间的关系？",
         "insufficientReason": null,
         "retrievedChunkIds": [
-          "interview-quality-suppliers-and-scale",
           "xinhua-yonghui-product-restructure",
           "tsinghua-supply-chain-competitor-value",
+          "interview-quality-suppliers-and-scale",
           "tsinghua-customer-value-creation",
-          "jiemian-culture-boundary-and-disputes"
+          "book-learn-pdl-ch4-customer"
         ],
         "retrieved": [
-          {
-            "chunkId": "interview-quality-suppliers-and-scale",
-            "chunkTitle": "访谈：品质、供应商、关店与经营节制",
-            "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
-            "score": 19.147501
-          },
           {
             "chunkId": "xinhua-yonghui-product-restructure",
             "chunkTitle": "永辉调改中的商品重构与质价比",
             "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
-            "score": 18.38823
+            "score": 34.217178
           },
           {
             "chunkId": "tsinghua-supply-chain-competitor-value",
             "chunkTitle": "供应链与同行价值共创：公平合作和知识分享",
             "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
-            "score": 17.875657
+            "score": 26.913279
+          },
+          {
+            "chunkId": "interview-quality-suppliers-and-scale",
+            "chunkTitle": "访谈：品质、供应商、关店与经营节制",
+            "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
+            "score": 26.132065
           },
           {
             "chunkId": "tsinghua-customer-value-creation",
             "chunkTitle": "顾客价值共创：品质、透明、便民与售后",
             "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
-            "score": 13.994998
+            "score": 18.440864
           },
           {
-            "chunkId": "jiemian-culture-boundary-and-disputes",
-            "chunkTitle": "“以爱管理”仍需接受规则与个人边界检验",
-            "sourceTitle": "界面新闻：自由·爱理念形成线索与《幸福生命手册》等公开叙述",
-            "score": 13.124871
+            "chunkId": "book-learn-pdl-ch4-customer",
+            "chunkTitle": "第四章议题：让顾客满意（书中讨论）",
+            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
+            "score": 14.729258
           }
         ]
       },
@@ -2687,35 +2746,42 @@
         "queryText": "东西卖得实惠，会不会只能靠牺牲质量或者压供应商？",
         "insufficientReason": null,
         "retrievedChunkIds": [
+          "xinhua-6a-quality-before-scale",
           "tsinghua-supply-chain-competitor-value",
           "interview-quality-suppliers-and-scale",
           "recruitment-special-groups",
-          "book-learn-pdl-ch4-customer"
+          "xinhua-yonghui-product-restructure"
         ],
         "retrieved": [
+          {
+            "chunkId": "xinhua-6a-quality-before-scale",
+            "chunkTitle": "质量优先于规模的文化解释",
+            "sourceTitle": "新华社千笔楼：卖东西的胖东来，咋卖成了“6A级景区”？",
+            "score": 8.566201
+          },
           {
             "chunkId": "tsinghua-supply-chain-competitor-value",
             "chunkTitle": "供应链与同行价值共创：公平合作和知识分享",
             "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
-            "score": 9.958207
+            "score": 7.997537
           },
           {
             "chunkId": "interview-quality-suppliers-and-scale",
             "chunkTitle": "访谈：品质、供应商、关店与经营节制",
             "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
-            "score": 9.166832
+            "score": 7.776256
           },
           {
             "chunkId": "recruitment-special-groups",
             "chunkTitle": "退伍边防军人与刑释人员专项投递通道",
             "sourceTitle": "郑州市市场监管局网站：新乡三胖招聘中的文化与生活考量",
-            "score": 7.860654
+            "score": 7.633039
           },
           {
-            "chunkId": "book-learn-pdl-ch4-customer",
-            "chunkTitle": "第四章议题：让顾客满意（书中讨论）",
-            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 5.224941
+            "chunkId": "xinhua-yonghui-product-restructure",
+            "chunkTitle": "永辉调改中的商品重构与质价比",
+            "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
+            "score": 6.074334
           }
         ]
       },
@@ -2723,15 +2789,18 @@
         "trackPass": true,
         "casePass": true,
         "positiveRecallPass": true,
-        "isolationPass": true,
+        "isolationPass": false,
         "finalityIntentPass": true,
         "noAnswerSafetyPass": true,
-        "retrievalPass": true,
-        "baselinePass": true
+        "retrievalPass": false,
+        "baselinePass": false
       },
-      "forbiddenHits": [],
+      "forbiddenHits": [
+        "xinhua-yonghui-product-restructure"
+      ],
       "failureTypes": [
-        "none"
+        "检索错误",
+        "生成越界风险"
       ]
     },
     {
@@ -2898,7 +2967,7 @@
             "chunkId": "recruitment-local-life-rationale",
             "chunkTitle": "公告把本地就业与家庭生活联系起来",
             "sourceTitle": "郑州市市场监管局网站：新乡三胖招聘中的文化与生活考量",
-            "score": 5.353335
+            "score": 5.356811
           }
         ]
       },
@@ -2949,39 +3018,39 @@
           "yudonglai-red-underwear-track-boundary",
           "red-underwear-report-testing-and-staff",
           "red-underwear-judgment-testing-loss-and-reach",
-          "xinhua-culture-love-five-levels",
-          "weiqu-award-cultural-meaning-boundary"
+          "weiqu-award-cultural-meaning-boundary",
+          "yudonglai-red-underwear-law-and-responsibility"
         ],
         "retrieved": [
           {
             "chunkId": "yudonglai-red-underwear-track-boundary",
             "chunkTitle": "文化价值表态不能代替事件事实和最终裁判",
             "sourceTitle": "媒体转述：于东来就红内裤追责谈「要有理性」",
-            "score": 7.407791
+            "score": 7.316089
           },
           {
             "chunkId": "red-underwear-report-testing-and-staff",
             "chunkTitle": "报告要点：送检合格表述与内部处理",
             "sourceTitle": "胖东来《关于“红色内裤掉色、过敏以及部门处理过程”的调查报告》要点",
-            "score": 6.804562
+            "score": 6.86622
           },
           {
             "chunkId": "red-underwear-judgment-testing-loss-and-reach",
             "chunkTitle": "送检支出与传播范围进入损失考量",
             "sourceTitle": "红内裤案一审判决公开报道：赔偿 40 万并道歉",
-            "score": 6.31436
-          },
-          {
-            "chunkId": "xinhua-culture-love-five-levels",
-            "chunkTitle": "作者把“爱”解释为自己、家人、员工、顾客和社会",
-            "sourceTitle": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
-            "score": 5.42194
+            "score": 6.243509
           },
           {
             "chunkId": "weiqu-award-cultural-meaning-boundary",
             "chunkTitle": "委屈奖表达组织支持，但不能预判个案结果",
             "sourceTitle": "媒体记录：胖东来「委屈奖」企业回应与于东来说明",
-            "score": 5.347128
+            "score": 5.751554
+          },
+          {
+            "chunkId": "yudonglai-red-underwear-law-and-responsibility",
+            "chunkTitle": "理性表态与依法追责并不矛盾",
+            "sourceTitle": "媒体转述：于东来就红内裤追责谈「要有理性」",
+            "score": 5.271989
           }
         ]
       },
@@ -3177,7 +3246,7 @@
             "chunkId": "interview-quality-suppliers-and-scale",
             "chunkTitle": "访谈：品质、供应商、关店与经营节制",
             "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
-            "score": 20.252491
+            "score": 20.427973
           }
         ]
       },
@@ -3229,49 +3298,56 @@
         "retrievedChunkIds": [
           "jiemian-freedom-love-rousseau-origin",
           "book-learn-pdl-flywheel-logic",
-          "book-learn-pdl-ch3-humanistic-management",
-          "interview-frontline-trust-responsibility-and-society"
+          "tsinghua-employee-customer-practices",
+          "tsinghua-replication-limits",
+          "book-learn-pdl-ch3-humanistic-management"
         ],
         "retrieved": [
           {
             "chunkId": "jiemian-freedom-love-rousseau-origin",
             "chunkTitle": "媒体整理的“自由·爱”形成时间线",
             "sourceTitle": "界面新闻：自由·爱理念形成线索与《幸福生命手册》等公开叙述",
-            "score": 5.791128
+            "score": 5.413642
           },
           {
             "chunkId": "book-learn-pdl-flywheel-logic",
             "chunkTitle": "员工—顾客—经营闭环（书中常被讨论的逻辑）",
             "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 5.24429
+            "score": 5.091533
+          },
+          {
+            "chunkId": "tsinghua-employee-customer-practices",
+            "chunkTitle": "员工价值共创：物质支持、精神尊重与能力培养",
+            "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
+            "score": 4.84295
+          },
+          {
+            "chunkId": "tsinghua-replication-limits",
+            "chunkTitle": "复制模式要理解价值分配和组织条件",
+            "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
+            "score": 3.849118
           },
           {
             "chunkId": "book-learn-pdl-ch3-humanistic-management",
             "chunkTitle": "第三章议题：人性化管理与员工（书中讨论）",
             "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 4.129825
-          },
-          {
-            "chunkId": "interview-frontline-trust-responsibility-and-society",
-            "chunkTitle": "访谈：一线授权、责任与社会角色",
-            "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
-            "score": 3.794275
+            "score": 3.747372
           }
         ]
       },
       "checks": {
         "trackPass": true,
         "casePass": true,
-        "positiveRecallPass": false,
+        "positiveRecallPass": true,
         "isolationPass": true,
         "finalityIntentPass": true,
         "noAnswerSafetyPass": true,
-        "retrievalPass": false,
-        "baselinePass": false
+        "retrievalPass": true,
+        "baselinePass": true
       },
       "forbiddenHits": [],
       "failureTypes": [
-        "检索错误"
+        "none"
       ]
     },
     {
@@ -3354,41 +3430,41 @@
         "insufficientReason": null,
         "retrievedChunkIds": [
           "interview-quality-suppliers-and-scale",
-          "xinhua-6a-quality-before-scale",
           "tsinghua-development-quality-first",
+          "xinhua-6a-quality-before-scale",
           "shen-culture-free-love-spirit",
-          "book-learn-pdl-surface-vs-culture"
+          "yudonglai-red-underwear-rationality"
         ],
         "retrieved": [
           {
             "chunkId": "interview-quality-suppliers-and-scale",
             "chunkTitle": "访谈：品质、供应商、关店与经营节制",
             "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
-            "score": 28.887562
-          },
-          {
-            "chunkId": "xinhua-6a-quality-before-scale",
-            "chunkTitle": "质量优先于规模的文化解释",
-            "sourceTitle": "新华社千笔楼：卖东西的胖东来，咋卖成了“6A级景区”？",
-            "score": 18.093459
+            "score": 29.248558
           },
           {
             "chunkId": "tsinghua-development-quality-first",
             "chunkTitle": "战略收缩与品质优先的阶段分析",
             "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
-            "score": 16.876631
+            "score": 17.300784
+          },
+          {
+            "chunkId": "xinhua-6a-quality-before-scale",
+            "chunkTitle": "质量优先于规模的文化解释",
+            "sourceTitle": "新华社千笔楼：卖东西的胖东来，咋卖成了“6A级景区”？",
+            "score": 16.245482
           },
           {
             "chunkId": "shen-culture-free-love-spirit",
             "chunkTitle": "管理层表述：自由精神、爱的精神与文化目标",
             "sourceTitle": "媒体记录：胖东来管理层谈文化理念与《幸福生命状态手册》",
-            "score": 12.167128
+            "score": 12.565213
           },
           {
-            "chunkId": "book-learn-pdl-surface-vs-culture",
-            "chunkTitle": "学表面与学文化的区分（书中核心问题意识）",
-            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 10.512714
+            "chunkId": "yudonglai-red-underwear-rationality",
+            "chunkTitle": "于东来谈理性、承担、友善与尊重（媒体转述）",
+            "sourceTitle": "媒体转述：于东来就红内裤追责谈「要有理性」",
+            "score": 8.664203
           }
         ]
       },
@@ -3437,42 +3513,42 @@
         "queryText": "不忙目扩张和‘自由与爱’有什么关系？",
         "insufficientReason": null,
         "retrievedChunkIds": [
+          "interview-quality-suppliers-and-scale",
+          "weiqu-award-yudonglai-purpose",
           "xinhua-culture-love-five-levels",
           "xinhua-yonghui-replication-boundary",
-          "weiqu-award-yudonglai-purpose",
-          "interview-quality-suppliers-and-scale",
-          "tsinghua-supply-chain-competitor-value"
+          "xinhua-6a-quality-before-scale"
         ],
         "retrieved": [
           {
-            "chunkId": "xinhua-culture-love-five-levels",
-            "chunkTitle": "作者把“爱”解释为自己、家人、员工、顾客和社会",
-            "sourceTitle": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
-            "score": 10.460303
-          },
-          {
-            "chunkId": "xinhua-yonghui-replication-boundary",
-            "chunkTitle": "可见动作不等于复制文化内核",
-            "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
-            "score": 10.350315
+            "chunkId": "interview-quality-suppliers-and-scale",
+            "chunkTitle": "访谈：品质、供应商、关店与经营节制",
+            "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
+            "score": 10.465696
           },
           {
             "chunkId": "weiqu-award-yudonglai-purpose",
             "chunkTitle": "于东来把闭店休息与幸福生活联系起来",
             "sourceTitle": "媒体记录：胖东来「委屈奖」企业回应与于东来说明",
-            "score": 9.766513
+            "score": 7.781449
           },
           {
-            "chunkId": "interview-quality-suppliers-and-scale",
-            "chunkTitle": "访谈：品质、供应商、关店与经营节制",
-            "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
-            "score": 9.479678
+            "chunkId": "xinhua-culture-love-five-levels",
+            "chunkTitle": "作者把“爱”解释为自己、家人、员工、顾客和社会",
+            "sourceTitle": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
+            "score": 6.580463
           },
           {
-            "chunkId": "tsinghua-supply-chain-competitor-value",
-            "chunkTitle": "供应链与同行价值共创：公平合作和知识分享",
-            "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
-            "score": 8.811908
+            "chunkId": "xinhua-yonghui-replication-boundary",
+            "chunkTitle": "可见动作不等于复制文化内核",
+            "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
+            "score": 6.145274
+          },
+          {
+            "chunkId": "xinhua-6a-quality-before-scale",
+            "chunkTitle": "质量优先于规模的文化解释",
+            "sourceTitle": "新华社千笔楼：卖东西的胖东来，咋卖成了“6A级景区”？",
+            "score": 5.982417
           }
         ]
       },
@@ -3522,20 +3598,27 @@
         "insufficientReason": null,
         "retrievedChunkIds": [
           "xinhua-6a-quality-before-scale",
-          "recruitment-special-groups"
+          "recruitment-special-groups",
+          "tsinghua-supply-chain-competitor-value"
         ],
         "retrieved": [
           {
             "chunkId": "xinhua-6a-quality-before-scale",
             "chunkTitle": "质量优先于规模的文化解释",
             "sourceTitle": "新华社千笔楼：卖东西的胖东来，咋卖成了“6A级景区”？",
-            "score": 11.778532
+            "score": 9.993297
           },
           {
             "chunkId": "recruitment-special-groups",
             "chunkTitle": "退伍边防军人与刑释人员专项投递通道",
             "sourceTitle": "郑州市市场监管局网站：新乡三胖招聘中的文化与生活考量",
-            "score": 9.053465
+            "score": 8.791311
+          },
+          {
+            "chunkId": "tsinghua-supply-chain-competitor-value",
+            "chunkTitle": "供应链与同行价值共创：公平合作和知识分享",
+            "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
+            "score": 4.795971
           }
         ]
       },
@@ -3588,39 +3671,39 @@
           "xinhua-yonghui-learn-pdl-practices",
           "tsinghua-replication-limits",
           "culture-system-document-and-period",
-          "xinhua-yonghui-replication-boundary",
-          "xinhua-yonghui-performance-boundary"
+          "xinhua-yonghui-performance-boundary",
+          "xinhua-6a-learning-and-reform"
         ],
         "retrieved": [
           {
             "chunkId": "xinhua-yonghui-learn-pdl-practices",
             "chunkTitle": "永辉鲁谷店调改称深度学习胖东来",
             "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
-            "score": 14.177662
+            "score": 13.961903
           },
           {
             "chunkId": "tsinghua-replication-limits",
             "chunkTitle": "复制模式要理解价值分配和组织条件",
             "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
-            "score": 11.539865
+            "score": 13.03327
           },
           {
             "chunkId": "culture-system-document-and-period",
             "chunkTitle": "2022 年转载文本的身份与时效边界",
             "sourceTitle": "行业媒体转载：《胖东来企业文化制度》与考评奖励方案（2022）",
-            "score": 6.631732
-          },
-          {
-            "chunkId": "xinhua-yonghui-replication-boundary",
-            "chunkTitle": "可见动作不等于复制文化内核",
-            "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
-            "score": 6.055992
+            "score": 6.73197
           },
           {
             "chunkId": "xinhua-yonghui-performance-boundary",
             "chunkTitle": "调改经营成效属于报道时点说法",
             "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
-            "score": 5.974405
+            "score": 5.994326
+          },
+          {
+            "chunkId": "xinhua-6a-learning-and-reform",
+            "chunkTitle": "学习胖东来不能只照搬表面动作",
+            "sourceTitle": "新华社千笔楼：卖东西的胖东来，咋卖成了“6A级景区”？",
+            "score": 5.987544
           }
         ]
       },
@@ -3716,42 +3799,42 @@
         "queryText": "一场客诉争议，能不能检验胖东来的‘自由与爱’？",
         "insufficientReason": null,
         "retrievedChunkIds": [
-          "yudonglai-red-underwear-track-boundary",
-          "xinhua-6a-quality-before-scale",
           "jiemian-culture-boundary-and-disputes",
-          "jiemian-freedom-love-rousseau-origin",
-          "xinhua-yonghui-replication-boundary"
+          "interview-criticism-traffic-and-correction",
+          "xinhua-6a-quality-before-scale",
+          "yudonglai-red-underwear-track-boundary",
+          "jiemian-freedom-love-rousseau-origin"
         ],
         "retrieved": [
           {
-            "chunkId": "yudonglai-red-underwear-track-boundary",
-            "chunkTitle": "文化价值表态不能代替事件事实和最终裁判",
-            "sourceTitle": "媒体转述：于东来就红内裤追责谈「要有理性」",
-            "score": 12.22218
+            "chunkId": "jiemian-culture-boundary-and-disputes",
+            "chunkTitle": "“以爱管理”仍需接受规则与个人边界检验",
+            "sourceTitle": "界面新闻：自由·爱理念形成线索与《幸福生命手册》等公开叙述",
+            "score": 13.030964
+          },
+          {
+            "chunkId": "interview-criticism-traffic-and-correction",
+            "chunkTitle": "访谈：网络流量、合理质疑与企业维权",
+            "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
+            "score": 9.35677
           },
           {
             "chunkId": "xinhua-6a-quality-before-scale",
             "chunkTitle": "质量优先于规模的文化解释",
             "sourceTitle": "新华社千笔楼：卖东西的胖东来，咋卖成了“6A级景区”？",
-            "score": 12.10223
+            "score": 9.272041
           },
           {
-            "chunkId": "jiemian-culture-boundary-and-disputes",
-            "chunkTitle": "“以爱管理”仍需接受规则与个人边界检验",
-            "sourceTitle": "界面新闻：自由·爱理念形成线索与《幸福生命手册》等公开叙述",
-            "score": 11.861339
+            "chunkId": "yudonglai-red-underwear-track-boundary",
+            "chunkTitle": "文化价值表态不能代替事件事实和最终裁判",
+            "sourceTitle": "媒体转述：于东来就红内裤追责谈「要有理性」",
+            "score": 9.260358
           },
           {
             "chunkId": "jiemian-freedom-love-rousseau-origin",
             "chunkTitle": "媒体整理的“自由·爱”形成时间线",
             "sourceTitle": "界面新闻：自由·爱理念形成线索与《幸福生命手册》等公开叙述",
-            "score": 10.606518
-          },
-          {
-            "chunkId": "xinhua-yonghui-replication-boundary",
-            "chunkTitle": "可见动作不等于复制文化内核",
-            "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
-            "score": 9.200977
+            "score": 8.046749
           }
         ]
       },
@@ -3802,8 +3885,8 @@
         "retrievedChunkIds": [
           "book-learn-pdl-surface-vs-culture",
           "jiemian-handbook-and-institutions",
-          "jiemian-culture-boundary-and-disputes",
           "book-learn-pdl-ch5-culture",
+          "tsinghua-customer-value-creation",
           "xinhua-culture-distribution-operations"
         ],
         "retrieved": [
@@ -3811,47 +3894,47 @@
             "chunkId": "book-learn-pdl-surface-vs-culture",
             "chunkTitle": "学表面与学文化的区分（书中核心问题意识）",
             "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 8.147297
+            "score": 8.600636
           },
           {
             "chunkId": "jiemian-handbook-and-institutions",
             "chunkTitle": "《幸福生命手册》与价值观的制度化载体",
             "sourceTitle": "界面新闻：自由·爱理念形成线索与《幸福生命手册》等公开叙述",
-            "score": 7.979423
-          },
-          {
-            "chunkId": "jiemian-culture-boundary-and-disputes",
-            "chunkTitle": "“以爱管理”仍需接受规则与个人边界检验",
-            "sourceTitle": "界面新闻：自由·爱理念形成线索与《幸福生命手册》等公开叙述",
-            "score": 7.75935
+            "score": 8.481023
           },
           {
             "chunkId": "book-learn-pdl-ch5-culture",
             "chunkTitle": "第五章议题：文化立企与道法术（书中讨论）",
             "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 7.379834
+            "score": 6.87128
+          },
+          {
+            "chunkId": "tsinghua-customer-value-creation",
+            "chunkTitle": "顾客价值共创：品质、透明、便民与售后",
+            "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
+            "score": 5.970475
           },
           {
             "chunkId": "xinhua-culture-distribution-operations",
             "chunkTitle": "文化、分配与运营相互咬合的“三飞轮”分析",
             "sourceTitle": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
-            "score": 6.401472
+            "score": 5.968277
           }
         ]
       },
       "checks": {
         "trackPass": true,
         "casePass": true,
-        "positiveRecallPass": true,
+        "positiveRecallPass": false,
         "isolationPass": true,
         "finalityIntentPass": true,
         "noAnswerSafetyPass": true,
-        "retrievalPass": true,
-        "baselinePass": true
+        "retrievalPass": false,
+        "baselinePass": false
       },
       "forbiddenHits": [],
       "failureTypes": [
-        "none"
+        "检索错误"
       ]
     },
     {
@@ -3887,27 +3970,27 @@
         "insufficientReason": null,
         "retrievedChunkIds": [
           "red-underwear-judgment-outcome",
-          "book-learn-pdl-ch1-growth",
-          "book-learn-pdl-toc-and-structure"
+          "book-learn-pdl-toc-and-structure",
+          "book-learn-pdl-ch1-growth"
         ],
         "retrieved": [
           {
             "chunkId": "red-underwear-judgment-outcome",
             "chunkTitle": "一审判决要求道歉并赔偿 40 万元",
             "sourceTitle": "红内裤案一审判决公开报道：赔偿 40 万并道歉",
-            "score": 4.926557
-          },
-          {
-            "chunkId": "book-learn-pdl-ch1-growth",
-            "chunkTitle": "第一章议题：成长脉络与区域竞争（书中叙述）",
-            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 3.676731
+            "score": 5.065133
           },
           {
             "chunkId": "book-learn-pdl-toc-and-structure",
             "chunkTitle": "公开目录与全书结构概览",
             "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 3.567883
+            "score": 3.800286
+          },
+          {
+            "chunkId": "book-learn-pdl-ch1-growth",
+            "chunkTitle": "第一章议题：成长脉络与区域竞争（书中叙述）",
+            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
+            "score": 3.739102
           }
         ]
       },
@@ -4055,8 +4138,8 @@
         "insufficientReason": null,
         "retrievedChunkIds": [
           "yudonglai-red-underwear-track-boundary",
-          "book-learn-pdl-ch5-culture",
           "red-underwear-lawsuit-filing",
+          "book-learn-pdl-ch5-culture",
           "red-underwear-judgment-handling-timeline",
           "red-underwear-report-testing-and-staff"
         ],
@@ -4065,31 +4148,31 @@
             "chunkId": "yudonglai-red-underwear-track-boundary",
             "chunkTitle": "文化价值表态不能代替事件事实和最终裁判",
             "sourceTitle": "媒体转述：于东来就红内裤追责谈「要有理性」",
-            "score": 6.933142
-          },
-          {
-            "chunkId": "book-learn-pdl-ch5-culture",
-            "chunkTitle": "第五章议题：文化立企与道法术（书中讨论）",
-            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 6.243432
+            "score": 7.293018
           },
           {
             "chunkId": "red-underwear-lawsuit-filing",
             "chunkTitle": "起诉公示：名誉权与追责金额表态",
             "sourceTitle": "胖东来关于「红内裤」事件博主名誉权诉讼的处理公示",
-            "score": 5.912683
+            "score": 6.235058
+          },
+          {
+            "chunkId": "book-learn-pdl-ch5-culture",
+            "chunkTitle": "第五章议题：文化立企与道法术（书中讨论）",
+            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
+            "score": 6.196888
           },
           {
             "chunkId": "red-underwear-judgment-handling-timeline",
             "chunkTitle": "法院公告所述投诉、就医与下架时间线",
             "sourceTitle": "红内裤案一审判决公开报道：赔偿 40 万并道歉",
-            "score": 5.749406
+            "score": 6.077732
           },
           {
             "chunkId": "red-underwear-report-testing-and-staff",
             "chunkTitle": "报告要点：送检合格表述与内部处理",
             "sourceTitle": "胖东来《关于“红色内裤掉色、过敏以及部门处理过程”的调查报告》要点",
-            "score": 5.475612
+            "score": 5.837314
           }
         ]
       },
@@ -4141,42 +4224,42 @@
         "queryText": "既然胖东来也会发生争议，‘自由与爱’是不是就是假的？",
         "insufficientReason": null,
         "retrievedChunkIds": [
-          "yudonglai-red-underwear-track-boundary",
           "jiemian-culture-boundary-and-disputes",
+          "yudonglai-red-underwear-track-boundary",
+          "weiqu-award-yudonglai-purpose",
           "jiemian-freedom-love-rousseau-origin",
-          "xinhua-yonghui-replication-boundary",
-          "xinhua-culture-love-five-levels"
+          "xinhua-yonghui-replication-boundary"
         ],
         "retrieved": [
-          {
-            "chunkId": "yudonglai-red-underwear-track-boundary",
-            "chunkTitle": "文化价值表态不能代替事件事实和最终裁判",
-            "sourceTitle": "媒体转述：于东来就红内裤追责谈「要有理性」",
-            "score": 11.166826
-          },
           {
             "chunkId": "jiemian-culture-boundary-and-disputes",
             "chunkTitle": "“以爱管理”仍需接受规则与个人边界检验",
             "sourceTitle": "界面新闻：自由·爱理念形成线索与《幸福生命手册》等公开叙述",
-            "score": 9.989711
+            "score": 9.68451
+          },
+          {
+            "chunkId": "yudonglai-red-underwear-track-boundary",
+            "chunkTitle": "文化价值表态不能代替事件事实和最终裁判",
+            "sourceTitle": "媒体转述：于东来就红内裤追责谈「要有理性」",
+            "score": 8.174305
+          },
+          {
+            "chunkId": "weiqu-award-yudonglai-purpose",
+            "chunkTitle": "于东来把闭店休息与幸福生活联系起来",
+            "sourceTitle": "媒体记录：胖东来「委屈奖」企业回应与于东来说明",
+            "score": 6.231259
           },
           {
             "chunkId": "jiemian-freedom-love-rousseau-origin",
             "chunkTitle": "媒体整理的“自由·爱”形成时间线",
             "sourceTitle": "界面新闻：自由·爱理念形成线索与《幸福生命手册》等公开叙述",
-            "score": 8.692662
+            "score": 6.132634
           },
           {
             "chunkId": "xinhua-yonghui-replication-boundary",
             "chunkTitle": "可见动作不等于复制文化内核",
             "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
-            "score": 8.535495
-          },
-          {
-            "chunkId": "xinhua-culture-love-five-levels",
-            "chunkTitle": "作者把“爱”解释为自己、家人、员工、顾客和社会",
-            "sourceTitle": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
-            "score": 8.453667
+            "score": 5.731456
           }
         ]
       },
