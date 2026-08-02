@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "id": "rag-culture-bm25-theme-rerank-experiment",
-  "evaluatedAt": "2026-08-02T08:23:21.991Z",
+  "evaluatedAt": "2026-08-02T08:43:31.726Z",
   "evaluationSet": "rag-culture-questions-v1",
   "knowledgeSnapshot": {
     "sources": 30,
@@ -12,6 +12,7 @@
     "algorithm": "BM25 over continuous Chinese bigrams",
     "cultureAnnotationSearch": "disabled",
     "cultureThemeRerank": "rule-based query theme detection; original BM25 candidates only; non-case culture-v1 match multiplier 0.05",
+    "queryRewriteV1": "disabled",
     "topK": 5,
     "caseRouting": "substring match against reviewed case aliases",
     "queryRewrite": "rules for contextual follow-ups, finality intent and known evidence gaps",
@@ -161,7 +162,7 @@
     ]
   },
   "comparisonToBaseline": {
-    "baselineId": "rag-culture-current-evaluation",
+    "baselineId": "rag-culture-pre-query-rewrite-control",
     "baselinePassed": 39,
     "currentPassed": 39,
     "passedDelta": 0,
@@ -181,6 +182,7 @@
     "controlIsolationPassed": 51,
     "experimentIsolationPassed": 51
   },
+  "queryRewriteSummary": null,
   "results": [
     {
       "id": "C1-01",
@@ -212,7 +214,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "胖东来的‘自由与爱’具体怎么体现在员工身上？",
         "queryText": "胖东来的‘自由与爱’具体怎么体现在员工身上？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C1"
         ],
@@ -312,7 +318,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "大家说胖东来把员工当‘完整的人’，这不是一句漂亮话吗？",
         "queryText": "大家说胖东来把员工当‘完整的人’，这不是一句漂亮话吗？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C1"
         ],
@@ -410,7 +420,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "网上说员工不开心就能直接不上班，真有这么随意吗？",
         "queryText": "网上说员工不开心就能直接不上班，真有这么随意吗？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C1"
         ],
@@ -509,7 +523,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": true,
+        "originalQueryText": "那是不是员工只要觉得委屈就一定能拿到钱？",
         "queryText": "胖东来的委屈奖是什么？\n那是不是员工只要觉得委屈就一定能拿到钱？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C1"
         ],
@@ -606,7 +624,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "胖东来员公的休息和年加到底怎么样？",
         "queryText": "胖东来员公的休息和年加到底怎么样？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C1"
         ],
@@ -677,7 +699,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "工资高、福利好就能叫‘自由与爱’了吗？",
         "queryText": "工资高、福利好就能叫‘自由与爱’了吗？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C1"
         ],
@@ -775,7 +801,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "尊重员工自由，会不会导致大家都不守规矩？",
         "queryText": "尊重员工自由，会不会导致大家都不守规矩？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C1"
         ],
@@ -870,7 +900,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "请给我一份胖东来 2026 年每个岗位最新工资和奖金表。",
         "queryText": "请给我一份胖东来 2026 年每个岗位最新工资和奖金表。",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C1"
         ],
@@ -921,7 +955,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "胖东来招聘为什么还要做企业文化答题？",
         "queryText": "胖东来招聘为什么还要做企业文化答题？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C1"
         ],
@@ -1018,7 +1056,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "招聘只限河南人，也能叫尊重员工生活吗？",
         "queryText": "招聘只限河南人，也能叫尊重员工生活吗？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C1"
         ],
@@ -1116,7 +1158,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "不是说胖东来员工都早下班吗，电影夜场和中央厨房的人怎么办？",
         "queryText": "不是说胖东来员工都早下班吗，电影夜场和中央厨房的人怎么办？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C1"
         ],
@@ -1216,7 +1262,11 @@
         "caseId": "employee-noodle-tasting-discipline-2024-02",
         "asksForFinality": true,
         "contextApplied": false,
+        "originalQueryText": "尝面员工后来还是被开除了吗？这件事怎么检验尊重员工？",
         "queryText": "尝面员工后来还是被开除了吗？这件事怎么检验尊重员工？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C1"
         ],
@@ -1352,7 +1402,11 @@
         "caseId": "employee-bride-price-boundary-2024-11",
         "asksForFinality": true,
         "contextApplied": false,
+        "originalQueryText": "胖东来不让员工收彩礼已经是正式制度了吗？这不侵犯自由吗？",
         "queryText": "胖东来不让员工收彩礼已经是正式制度了吗？这不侵犯自由吗？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C1"
         ],
@@ -1452,7 +1506,11 @@
         "caseId": "employee-salary-policy-rumor-2026-06",
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "胖东来真的大幅降薪了吗，企业后来怎么解释的？",
         "queryText": "胖东来真的大幅降薪了吗，企业后来怎么解释的？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C1"
         ],
@@ -1539,7 +1597,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "胖东来为什么愿意让一线员工直接处理顾客问题？",
         "queryText": "胖东来为什么愿意让一线员工直接处理顾客问题？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C1",
           "C2"
@@ -1637,7 +1699,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "胖东来的管理者敢放权，背后靠什么兜底？",
         "queryText": "胖东来的管理者敢放权，背后靠什么兜底？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C2"
         ],
@@ -1715,7 +1781,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "普通店员真能自己做主给顾客退换货吗？",
         "queryText": "普通店员真能自己做主给顾客退换货吗？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C2",
           "C3"
@@ -1814,7 +1884,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": true,
+        "originalQueryText": "那要是他判断错了呢？",
         "queryText": "胖东来强调信任一线员工，让他们及时处理问题。\n那要是他判断错了呢？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C1",
           "C2"
@@ -1911,7 +1985,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "一线授全和责任是怎么配套的？",
         "queryText": "一线授全和责任是怎么配套的？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C2"
         ],
@@ -1972,7 +2050,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "所谓‘信任员工’会不会只是老板个人魅力，老板退休就没了？",
         "queryText": "所谓‘信任员工’会不会只是老板个人魅力，老板退休就没了？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C1",
           "C2"
@@ -2071,7 +2153,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "永辉照着胖东来改店，能证明这套授权文化可以直接复制吗？",
         "queryText": "永辉照着胖东来改店，能证明这套授权文化可以直接复制吗？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C2"
         ],
@@ -2168,7 +2254,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "胖东来每个岗位分别能自主赔付多少元？请列出权限表。",
         "queryText": "胖东来每个岗位分别能自主赔付多少元？请列出权限表。",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C1",
           "C2"
@@ -2219,7 +2309,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "胖东来的真诚服务具体有哪些做法？",
         "queryText": "胖东来的真诚服务具体有哪些做法？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C3"
         ],
@@ -2316,7 +2410,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "把顾客放在心上，是不是顾客说什么都得照办？",
         "queryText": "把顾客放在心上，是不是顾客说什么都得照办？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C3"
         ],
@@ -2413,7 +2511,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "买回去不喜欢，胖东来是不是啥都给退？",
         "queryText": "买回去不喜欢，胖东来是不是啥都给退？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C3"
         ],
@@ -2464,7 +2566,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "为什么企业还要反过来给投诉的人奖励？",
         "queryText": "为什么企业还要反过来给投诉的人奖励？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C3"
         ],
@@ -2559,7 +2665,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "顾客投述奖和退换货说明了什么？",
         "queryText": "顾客投述奖和退换货说明了什么？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C3"
         ],
@@ -2656,7 +2766,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "那些夸张的服务细节，会不会只是用来吸引流量的表演？",
         "queryText": "那些夸张的服务细节，会不会只是用来吸引流量的表演？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C3"
         ],
@@ -2755,7 +2869,11 @@
         "caseId": "tea-fly-feedback-2026-01",
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "茶叶里有苍蝇的反馈中，客服处理能怎么看出它的服务文化？",
         "queryText": "茶叶里有苍蝇的反馈中，客服处理能怎么看出它的服务文化？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C3"
         ],
@@ -2861,7 +2979,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "现在投诉胖东来一次，顾客固定能拿多少奖励？",
         "queryText": "现在投诉胖东来一次，顾客固定能拿多少奖励？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C3"
         ],
@@ -2953,7 +3075,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "胖东来怎样理解商品品质、价格和供应商之间的关系？",
         "queryText": "胖东来怎样理解商品品质、价格和供应商之间的关系？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C4"
         ],
@@ -3051,7 +3177,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "东西卖得实惠，会不会只能靠牺牲质量或者压供应商？",
         "queryText": "东西卖得实惠，会不会只能靠牺牲质量或者压供应商？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C4"
         ],
@@ -3137,7 +3267,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "自有品牌真出了质量问题，他们内部到底怎么查？",
         "queryText": "自有品牌真出了质量问题，他们内部到底怎么查？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C4"
         ],
@@ -3191,7 +3325,11 @@
         "caseId": "egg-canthaxanthin-feedback-2026-04",
         "asksForFinality": true,
         "contextApplied": true,
+        "originalQueryText": "那是不是监管部门已经证明这些鸡蛋肯定没问题？",
         "queryText": "那是不是监管部门已经证明这些鸡蛋肯定没问题？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C4"
         ],
@@ -3280,7 +3418,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "鲜鸡旦角黄诉那件事，胖东来公开怎么说的？",
         "queryText": "鲜鸡旦角黄诉那件事，胖东来公开怎么说的？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C4"
         ],
@@ -3340,7 +3482,11 @@
         "caseId": null,
         "asksForFinality": true,
         "contextApplied": false,
+        "originalQueryText": "企业自己送检、自己公布结果，这能算最终结论吗？",
         "queryText": "企业自己送检、自己公布结果，这能算最终结论吗？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C4",
           "C6"
@@ -3442,7 +3588,11 @@
         "caseId": "tea-fly-feedback-2026-01",
         "asksForFinality": true,
         "contextApplied": false,
+        "originalQueryText": "茶叶苍蝇反馈最后查清了吗？别拿鸡蛋检测来回答。",
         "queryText": "茶叶苍蝇反馈最后查清了吗？别拿鸡蛋检测来回答。",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C4",
           "C6"
@@ -3547,7 +3697,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "请列出胖东来当前所有供应商的审核分数和淘汰名单。",
         "queryText": "请列出胖东来当前所有供应商的审核分数和淘汰名单。",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C4"
         ],
@@ -3597,7 +3751,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "胖东来为什么一直不盲目扩张？",
         "queryText": "胖东来为什么一直不盲目扩张？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C5"
         ],
@@ -3659,7 +3817,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "开店开得慢，到底是克制，还是其实没有全国经营能力？",
         "queryText": "开店开得慢，到底是克制，还是其实没有全国经营能力？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C5"
         ],
@@ -3747,7 +3909,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "这么火，为啥不赶紧开遍全国多挣钱？",
         "queryText": "这么火，为啥不赶紧开遍全国多挣钱？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C5"
         ],
@@ -3799,7 +3965,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": true,
+        "originalQueryText": "那它主动关店又该怎么理解？",
         "queryText": "企业公开表述强调品质优先，不追求盲目扩张。\n那它主动关店又该怎么理解？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C4",
           "C5"
@@ -3897,7 +4067,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "不忙目扩张和‘自由与爱’有什么关系？",
         "queryText": "不忙目扩张和‘自由与爱’有什么关系？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C5"
         ],
@@ -3994,7 +4168,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "‘不追求规模’会不会只是一个很好听的营销人设？",
         "queryText": "‘不追求规模’会不会只是一个很好听的营销人设？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C5"
         ],
@@ -4065,7 +4243,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "永辉学胖东来后生意变好，是否证明这套模式谁学都能成功？",
         "queryText": "永辉学胖东来后生意变好，是否证明这套模式谁学都能成功？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C5"
         ],
@@ -4160,7 +4342,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "胖东来今年净利润率多少，未来三年准备开多少家店？",
         "queryText": "胖东来今年净利润率多少，未来三年准备开多少家店？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C5"
         ],
@@ -4212,7 +4398,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "一场客诉争议，能不能检验胖东来的‘自由与爱’？",
         "queryText": "一场客诉争议，能不能检验胖东来的‘自由与爱’？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C6"
         ],
@@ -4309,7 +4499,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "企业面对负面反馈时的做法，和它平时说的价值观有什么关系？",
         "queryText": "企业面对负面反馈时的做法，和它平时说的价值观有什么关系？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C6"
         ],
@@ -4408,7 +4602,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "出了事发个道歉就算有爱了？",
         "queryText": "出了事发个道歉就算有爱了？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C6"
         ],
@@ -4492,7 +4690,11 @@
         "caseId": "tea-fly-feedback-2026-01",
         "asksForFinality": true,
         "contextApplied": true,
+        "originalQueryText": "后来到底查清没有？",
         "queryText": "后来到底查清没有？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C4",
           "C6"
@@ -4601,7 +4803,11 @@
         "caseId": null,
         "asksForFinality": true,
         "contextApplied": false,
+        "originalQueryText": "红内库掉色那件事最后怎么判的？",
         "queryText": "红内库掉色那件事最后怎么判的？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C6"
         ],
@@ -4701,7 +4907,11 @@
         "caseId": null,
         "asksForFinality": false,
         "contextApplied": false,
+        "originalQueryText": "既然胖东来也会发生争议，‘自由与爱’是不是就是假的？",
         "queryText": "既然胖东来也会发生争议，‘自由与爱’是不是就是假的？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C6"
         ],
@@ -4799,7 +5009,11 @@
         "caseId": "tea-fly-feedback-2026-01",
         "asksForFinality": true,
         "contextApplied": false,
+        "originalQueryText": "红内裤案法院有一审结果，那能不能说明茶叶苍蝇反馈也已经有最终结论？",
         "queryText": "红内裤案法院有一审结果，那能不能说明茶叶苍蝇反馈也已经有最终结论？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C4",
           "C6"
@@ -4905,7 +5119,11 @@
         "caseId": null,
         "asksForFinality": true,
         "contextApplied": false,
+        "originalQueryText": "胖东来历史上所有投诉最后分别是谁对谁错？",
         "queryText": "胖东来历史上所有投诉最后分别是谁对谁错？",
+        "queryCorrections": [],
+        "queryExpansions": [],
+        "queryRewriteApplied": false,
         "detectedCultureThemes": [
           "C6"
         ],

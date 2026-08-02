@@ -45,6 +45,7 @@ test("keeps store content and chat contract outside their UI and Worker entrypoi
   assert.match(worker, /from "\.\.\/shared\/chat"/);
   assert.match(worker, /knowledge\/compiled\/knowledge-base\.json/);
   assert.match(worker, /createKnowledgeRetriever/);
+  assert.match(worker, /queryRewriteV1: true/);
   assert.match(worker, /previousUserQuestions/);
   assert.doesNotMatch(worker, /const BM25_K1/);
   assert.doesNotMatch(worker, /\.\.\/\.\.\/knowledge-base\.json/);
@@ -232,31 +233,33 @@ test("records a reproducible BM25 baseline against the culture question set", as
   assert.ok(baseline.results.every((result) => typeof result.checks.baselinePass === "boolean"));
   assert.match(report, /当前 BM25 基线通过 28\/54 题/);
   assert.equal(current.comparisonToBaseline.baselinePassed, 28);
-  assert.equal(current.summary.passed, 39);
+  assert.equal(current.summary.passed, 50);
   assert.equal(current.summary.finalityIntentPassed, 54);
   assert.equal(current.summary.noAnswerSafetyPassed, 6);
   assert.deepEqual(current.comparisonToBaseline.regressedQuestionIds, []);
-  assert.match(currentReport, /当前检索通过 39\/54 题/);
+  assert.match(current.retrievalConfiguration.queryRewriteV1, /reviewed fixed typo corrections/);
+  assert.match(currentReport, /当前检索通过 50\/54 题/);
   assert.match(packageJson.scripts["rag:evaluate"], /evaluate-rag-baseline\.mjs/);
   assert.match(packageJson.scripts["rag:evaluate"], /--current/);
+  assert.match(packageJson.scripts["rag:evaluate"], /--adopt-query-rewrite-v1/);
 });
 
 test("keeps the culture-v1 BM25 expansion experimental when it regresses", async () => {
-  const [current, experiment, report, packageJson] = await Promise.all([
-    readFile(new URL("../../evaluation/rag-culture-current-evaluation.json", import.meta.url), "utf8").then(JSON.parse),
+  const [control, experiment, report, packageJson] = await Promise.all([
+    readFile(new URL("../../evaluation/rag-culture-pre-query-rewrite-control.json", import.meta.url), "utf8").then(JSON.parse),
     readFile(new URL("../../evaluation/rag-culture-bm25-culture-v1-experiment.json", import.meta.url), "utf8").then(JSON.parse),
     readFile(new URL("../../../docs/RAG_CULTURE_BM25_CULTURE_V1_EXPERIMENT.md", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8").then(JSON.parse),
   ]);
 
-  assert.equal(current.summary.passed, 39);
+  assert.equal(control.summary.passed, 39);
   assert.equal(experiment.summary.passed, 38);
-  assert.equal(experiment.comparisonToBaseline.baselineId, current.id);
+  assert.equal(experiment.comparisonToBaseline.baselineId, control.id);
   assert.deepEqual(experiment.comparisonToBaseline.newlyPassedQuestionIds, ["C5-02"]);
   assert.deepEqual(experiment.comparisonToBaseline.regressedQuestionIds, ["C4-02", "C6-02"]);
-  assert.equal(experiment.summary.noAnswerSafetyPassed, current.summary.noAnswerSafetyPassed);
-  assert.equal(experiment.summary.finalityIntentPassed, current.summary.finalityIntentPassed);
-  assert.ok(experiment.summary.isolationPassed < current.summary.isolationPassed);
+  assert.equal(experiment.summary.noAnswerSafetyPassed, control.summary.noAnswerSafetyPassed);
+  assert.equal(experiment.summary.finalityIntentPassed, control.summary.finalityIntentPassed);
+  assert.ok(experiment.summary.isolationPassed < control.summary.isolationPassed);
   assert.equal(experiment.experimentDecision.recommendedForProduction, false);
   assert.match(experiment.retrievalConfiguration.cultureAnnotationSearch, /non-case culture-v1/);
   assert.match(report, /不启用到网站正式检索/);
@@ -264,9 +267,9 @@ test("keeps the culture-v1 BM25 expansion experimental when it regresses", async
 });
 
 test("keeps culture theme reranking experimental when it does not improve recall", async () => {
-  const [evaluation, current, experiment, report, packageJson, retrieval] = await Promise.all([
+  const [evaluation, control, experiment, report, packageJson, retrieval] = await Promise.all([
     readFile(new URL("../../evaluation/rag-culture-questions-v1.json", import.meta.url), "utf8").then(JSON.parse),
-    readFile(new URL("../../evaluation/rag-culture-current-evaluation.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../evaluation/rag-culture-pre-query-rewrite-control.json", import.meta.url), "utf8").then(JSON.parse),
     readFile(new URL("../../evaluation/rag-culture-bm25-theme-rerank-experiment.json", import.meta.url), "utf8").then(JSON.parse),
     readFile(new URL("../../../docs/RAG_CULTURE_BM25_THEME_RERANK_EXPERIMENT.md", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8").then(JSON.parse),
@@ -280,14 +283,59 @@ test("keeps culture theme reranking experimental when it does not improve recall
     assert.ok(detected.includes(question.theme), `${question.id} 未识别到 ${question.theme}`);
   }
   assert.equal(experiment.summary.themeDetectionPassed, 54);
-  assert.equal(experiment.summary.passed, current.summary.passed);
-  assert.equal(experiment.summary.isolationPassed, current.summary.isolationPassed);
+  assert.equal(experiment.summary.passed, control.summary.passed);
+  assert.equal(experiment.summary.isolationPassed, control.summary.isolationPassed);
   assert.deepEqual(experiment.comparisonToBaseline.newlyPassedQuestionIds, []);
   assert.deepEqual(experiment.comparisonToBaseline.regressedQuestionIds, []);
   assert.equal(experiment.experimentDecision.recommendedForProduction, false);
   assert.match(experiment.retrievalConfiguration.cultureThemeRerank, /multiplier 0\.05/);
   assert.match(report, /不启用到网站正式检索/);
   assert.match(packageJson.scripts["rag:evaluate:theme-rerank"], /--culture-rerank=0\.05/);
+});
+
+test("adopts auditable Query rewrite V1 only after a zero-regression experiment", async () => {
+  const [control, current, experiment, report, packageJson, retrieval, compiled] = await Promise.all([
+    readFile(new URL("../../evaluation/rag-culture-pre-query-rewrite-control.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../evaluation/rag-culture-current-evaluation.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../evaluation/rag-culture-query-rewrite-v1-experiment.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../../docs/RAG_CULTURE_QUERY_REWRITE_V1_EXPERIMENT.md", import.meta.url), "utf8"),
+    readFile(new URL("../package.json", import.meta.url), "utf8").then(JSON.parse),
+    import("../shared/retrieval.mjs"),
+    readFile(new URL("../../knowledge/compiled/knowledge-base.json", import.meta.url), "utf8").then(JSON.parse),
+  ]);
+
+  const rewrite = retrieval.rewriteKnowledgeQuery("鲜鸡旦角黄诉和红内库，不要忙目判断");
+  assert.equal(rewrite.corrected, "鲜鸡蛋角黄素和红内裤，不要盲目判断");
+  assert.deepEqual(rewrite.corrections, [
+    { from: "鸡旦", to: "鸡蛋" },
+    { from: "角黄诉", to: "角黄素" },
+    { from: "红内库", to: "红内裤" },
+    { from: "忙目", to: "盲目" },
+  ]);
+
+  const retriever = retrieval.createKnowledgeRetriever(compiled, { queryRewriteV1: true });
+  const egg = retriever.searchKnowledge("鲜鸡旦角黄诉那件事，胖东来公开怎么说的？");
+  assert.equal(egg.track, "case");
+  assert.equal(egg.caseRecord.id, "egg-canthaxanthin-feedback-2026-04");
+  assert.equal(egg.originalQueryText, "鲜鸡旦角黄诉那件事，胖东来公开怎么说的？");
+  assert.ok(egg.queryCorrections.length >= 2);
+  const expansion = retriever.searchKnowledge("买回去不喜欢，胖东来是不是啥都给退？");
+  assert.ok(expansion.queryExpansions.some((item) => item.ruleId === "returns-colloquial"));
+  assert.ok(expansion.retrieved.some((item) => item.chunkId === "interview-trust-returns-and-complaints"));
+
+  assert.equal(control.summary.passed, 39);
+  assert.equal(experiment.summary.passed, 50);
+  assert.equal(current.summary.passed, 50);
+  assert.deepEqual(experiment.comparisonToBaseline.regressedQuestionIds, []);
+  assert.equal(experiment.summary.isolationPassed, control.summary.isolationPassed);
+  assert.equal(experiment.summary.finalityIntentPassed, control.summary.finalityIntentPassed);
+  assert.equal(experiment.summary.noAnswerSafetyPassed, control.summary.noAnswerSafetyPassed);
+  assert.equal(experiment.experimentDecision.recommendedForProduction, true);
+  assert.deepEqual(experiment.queryRewriteSummary.correctedQuestionIds, [
+    "C1-05", "C2-05", "C3-05", "C4-05", "C5-05", "C6-05",
+  ]);
+  assert.match(report, /建议进入本地正式检索/);
+  assert.match(packageJson.scripts["rag:evaluate:query-rewrite-v1"], /--query-rewrite-v1/);
 });
 
 test("uses recent user context only when a follow-up needs it", async () => {

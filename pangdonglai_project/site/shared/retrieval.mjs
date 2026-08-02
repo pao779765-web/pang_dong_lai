@@ -36,6 +36,91 @@ const CULTURE_QUERY_RULES = {
   ],
 };
 
+const QUERY_TYPO_REPLACEMENTS = [
+  ["员公", "员工"],
+  ["年加", "年假"],
+  ["授全", "授权"],
+  ["投述", "投诉"],
+  ["鸡旦", "鸡蛋"],
+  ["角黄诉", "角黄素"],
+  ["红内库", "红内裤"],
+  ["忙目", "盲目"],
+];
+
+const QUERY_EXPANSION_RULES = [
+  {
+    id: "employee-culture-practices",
+    pattern: /自由与爱.{0,10}(?:员工|员工身上)|(?:员工|员工身上).{0,10}自由与爱|完整的人/,
+    terms: "员工尊严 完整人格 员工生活",
+  },
+  {
+    id: "employee-culture-beyond-pay",
+    pattern: /(?:工资|薪酬).{0,6}(?:高|好).{0,8}(?:福利).{0,6}(?:好|高)|高工资.{0,8}高福利/,
+    terms: "员工尊严 生活空间 人性化管理",
+  },
+  {
+    id: "freedom-with-rules",
+    pattern: /(?:员工)?自由.{0,12}(?:不守规矩|规矩|规则|纪律)/,
+    terms: "行为规范 责任 奖励 管理边界",
+  },
+  {
+    id: "delegation-safeguards",
+    pattern: /(?:放权|授权).{0,12}(?:兜底|保障|配套)/,
+    terms: "一线授权 操作手册 制度执行 责任 培训 纠错",
+  },
+  {
+    id: "sincere-service-practices",
+    pattern: /(?:真诚服务|服务).{0,12}(?:具体|做法|怎么做|体现)/,
+    terms: "退换货 投诉奖励 便民服务 顾客体验",
+  },
+  {
+    id: "customer-service-boundary",
+    pattern: /顾客.{0,16}(?:照办|说什么都|什么都得|都得听)/,
+    terms: "服务边界 退换货 事实证据",
+  },
+  {
+    id: "returns-colloquial",
+    pattern: /(?:啥都给退|什么都给退|不喜欢.{0,12}(?:退|退货))|(?:退|退货).{0,8}不喜欢/,
+    terms: "无理由退换货 退换货规则",
+  },
+  {
+    id: "slow-expansion-boundary",
+    pattern: /开店.{0,12}(?:慢|克制).{0,18}(?:全国|经营能力)|(?:全国|经营能力).{0,18}开店.{0,12}(?:慢|克制)/,
+    terms: "规模扩张 经营节制 品质优先 复制边界",
+  },
+  {
+    id: "nationwide-expansion-colloquial",
+    pattern: /(?:开遍全国|全国开店).{0,12}(?:挣钱|赚钱|扩张)?|(?:挣钱|赚钱).{0,12}(?:开遍全国|全国开店)/,
+    terms: "不盲目扩张 品质优先 规模 经营节制",
+  },
+  {
+    id: "apology-culture-boundary",
+    pattern: /(?:出了事|争议|出事).{0,12}(?:道歉).{0,12}(?:有爱|自由与爱|算)|(?:道歉).{0,12}(?:有爱|自由与爱)/,
+    terms: "争议处理 责任 纠错 尊重 事实证据 文化边界",
+  },
+];
+
+export function rewriteKnowledgeQuery(value) {
+  const original = typeof value === "string" ? value.trim() : "";
+  let corrected = original;
+  const corrections = [];
+
+  for (const [from, to] of QUERY_TYPO_REPLACEMENTS) {
+    if (!corrected.includes(from)) continue;
+    corrected = corrected.replaceAll(from, to);
+    corrections.push({ from, to });
+  }
+
+  const expansions = QUERY_EXPANSION_RULES
+    .filter((rule) => rule.pattern.test(corrected.replace(/\s+/g, "")))
+    .map((rule) => ({ ruleId: rule.id, addedText: rule.terms }));
+  const searchText = [corrected, ...expansions.map((item) => item.addedText)]
+    .filter(Boolean)
+    .join("\n");
+
+  return { original, corrected, searchText, corrections, expansions };
+}
+
 export function makeSearchTerms(value) {
   const text = value.toLowerCase().replace(/[^\u4e00-\u9fff0-9a-z]/g, "");
 
@@ -166,6 +251,7 @@ function scoreBm25(queryTerms, documentTerms, documentFrequencies, totalDocument
 export function createKnowledgeRetriever(knowledgeBase, options = {}) {
   const includeCultureAnnotations = options.includeCultureAnnotations === true;
   const cultureRerankWeight = Number(options.cultureRerankWeight ?? 0);
+  const queryRewriteV1 = options.queryRewriteV1 === true;
   if (!Number.isFinite(cultureRerankWeight) || cultureRerankWeight < 0 || cultureRerankWeight > 0.25) {
     throw new Error("cultureRerankWeight 必须是 0 到 0.25 之间的有限数值。");
   }
@@ -351,41 +437,68 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
   }
 
   function searchKnowledge(question, context = []) {
+    const currentRewrite = queryRewriteV1
+      ? rewriteKnowledgeQuery(question)
+      : {
+          original: question,
+          corrected: question,
+          searchText: question,
+          corrections: [],
+          expansions: [],
+        };
     const contextQuestions = context
       .filter((item) => typeof item === "string" && item.trim())
       .map((item) => item.trim())
       .slice(-2);
     const contextDependent = isContextDependent(question);
+    const contextRewrites = contextDependent && queryRewriteV1
+      ? contextQuestions.map(rewriteKnowledgeQuery)
+      : contextQuestions.map((item) => ({
+          original: item,
+          corrected: item,
+          searchText: item,
+          corrections: [],
+          expansions: [],
+        }));
     const themeDetectionText = contextDependent && contextQuestions.length
-      ? `${contextQuestions.join("\n")}\n${question}`
-      : question;
+      ? `${contextRewrites.map((item) => item.searchText).join("\n")}\n${currentRewrite.searchText}`
+      : currentRewrite.searchText;
     const detectedCultureThemes = cultureRerankWeight > 0
       ? detectCultureThemes(themeDetectionText)
       : [];
-    const directCaseRecord = findCase(question);
+    const directCaseRecord = findCase(currentRewrite.corrected);
     const contextualCaseRecord = contextDependent
-      ? [...contextQuestions].reverse().map(findCase).find(Boolean)
+      ? [...contextRewrites].reverse().map((item) => findCase(item.corrected)).find(Boolean)
       : undefined;
     const caseRecord = directCaseRecord ?? contextualCaseRecord;
     if (caseRecord) {
       return {
         track: "case",
         caseRecord,
-        asksForFinality: asksForFinality(question),
+        asksForFinality: asksForFinality(`${question}\n${currentRewrite.corrected}`),
         contextApplied: !directCaseRecord && Boolean(contextualCaseRecord),
-        queryText: question,
+        originalQueryText: question,
+        queryText: currentRewrite.corrected,
+        queryCorrections: currentRewrite.corrections,
+        queryExpansions: [],
+        queryRewriteApplied: currentRewrite.corrections.length > 0,
         detectedCultureThemes,
         retrieved: searchCase(caseRecord),
       };
     }
 
-    const insufficientReason = detectKnownEvidenceGap(question);
+    const insufficientReason = detectKnownEvidenceGap(currentRewrite.corrected);
     if (insufficientReason) {
       return {
         track: "general",
-        asksForFinality: asksForFinality(question),
+        asksForFinality: asksForFinality(`${question}\n${currentRewrite.corrected}`),
         contextApplied: false,
-        queryText: question,
+        originalQueryText: question,
+        queryText: currentRewrite.corrected,
+        queryCorrections: currentRewrite.corrections,
+        queryExpansions: currentRewrite.expansions,
+        queryRewriteApplied:
+          currentRewrite.corrections.length > 0 || currentRewrite.expansions.length > 0,
         detectedCultureThemes,
         insufficientReason,
         retrieved: [],
@@ -396,9 +509,24 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
 
     return {
       track: "general",
-      asksForFinality: asksForFinality(question),
-      contextApplied: queryText !== question,
+      asksForFinality: asksForFinality(`${question}\n${currentRewrite.corrected}`),
+      contextApplied: contextDependent && contextQuestions.length > 0,
+      originalQueryText: question,
       queryText,
+      queryCorrections: [
+        ...contextRewrites.flatMap((item) => item.corrections),
+        ...currentRewrite.corrections,
+      ],
+      queryExpansions: [
+        ...(contextDependent ? contextRewrites.flatMap((item) => item.expansions) : []),
+        ...currentRewrite.expansions,
+      ],
+      queryRewriteApplied:
+        currentRewrite.corrections.length > 0 ||
+        currentRewrite.expansions.length > 0 ||
+        (contextDependent && contextRewrites.some(
+          (item) => item.corrections.length > 0 || item.expansions.length > 0,
+        )),
       detectedCultureThemes,
       retrieved: searchGeneralKnowledge(queryText, detectedCultureThemes),
     };

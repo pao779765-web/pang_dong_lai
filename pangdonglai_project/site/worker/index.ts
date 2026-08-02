@@ -184,11 +184,15 @@ type SearchPlan = {
   asksForFinality: boolean;
   contextApplied: boolean;
   queryText: string;
+  originalQueryText?: string;
+  queryCorrections?: Array<{ from: string; to: string }>;
+  queryExpansions?: Array<{ ruleId: string; addedText: string }>;
+  queryRewriteApplied?: boolean;
   insufficientReason?: string;
   retrieved: RetrievedChunk[];
 };
 
-const knowledgeRetriever = createKnowledgeRetriever(knowledgeBase);
+const knowledgeRetriever = createKnowledgeRetriever(knowledgeBase, { queryRewriteV1: true });
 
 function searchKnowledge(question: string, context: string[] = []): SearchPlan {
   return knowledgeRetriever.searchKnowledge(question, context) as SearchPlan;
