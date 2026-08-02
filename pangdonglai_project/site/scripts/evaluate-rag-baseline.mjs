@@ -6,8 +6,19 @@ const knowledgeUrl = new URL("../../knowledge/compiled/knowledge-base.json", imp
 const frozenBaselineUrl = new URL("../../evaluation/rag-culture-bm25-baseline-v1.json", import.meta.url);
 const isCurrentEvaluation = process.argv.includes("--current");
 const includesCultureV1 = process.argv.includes("--culture-v1");
-if (includesCultureV1 && !isCurrentEvaluation) {
-  throw new Error("culture-v1 实验必须与 --current 一起运行，以保留相同的上下文和安全规则。");
+const cultureRerankArgument = process.argv.find((argument) =>
+  argument.startsWith("--culture-rerank="),
+);
+const cultureRerankWeight = cultureRerankArgument
+  ? Number(cultureRerankArgument.split("=")[1])
+  : 0;
+const usesCultureRerank = cultureRerankWeight > 0;
+const isExperiment = includesCultureV1 || usesCultureRerank;
+if (isExperiment && !isCurrentEvaluation) {
+  throw new Error("文化检索实验必须与 --current 一起运行，以保留相同的上下文和安全规则。");
+}
+if (includesCultureV1 && usesCultureRerank) {
+  throw new Error("字段直接拼接和主题重排必须分开评测，不能同时启用。");
 }
 const currentEvaluationUrl = new URL(
   "../../evaluation/rag-culture-current-evaluation.json",
@@ -17,12 +28,20 @@ const cultureExperimentUrl = new URL(
   "../../evaluation/rag-culture-bm25-culture-v1-experiment.json",
   import.meta.url,
 );
-const resultUrl = includesCultureV1
+const cultureRerankExperimentUrl = new URL(
+  "../../evaluation/rag-culture-bm25-theme-rerank-experiment.json",
+  import.meta.url,
+);
+const resultUrl = usesCultureRerank
+  ? cultureRerankExperimentUrl
+  : includesCultureV1
   ? cultureExperimentUrl
   : isCurrentEvaluation
   ? new URL("../../evaluation/rag-culture-current-evaluation.json", import.meta.url)
   : frozenBaselineUrl;
-const reportUrl = includesCultureV1
+const reportUrl = usesCultureRerank
+  ? new URL("../../../docs/RAG_CULTURE_BM25_THEME_RERANK_EXPERIMENT.md", import.meta.url)
+  : includesCultureV1
   ? new URL("../../../docs/RAG_CULTURE_BM25_CULTURE_V1_EXPERIMENT.md", import.meta.url)
   : isCurrentEvaluation
   ? new URL("../../../docs/RAG_CULTURE_CURRENT_EVALUATION.md", import.meta.url)
@@ -35,6 +54,7 @@ const [evaluation, knowledgeBase] = await Promise.all([
 
 const retriever = createKnowledgeRetriever(knowledgeBase, {
   includeCultureAnnotations: includesCultureV1,
+  cultureRerankWeight,
 });
 
 function roundRate(passed, total) {
@@ -90,6 +110,7 @@ function evaluateQuestion(question) {
       asksForFinality: plan.asksForFinality,
       contextApplied: plan.contextApplied,
       queryText: plan.queryText,
+      detectedCultureThemes: plan.detectedCultureThemes ?? [],
       insufficientReason: plan.insufficientReason ?? null,
       retrievedChunkIds,
       retrieved: plan.retrieved.map((item) => ({
@@ -97,6 +118,8 @@ function evaluateQuestion(question) {
         chunkTitle: item.chunkTitle,
         sourceTitle: item.sourceTitle,
         score: Number(item.score.toFixed(6)),
+        baseScore: Number((item.baseScore ?? item.score).toFixed(6)),
+        cultureThemeMatches: item.cultureThemeMatches ?? 0,
       })),
     },
     checks: {
@@ -164,7 +187,7 @@ const failureSummary = {
 
 const comparisonReference = isCurrentEvaluation
   ? JSON.parse(
-      await readFile(includesCultureV1 ? currentEvaluationUrl : frozenBaselineUrl, "utf8"),
+      await readFile(isExperiment ? currentEvaluationUrl : frozenBaselineUrl, "utf8"),
     )
   : null;
 const comparisonToBaseline = comparisonReference
@@ -217,7 +240,11 @@ const patternSummary = {
     .map((result) => result.id),
 };
 
-const experimentDecision = includesCultureV1
+const themeDetectionPassed = usesCultureRerank
+  ? results.filter((result) => result.actual.detectedCultureThemes.includes(result.theme)).length
+  : null;
+
+const experimentDecision = isExperiment
   ? {
       recommendedForProduction:
         passed > comparisonReference.summary.passed &&
@@ -239,7 +266,9 @@ const experimentDecision = includesCultureV1
 const baseline = {
   schemaVersion: "1.0",
   id: isCurrentEvaluation
-    ? includesCultureV1
+    ? usesCultureRerank
+      ? "rag-culture-bm25-theme-rerank-experiment"
+      : includesCultureV1
       ? "rag-culture-bm25-culture-v1-experiment"
       : "rag-culture-current-evaluation"
     : "rag-culture-bm25-baseline-v1",
@@ -257,6 +286,9 @@ const baseline = {
     algorithm: "BM25 over continuous Chinese bigrams",
     cultureAnnotationSearch: includesCultureV1
       ? "non-case culture-v1 theme labels, practice, mechanism, qualified value meaning, stakeholders and tension; case annotations excluded from general-track expansion"
+      : "disabled",
+    cultureThemeRerank: usesCultureRerank
+      ? `rule-based query theme detection; original BM25 candidates only; non-case culture-v1 match multiplier ${cultureRerankWeight}`
       : "disabled",
     topK: 5,
     caseRouting: "substring match against reviewed case aliases",
@@ -294,6 +326,11 @@ const baseline = {
     noAnswerSafetyPassed: noAnswerPassed,
     noAnswerSafetyTotal: noAnswerQuestions.length,
     noAnswerSafetyRate: roundRate(noAnswerPassed, noAnswerQuestions.length),
+    themeDetectionPassed,
+    themeDetectionTotal: usesCultureRerank ? results.length : null,
+    themeDetectionRate: usesCultureRerank
+      ? roundRate(themeDetectionPassed, results.length)
+      : null,
   },
   byTheme,
   failureSummary,
@@ -323,21 +360,23 @@ const failedRows = results
     return `| ${result.id} | ${result.theme} | ${reasons.join("；")} | ${result.actual.retrievedChunkIds.slice(0, 5).join("、") || "无"} |`;
   });
 
-const reportTitle = includesCultureV1
+const reportTitle = usesCultureRerank
+  ? "RAG 文化主线小权重重排对照实验"
+  : includesCultureV1
   ? "RAG culture-v1 字段 BM25 对照实验"
   : isCurrentEvaluation
   ? "RAG 文化问答当前检索评测"
   : "RAG 文化问答 BM25 基线 V1";
 const comparisonParagraph = comparisonToBaseline
-  ? `${includesCultureV1 ? "未读取文化字段的当前控制组" : "冻结基线"}为 ${comparisonToBaseline.baselinePassed}/${results.length}，本次变化 ${comparisonToBaseline.passedDelta} 题；新增通过：${renderQuestionList(comparisonToBaseline.newlyPassedQuestionIds)}；退步：${renderQuestionList(comparisonToBaseline.regressedQuestionIds)}。`
+  ? `${isExperiment ? "当前正式检索控制组" : "冻结基线"}为 ${comparisonToBaseline.baselinePassed}/${results.length}，本次变化 ${comparisonToBaseline.passedDelta} 题；新增通过：${renderQuestionList(comparisonToBaseline.newlyPassedQuestionIds)}；退步：${renderQuestionList(comparisonToBaseline.regressedQuestionIds)}。`
   : "这是修改 Query、上下文或检索门槛之前的冻结基线。";
-const experimentDecisionSection = includesCultureV1
+const experimentDecisionSection = isExperiment
   ? `
 ### 是否启用
 
-**结论：${experimentDecision.recommendedForProduction ? "建议启用" : "不启用到网站正式检索"}。** 启用门槛是“综合通过题数提高、零退步，并且隔离、终局意图、无答案安全均不下降”。本次新增通过 ${renderQuestionList(experimentDecision.newlyPassedQuestionIds)}，但退步 ${renderQuestionList(experimentDecision.regressedQuestionIds)}，禁用片段隔离由 ${experimentDecision.controlIsolationPassed}/${results.length} 变为 ${experimentDecision.experimentIsolationPassed}/${results.length}。因此网站继续使用未读取文化字段的控制组配置；实验开关只用于后续复测。
+**结论：${experimentDecision.recommendedForProduction ? "建议进入本地正式检索，等待用户验收后再部署" : "不启用到网站正式检索"}。** 启用门槛是“综合通过题数提高、零退步，并且隔离、终局意图、无答案安全均不下降”。本次新增通过 ${renderQuestionList(experimentDecision.newlyPassedQuestionIds)}，但退步 ${renderQuestionList(experimentDecision.regressedQuestionIds)}，禁用片段隔离由 ${experimentDecision.controlIsolationPassed}/${results.length} 变为 ${experimentDecision.experimentIsolationPassed}/${results.length}。${experimentDecision.recommendedForProduction ? "该实验满足自动门槛，但仍需检查新增通过题和真实用户问法。" : "因此网站继续使用控制组配置；实验开关只用于后续复测。"}
 
-这说明标注本身仍然有价值，但把所有语义字段直接拼进 BM25 会重复通用词并改变排序。下一轮应测试“Query 主题识别 + 小权重重排”，而不是继续扩长 BM25 文本。
+${usesCultureRerank ? `主题识别命中题集预期主线 ${themeDetectionPassed}/${results.length}；重排权重为 ${cultureRerankWeight}，只调整原 BM25 已通过证据门槛的非案例候选，不扩充候选、不改变案例路由。` : "这说明标注本身仍然有价值，但把所有语义字段直接拼进 BM25 会重复通用词并改变排序。下一轮应测试“Query 主题识别 + 小权重重排”，而不是继续扩长 BM25 文本。"}
 `
   : "";
 
@@ -353,7 +392,7 @@ const report = `# ${reportTitle}
 
 当前检索通过 ${passed}/${results.length} 题，综合通过率为 **${percent(baseline.summary.passRate)}**。${comparisonParagraph}本次只运行确定性的检索与路由，不调用 DeepSeek，因此不会产生费用；“生成越界”只记录检索结果可能带来的风险，不把风险写成已经发生的回答错误。
 
-原始 28/54 基线文件保持不变，${includesCultureV1 ? "本实验也不覆盖当前 39/54 控制组" : "当前结果单独保存"}；本轮仍不接入向量库。
+原始 28/54 基线文件保持不变，${isExperiment ? "本实验也不覆盖当前 39/54 控制组" : "当前结果单独保存"}；本轮仍不接入向量库。
 ${experimentDecisionSection}
 
 ## 2. 核心指标
@@ -367,6 +406,7 @@ ${experimentDecisionSection}
 | 禁用片段隔离 | ${isolationPassed}/${results.length}（${percent(baseline.summary.isolationAccuracy)}） |
 | 终局意图识别 | ${finalityPassed}/${results.length}（${percent(baseline.summary.finalityIntentAccuracy)}） |
 | 无答案问题安全 | ${noAnswerPassed}/${noAnswerQuestions.length}（${percent(baseline.summary.noAnswerSafetyRate)}） |
+${usesCultureRerank ? `| Query 文化主线识别 | ${themeDetectionPassed}/${results.length}（${percent(baseline.summary.themeDetectionRate)}） |` : ""}
 
 ## 3. 分主题结果
 
@@ -411,7 +451,7 @@ ${failedRows.length ? failedRows.join("\n") : "| — | — | 无 | — |"}
 3. 完成文化知识字段和 Query 改写 V1 后，用同一试卷重跑；
 4. 基线可重复且边界测试稳定后，再建立 BM25 + 向量 + 案例路由的混合检索原型。
 
-完整逐题结果见 \`pangdonglai_project/evaluation/${includesCultureV1 ? "rag-culture-bm25-culture-v1-experiment.json" : isCurrentEvaluation ? "rag-culture-current-evaluation.json" : "rag-culture-bm25-baseline-v1.json"}\`。
+完整逐题结果见 \`pangdonglai_project/evaluation/${usesCultureRerank ? "rag-culture-bm25-theme-rerank-experiment.json" : includesCultureV1 ? "rag-culture-bm25-culture-v1-experiment.json" : isCurrentEvaluation ? "rag-culture-current-evaluation.json" : "rag-culture-bm25-baseline-v1.json"}\`。
 `;
 
 await Promise.all([
@@ -420,5 +460,5 @@ await Promise.all([
 ]);
 
 console.log(
-  `${includesCultureV1 ? "culture-v1 BM25 实验" : isCurrentEvaluation ? "当前检索评测" : "BM25 基线"}完成：${passed}/${results.length}（${percent(baseline.summary.passRate)}），报告已写入 ${reportUrl.pathname}`,
+  `${usesCultureRerank ? "文化主线重排实验" : includesCultureV1 ? "culture-v1 BM25 实验" : isCurrentEvaluation ? "当前检索评测" : "BM25 基线"}完成：${passed}/${results.length}（${percent(baseline.summary.passRate)}），报告已写入 ${reportUrl.pathname}`,
 );

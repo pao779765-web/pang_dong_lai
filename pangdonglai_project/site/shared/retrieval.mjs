@@ -8,6 +8,33 @@ const CULTURE_THEME_LABELS = {
   C5: "利润规模与经营节制",
   C6: "争议中的文化检验",
 };
+const CULTURE_QUERY_RULES = {
+  C1: [
+    [5, /员工|员公|劳动者|招聘|岗位|工资|薪酬|降薪|奖金|福利|休假|年假|不开心假|休息|下班|上班|工作生活|家庭|彩礼|婚礼|完整的人|尊重员工|尝面/],
+    [2, /个人生活|个人边界|就业|守规矩/],
+  ],
+  C2: [
+    [5, /一线|放权|授全|授权|权限|做主|兜底|信任员工|判断错|管理者|老板退休|决策|责任.*配套/],
+    [2, /培训|组织机制|民主管理/],
+  ],
+  C3: [
+    [5, /顾客|真诚服务|退换货|退货|投诉奖|投述奖|投诉.*奖励|客服|售后|顾客至上|啥都给退|照办/],
+    [3, /服务文化|服务细节|客诉/],
+  ],
+  C4: [
+    [5, /商品|品质|质量|供应商|自有品牌|送检|检测|鸡蛋|鸡旦|角黄|茶叶|苍蝇|食品安全/],
+    [3, /价格|实惠|监管部门/],
+  ],
+  C5: [
+    [5, /扩张|开店|开遍|全国|关店|规模|利润|挣钱|经营能力|克制|营销人设|不追求规模|不忙目|不盲目/],
+    [3, /生意变好|多挣钱/],
+  ],
+  C6: [
+    [6, /客诉争议|负面反馈|出了事|发个道歉|道歉就|文化.*假|假的|价值观.*关系|检验.*自由与爱|最后怎么判|谁对谁错/],
+    [4, /争议|查清|最终结论|法院|判决|维权|企业回应/],
+    [2, /道歉|调查结果/],
+  ],
+};
 
 export function makeSearchTerms(value) {
   const text = value.toLowerCase().replace(/[^\u4e00-\u9fff0-9a-z]/g, "");
@@ -22,6 +49,22 @@ export function makeSearchTerms(value) {
   }
 
   return terms;
+}
+
+export function detectCultureThemes(value) {
+  const normalized = value.toLowerCase().replace(/\s+/g, "");
+  const scores = Object.entries(CULTURE_QUERY_RULES).map(([theme, rules]) => [
+    theme,
+    rules.reduce((score, [weight, pattern]) => score + (pattern.test(normalized) ? weight : 0), 0),
+  ]);
+  const highestScore = Math.max(0, ...scores.map(([, score]) => score));
+  if (highestScore === 0) return [];
+
+  return scores
+    .filter(([, score]) => score >= Math.max(3, highestScore - 1))
+    .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))
+    .slice(0, 2)
+    .map(([theme]) => theme);
 }
 
 function makeCultureSearchContent(culture) {
@@ -122,6 +165,10 @@ function scoreBm25(queryTerms, documentTerms, documentFrequencies, totalDocument
 
 export function createKnowledgeRetriever(knowledgeBase, options = {}) {
   const includeCultureAnnotations = options.includeCultureAnnotations === true;
+  const cultureRerankWeight = Number(options.cultureRerankWeight ?? 0);
+  if (!Number.isFinite(cultureRerankWeight) || cultureRerankWeight < 0 || cultureRerankWeight > 0.25) {
+    throw new Error("cultureRerankWeight 必须是 0 到 0.25 之间的有限数值。");
+  }
   function toRetrievedChunk(document, chunk, score, caseRecord) {
     const content = `${document.title}\n${chunk.title}\n${chunk.text}`;
     return {
@@ -225,7 +272,7 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
     return false;
   }
 
-  function searchGeneralKnowledge(question) {
+  function searchGeneralKnowledge(question, detectedCultureThemes) {
     const queryTerms = makeSearchTerms(question);
     if (queryTerms.length === 0) return [];
 
@@ -244,6 +291,7 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
             ...toRetrievedChunk(document, chunk, 0),
             terms: makeSearchTerms(searchContent),
             evidenceTerms: makeSearchTerms(evidenceContent),
+            cultureThemes: document.caseId ? [] : (chunk.culture?.cultureTheme ?? []),
           };
         }),
       );
@@ -267,7 +315,7 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
       indexedChunks.reduce((sum, item) => sum + item.terms.length, 0) / indexedChunks.length;
 
     return indexedChunks
-      .map(({ terms, evidenceTerms, ...item }) => {
+      .map(({ terms, evidenceTerms, cultureThemes, ...item }) => {
         const matchingDistinctiveTerms = queryTerms.filter(
           (term) => isDistinctiveQueryTerm(term) && evidenceTerms.includes(term),
         );
@@ -278,15 +326,22 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
           matchingDistinctiveTerms.length > 0 &&
           (hasUniqueDistinctiveTerm || matchingDistinctiveTerms.length >= 2);
 
+        const baseScore = scoreBm25(
+          queryTerms,
+          terms,
+          documentFrequencies,
+          indexedChunks.length,
+          averageDocumentLength,
+        );
+        const cultureThemeMatches = detectedCultureThemes.filter((theme) =>
+          cultureThemes.includes(theme),
+        ).length;
+
         return {
           ...item,
-          score: scoreBm25(
-            queryTerms,
-            terms,
-            documentFrequencies,
-            indexedChunks.length,
-            averageDocumentLength,
-          ),
+          score: baseScore * (1 + cultureRerankWeight * cultureThemeMatches),
+          baseScore,
+          cultureThemeMatches,
           hasDistinctiveEvidence,
         };
       })
@@ -301,6 +356,12 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
       .map((item) => item.trim())
       .slice(-2);
     const contextDependent = isContextDependent(question);
+    const themeDetectionText = contextDependent && contextQuestions.length
+      ? `${contextQuestions.join("\n")}\n${question}`
+      : question;
+    const detectedCultureThemes = cultureRerankWeight > 0
+      ? detectCultureThemes(themeDetectionText)
+      : [];
     const directCaseRecord = findCase(question);
     const contextualCaseRecord = contextDependent
       ? [...contextQuestions].reverse().map(findCase).find(Boolean)
@@ -313,6 +374,7 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
         asksForFinality: asksForFinality(question),
         contextApplied: !directCaseRecord && Boolean(contextualCaseRecord),
         queryText: question,
+        detectedCultureThemes,
         retrieved: searchCase(caseRecord),
       };
     }
@@ -324,21 +386,21 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
         asksForFinality: asksForFinality(question),
         contextApplied: false,
         queryText: question,
+        detectedCultureThemes,
         insufficientReason,
         retrieved: [],
       };
     }
 
-    const queryText = contextDependent && contextQuestions.length
-      ? `${contextQuestions.join("\n")}\n${question}`
-      : question;
+    const queryText = themeDetectionText;
 
     return {
       track: "general",
       asksForFinality: asksForFinality(question),
       contextApplied: queryText !== question,
       queryText,
-      retrieved: searchGeneralKnowledge(queryText),
+      detectedCultureThemes,
+      retrieved: searchGeneralKnowledge(queryText, detectedCultureThemes),
     };
   }
 

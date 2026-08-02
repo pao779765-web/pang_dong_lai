@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-08-02
 
-**当前执行者：** Codex 已完成 `culture-v1` BM25 对照实验：控制组 39/54，实验组 38/54 且隔离下降，因此不启用字段直接拼接；下一项继续完整 Query 改写，再测试主题识别与小权重重排，暂不接向量库
+**当前执行者：** Codex 已完成 Query 文化主线识别与小权重重排实验：主题识别 54/54，但 3%～20% 权重均保持 39/54、没有新增通过，因此不启用；下一项进入错别字和同义表达的完整 Query 改写，暂不接向量库
 **分支：** `main`
 
 ---
@@ -62,6 +62,7 @@
 - [x] **RAG-CULTURE-R3A（用户明确要求提前执行）**：检索只在追问需要时继承最近两条用户问题；扩充自然终局表达并避免把“企业后来怎么解释”误判为终局；为已确认缺失的薪酬表、权限表、通用调查流程、供应商名单、财务计划和全部投诉结论增加资料充分性闸门。同一 54 题当前评测为 39/54（72.2%），比冻结基线增加 11 题、无退步；终局意图 54/54、无答案安全 6/6。该闸门不是通用事实判断器，错别字和语义召回仍待后续完整 R3。
 - [x] **RAG-CULTURE-R2**：现有 30 份资料的 135 个正式片段已全部写入 `culture-v1`，包含文化主线、关联级别、做法、机制、解释性价值、利益相关者、现实张力和对应时间；4 个纯背景片段不强行挂文化主线。构建脚本会拒绝漏标、未知枚举、边界材料无张力说明或无保留的文化断言。网站正式检索仍不消费新字段、未部署，详见 `docs/RAG_CULTURE_ANNOTATION_V1.md`。
 - [x] **RAG-CULTURE-R2B（用户批准）**：用同一 54 题比较当前 BM25 与 `culture-v1` 字段直接拼接。控制组 39/54（72.2%），收紧到仅非案例文化字段后实验组仍为 38/54（70.4%）；新增通过 `C5-02`，但 `C4-02`、`C6-02` 退步，禁用片段隔离由 51/54 降至 50/54。实验未满足“提高、零退步、安全不下降”门槛，网站继续使用控制组配置；未接向量库、未部署。
+- [x] **RAG-CULTURE-R3B（用户批准继续）**：新增规则式 Query 文化主线识别，54/54 题均包含预期主线；只对原 BM25 已通过证据门槛的非案例候选做小权重重排，不扩大候选范围。3%、5%、8%、12%、20% 五档权重均保持 39/54，新增通过和退步均为 0，隔离 51/54、终局 54/54、无答案安全 6/6 不变。因未提高综合通过题数，不启用到网站正式检索；详见 `docs/RAG_CULTURE_BM25_THEME_RERANK_EXPERIMENT.md`。
 - [ ] **RAG-CULTURE-R1**：用户已批准 C1“员工的尊严、自由与生活”首批两组资料。7 份资料、32 个片段和 3 个独立案例已按 `approved` / `limited` 范围入库，审核与结果见 `docs/SOURCE_AUDIT_C1_01.md`；知识库现有 30 份资料、135 个片段和 6 个案例。本阶段尚未完成后续 C1 一手资料主干，不得自动扩充。
 - [x] **RAG-RESEARCH-01**：建立 Codex 与 Grok 强制共用的互联网资料检索与 RAG 入库规范；明确候选池、来源优先级、企业身份核验、转载去重、事件阶段、用户批准、版权边界、入库测试和向量库接入条件，并在 `AGENTS.md` 设置任务前必读入口。
 - [x] **Codex【RAG-CASE-01】**：按 Grok 审核顺序完成“案例档案 + 事件事实/文化理解双轨回答”：定义 `caseId`、`claimType`、`finality` schema；事件轨仅引用同案例资料，文化轨不得裁定具体客诉真伪；无 `final` 证据时禁止终局话术；界面展示案例来源的证据阶段；补充误召回与最终结论边界测试。
@@ -110,7 +111,7 @@
 ### 给 Codex
 
 1. 资料架构只维护 `pangdonglai_project/knowledge/**`；禁止手工修改 `knowledge/compiled/knowledge-base.json` 或恢复旧根文件。
-2. `RAG-CULTURE-R0`、`RAG-CULTURE-R2/R2B` 与用户指定的 `RAG-CULTURE-R3A` 已完成；文化字段直接拼接实验已因 38/54 和隔离下降而拒绝。下一项继续 R1/R3，完成错别字、同义词和 Query 主题识别，再评估小权重重排；通用充分性判断仍未完成，在这些边界稳定前不接向量库。
+2. `RAG-CULTURE-R0`、`RAG-CULTURE-R2/R2B` 与 `RAG-CULTURE-R3A/R3B` 已完成；文化字段直接拼接因退步被拒绝，主题识别虽为 54/54，但重排没有改善召回。下一项继续 R1/R3，完成错别字与同义表达的完整 Query 改写；通用充分性判断仍未完成，在这些边界稳定前不接向量库。
 3. 所有 RAG 工作先读 `docs/RAG_RESEARCH_PROTOCOL.md` 和 `docs/RAG_CULTURE_ROADMAP.md`；不修改原始 HTML，完成后更新本 HANDOFF 并小步提交。
 
 ### 给 Grok
@@ -156,6 +157,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-02 | Codex | 按用户要求继续完成 Query 文化主线识别与小权重重排实验：54/54 题识别到预期主线；重排严格限制在原 BM25 候选且排除案例字段扩散。3%～20% 五档权重均保持 39/54，未新增通过也未退步，安全指标不变，因此按“必须提高”门槛拒绝启用；33 项测试与 lint 通过，未部署 | site/shared/retrieval.mjs, site/scripts/evaluate-rag-baseline.mjs, site/package.json, evaluation/rag-culture-bm25-theme-rerank-experiment.json, docs/RAG_CULTURE_BM25_THEME_RERANK_EXPERIMENT.md, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_ANNOTATION_V1.md, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |
 | 2026-08-02 | Codex | 经用户批准，用同一 54 题完成 `culture-v1` BM25 对照实验；全量直接拼接与仅非案例字段两轮均为 38/54，最终收紧方案相较 39/54 控制组新增通过 C5-02、但 C4-02/C6-02 退步，禁用片段隔离降至 50/54。已设置“提高、零退步、安全不下降”启用门槛并明确拒绝上线，实验开关仅供复测；32 项测试与 lint 通过，未接向量库、未部署 | site/shared/retrieval.mjs, site/scripts/evaluate-rag-baseline.mjs, site/package.json, evaluation/rag-culture-bm25-culture-v1-experiment.json, docs/RAG_CULTURE_BM25_CULTURE_V1_EXPERIMENT.md, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_ANNOTATION_V1.md, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |
 | 2026-08-02 | Codex | 按用户要求为现有 135 个正式片段完成 `culture-v1` 标注；区分直接、辅助、边界与纯背景资料，增加做法、机制、解释性价值、利益相关者、张力和时间字段；构建时强制校验标注结构并补充回归测试与审计报告。未修改检索排序、未接向量库、未部署 | knowledge/chunks/*.jsonl, knowledge/compiled/knowledge-base.json, knowledge/README.md, site/scripts/annotate-culture-v1.mjs, site/scripts/build-knowledge.mjs, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_ANNOTATION_V1.md, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |
 | 2026-08-01 | Codex | 按用户明确要求提前处理上下文、终局意图和资料不足噪声：仅对追问继承最近用户话题，增加自然终局表达规则，并以可维护的已知缺口闸门阻止薪酬表、权限表、供应商名单等无依据请求进入生成上下文；冻结基线保持 28/54，当前同题集升至 39/54（72.2%）、无退步，终局意图 54/54、无答案安全 6/6；31 项测试与 lint 通过，未接向量库、未部署 | site/shared/retrieval.mjs, site/worker/index.ts, site/scripts/evaluate-rag-baseline.mjs, evaluation/rag-culture-current-evaluation.json, docs/RAG_CULTURE_CURRENT_EVALUATION.md, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |

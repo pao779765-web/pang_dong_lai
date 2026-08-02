@@ -263,6 +263,33 @@ test("keeps the culture-v1 BM25 expansion experimental when it regresses", async
   assert.match(packageJson.scripts["rag:evaluate:culture-v1"], /--culture-v1/);
 });
 
+test("keeps culture theme reranking experimental when it does not improve recall", async () => {
+  const [evaluation, current, experiment, report, packageJson, retrieval] = await Promise.all([
+    readFile(new URL("../../evaluation/rag-culture-questions-v1.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../evaluation/rag-culture-current-evaluation.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../evaluation/rag-culture-bm25-theme-rerank-experiment.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../../docs/RAG_CULTURE_BM25_THEME_RERANK_EXPERIMENT.md", import.meta.url), "utf8"),
+    readFile(new URL("../package.json", import.meta.url), "utf8").then(JSON.parse),
+    import("../shared/retrieval.mjs"),
+  ]);
+
+  for (const question of evaluation.questions) {
+    const detected = retrieval.detectCultureThemes(
+      [...question.context, question.question].join("\n"),
+    );
+    assert.ok(detected.includes(question.theme), `${question.id} 未识别到 ${question.theme}`);
+  }
+  assert.equal(experiment.summary.themeDetectionPassed, 54);
+  assert.equal(experiment.summary.passed, current.summary.passed);
+  assert.equal(experiment.summary.isolationPassed, current.summary.isolationPassed);
+  assert.deepEqual(experiment.comparisonToBaseline.newlyPassedQuestionIds, []);
+  assert.deepEqual(experiment.comparisonToBaseline.regressedQuestionIds, []);
+  assert.equal(experiment.experimentDecision.recommendedForProduction, false);
+  assert.match(experiment.retrievalConfiguration.cultureThemeRerank, /multiplier 0\.05/);
+  assert.match(report, /不启用到网站正式检索/);
+  assert.match(packageJson.scripts["rag:evaluate:theme-rerank"], /--culture-rerank=0\.05/);
+});
+
 test("uses recent user context only when a follow-up needs it", async () => {
   const [{ createKnowledgeRetriever }, compiled] = await Promise.all([
     import("../shared/retrieval.mjs"),
