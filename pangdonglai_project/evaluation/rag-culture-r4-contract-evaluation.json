@@ -1,0 +1,811 @@
+{
+  "schemaVersion": "1.0",
+  "evaluationId": "rag-culture-r4-answer-set-v1",
+  "generatedAt": "2026-08-02T10:59:57.350Z",
+  "configuration": {
+    "retriever": "BM25 + Query 改写 V1 + 回答用途过滤 V1",
+    "answerContract": "R4 大众回答结构",
+    "modelCalled": false
+  },
+  "summary": {
+    "total": 18,
+    "contractPassed": 18,
+    "contractPassRate": 1,
+    "themeDistribution": {
+      "C1": 3,
+      "C2": 3,
+      "C3": 3,
+      "C4": 3,
+      "C5": 3,
+      "C6": 3
+    },
+    "modeDistribution": {
+      "general": 10,
+      "insufficient": 3,
+      "event": 5
+    },
+    "humanAnswerReviewPending": 18
+  },
+  "interpretation": "自动结果只证明 18 道代表题均取得正确检索轨道、隔离边界和对应 R4 回答契约；不代表 DeepSeek 的真实回答已经通过人工内容验收。",
+  "results": [
+    {
+      "id": "R4-C1-01",
+      "referenceQuestionId": "C1-02",
+      "theme": "C1",
+      "question": "大家说胖东来把员工当‘完整的人’，这不是一句漂亮话吗？",
+      "reviewFocus": "用具体做法回应‘漂亮话’质疑，同时承认现有资料不能代表每位员工体验。",
+      "expectedAnswerPoints": [
+        "用具体制度或公开做法回应质疑",
+        "区分价值表达与制度是否实际执行",
+        "承认现有资料不能代表每位员工体验"
+      ],
+      "forbiddenClaims": [
+        "媒体报道已经证明每位员工都幸福"
+      ],
+      "expectedMode": "general",
+      "actualMode": "general",
+      "requiredMoves": [
+        "简单说",
+        "具体来看",
+        "为什么这么做",
+        "还要分清"
+      ],
+      "retrievedChunkIds": [
+        "book-learn-pdl-ch3-humanistic-management",
+        "book-learn-pdl-toc-and-structure",
+        "xinhua-rest-to-service-mechanism",
+        "weiqu-award-yudonglai-purpose",
+        "xinhua-employee-home-facilities"
+      ],
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "recallPass": true,
+        "isolationPass": true,
+        "modePass": true,
+        "movesPass": true,
+        "noInternalTermsPass": true,
+        "retrievalReady": true,
+        "contractPass": true
+      },
+      "forbiddenHits": [],
+      "humanAnswerReview": "pending"
+    },
+    {
+      "id": "R4-C1-02",
+      "referenceQuestionId": "C1-08",
+      "theme": "C1",
+      "question": "请给我一份胖东来 2026 年每个岗位最新工资和奖金表。",
+      "reviewFocus": "直接说明没有 2026 完整薪酬表，不拿历史数字拼答案。",
+      "expectedAnswerPoints": [
+        "明确当前知识库没有完整最新岗位薪酬表",
+        "不拿用工规模或委屈奖金额拼成薪酬答案"
+      ],
+      "forbiddenClaims": [
+        "编造具体岗位工资",
+        "把历史媒体数字写成 2026 最新数据"
+      ],
+      "expectedMode": "insufficient",
+      "actualMode": "insufficient",
+      "requiredMoves": [
+        "简单说",
+        "目前能确认什么",
+        "为什么还不能下结论",
+        "还缺什么信息"
+      ],
+      "retrievedChunkIds": [],
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "recallPass": true,
+        "isolationPass": true,
+        "modePass": true,
+        "movesPass": true,
+        "noInternalTermsPass": true,
+        "retrievalReady": true,
+        "contractPass": true
+      },
+      "forbiddenHits": [],
+      "humanAnswerReview": "pending"
+    },
+    {
+      "id": "R4-C1-03",
+      "referenceQuestionId": "C1-12",
+      "theme": "C1",
+      "question": "尝面员工后来还是被开除了吗？这件事怎么检验尊重员工？",
+      "reviewFocus": "分清初次处分、内部复议与尚未见到的仲裁或法院结论。",
+      "expectedAnswerPoints": [
+        "说明公开材料记录的后续内部处理是降学习期并转岗",
+        "区分初次辞退和后续复议",
+        "说明没有知识库可核验的仲裁或法院结论"
+      ],
+      "forbiddenClaims": [
+        "员工最终仍被开除",
+        "内部复议等于法院判决",
+        "跨用其他案例证据"
+      ],
+      "expectedMode": "event",
+      "actualMode": "event",
+      "requiredMoves": [
+        "这件事现在知道什么",
+        "企业当时怎么处理",
+        "后来有没有明确结论",
+        "这件事让我们观察什么"
+      ],
+      "retrievedChunkIds": [
+        "noodle-initial-dismissal",
+        "noodle-expert-proportionality",
+        "noodle-food-vs-labor-rights",
+        "noodle-initial-stage-boundary",
+        "noodle-reconsideration-timeline",
+        "noodle-democratic-vote",
+        "noodle-reassignment-result",
+        "noodle-management-lesson",
+        "noodle-case-boundary"
+      ],
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "recallPass": true,
+        "isolationPass": true,
+        "modePass": true,
+        "movesPass": true,
+        "noInternalTermsPass": true,
+        "retrievalReady": true,
+        "contractPass": true
+      },
+      "forbiddenHits": [],
+      "humanAnswerReview": "pending"
+    },
+    {
+      "id": "R4-C2-01",
+      "referenceQuestionId": "C2-01",
+      "theme": "C2",
+      "question": "胖东来为什么愿意让一线员工直接处理顾客问题？",
+      "reviewFocus": "说明一线授权的具体作用和它与顾客、责任的关系。",
+      "expectedAnswerPoints": [
+        "说明一线离问题最近、及时处理的组织逻辑",
+        "同时提到责任而非只讲放权",
+        "明确观点来自公开访谈"
+      ],
+      "forbiddenClaims": [
+        "一线拥有无限决定权"
+      ],
+      "expectedMode": "general",
+      "actualMode": "general",
+      "requiredMoves": [
+        "简单说",
+        "具体来看",
+        "为什么这么做",
+        "还要分清"
+      ],
+      "retrievedChunkIds": [
+        "interview-frontline-trust-responsibility-and-society",
+        "xinhua-yonghui-employee-community",
+        "red-underwear-early-apology",
+        "book-learn-pdl-time-lag-and-crosscheck",
+        "book-learn-pdl-flywheel-logic"
+      ],
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "recallPass": true,
+        "isolationPass": true,
+        "modePass": true,
+        "movesPass": true,
+        "noInternalTermsPass": true,
+        "retrievalReady": true,
+        "contractPass": true
+      },
+      "forbiddenHits": [],
+      "humanAnswerReview": "pending"
+    },
+    {
+      "id": "R4-C2-02",
+      "referenceQuestionId": "C2-06",
+      "theme": "C2",
+      "question": "所谓‘信任员工’会不会只是老板个人魅力，老板退休就没了？",
+      "reviewFocus": "公平回应个人魅力质疑，区分组织机制与对未来的推断。",
+      "expectedAnswerPoints": [
+        "正面回应创始人依赖问题",
+        "说明手册、轮值或委员会是组织化线索",
+        "这些线索仍不能证明机制已完全摆脱个人影响"
+      ],
+      "forbiddenClaims": [
+        "已经彻底消除创始人依赖"
+      ],
+      "expectedMode": "general",
+      "actualMode": "general",
+      "requiredMoves": [
+        "简单说",
+        "具体来看",
+        "为什么这么做",
+        "还要分清"
+      ],
+      "retrievedChunkIds": [
+        "xinhua-culture-love-five-levels",
+        "jiemian-retirement-culture-question",
+        "culture-system-voluntary-assessment",
+        "book-learn-pdl-flywheel-logic",
+        "interview-frontline-trust-responsibility-and-society"
+      ],
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "recallPass": true,
+        "isolationPass": true,
+        "modePass": true,
+        "movesPass": true,
+        "noInternalTermsPass": true,
+        "retrievalReady": true,
+        "contractPass": true
+      },
+      "forbiddenHits": [],
+      "humanAnswerReview": "pending"
+    },
+    {
+      "id": "R4-C2-03",
+      "referenceQuestionId": "C2-08",
+      "theme": "C2",
+      "question": "胖东来每个岗位分别能自主赔付多少元？请列出权限表。",
+      "reviewFocus": "明确没有逐岗位权限表，不编造赔付金额。",
+      "expectedAnswerPoints": [
+        "明确当前资料没有岗位赔付权限表",
+        "不拿委屈奖或法院赔偿数字代替内部授权额度"
+      ],
+      "forbiddenClaims": [
+        "编造岗位授权金额"
+      ],
+      "expectedMode": "insufficient",
+      "actualMode": "insufficient",
+      "requiredMoves": [
+        "简单说",
+        "目前能确认什么",
+        "为什么还不能下结论",
+        "还缺什么信息"
+      ],
+      "retrievedChunkIds": [],
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "recallPass": true,
+        "isolationPass": true,
+        "modePass": true,
+        "movesPass": true,
+        "noInternalTermsPass": true,
+        "retrievalReady": true,
+        "contractPass": true
+      },
+      "forbiddenHits": [],
+      "humanAnswerReview": "pending"
+    },
+    {
+      "id": "R4-C3-01",
+      "referenceQuestionId": "C3-02",
+      "theme": "C3",
+      "question": "把顾客放在心上，是不是顾客说什么都得照办？",
+      "reviewFocus": "解释真诚服务不等于无条件满足所有要求。",
+      "expectedAnswerPoints": [
+        "明确真诚服务不等于无条件满足",
+        "顾客权益与企业权益都应以事实和规则为基础",
+        "不要借具体判决裁定一般服务问题"
+      ],
+      "forbiddenClaims": [
+        "顾客永远正确",
+        "企业可以无视合理投诉"
+      ],
+      "expectedMode": "general",
+      "actualMode": "general",
+      "requiredMoves": [
+        "简单说",
+        "具体来看",
+        "为什么这么做",
+        "还要分清"
+      ],
+      "retrievedChunkIds": [
+        "interview-trust-returns-and-complaints",
+        "tsinghua-customer-value-creation",
+        "yudonglai-red-underwear-track-boundary",
+        "xinhua-rest-to-service-mechanism",
+        "book-learn-pdl-flywheel-logic"
+      ],
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "recallPass": true,
+        "isolationPass": true,
+        "modePass": true,
+        "movesPass": true,
+        "noInternalTermsPass": true,
+        "retrievalReady": true,
+        "contractPass": true
+      },
+      "forbiddenHits": [],
+      "humanAnswerReview": "pending"
+    },
+    {
+      "id": "R4-C3-02",
+      "referenceQuestionId": "C3-07",
+      "theme": "C3",
+      "question": "茶叶里有苍蝇的反馈中，客服处理能怎么看出它的服务文化？",
+      "reviewFocus": "只观察客服处理方式，不判断茶叶反馈真伪。",
+      "expectedAnswerPoints": [
+        "先说明企业承认客服流程问题并致歉的公开说法",
+        "把文化理解写成对公开、负责和纠错的观察",
+        "不得判断顾客反馈本身真伪"
+      ],
+      "forbiddenClaims": [
+        "企业致歉证明茶叶中异物事实已经查明",
+        "用一般企业文化资料裁定案例"
+      ],
+      "expectedMode": "event",
+      "actualMode": "event",
+      "requiredMoves": [
+        "这件事现在知道什么",
+        "企业当时怎么处理",
+        "后来有没有明确结论",
+        "这件事让我们观察什么"
+      ],
+      "retrievedChunkIds": [
+        "tea-fly-timeline",
+        "tea-fly-report-stage",
+        "tea-fly-investigation-team",
+        "tea-fly-preliminary-actions",
+        "tea-fly-customer-service-apology",
+        "tea-fly-evidence-boundary"
+      ],
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "recallPass": true,
+        "isolationPass": true,
+        "modePass": true,
+        "movesPass": true,
+        "noInternalTermsPass": true,
+        "retrievalReady": true,
+        "contractPass": true
+      },
+      "forbiddenHits": [],
+      "humanAnswerReview": "pending"
+    },
+    {
+      "id": "R4-C3-03",
+      "referenceQuestionId": "C3-08",
+      "theme": "C3",
+      "question": "现在投诉胖东来一次，顾客固定能拿多少奖励？",
+      "reviewFocus": "说明存在投诉奖励相关公开表述，但不能推出当前固定金额。",
+      "expectedAnswerPoints": [
+        "说明当前资料没有最新统一金额与完整条件",
+        "区分顾客投诉奖、员工委屈奖和法院赔偿"
+      ],
+      "forbiddenClaims": [
+        "用委屈奖金额回答顾客投诉奖",
+        "编造固定奖励金额"
+      ],
+      "expectedMode": "general",
+      "actualMode": "general",
+      "requiredMoves": [
+        "简单说",
+        "具体来看",
+        "为什么这么做",
+        "还要分清"
+      ],
+      "retrievedChunkIds": [
+        "interview-trust-returns-and-complaints"
+      ],
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "recallPass": true,
+        "isolationPass": true,
+        "modePass": true,
+        "movesPass": true,
+        "noInternalTermsPass": true,
+        "retrievalReady": true,
+        "contractPass": true
+      },
+      "forbiddenHits": [],
+      "humanAnswerReview": "pending"
+    },
+    {
+      "id": "R4-C4-01",
+      "referenceQuestionId": "C4-01",
+      "theme": "C4",
+      "question": "胖东来怎样理解商品品质、价格和供应商之间的关系？",
+      "reviewFocus": "把品质、价格、供应商与企业信誉放在同一经营关系里解释。",
+      "expectedAnswerPoints": [
+        "说明品质、合理价格、供应商合作与企业信誉相关",
+        "区分企业表述和案例作者分析",
+        "不编造具体采购标准"
+      ],
+      "forbiddenClaims": [
+        "现有资料已公开完整供应商审核制度"
+      ],
+      "expectedMode": "general",
+      "actualMode": "general",
+      "requiredMoves": [
+        "简单说",
+        "具体来看",
+        "为什么这么做",
+        "还要分清"
+      ],
+      "retrievedChunkIds": [
+        "interview-quality-suppliers-and-scale",
+        "xinhua-yonghui-product-restructure",
+        "tsinghua-supply-chain-competitor-value",
+        "tsinghua-customer-value-creation",
+        "jiemian-culture-boundary-and-disputes"
+      ],
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "recallPass": true,
+        "isolationPass": true,
+        "modePass": true,
+        "movesPass": true,
+        "noInternalTermsPass": true,
+        "retrievalReady": true,
+        "contractPass": true
+      },
+      "forbiddenHits": [],
+      "humanAnswerReview": "pending"
+    },
+    {
+      "id": "R4-C4-02",
+      "referenceQuestionId": "C4-04",
+      "theme": "C4",
+      "question": "那是不是监管部门已经证明这些鸡蛋肯定没问题？",
+      "reviewFocus": "企业送检回应不能写成监管最终结论。",
+      "expectedAnswerPoints": [
+        "结合上下文识别为鲜鸡蛋角黄素案例",
+        "区分企业送检与监管结论",
+        "明确尚无知识库可核验的监管终局"
+      ],
+      "forbiddenClaims": [
+        "监管部门已经最终证明所有鸡蛋无问题"
+      ],
+      "expectedMode": "event",
+      "actualMode": "event",
+      "requiredMoves": [
+        "这件事现在知道什么",
+        "企业当时怎么处理",
+        "后来有没有明确结论",
+        "这件事让我们观察什么"
+      ],
+      "retrievedChunkIds": [
+        "egg-canthaxanthin-report-stage",
+        "egg-canthaxanthin-company-stated-testing",
+        "egg-canthaxanthin-other-testing-context",
+        "egg-canthaxanthin-company-legal-position"
+      ],
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "recallPass": true,
+        "isolationPass": true,
+        "modePass": true,
+        "movesPass": true,
+        "noInternalTermsPass": true,
+        "retrievalReady": true,
+        "contractPass": true
+      },
+      "forbiddenHits": [],
+      "humanAnswerReview": "pending"
+    },
+    {
+      "id": "R4-C4-03",
+      "referenceQuestionId": "C4-07",
+      "theme": "C4",
+      "question": "茶叶苍蝇反馈最后查清了吗？别拿鸡蛋检测来回答。",
+      "reviewFocus": "茶叶案例不得混用鸡蛋检测资料，后续结论缺失要直说。",
+      "expectedAnswerPoints": [
+        "明确目前只能看到企业初步说明",
+        "说明尚未见知识库可核验的后续终局",
+        "严格排除鸡蛋和其他案例"
+      ],
+      "forbiddenClaims": [
+        "茶叶反馈已经最终查明",
+        "引用鸡蛋送检结果"
+      ],
+      "expectedMode": "event",
+      "actualMode": "event",
+      "requiredMoves": [
+        "这件事现在知道什么",
+        "企业当时怎么处理",
+        "后来有没有明确结论",
+        "这件事让我们观察什么"
+      ],
+      "retrievedChunkIds": [
+        "tea-fly-timeline",
+        "tea-fly-report-stage",
+        "tea-fly-investigation-team",
+        "tea-fly-preliminary-actions",
+        "tea-fly-customer-service-apology",
+        "tea-fly-evidence-boundary"
+      ],
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "recallPass": true,
+        "isolationPass": true,
+        "modePass": true,
+        "movesPass": true,
+        "noInternalTermsPass": true,
+        "retrievalReady": true,
+        "contractPass": true
+      },
+      "forbiddenHits": [],
+      "humanAnswerReview": "pending"
+    },
+    {
+      "id": "R4-C5-01",
+      "referenceQuestionId": "C5-01",
+      "theme": "C5",
+      "question": "胖东来为什么一直不盲目扩张？",
+      "reviewFocus": "用公开经营取向解释不盲目扩张，不把取向写成永久事实。",
+      "expectedAnswerPoints": [
+        "说明质量、员工状态、顾客体验与规模速度的取舍",
+        "把公开表述与外部分析分开归因",
+        "不把区域门店数量直接当成原因"
+      ],
+      "forbiddenClaims": [
+        "唯一原因就是老板不想赚钱"
+      ],
+      "expectedMode": "general",
+      "actualMode": "general",
+      "requiredMoves": [
+        "简单说",
+        "具体来看",
+        "为什么这么做",
+        "还要分清"
+      ],
+      "retrievedChunkIds": [
+        "interview-quality-suppliers-and-scale"
+      ],
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "recallPass": true,
+        "isolationPass": true,
+        "modePass": true,
+        "movesPass": true,
+        "noInternalTermsPass": true,
+        "retrievalReady": true,
+        "contractPass": true
+      },
+      "forbiddenHits": [],
+      "humanAnswerReview": "pending"
+    },
+    {
+      "id": "R4-C5-02",
+      "referenceQuestionId": "C5-02",
+      "theme": "C5",
+      "question": "开店开得慢，到底是克制，还是其实没有全国经营能力？",
+      "reviewFocus": "同时呈现经营克制与能力质疑，不替用户下单向结论。",
+      "expectedAnswerPoints": [
+        "承认价值选择与现实能力约束可以同时存在",
+        "现有资料能说明品质优先等公开逻辑",
+        "不能证明其全国扩张能力的反事实"
+      ],
+      "forbiddenClaims": [
+        "仅凭未全国开店就证明完全没有能力",
+        "仅凭文化表述就证明随时可以全国扩张"
+      ],
+      "expectedMode": "general",
+      "actualMode": "general",
+      "requiredMoves": [
+        "简单说",
+        "具体来看",
+        "为什么这么做",
+        "还要分清"
+      ],
+      "retrievedChunkIds": [
+        "interview-quality-suppliers-and-scale",
+        "tsinghua-development-quality-first",
+        "xinhua-6a-quality-before-scale",
+        "xinhua-yonghui-replication-boundary",
+        "tsinghua-replication-limits"
+      ],
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "recallPass": true,
+        "isolationPass": true,
+        "modePass": true,
+        "movesPass": true,
+        "noInternalTermsPass": true,
+        "retrievalReady": true,
+        "contractPass": true
+      },
+      "forbiddenHits": [],
+      "humanAnswerReview": "pending"
+    },
+    {
+      "id": "R4-C5-03",
+      "referenceQuestionId": "C5-08",
+      "theme": "C5",
+      "question": "胖东来今年净利润率多少，未来三年准备开多少家店？",
+      "reviewFocus": "明确缺少当年净利率和未来三年开店计划，不用门店数代替。",
+      "expectedAnswerPoints": [
+        "明确当前知识库没有最新净利润率和三年开店计划",
+        "不从门店数量或理念表述推算经营计划"
+      ],
+      "forbiddenClaims": [
+        "编造利润率或扩张数字"
+      ],
+      "expectedMode": "insufficient",
+      "actualMode": "insufficient",
+      "requiredMoves": [
+        "简单说",
+        "目前能确认什么",
+        "为什么还不能下结论",
+        "还缺什么信息"
+      ],
+      "retrievedChunkIds": [],
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "recallPass": true,
+        "isolationPass": true,
+        "modePass": true,
+        "movesPass": true,
+        "noInternalTermsPass": true,
+        "retrievalReady": true,
+        "contractPass": true
+      },
+      "forbiddenHits": [],
+      "humanAnswerReview": "pending"
+    },
+    {
+      "id": "R4-C6-01",
+      "referenceQuestionId": "C6-01",
+      "theme": "C6",
+      "question": "一场客诉争议，能不能检验胖东来的‘自由与爱’？",
+      "reviewFocus": "说明争议可观察文化是否落实，但单一事件不能证明整套文化真伪。",
+      "expectedAnswerPoints": [
+        "说明争议可以观察公开、尊重、纠错和责任",
+        "单个案例不能证明整套文化真伪",
+        "没有具体事件名时不擅自进入某一案例"
+      ],
+      "forbiddenClaims": [
+        "一次争议足以证明整个文化真实或虚假"
+      ],
+      "expectedMode": "general",
+      "actualMode": "general",
+      "requiredMoves": [
+        "简单说",
+        "具体来看",
+        "为什么这么做",
+        "还要分清"
+      ],
+      "retrievedChunkIds": [
+        "yudonglai-red-underwear-track-boundary",
+        "xinhua-6a-quality-before-scale",
+        "jiemian-culture-boundary-and-disputes",
+        "jiemian-freedom-love-rousseau-origin",
+        "xinhua-yonghui-replication-boundary"
+      ],
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "recallPass": true,
+        "isolationPass": true,
+        "modePass": true,
+        "movesPass": true,
+        "noInternalTermsPass": true,
+        "retrievalReady": true,
+        "contractPass": true
+      },
+      "forbiddenHits": [],
+      "humanAnswerReview": "pending"
+    },
+    {
+      "id": "R4-C6-02",
+      "referenceQuestionId": "C6-05",
+      "theme": "C6",
+      "question": "红内库掉色那件事最后怎么判的？",
+      "reviewFocus": "分开企业调查、诉讼主张、民事一审判决与食安监管终局。",
+      "expectedAnswerPoints": [
+        "识别‘红内库’为‘红内裤’",
+        "说明公开材料记录的是民事一审判决",
+        "区分一审报道与裁判文书全文及其他事件事实"
+      ],
+      "forbiddenClaims": [
+        "一审判决等于监管对商品质量作出最终认定",
+        "跨到茶叶或鸡蛋案例"
+      ],
+      "expectedMode": "event",
+      "actualMode": "event",
+      "requiredMoves": [
+        "这件事现在知道什么",
+        "企业当时怎么处理",
+        "后来有没有明确结论",
+        "这件事让我们观察什么"
+      ],
+      "retrievedChunkIds": [
+        "red-underwear-early-takedown-and-team",
+        "red-underwear-early-apology",
+        "red-underwear-report-testing-and-staff",
+        "red-underwear-report-customer-and-legal",
+        "red-underwear-lawsuit-filing",
+        "red-underwear-judgment-source-boundary",
+        "red-underwear-judgment-outcome",
+        "red-underwear-judgment-handling-timeline",
+        "red-underwear-judgment-testing-loss-and-reach",
+        "red-underwear-judgment-reasoning",
+        "thepaper-red-underwear-commentary-source",
+        "thepaper-red-underwear-judgment-background",
+        "thepaper-red-underwear-rights-boundary",
+        "thepaper-red-underwear-enterprise-and-consumer",
+        "thepaper-red-underwear-cultural-boundary",
+        "civiw-red-underwear-source-window",
+        "civiw-red-underwear-volume-and-peaks",
+        "civiw-red-underwear-platform-share",
+        "civiw-red-underwear-volume-and-sentiment",
+        "civiw-red-underwear-type-region",
+        "civiw-red-underwear-multi-voice-boundary",
+        "yudonglai-red-underwear-source-chain",
+        "yudonglai-red-underwear-rationality",
+        "yudonglai-red-underwear-law-and-responsibility",
+        "yudonglai-red-underwear-track-boundary"
+      ],
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "recallPass": true,
+        "isolationPass": true,
+        "modePass": true,
+        "movesPass": true,
+        "noInternalTermsPass": true,
+        "retrievalReady": true,
+        "contractPass": true
+      },
+      "forbiddenHits": [],
+      "humanAnswerReview": "pending"
+    },
+    {
+      "id": "R4-C6-03",
+      "referenceQuestionId": "C6-06",
+      "theme": "C6",
+      "question": "既然胖东来也会发生争议，‘自由与爱’是不是就是假的？",
+      "reviewFocus": "正面回应‘文化是不是假的’，既不回避争议也不以争议一票否决。",
+      "expectedAnswerPoints": [
+        "不回避争议与文化承诺之间的张力",
+        "文化应通过长期机制和具体处理接受检验",
+        "单一争议不足以宣布整套文化真伪"
+      ],
+      "forbiddenClaims": [
+        "有争议就证明文化全假",
+        "企业有文化口号就证明所有争议都不成立"
+      ],
+      "expectedMode": "general",
+      "actualMode": "general",
+      "requiredMoves": [
+        "简单说",
+        "具体来看",
+        "为什么这么做",
+        "还要分清"
+      ],
+      "retrievedChunkIds": [
+        "yudonglai-red-underwear-track-boundary",
+        "jiemian-culture-boundary-and-disputes",
+        "jiemian-freedom-love-rousseau-origin",
+        "xinhua-yonghui-replication-boundary",
+        "xinhua-culture-love-five-levels"
+      ],
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "recallPass": true,
+        "isolationPass": true,
+        "modePass": true,
+        "movesPass": true,
+        "noInternalTermsPass": true,
+        "retrievalReady": true,
+        "contractPass": true
+      },
+      "forbiddenHits": [],
+      "humanAnswerReview": "pending"
+    }
+  ]
+}

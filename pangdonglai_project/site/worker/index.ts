@@ -3,6 +3,7 @@ import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } fr
 import handler from "vinext/server/app-router-entry";
 import knowledgeBase from "../../knowledge/compiled/knowledge-base.json";
 import { CHAT_ROLES, type ChatRequestMessage, type ChatRole, type ChatSource } from "../shared/chat";
+import { createR4AnswerGuidance } from "../shared/answer-guidance.mjs";
 import { createKnowledgeRetriever } from "../shared/retrieval.mjs";
 
 interface Env {
@@ -262,12 +263,18 @@ function buildSystemPrompt(plan: SearchPlan) {
     : "本次检索没有命中任何已审核资料（含 approved 与 limited 非事件资料）。";
 
   const trackInstructions = plan.track === "case" && plan.caseRecord
-    ? `【这次问题的回答边界】\n事件：${plan.caseRecord.title}\n需要先说明：${describeCaseStage(plan.caseRecord)}\n它值得怎样理解：${plan.caseRecord.culturalLens}\n用户是否在问后续结论：${plan.asksForFinality ? "是" : "否"}\n回答顺序：先自然地回答企业当时公开怎么说，再用一句自然语言说明有没有后续结论，最后把文化理解写成“值得观察的问题”，不要裁定客诉真伪。不得引用其他案例或企业理念资料来裁定本案例事实。`
+    ? `【这次问题的回答边界】\n事件：${plan.caseRecord.title}\n需要先说明：${describeCaseStage(plan.caseRecord)}\n它值得怎样理解：${plan.caseRecord.culturalLens}\n用户是否在问后续结论：${plan.asksForFinality ? "是" : "否"}\n不得引用其他案例或企业理念资料来裁定本案例事实。`
     : plan.insufficientReason
       ? `【一般资料问答】\n${plan.insufficientReason} 请直接、自然地说明资料不足，不要用相近主题、历史数字或一般理念拼出用户要求的表格、名单、金额或结论。`
       : "【一般资料问答】\n只能引用直接支持当前问题的资料；不要为了凑来源列出不相关资料。";
 
-  return `${BASE_SYSTEM_PROMPT}\n\n${trackInstructions}\n\n【检索到的资料】\n${evidence}`;
+  const answerGuidance = createR4AnswerGuidance({
+    track: plan.track,
+    insufficientReason: plan.insufficientReason,
+    hasEvidence: plan.retrieved.length > 0,
+  }).prompt;
+
+  return `${BASE_SYSTEM_PROMPT}\n\n${trackInstructions}\n\n${answerGuidance}\n\n【检索到的资料】\n${evidence}`;
 }
 
 function streamEvent(value: unknown) {

@@ -57,6 +57,51 @@ test("keeps store content and chat contract outside their UI and Worker entrypoi
   assert.equal(regions.flatMap((region) => region.stores).length, 14);
 });
 
+test("defines and validates the R4 answer contract across all six culture themes", async () => {
+  const [guidance, r4Set, evaluation, packageJson] = await Promise.all([
+    import("../shared/answer-guidance.mjs"),
+    readFile(new URL("../../evaluation/rag-culture-r4-answer-set-v1.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../evaluation/rag-culture-r4-contract-evaluation.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../package.json", import.meta.url), "utf8").then(JSON.parse),
+  ]);
+
+  assert.deepEqual(guidance.R4_GENERAL_FLOW, ["简单说", "具体来看", "为什么这么做", "还要分清"]);
+  assert.deepEqual(guidance.R4_EVENT_FLOW, [
+    "这件事现在知道什么",
+    "企业当时怎么处理",
+    "后来有没有明确结论",
+    "这件事让我们观察什么",
+  ]);
+
+  const general = guidance.createR4AnswerGuidance({ track: "general", hasEvidence: true });
+  assert.equal(general.mode, "general");
+  assert.match(general.prompt, /一至三个最相关、可核验的做法或例子/);
+  assert.match(general.prompt, /不是必须逐字显示的四个标题/);
+
+  const insufficient = guidance.createR4AnswerGuidance({ track: "general", hasEvidence: false });
+  assert.equal(insufficient.mode, "insufficient");
+  assert.match(insufficient.prompt, /还缺什么信息/);
+  assert.match(insufficient.prompt, /不得用相近主题、历史数字、一般理念或常识猜测/);
+
+  const event = guidance.createR4AnswerGuidance({ track: "case", hasEvidence: true });
+  assert.equal(event.mode, "event");
+  assert.match(event.prompt, /不能用文化口号裁定客诉真伪/);
+
+  assert.equal(r4Set.questions.length, 18);
+  assert.deepEqual(evaluation.summary.themeDistribution, {
+    C1: 3,
+    C2: 3,
+    C3: 3,
+    C4: 3,
+    C5: 3,
+    C6: 3,
+  });
+  assert.equal(evaluation.summary.contractPassed, 18);
+  assert.equal(evaluation.summary.humanAnswerReviewPending, 18);
+  assert.ok(evaluation.results.every((result) => result.checks.contractPass));
+  assert.match(packageJson.scripts["rag:evaluate:r4-contract"], /evaluate-rag-r4-contract/);
+});
+
 test("builds the RAG index from the directory knowledge source of truth", async () => {
   const manifest = JSON.parse(
     await readFile(new URL("../../knowledge/manifest.json", import.meta.url), "utf8"),
@@ -610,6 +655,11 @@ test("streams BM25-grounded DeepSeek tokens and verified sources", async () => {
     assert.match(deepseekRequest.messages[0].content, /DeepSeek 模型 deepseek-v4-flash/);
     assert.match(deepseekRequest.messages[0].content, /常规营业安排与周二闭店说明/);
     assert.match(deepseekRequest.messages[0].content, /只能依据下方“检索到的资料”回答具体事实/);
+    assert.match(deepseekRequest.messages[0].content, /简单说/);
+    assert.match(deepseekRequest.messages[0].content, /具体来看/);
+    assert.match(deepseekRequest.messages[0].content, /为什么这么做/);
+    assert.match(deepseekRequest.messages[0].content, /还要分清/);
+    assert.match(deepseekRequest.messages[0].content, /不是必须逐字显示的四个标题/);
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -643,6 +693,9 @@ test("does not attach store sources when only the generic brand name matches", a
 
     const body = await response.text();
     assert.match(deepseekRequest.messages[0].content, /本次检索没有命中任何已审核资料/);
+    assert.match(deepseekRequest.messages[0].content, /目前能确认什么/);
+    assert.match(deepseekRequest.messages[0].content, /为什么还不能下结论/);
+    assert.match(deepseekRequest.messages[0].content, /还缺什么信息/);
     assert.doesNotMatch(body, /"type":"sources"/);
     assert.match(body, /"type":"done"/);
   } finally {
@@ -1143,6 +1196,11 @@ test("keeps a limited event response inside its case and forbids finality langua
     assert.match(prompt, /目前能看到的是企业当时的公开回应，后续调查结论尚未见到/);
     assert.match(prompt, /用户是否在问后续结论：是/);
     assert.match(prompt, /不得引用其他案例或企业理念资料来裁定本案例事实/);
+    assert.match(prompt, /这件事现在知道什么/);
+    assert.match(prompt, /企业当时怎么处理/);
+    assert.match(prompt, /后来有没有明确结论/);
+    assert.match(prompt, /这件事让我们观察什么/);
+    assert.match(prompt, /不能用文化口号裁定客诉真伪/);
     assert.doesNotMatch(prompt, /人民日报于东来访谈/);
     assert.doesNotMatch(prompt, /胖东来简介/);
     assert.doesNotMatch(prompt, /L1|L2|caseId|claimType|finality|preliminary_only|资料说明/);

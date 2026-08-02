@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "1.0",
+  "id": "rag-culture-r4-answer-set-v1",
+  "title": "胖东来文化 R4 大众回答评测集 V1",
+  "createdAt": "2026-08-02",
+  "purpose": "用代表性真实问法检查回答是否先说人话、举相关做法、解释文化逻辑并保留必要边界；热点事件另按事件四步检查。",
+  "scope": "本评测集引用 54 题检索试卷中的内容预期和禁用断言，不修改原试卷。自动脚本只检查检索上下文与回答契约是否准备完整；真实模型答案仍需按本试卷人工验收。",
+  "scoringPolicy": {
+    "directness": "第一段直接回应用户，不以检索过程、证据等级或来源清单开场。",
+    "evidence": "通常选择一至三个直接相关、可核验的做法或例子，不堆砌资料。",
+    "understanding": "解释做法与员工、顾客、经营或责任的关系，不用口号代替分析。",
+    "boundary": "自然说明会改变结论的归因、时间、适用范围、争议或资料缺口。",
+    "event": "事件题必须分开表达当前所知、企业处理、后续结论和文化观察，文化不能裁定客诉真伪。",
+    "manualPass": "一条回答须覆盖原题 expectedAnswerPoints、避开 forbiddenClaims，并满足对应 R4 理解顺序。"
+  },
+  "questions": [
+    { "id": "R4-C1-01", "referenceQuestionId": "C1-02", "expectedMode": "general", "reviewFocus": "用具体做法回应‘漂亮话’质疑，同时承认现有资料不能代表每位员工体验。" },
+    { "id": "R4-C1-02", "referenceQuestionId": "C1-08", "expectedMode": "insufficient", "reviewFocus": "直接说明没有 2026 完整薪酬表，不拿历史数字拼答案。" },
+    { "id": "R4-C1-03", "referenceQuestionId": "C1-12", "expectedMode": "event", "reviewFocus": "分清初次处分、内部复议与尚未见到的仲裁或法院结论。" },
+
+    { "id": "R4-C2-01", "referenceQuestionId": "C2-01", "expectedMode": "general", "reviewFocus": "说明一线授权的具体作用和它与顾客、责任的关系。" },
+    { "id": "R4-C2-02", "referenceQuestionId": "C2-06", "expectedMode": "general", "reviewFocus": "公平回应个人魅力质疑，区分组织机制与对未来的推断。" },
+    { "id": "R4-C2-03", "referenceQuestionId": "C2-08", "expectedMode": "insufficient", "reviewFocus": "明确没有逐岗位权限表，不编造赔付金额。" },
+
+    { "id": "R4-C3-01", "referenceQuestionId": "C3-02", "expectedMode": "general", "reviewFocus": "解释真诚服务不等于无条件满足所有要求。" },
+    { "id": "R4-C3-02", "referenceQuestionId": "C3-07", "expectedMode": "event", "reviewFocus": "只观察客服处理方式，不判断茶叶反馈真伪。" },
+    { "id": "R4-C3-03", "referenceQuestionId": "C3-08", "expectedMode": "general", "reviewFocus": "说明存在投诉奖励相关公开表述，但不能推出当前固定金额。" },
+
+    { "id": "R4-C4-01", "referenceQuestionId": "C4-01", "expectedMode": "general", "reviewFocus": "把品质、价格、供应商与企业信誉放在同一经营关系里解释。" },
+    { "id": "R4-C4-02", "referenceQuestionId": "C4-04", "expectedMode": "event", "reviewFocus": "企业送检回应不能写成监管最终结论。" },
+    { "id": "R4-C4-03", "referenceQuestionId": "C4-07", "expectedMode": "event", "reviewFocus": "茶叶案例不得混用鸡蛋检测资料，后续结论缺失要直说。" },
+
+    { "id": "R4-C5-01", "referenceQuestionId": "C5-01", "expectedMode": "general", "reviewFocus": "用公开经营取向解释不盲目扩张，不把取向写成永久事实。" },
+    { "id": "R4-C5-02", "referenceQuestionId": "C5-02", "expectedMode": "general", "reviewFocus": "同时呈现经营克制与能力质疑，不替用户下单向结论。" },
+    { "id": "R4-C5-03", "referenceQuestionId": "C5-08", "expectedMode": "insufficient", "reviewFocus": "明确缺少当年净利率和未来三年开店计划，不用门店数代替。" },
+
+    { "id": "R4-C6-01", "referenceQuestionId": "C6-01", "expectedMode": "general", "reviewFocus": "说明争议可观察文化是否落实，但单一事件不能证明整套文化真伪。" },
+    { "id": "R4-C6-02", "referenceQuestionId": "C6-05", "expectedMode": "event", "reviewFocus": "分开企业调查、诉讼主张、民事一审判决与食安监管终局。" },
+    { "id": "R4-C6-03", "referenceQuestionId": "C6-06", "expectedMode": "general", "reviewFocus": "正面回应‘文化是不是假的’，既不回避争议也不以争议一票否决。" }
+  ]
+}

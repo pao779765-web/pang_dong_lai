@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-08-02
 
-**当前执行者：** Codex 已完成 Query 改写 V1 与回答用途过滤 V1；固定 54 题当前检索为 54/54，下一项进入 R4 文化型回答结构评测，暂不接向量库
+**当前执行者：** Codex 已将 R4 大众回答契约接入本地 Worker，并建立 18 道代表题；自动契约检查 18/18，下一项是本地真实回答人工验收，暂不接向量库
 **分支：** `main`
 
 ---
@@ -65,7 +65,8 @@
 - [x] **RAG-CULTURE-R3B（用户批准继续）**：新增规则式 Query 文化主线识别，54/54 题均包含预期主线；只对原 BM25 已通过证据门槛的非案例候选做小权重重排，不扩大候选范围。3%、5%、8%、12%、20% 五档权重均保持 39/54，新增通过和退步均为 0，隔离 51/54、终局 54/54、无答案安全 6/6 不变。因未提高综合通过题数，不启用到网站正式检索；详见 `docs/RAG_CULTURE_BM25_THEME_RERANK_EXPERIMENT.md`。
 - [x] **RAG-CULTURE-R3C（用户批准继续）**：完成可审计 Query 改写 V1；使用固定领域错字表与 10 条审核短语扩展，保留原问题和逐条改写记录，案例路由只使用纠错结果、不使用扩展词。相较启用前控制组 39/54，实验与当前本地正式检索均为 50/54（92.6%），新增通过 11 题、零退步；路由 54/54、终局 54/54、无答案安全 6/6，隔离保持 51/54。已进入本地 Worker 和当前评测，未部署 CloudBase；详见 `docs/RAG_CULTURE_QUERY_REWRITE_V1_EXPERIMENT.md`。
 - [x] **RAG-CULTURE-R3D（用户批准继续）**：完成回答用途过滤 V1；区分“薪酬福利与文化关系”“经营表现与授权文化复制证明”“顾客投诉奖与员工委屈奖”，并对未指定案例的企业自行送检终局问题启用资料不足闸门。薪酬文化题只前置直接支持资料，不删除相关观点；复制证明与投诉奖题才执行用途过滤。相较 50/54 控制组新增通过剩余 4 题、零退步，固定试卷当前为 54/54；召回、路由、隔离、终局和无答案安全均达到该试卷满分。已进入本地 Worker，未部署 CloudBase；详见 `docs/RAG_CULTURE_ANSWER_PURPOSE_FILTER_V1_EXPERIMENT.md`。满分仅表示当前固定题集通过，不代表通用充分性判断已经完成。
-- [x] **RAG-CULTURE-R4-SPEC（用户已确认）**：R4 的内部“回答—做法—文化逻辑—边界”改为面向大众的“简单说—具体来看—为什么这么做—还要分清”；热点事件使用“这件事现在知道什么—企业当时怎么处理—后来有没有明确结论—这件事让我们观察什么”。四步是自然组织原则，不强制机械标题；内部归因、时间、事件阶段和不得裁定客诉真伪的约束不变。当前只完成规范，尚未修改系统提示词或建立回答级评测。
+- [x] **RAG-CULTURE-R4-SPEC（用户已确认）**：R4 的内部“回答—做法—文化逻辑—边界”改为面向大众的“简单说—具体来看—为什么这么做—还要分清”；热点事件使用“这件事现在知道什么—企业当时怎么处理—后来有没有明确结论—这件事让我们观察什么”。四步是自然组织原则，不强制机械标题；内部归因、时间、事件阶段和不得裁定客诉真伪的约束不变。该规范现已由 R4A 接入本地 Worker。
+- [x] **RAG-CULTURE-R4A（用户要求落地）**：已把一般文化、热点事件和资料不足三种大众回答方式集中到共享回答契约并接入本地 Worker；从原 54 题中选出 18 道回答级代表题，每条文化主线 3 道。自动检查 18/18 取得正确检索上下文与回答契约，36 项测试和 lint 通过。自动检查未调用 DeepSeek，真实回答人工验收仍未完成；未接向量库、未部署 CloudBase，详见 `docs/RAG_CULTURE_R4_IMPLEMENTATION.md`。
 - [ ] **RAG-CULTURE-R1**：用户已批准 C1“员工的尊严、自由与生活”首批两组资料。7 份资料、32 个片段和 3 个独立案例已按 `approved` / `limited` 范围入库，审核与结果见 `docs/SOURCE_AUDIT_C1_01.md`；知识库现有 30 份资料、135 个片段和 6 个案例。本阶段尚未完成后续 C1 一手资料主干，不得自动扩充。
 - [x] **RAG-RESEARCH-01**：建立 Codex 与 Grok 强制共用的互联网资料检索与 RAG 入库规范；明确候选池、来源优先级、企业身份核验、转载去重、事件阶段、用户批准、版权边界、入库测试和向量库接入条件，并在 `AGENTS.md` 设置任务前必读入口。
 - [x] **Codex【RAG-CASE-01】**：按 Grok 审核顺序完成“案例档案 + 事件事实/文化理解双轨回答”：定义 `caseId`、`claimType`、`finality` schema；事件轨仅引用同案例资料，文化轨不得裁定具体客诉真伪；无 `final` 证据时禁止终局话术；界面展示案例来源的证据阶段；补充误召回与最终结论边界测试。
@@ -114,7 +115,7 @@
 ### 给 Codex
 
 1. 资料架构只维护 `pangdonglai_project/knowledge/**`；禁止手工修改 `knowledge/compiled/knowledge-base.json` 或恢复旧根文件。
-2. `RAG-CULTURE-R0`、`RAG-CULTURE-R2/R2B` 与 `RAG-CULTURE-R3A/R3B/R3C/R3D` 已完成；R4 大众表达规范已由用户确认，但尚未改系统提示词或建立回答级评测。下一项按“简单说—具体来看—为什么这么做—还要分清”建立 R4 评测与实现；热点事件采用对应自然四步，在回答边界稳定前不接向量库。
+2. `RAG-CULTURE-R0`、`RAG-CULTURE-R2/R2B`、`RAG-CULTURE-R3A/R3B/R3C/R3D` 与 `RAG-CULTURE-R4A` 已完成；R4 本地回答契约和 18 道代表题已建立。下一项是生成这 18 道真实回答并按试卷人工验收；在回答边界稳定前不接向量库。
 3. 所有 RAG 工作先读 `docs/RAG_RESEARCH_PROTOCOL.md` 和 `docs/RAG_CULTURE_ROADMAP.md`；不修改原始 HTML，完成后更新本 HANDOFF 并小步提交。
 
 ### 给 Grok
@@ -160,6 +161,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-02 | Codex | 按用户要求将 R4 正式接入本地 Worker：一般文化、热点事件和资料不足分别使用对应大众理解顺序，且不强制机械标题；从原 54 题选出 18 道代表题并建立可重复的回答契约检查，18/18 通过。36 项测试与 lint 通过。自动检查未调用 DeepSeek，真实回答仍待人工验收；未接向量库、未部署 | site/shared/answer-guidance.mjs, site/worker/index.ts, site/scripts/evaluate-rag-r4-contract.mjs, site/tests/rendered-html.test.mjs, site/package.json, evaluation/rag-culture-r4-*.json, docs/RAG_CULTURE_R4_IMPLEMENTATION.md, docs/RAG_CULTURE_ROADMAP.md, docs/PLAN.md, docs/HANDOFF.md |
 | 2026-08-02 | Codex | 按用户确认将 R4 从内部术语“回答—做法—文化逻辑—边界”改写为大众表达“简单说—具体来看—为什么这么做—还要分清”；同时确定热点事件的自然四步、可合并但不可省略重要边界的规则和回答级验收标准。当前仅更新规范与交接，未修改提示词、检索代码或云端版本 | docs/RAG_CULTURE_ROADMAP.md, docs/PLAN.md, docs/HANDOFF.md |
 | 2026-08-02 | Codex | 继续处理 50/54 后剩余四题，完成回答用途过滤 V1：薪酬文化题只前置直接证据；授权文化复制证明排除不能证明文化复制的经营数据；当前顾客投诉奖排除员工委屈奖和具体事件金额；未指定案例的企业自行送检终局问题进入资料不足闸门。对照实验由 50/54 升至 54/54、零退步，隔离由 51/54 升至 54/54，其余安全指标保持满分；已进入本地 Worker。35 项测试、构建和 lint 通过，未接向量库、未部署 | site/shared/retrieval.mjs, site/worker/index.ts, site/scripts/evaluate-rag-baseline.mjs, site/package.json, site/tests/rendered-html.test.mjs, evaluation/rag-culture-*.json, docs/RAG_CULTURE_*.md, docs/HANDOFF.md |
 | 2026-08-02 | Codex | 按用户要求继续完成可审计 Query 改写 V1：固定领域错字修正与 10 条审核口语/同义扩展均保留原问题和审计记录，案例路由不使用扩展词。54 题由 39/54 升至 50/54，新增通过 11 题、零退步；路由与终局均 54/54、无答案安全 6/6、隔离保持 51/54，满足启用门槛并进入本地 Worker；新增启用前冻结控制组、实验报告和回归测试。34 项测试及 lint 通过，未接向量库、未部署 | site/shared/retrieval.mjs, site/worker/index.ts, site/scripts/evaluate-rag-baseline.mjs, site/package.json, site/tests/rendered-html.test.mjs, evaluation/rag-culture-*.json, docs/RAG_CULTURE_*.md, docs/HANDOFF.md |

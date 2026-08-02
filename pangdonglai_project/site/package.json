@@ -12,6 +12,7 @@
     "rag:evaluate:theme-rerank": "npm run rag:evaluate && node scripts/evaluate-rag-baseline.mjs --current --culture-rerank=0.05",
     "rag:evaluate:query-rewrite-v1": "npm run knowledge:build && node scripts/evaluate-rag-baseline.mjs --current --query-rewrite-v1",
     "rag:evaluate:answer-purpose-filter-v1": "npm run knowledge:build && node scripts/evaluate-rag-baseline.mjs --current --adopt-query-rewrite-v1 --answer-purpose-filter-v1",
+    "rag:evaluate:r4-contract": "npm run knowledge:build && node scripts/evaluate-rag-r4-contract.mjs",
     "predev": "npm run knowledge:build",
     "dev": "vinext dev",
     "prebuild": "npm run knowledge:build",
