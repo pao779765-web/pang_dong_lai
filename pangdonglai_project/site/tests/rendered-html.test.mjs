@@ -102,6 +102,28 @@ test("defines and validates the R4 answer contract across all six culture themes
   assert.match(packageJson.scripts["rag:evaluate:r4-contract"], /evaluate-rag-r4-contract/);
 });
 
+test("records the real R4 model run without storing the API key", async () => {
+  const [answers, review, runner, packageJson] = await Promise.all([
+    readFile(new URL("../../evaluation/rag-culture-r4-live-answers-v1.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../evaluation/rag-culture-r4-human-review-v1.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../scripts/evaluate-rag-r4-live.mjs", import.meta.url), "utf8"),
+    readFile(new URL("../package.json", import.meta.url), "utf8").then(JSON.parse),
+  ]);
+
+  assert.equal(answers.summary.completed, 18);
+  assert.equal(answers.summary.failed, 0);
+  assert.equal(answers.configuration.apiKeyStored, false);
+  assert.ok(answers.results.every((result) => result.answer && result.humanReview === "pending"));
+  assert.doesNotMatch(JSON.stringify(answers), /DEEPSEEK_API_KEY/);
+  assert.equal(review.summary.pass, 10);
+  assert.equal(review.summary.revise, 8);
+  assert.equal(review.summary.byMode.event.pass, 5);
+  assert.equal(review.reviews.length, 18);
+  assert.match(runner, /process\.env\.DEEPSEEK_API_KEY/);
+  assert.doesNotMatch(runner, /writeFile\([^\n]+apiKey/);
+  assert.match(packageJson.scripts["rag:evaluate:r4-live"], /evaluate-rag-r4-live/);
+});
+
 test("builds the RAG index from the directory knowledge source of truth", async () => {
   const manifest = JSON.parse(
     await readFile(new URL("../../knowledge/manifest.json", import.meta.url), "utf8"),
