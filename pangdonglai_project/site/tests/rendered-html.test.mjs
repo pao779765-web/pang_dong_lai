@@ -116,9 +116,18 @@ test("records the real R4 model run without storing the API key", async () => {
   assert.equal(answers.configuration.apiKeyStored, false);
   assert.ok(answers.results.every((result) => result.answer && result.humanReview === "pending"));
   assert.doesNotMatch(JSON.stringify(answers), /DEEPSEEK_API_KEY/);
-  assert.equal(review.summary.pass, 10);
-  assert.equal(review.summary.revise, 8);
-  assert.equal(review.summary.byMode.event.pass, 5);
+  assert.equal(review.runRound, 2);
+  assert.equal(review.summary.pass, 12);
+  assert.equal(review.summary.revise, 6);
+  assert.equal(review.summary.byMode.general.pass, 6);
+  assert.equal(review.summary.byMode.insufficient.pass, 3);
+  assert.equal(review.summary.byMode.event.pass, 3);
+  assert.deepEqual(review.summary.safeFallbacks, [
+    "R4-C1-01",
+    "R4-C3-02",
+    "R4-C4-02",
+    "R4-C6-01",
+  ]);
   assert.equal(review.reviews.length, 18);
   assert.match(runner, /process\.env\.DEEPSEEK_API_KEY/);
   assert.doesNotMatch(runner, /writeFile\([^\n]+apiKey/);

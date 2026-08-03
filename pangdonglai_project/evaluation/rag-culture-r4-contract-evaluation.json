@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "evaluationId": "rag-culture-r4-answer-set-v1",
-  "generatedAt": "2026-08-03T03:59:25.992Z",
+  "generatedAt": "2026-08-03T04:15:20.721Z",
   "configuration": {
     "retriever": "BM25 + Query 改写 V1 + 回答用途过滤 V1",
     "answerContract": "R4 大众回答结构",
