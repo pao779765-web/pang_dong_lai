@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-08-03
 
-**当前执行者：** Codex 已完成 R4 首轮真实 DeepSeek 评测；调用 18/18 成功，严格内容验收 10/18，下一项修复八道失败题，暂不接向量库
+**当前执行者：** Codex 已完成 R4 回答控制前三步：135 个 Claim、动态 AnswerPlan、生成后 AnswerValidation；下一项是经用户授权后运行第二轮真实 18 题评测，暂不接向量库
 **分支：** `main`
 
 ---
@@ -68,6 +68,7 @@
 - [x] **RAG-CULTURE-R4-SPEC（用户已确认）**：R4 的内部“回答—做法—文化逻辑—边界”改为面向大众的“简单说—具体来看—为什么这么做—还要分清”；热点事件使用“这件事现在知道什么—企业当时怎么处理—后来有没有明确结论—这件事让我们观察什么”。四步是自然组织原则，不强制机械标题；内部归因、时间、事件阶段和不得裁定客诉真伪的约束不变。该规范现已由 R4A 接入本地 Worker。
 - [x] **RAG-CULTURE-R4A（用户要求落地）**：已把一般文化、热点事件和资料不足三种大众回答方式集中到共享回答契约并接入本地 Worker；从原 54 题中选出 18 道回答级代表题，每条文化主线 3 道。自动检查 18/18 取得正确检索上下文与回答契约，36 项测试和 lint 通过。自动检查未调用 DeepSeek，真实回答人工验收仍未完成；未接向量库、未部署 CloudBase，详见 `docs/RAG_CULTURE_R4_IMPLEMENTATION.md`。
 - [x] **RAG-CULTURE-R4B（用户明确授权真实评测）**：用户同意将18道题及相关已审核知识库片段发送给 DeepSeek。最新本地 R4 Worker 顺序调用 18/18 成功，平均 3.98 秒；严格人工验收 10/18。热点事件 5/5 通过，一般文化 4/10、资料不足 1/3；八道失败集中在时间错误、无关案例、遗漏关键区分和单向文化裁定。37 项测试与 lint 通过。结果证明当前不应开始 R5；未部署，详见 `docs/RAG_CULTURE_R4_LIVE_EVALUATION.md`。
+- [x] **RAG-CULTURE-R4C（用户要求直接完成前三步）**：不按八道失败题逐题追加提示词补丁；新增通用 Claim、AnswerPlan、AnswerValidation 三类对象。现有135个审核片段确定性生成135个 `claim-v1`，构建强制校验；每次问题只把允许事实与动态边界交给模型，首稿先检查数字、日期、跨案例、绝对判断与终局话术，失败自动重写一次，仍失败安全降级。固定检索54/54、R4自动契约18/18、41项测试与lint通过；未调用第二轮真实DeepSeek、未接向量库、未部署，详见 `docs/RAG_ANSWER_CONTROL_V1.md`。
 - [ ] **RAG-CULTURE-R1**：用户已批准 C1“员工的尊严、自由与生活”首批两组资料。7 份资料、32 个片段和 3 个独立案例已按 `approved` / `limited` 范围入库，审核与结果见 `docs/SOURCE_AUDIT_C1_01.md`；知识库现有 30 份资料、135 个片段和 6 个案例。本阶段尚未完成后续 C1 一手资料主干，不得自动扩充。
 - [x] **RAG-RESEARCH-01**：建立 Codex 与 Grok 强制共用的互联网资料检索与 RAG 入库规范；明确候选池、来源优先级、企业身份核验、转载去重、事件阶段、用户批准、版权边界、入库测试和向量库接入条件，并在 `AGENTS.md` 设置任务前必读入口。
 - [x] **Codex【RAG-CASE-01】**：按 Grok 审核顺序完成“案例档案 + 事件事实/文化理解双轨回答”：定义 `caseId`、`claimType`、`finality` schema；事件轨仅引用同案例资料，文化轨不得裁定具体客诉真伪；无 `final` 证据时禁止终局话术；界面展示案例来源的证据阶段；补充误召回与最终结论边界测试。
@@ -116,7 +117,7 @@
 ### 给 Codex
 
 1. 资料架构只维护 `pangdonglai_project/knowledge/**`；禁止手工修改 `knowledge/compiled/knowledge-base.json` 或恢复旧根文件。
-2. `RAG-CULTURE-R4B` 首轮真实评测已完成，18 道调用成功、严格验收 10/18。下一项修复 `R4-C1-02`、`R4-C2-02/03`、`R4-C3-01/03`、`R4-C5-02`、`R4-C6-01/03`；重点约束一般题跨入具体案例、资料不足题补常识和第一段单向裁定。复测通过前不接向量库。
+2. `RAG-CULTURE-R4C` 已用 Claim、AnswerPlan、AnswerValidation 建立通用修复层，不再逐题打补丁。下一项须在用户明确同意再次发送18道题及相关片段后运行第二轮真实评测；复测通过前不接向量库，也不要直接部署。
 3. 所有 RAG 工作先读 `docs/RAG_RESEARCH_PROTOCOL.md` 和 `docs/RAG_CULTURE_ROADMAP.md`；不修改原始 HTML，完成后更新本 HANDOFF 并小步提交。
 
 ### 给 Grok
@@ -162,6 +163,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-03 | Codex | 按用户要求直接完成回答控制前三步：为135个审核片段确定性生成135个claim-v1并加入构建强校验；每题动态生成AnswerPlan，只允许直接支持的Claim；模型首稿经AnswerValidation检查数字、日期、跨案例、绝对结论与终局表述，失败重写一次、仍失败安全降级。固定检索54/54、R4自动契约18/18、41项测试与lint通过。未运行第二轮真实DeepSeek、未接向量库、未部署 | knowledge/chunks/*.jsonl, knowledge/manifest.json, knowledge/README.md, site/shared/answer-control.mjs, site/scripts/annotate-claims-v1.mjs, site/scripts/build-knowledge.mjs, site/shared/retrieval.mjs, site/worker/index.ts, site/tests/rendered-html.test.mjs, site/package.json, docs/RAG_ANSWER_CONTROL_V1.md, docs/RAG_CULTURE_ROADMAP.md, docs/PLAN.md, docs/HANDOFF.md |
 | 2026-08-03 | Codex | 经用户明确同意，将18道题及相关已审核片段发送给 DeepSeek 完成 R4 首轮真实评测；调用18/18成功，平均3.98秒，严格人工验收10/18。热点事件5/5，一般文化4/10，资料不足1/3；记录八道失败题及时间错误、无关案例、遗漏区分、单向裁定四类问题，决定先修复R4、暂不进入R5。未读取或保存密钥值，未部署 | site/scripts/evaluate-rag-r4-live.mjs, site/package.json, site/tests/rendered-html.test.mjs, evaluation/rag-culture-r4-live-answers-v1.json, evaluation/rag-culture-r4-human-review-v1.json, docs/RAG_CULTURE_R4_LIVE_EVALUATION.md, docs/RAG_CULTURE_R4_IMPLEMENTATION.md, docs/RAG_CULTURE_ROADMAP.md, docs/PLAN.md, docs/HANDOFF.md |
 | 2026-08-02 | Codex | 按用户要求将 R4 正式接入本地 Worker：一般文化、热点事件和资料不足分别使用对应大众理解顺序，且不强制机械标题；从原 54 题选出 18 道代表题并建立可重复的回答契约检查，18/18 通过。36 项测试与 lint 通过。自动检查未调用 DeepSeek，真实回答仍待人工验收；未接向量库、未部署 | site/shared/answer-guidance.mjs, site/worker/index.ts, site/scripts/evaluate-rag-r4-contract.mjs, site/tests/rendered-html.test.mjs, site/package.json, evaluation/rag-culture-r4-*.json, docs/RAG_CULTURE_R4_IMPLEMENTATION.md, docs/RAG_CULTURE_ROADMAP.md, docs/PLAN.md, docs/HANDOFF.md |
 | 2026-08-02 | Codex | 按用户确认将 R4 从内部术语“回答—做法—文化逻辑—边界”改写为大众表达“简单说—具体来看—为什么这么做—还要分清”；同时确定热点事件的自然四步、可合并但不可省略重要边界的规则和回答级验收标准。当前仅更新规范与交接，未修改提示词、检索代码或云端版本 | docs/RAG_CULTURE_ROADMAP.md, docs/PLAN.md, docs/HANDOFF.md |

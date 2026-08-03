@@ -6,6 +6,7 @@
     "node": ">=22.13.0"
   },
   "scripts": {
+    "knowledge:claims": "node scripts/annotate-claims-v1.mjs",
     "knowledge:build": "node scripts/build-knowledge.mjs",
     "rag:evaluate": "npm run knowledge:build && node scripts/evaluate-rag-baseline.mjs --current --adopt-query-rewrite-v1 --adopt-answer-purpose-filter-v1",
     "rag:evaluate:culture-v1": "npm run rag:evaluate && node scripts/evaluate-rag-baseline.mjs --current --culture-v1",

@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 import { createCloudBaseServer } from "../scripts/cloudbase-server.mjs";
+import { createAnswerPlan, validateAnswer } from "../shared/answer-control.mjs";
 
 let renderSequence = 0;
 
@@ -148,6 +149,10 @@ test("builds the RAG index from the directory knowledge source of truth", async 
   const cultureRelevance = new Set(["direct", "supporting", "context_only", "boundary"]);
   const allChunks = compiled.documents.flatMap((document) => document.chunks);
   assert.equal(allChunks.length, 135);
+  assert.equal(manifest.counts.claims, 135);
+  const allClaims = allChunks.flatMap((chunk) => chunk.claims);
+  assert.equal(allClaims.length, 135);
+  assert.equal(new Set(allClaims.map((claim) => claim.id)).size, 135);
   for (const chunk of allChunks) {
     assert.equal(chunk.culture.annotationVersion, "culture-v1");
     assert.ok(cultureRelevance.has(chunk.culture.relevance));
@@ -162,6 +167,11 @@ test("builds the RAG index from the directory knowledge source of truth", async 
     if (chunk.culture.valueMeaning) {
       assert.match(chunk.culture.valueMeaning, /^可用于(?:理解|检验)/);
     }
+    assert.equal(chunk.claims.length, 1);
+    assert.equal(chunk.claims[0].annotationVersion, "claim-v1");
+    assert.equal(chunk.claims[0].statement, chunk.text);
+    assert.ok(chunk.claims[0].canSupport.length > 0);
+    assert.ok(chunk.claims[0].cannotSupport.length > 0);
   }
   for (const theme of cultureThemes) {
     assert.ok(
@@ -237,6 +247,74 @@ test("builds the RAG index from the directory knowledge source of truth", async 
     assert.ok(document.chunks.every((chunk) => chunk.contentKind === "source_text"));
     assert.ok(document.chunks.every((chunk) => chunk.sourceSpans.length > 0));
   }
+});
+
+test("builds a generic AnswerPlan and validates answers without per-question patches", () => {
+  const cases = [
+    { id: "case-a", title: "甲事件", aliases: ["甲事件"], finality: "preliminary", culturalLens: "观察回应" },
+    { id: "case-b", title: "乙方事件", aliases: ["乙方事件"], finality: "no_regulatory_final", culturalLens: "观察边界" },
+  ];
+  const ordinaryClaim = {
+    annotationVersion: "claim-v1",
+    id: "chunk-1--claim-1",
+    statement: "资料显示员工每年可以使用 10 天相关假期。",
+    sourceRole: "reported_account",
+    effectiveAt: "2026-01-01",
+    caseId: null,
+    mentionedCaseIds: [],
+    claimType: "media_observation",
+    canSupport: ["员工休假"],
+    cannotSupport: ["不能外推为所有门店当前安排。"],
+    topics: ["员工"],
+  };
+  const searchPlan = {
+    track: "general",
+    asksForFinality: false,
+    contextApplied: false,
+    originalQueryText: "目前员工休假怎么安排？",
+    queryText: "目前员工休假怎么安排？",
+    retrieved: [{
+      chunkId: "chunk-1",
+      chunkTitle: "员工假期",
+      sourceTitle: "测试来源",
+      sourceUrl: "https://example.com",
+      verifiedAt: "2026-01-01",
+      evidenceLabel: "媒体记录",
+      claims: [ordinaryClaim],
+    }],
+  };
+  const plan = createAnswerPlan(searchPlan, cases, "2026-08-03");
+  assert.equal(plan.schemaVersion, "answer-plan-v1");
+  assert.equal(plan.answerability, "supported");
+  assert.equal(plan.timeTarget, "current");
+  assert.deepEqual(plan.allowedClaimIds, [ordinaryClaim.id]);
+  assert.match(plan.requiredDistinctions.join(""), /不能外推/);
+
+  const grounded = validateAnswer("据资料显示，员工每年可以使用 10 天相关假期。", plan, cases);
+  assert.equal(grounded.passed, true);
+  const inventedNumber = validateAnswer("据资料显示，员工每年可以使用 20 天相关假期。", plan, cases);
+  assert.equal(inventedNumber.passed, false);
+  assert.ok(inventedNumber.violations.some((item) => item.code === "unsupported_number"));
+  const wrongTime = validateAnswer("2026 年尚未到来，所以没有最新信息。", plan, cases);
+  assert.ok(wrongTime.violations.some((item) => item.code === "wrong_current_date"));
+  const unrelatedCase = validateAnswer("这也可以参考乙方事件。", plan, cases);
+  assert.ok(unrelatedCase.violations.some((item) => item.code === "unexpected_case"));
+});
+
+test("makes an insufficient AnswerPlan refuse similar retrieval noise", () => {
+  const plan = createAnswerPlan({
+    track: "general",
+    asksForFinality: false,
+    contextApplied: false,
+    originalQueryText: "请给我完整最新工资表",
+    queryText: "请给我完整最新工资表",
+    insufficientReason: "当前资料库没有完整、最新的岗位薪酬表。",
+    retrieved: [],
+  }, [], "2026-08-03");
+  assert.equal(plan.answerability, "insufficient");
+  assert.deepEqual(plan.allowedClaimIds, []);
+  assert.equal(validateAnswer("目前没有足够信息回答这个问题。", plan, []).passed, true);
+  assert.equal(validateAnswer("我推测每月工资大约 9000 元。", plan, []).passed, false);
 });
 
 test("keeps the first culture question set balanced and linked to real chunks", async () => {
@@ -676,12 +754,83 @@ test("streams BM25-grounded DeepSeek tokens and verified sources", async () => {
     assert.equal(deepseekRequest.stream, true);
     assert.match(deepseekRequest.messages[0].content, /DeepSeek 模型 deepseek-v4-flash/);
     assert.match(deepseekRequest.messages[0].content, /常规营业安排与周二闭店说明/);
-    assert.match(deepseekRequest.messages[0].content, /只能依据下方“检索到的资料”回答具体事实/);
+    assert.match(deepseekRequest.messages[0].content, /只能依据下方“本题允许使用的事实”回答具体事实/);
+    assert.match(deepseekRequest.messages[0].content, /【本题回答提纲】/);
+    assert.match(deepseekRequest.messages[0].content, /今天的日期：\d{4}-\d{2}-\d{2}/);
+    assert.match(deepseekRequest.messages[0].content, /【本题允许使用的事实】/);
     assert.match(deepseekRequest.messages[0].content, /简单说/);
     assert.match(deepseekRequest.messages[0].content, /具体来看/);
     assert.match(deepseekRequest.messages[0].content, /为什么这么做/);
     assert.match(deepseekRequest.messages[0].content, /还要分清/);
     assert.match(deepseekRequest.messages[0].content, /不是必须逐字显示的四个标题/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("repairs a generated answer once when AnswerValidation finds an unsupported fact", async () => {
+  const originalFetch = globalThis.fetch;
+  const requests = [];
+  globalThis.fetch = async (input, init) => {
+    if (String(input) === "https://api.deepseek.com/chat/completions") {
+      requests.push(JSON.parse(init.body));
+      const content = requests.length === 1 ? "周二有 999 家门店闭店。" : "官网门店资料列出了周二闭店安排。";
+      return new Response(
+        `data: ${JSON.stringify({ choices: [{ delta: { content } }] })}\n\ndata: [DONE]\n\n`,
+        { headers: { "content-type": "text/event-stream" } },
+      );
+    }
+    return originalFetch(input, init);
+  };
+
+  try {
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ messages: [{ role: "user", content: "胖东来周二是否闭店？" }] }),
+      },
+      { DEEPSEEK_API_KEY: "test-key" },
+    );
+    const body = await response.text();
+    assert.equal(requests.length, 2);
+    assert.match(requests[1].messages[0].content, /上一次草稿未通过回答边界检查/);
+    assert.doesNotMatch(body, /999/);
+    assert.match(body, /官网门店资料列出了周二闭店安排/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("uses a safe fallback when the repaired answer still exceeds its AnswerPlan", async () => {
+  const originalFetch = globalThis.fetch;
+  let requestCount = 0;
+  globalThis.fetch = async (input) => {
+    if (String(input) === "https://api.deepseek.com/chat/completions") {
+      requestCount += 1;
+      return new Response(
+        'data: {"choices":[{"delta":{"content":"我猜这款酱油售价 99 元。"}}]}\n\ndata: [DONE]\n\n',
+        { headers: { "content-type": "text/event-stream" } },
+      );
+    }
+    return originalFetch(input);
+  };
+
+  try {
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ messages: [{ role: "user", content: "胖东来酱油怎么样？" }] }),
+      },
+      { DEEPSEEK_API_KEY: "test-key" },
+    );
+    const body = await response.text();
+    assert.equal(requestCount, 2);
+    assert.doesNotMatch(body, /99/);
+    assert.match(body, /目前没有足够信息回答这个问题/);
   } finally {
     globalThis.fetch = originalFetch;
   }

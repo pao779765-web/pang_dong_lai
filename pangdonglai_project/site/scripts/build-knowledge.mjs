@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { validateClaimV1 } from "../shared/answer-control.mjs";
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectDirectory = path.resolve(scriptDirectory, "../..");
@@ -103,8 +104,10 @@ for (const reference of manifest.cases) {
 
 const seenDocumentIds = new Set();
 const seenChunkIds = new Set();
+const seenClaimIds = new Set();
 const documents = [];
 let chunkCount = 0;
+let claimCount = 0;
 
 for (const reference of manifest.sources) {
   const metadata = await readJson(reference.metadataPath);
@@ -142,6 +145,15 @@ for (const reference of manifest.sources) {
       throw new Error(`片段 id 重复：${chunk.id}`);
     }
     validateCultureAnnotation(chunk);
+    if (!Array.isArray(chunk.claims) || chunk.claims.length !== 1) {
+      throw new Error(`claim-v1 首版要求每个片段恰好包含一个 Claim：${chunk.id}`);
+    }
+    for (const claim of chunk.claims) {
+      validateClaimV1(claim, { chunkId: chunk.id, document: metadata, caseIds: seenCaseIds });
+      if (seenClaimIds.has(claim.id)) throw new Error(`Claim id 重复：${claim.id}`);
+      seenClaimIds.add(claim.id);
+      claimCount += 1;
+    }
     seenChunkIds.add(chunk.id);
   }
 
@@ -154,6 +166,7 @@ const actualCounts = {
   cases: cases.length,
   sources: documents.length,
   chunks: chunkCount,
+  claims: claimCount,
 };
 
 for (const [key, value] of Object.entries(actualCounts)) {
@@ -176,5 +189,5 @@ await mkdir(path.dirname(outputPath), { recursive: true });
 await writeFile(outputPath, `${JSON.stringify(compiled, null, 2)}\n`, "utf8");
 
 process.stdout.write(
-  `知识索引已生成：${actualCounts.sources} 份资料、${actualCounts.chunks} 个片段、${actualCounts.cases} 个案例。\n`,
+  `知识索引已生成：${actualCounts.sources} 份资料、${actualCounts.chunks} 个片段、${actualCounts.claims} 个 Claim、${actualCounts.cases} 个案例。\n`,
 );

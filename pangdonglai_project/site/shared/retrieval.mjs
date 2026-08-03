@@ -326,6 +326,7 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
       caseTitle: caseRecord?.title,
       claimType: document.claimType,
       finality: document.finality,
+      claims: chunk.claims ?? [],
       score,
     };
   }
