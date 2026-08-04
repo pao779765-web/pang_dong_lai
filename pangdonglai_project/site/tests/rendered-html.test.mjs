@@ -9,8 +9,127 @@ import {
   makeSafeFallback,
   validateAnswer,
 } from "../shared/answer-control.mjs";
+import { createTokenHubEmbeddingClient } from "../shared/embedding-client.mjs";
+import {
+  cosineSimilarity,
+  createHybridKnowledgeRetriever,
+  createVectorCorpus,
+  reciprocalRankFusion,
+} from "../shared/hybrid-retrieval.mjs";
 
 let renderSequence = 0;
+
+test("validates TokenHub embedding responses without exposing the key", async () => {
+  const requests = [];
+  const client = createTokenHubEmbeddingClient({
+    apiKey: "test-secret-key",
+    fetchImpl: async (url, init) => {
+      requests.push({ url, init });
+      return new Response(JSON.stringify({
+        data: [
+          { index: 1, embedding: [0, 1] },
+          { index: 0, embedding: [1, 0] },
+        ],
+      }));
+    },
+  });
+  assert.deepEqual(await client.embed(["员工尊严", "顾客服务"]), [[1, 0], [0, 1]]);
+  assert.equal(JSON.parse(requests[0].init.body).model, "kinfra-text-embedding-0.6b");
+  assert.equal(requests[0].init.headers.authorization, "Bearer test-secret-key");
+  assert.doesNotMatch(JSON.stringify(JSON.parse(requests[0].init.body)), /test-secret-key/);
+});
+
+test("fuses keyword and vector rankings while preserving safety routes", async () => {
+  const knowledgeBase = {
+    documents: [
+      {
+        id: "approved-general",
+        title: "员工生活设施",
+        status: "approved",
+        caseId: null,
+        claimType: "practice",
+        finality: "not_applicable",
+        evidenceLevel: "L1",
+        evidenceLabel: "可核验",
+        answerMode: "fact_with_source",
+        answeringRules: [],
+        source: { url: "https://example.com/general", verifiedAt: "2026-08-04" },
+        chunks: [{ id: "general-1", title: "生活设施", text: "设置休息区和洗衣房。", facts: {}, claims: [] }],
+      },
+      {
+        id: "limited-case",
+        title: "案例初步回应",
+        status: "limited",
+        caseId: "case-1",
+        claimType: "company_response",
+        finality: "preliminary",
+        evidenceLevel: "L2",
+        evidenceLabel: "有限使用",
+        answerMode: "case_only",
+        answeringRules: [],
+        source: { url: "https://example.com/case", verifiedAt: "2026-08-04" },
+        chunks: [{ id: "case-1-chunk", title: "初步回应", text: "尚无最终结论。", facts: {}, claims: [] }],
+      },
+    ],
+  };
+  assert.deepEqual(createVectorCorpus(knowledgeBase).map((item) => item.chunkId), ["general-1"]);
+  assert.equal(cosineSimilarity([1, 0], [1, 0]), 1);
+  assert.deepEqual(
+    reciprocalRankFusion([["keyword"], ["vector"]], { weights: [1, 0.5] }).map((item) => item.chunkId),
+    ["keyword", "vector"],
+  );
+
+  let embeddingCalls = 0;
+  const keywordResult = {
+    chunkId: "general-1",
+    chunkTitle: "生活设施",
+    content: "员工生活设施\n生活设施\n设置休息区和洗衣房。",
+    sourceTitle: "员工生活设施",
+    sourceUrl: "https://example.com/general",
+    score: 2,
+    baseScore: 2,
+  };
+  const keywordRetriever = {
+    searchKnowledge(question) {
+      if (question === "案例问题") return { track: "case", queryText: question, retrieved: [], answerCandidates: [] };
+      if (question === "缺资料") {
+        return { track: "general", queryText: question, insufficientReason: "资料不足", retrieved: [], answerCandidates: [] };
+      }
+      return {
+        track: "general",
+        queryText: question,
+        detectedAnswerPurposes: [],
+        retrieved: [keywordResult],
+        answerCandidates: [keywordResult],
+      };
+    },
+  };
+  const retriever = createHybridKnowledgeRetriever({
+    knowledgeBase,
+    keywordRetriever,
+    vectorIndex: {
+      schemaVersion: "r5-vector-index-v1",
+      model: "test-model",
+      dimensions: 2,
+      entries: [
+        { chunkId: "general-1", embedding: [1, 0] },
+        { chunkId: "case-1-chunk", embedding: [1, 0] },
+      ],
+    },
+    embedQuery: async () => {
+      embeddingCalls += 1;
+      return [1, 0];
+    },
+    fallbackToKeyword: false,
+  });
+
+  const hybrid = await retriever.searchKnowledge("怎么尊重员工");
+  assert.equal(hybrid.retrievalMode, "hybrid-rrf");
+  assert.deepEqual(hybrid.retrieved.map((item) => item.chunkId), ["general-1"]);
+  assert.equal((await retriever.searchKnowledge("案例问题")).vectorApplied, false);
+  assert.equal((await retriever.searchKnowledge("缺资料")).vectorApplied, false);
+  assert.equal(embeddingCalls, 1);
+});
 
 async function render(path = "/", init = {}, env = {}, workerCacheKey) {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);

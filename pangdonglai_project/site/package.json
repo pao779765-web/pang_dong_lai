@@ -15,6 +15,8 @@
     "rag:evaluate:answer-purpose-filter-v1": "npm run knowledge:build && node scripts/evaluate-rag-baseline.mjs --current --adopt-query-rewrite-v1 --answer-purpose-filter-v1",
     "rag:evaluate:r4-contract": "npm run knowledge:build && node scripts/evaluate-rag-r4-contract.mjs",
     "rag:evaluate:r4-live": "npm run build && node scripts/evaluate-rag-r4-live.mjs",
+    "rag:vectorize:r5": "npm run knowledge:build && node scripts/generate-vector-index.mjs",
+    "rag:evaluate:r5": "npm run knowledge:build && node scripts/evaluate-rag-hybrid.mjs",
     "predev": "npm run knowledge:build",
     "dev": "vinext dev",
     "prebuild": "npm run knowledge:build",

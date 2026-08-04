@@ -181,7 +181,7 @@ export function detectAnswerPurposes(value) {
   return purposes;
 }
 
-function supportsAnswerPurposes(item, purposes) {
+export function supportsAnswerPurposes(item, purposes) {
   const normalized = item.evidenceText.toLowerCase().replace(/\s+/g, "");
 
   return purposes.every((purpose) => {
@@ -203,6 +203,13 @@ function supportsAnswerPurposes(item, purposes) {
     }
     return true;
   });
+}
+
+/** Approved facts + limited non-case materials. Case-bound limited stays on case track only. */
+export function isSearchableInGeneralTrack(document) {
+  if (document.status === "approved") return true;
+  if (document.status === "limited" && !document.caseId) return true;
+  return false;
 }
 
 function makeCultureSearchContent(culture) {
@@ -412,13 +419,6 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
       .flatMap((document) =>
         document.chunks.map((chunk) => toRetrievedChunk(document, chunk, 1, caseRecord)),
       );
-  }
-
-  /** Approved facts + limited non-case materials. Case-bound limited stays on case track only. */
-  function isSearchableInGeneralTrack(document) {
-    if (document.status === "approved") return true;
-    if (document.status === "limited" && !document.caseId) return true;
-    return false;
   }
 
   function searchGeneralKnowledge(question, detectedCultureThemes, detectedAnswerPurposes) {
