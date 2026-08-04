@@ -2,9 +2,9 @@
 
 > **规则：** 谁做完谁更新本文件。下一位只认本文件 + Git，不靠聊天记录猜。
 
-**更新时间：** 2026-08-03
+**更新时间：** 2026-08-04
 
-**当前执行者：** Codex 已完成 R4 第二轮真实评测：18/18调用成功，严格验收12/18；下一项修复AnswerValidation误报与最小事实降级，暂不接向量库
+**当前执行者：** Codex 已完成 R4 回答控制 V1.1 通用修复；下一项须经用户另行授权运行第三轮真实 18 题评测，暂不接向量库、不部署
 **分支：** `main`
 
 ---
@@ -70,6 +70,7 @@
 - [x] **RAG-CULTURE-R4B（用户明确授权真实评测）**：用户同意将18道题及相关已审核知识库片段发送给 DeepSeek。最新本地 R4 Worker 顺序调用 18/18 成功，平均 3.98 秒；严格人工验收 10/18。热点事件 5/5 通过，一般文化 4/10、资料不足 1/3；八道失败集中在时间错误、无关案例、遗漏关键区分和单向文化裁定。37 项测试与 lint 通过。结果证明当前不应开始 R5；未部署，详见 `docs/RAG_CULTURE_R4_LIVE_EVALUATION.md`。
 - [x] **RAG-CULTURE-R4C（用户要求直接完成前三步）**：不按八道失败题逐题追加提示词补丁；新增通用 Claim、AnswerPlan、AnswerValidation 三类对象。现有135个审核片段确定性生成135个 `claim-v1`，构建强制校验；每次问题只把允许事实与动态边界交给模型，首稿先检查数字、日期、跨案例、绝对判断与终局话术，失败自动重写一次，仍失败安全降级。固定检索54/54、R4自动契约18/18、41项测试与lint通过；未调用第二轮真实DeepSeek、未接向量库、未部署，详见 `docs/RAG_ANSWER_CONTROL_V1.md`。
 - [x] **RAG-CULTURE-R4D（用户明确要求运行第二轮评测）**：同一18题及各题允许Claim发送给DeepSeek，调用18/18成功，严格验收由10/18升至12/18。首轮失败题修好5道，一般文化升至6/10、资料不足3/3；但4道有资料问题触发统一安全降级，导致3道原通过题回归，热点事件降至3/5。结论是AnswerValidation存在数字/编号和否定语境误报，安全降级也应保留最小可答事实；未接向量库、未部署，详见 `docs/RAG_CULTURE_R4_LIVE_EVALUATION_ROUND2.md`。
+- [x] **RAG-CULTURE-R4E（用户要求继续通用修复）**：不为六道失败题逐题追加提示词。AnswerValidation 已区分列表编号与事实数字，把北京时间、资料日期和来源标题纳入数字依据，并识别“不能说已经证明”等否定语境；第二次重写仍失败时，有 Claim 的问题保留排名最高的最小可答事实。Claim 新增 `distinctions` 必要区分；AnswerPlan 保留 Top-5 BM25 验收口径，同时在同一安全过滤后的 Top-12 候选中按文字相关度、原检索分数和通用证据意图选择最多5条 Claim，能补入退休治理机制、投诉奖用途区分并优先文化争议边界。固定检索54/54、R4自动契约18/18、43项测试与lint通过；未调用第三轮DeepSeek、未接向量库、未部署，详见 `docs/RAG_ANSWER_CONTROL_V1.md`。
 - [ ] **RAG-CULTURE-R1**：用户已批准 C1“员工的尊严、自由与生活”首批两组资料。7 份资料、32 个片段和 3 个独立案例已按 `approved` / `limited` 范围入库，审核与结果见 `docs/SOURCE_AUDIT_C1_01.md`；知识库现有 30 份资料、135 个片段和 6 个案例。本阶段尚未完成后续 C1 一手资料主干，不得自动扩充。
 - [x] **RAG-RESEARCH-01**：建立 Codex 与 Grok 强制共用的互联网资料检索与 RAG 入库规范；明确候选池、来源优先级、企业身份核验、转载去重、事件阶段、用户批准、版权边界、入库测试和向量库接入条件，并在 `AGENTS.md` 设置任务前必读入口。
 - [x] **Codex【RAG-CASE-01】**：按 Grok 审核顺序完成“案例档案 + 事件事实/文化理解双轨回答”：定义 `caseId`、`claimType`、`finality` schema；事件轨仅引用同案例资料，文化轨不得裁定具体客诉真伪；无 `final` 证据时禁止终局话术；界面展示案例来源的证据阶段；补充误召回与最终结论边界测试。
@@ -118,7 +119,7 @@
 ### 给 Codex
 
 1. 资料架构只维护 `pangdonglai_project/knowledge/**`；禁止手工修改 `knowledge/compiled/knowledge-base.json` 或恢复旧根文件。
-2. `RAG-CULTURE-R4D` 第二轮严格验收12/18。下一项不是补六道题专用提示词，而是修复三条通用机制：数字与列表编号/资料日期的区分、绝对结论的否定语境识别、有证据问题的最小事实安全降级。定向回归后再由用户授权第三轮真实评测；通过前不接向量库、不要部署。
+2. `RAG-CULTURE-R4E` 的三条通用校验修复和 Claim 优选已完成本地回归。下一项必须先取得用户对第三轮真实 DeepSeek 18 题评测的单独授权；不要再次修改提示词或逐题补丁。第三轮通过前不接向量库、不要部署。
 3. 所有 RAG 工作先读 `docs/RAG_RESEARCH_PROTOCOL.md` 和 `docs/RAG_CULTURE_ROADMAP.md`；不修改原始 HTML，完成后更新本 HANDOFF 并小步提交。
 
 ### 给 Grok
@@ -164,6 +165,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-04 | Codex | 按用户要求继续完成R4通用修复：区分列表编号/事实数字并纳入北京时间与资料日期，识别绝对结论的否定语境，有资料时安全降级保留最小事实；Claim增加必要区分，AnswerPlan在不改变Top-5 BM25评测口径的前提下从安全Top-12候选优选最多5条Claim。固定检索54/54、R4自动契约18/18、43项测试与lint通过。未调用第三轮DeepSeek、未接向量库、未部署 | knowledge/chunks/*.jsonl, knowledge/README.md, site/shared/answer-control.mjs, site/shared/retrieval.mjs, site/worker/index.ts, site/tests/rendered-html.test.mjs, evaluation/rag-culture-current-evaluation.json, evaluation/rag-culture-r4-contract-evaluation.json, docs/RAG_ANSWER_CONTROL_V1.md, docs/RAG_CULTURE_CURRENT_EVALUATION.md, docs/RAG_CULTURE_ROADMAP.md, docs/PLAN.md, docs/HANDOFF.md |
 | 2026-08-03 | Codex | 经用户明确要求运行R4第二轮真实评测；同一18题调用18/18成功，严格验收由10/18升至12/18。五道首轮失败题修复，但四道有资料问题触发统一安全降级，其中三道形成新回归；定位为数字/编号、否定语境误报及降级答案未保留最小事实。未读取、显示或保存密钥，未接向量库、未部署 | evaluation/rag-culture-r4-live-answers-v1.json, evaluation/rag-culture-r4-human-review-v1.json, docs/RAG_CULTURE_R4_LIVE_EVALUATION_ROUND2.md, docs/RAG_ANSWER_CONTROL_V1.md, docs/RAG_CULTURE_R4_IMPLEMENTATION.md, docs/RAG_CULTURE_ROADMAP.md, docs/PLAN.md, docs/HANDOFF.md |
 | 2026-08-03 | Codex | 按用户要求直接完成回答控制前三步：为135个审核片段确定性生成135个claim-v1并加入构建强校验；每题动态生成AnswerPlan，只允许直接支持的Claim；模型首稿经AnswerValidation检查数字、日期、跨案例、绝对结论与终局表述，失败重写一次、仍失败安全降级。固定检索54/54、R4自动契约18/18、41项测试与lint通过。未运行第二轮真实DeepSeek、未接向量库、未部署 | knowledge/chunks/*.jsonl, knowledge/manifest.json, knowledge/README.md, site/shared/answer-control.mjs, site/scripts/annotate-claims-v1.mjs, site/scripts/build-knowledge.mjs, site/shared/retrieval.mjs, site/worker/index.ts, site/tests/rendered-html.test.mjs, site/package.json, docs/RAG_ANSWER_CONTROL_V1.md, docs/RAG_CULTURE_ROADMAP.md, docs/PLAN.md, docs/HANDOFF.md |
 | 2026-08-03 | Codex | 经用户明确同意，将18道题及相关已审核片段发送给 DeepSeek 完成 R4 首轮真实评测；调用18/18成功，平均3.98秒，严格人工验收10/18。热点事件5/5，一般文化4/10，资料不足1/3；记录八道失败题及时间错误、无关案例、遗漏区分、单向裁定四类问题，决定先修复R4、暂不进入R5。未读取或保存密钥值，未部署 | site/scripts/evaluate-rag-r4-live.mjs, site/package.json, site/tests/rendered-html.test.mjs, evaluation/rag-culture-r4-live-answers-v1.json, evaluation/rag-culture-r4-human-review-v1.json, docs/RAG_CULTURE_R4_LIVE_EVALUATION.md, docs/RAG_CULTURE_R4_IMPLEMENTATION.md, docs/RAG_CULTURE_ROADMAP.md, docs/PLAN.md, docs/HANDOFF.md |

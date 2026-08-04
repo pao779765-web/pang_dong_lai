@@ -185,6 +185,7 @@ type RetrievedChunk = {
     claimType: string;
     canSupport: string[];
     cannotSupport: string[];
+    distinctions: string[];
     topics: string[];
   }>;
   score: number;
@@ -213,6 +214,7 @@ type SearchPlan = {
   purposeBoostedChunkIds?: string[];
   insufficientReason?: string;
   retrieved: RetrievedChunk[];
+  answerCandidates?: RetrievedChunk[];
 };
 
 const knowledgeRetriever = createKnowledgeRetriever(knowledgeBase, {
@@ -281,10 +283,11 @@ function describeBoundaryForReader(value: string) {
 }
 
 function buildSystemPrompt(plan: SearchPlan, answerPlan: ReturnType<typeof createAnswerPlan>) {
+  const answerCandidates = plan.answerCandidates ?? plan.retrieved;
   const evidence = answerPlan.allowedClaims.length
     ? answerPlan.allowedClaims
         .map((claim, index) => {
-          const item = plan.retrieved.find((retrieved) => retrieved.chunkId === claim.chunkId)!;
+          const item = answerCandidates.find((retrieved) => retrieved.chunkId === claim.chunkId)!;
           return `【允许事实 ${index + 1}】\n标题：${claim.chunkTitle}\n来源：${claim.sourceTitle}\n资料时间：${claim.effectiveAt ?? claim.verifiedAt}\n这份资料是什么：${describeSourceForReader(item)}\n可陈述事实：${claim.statement}\n不得外推：${claim.cannotSupport.map(describeBoundaryForReader).join("；") || "不得超出上述事实和时间范围。"}`;
         })
         .join("\n\n")
@@ -446,7 +449,8 @@ async function handleChat(request: Request, env: Env) {
   const searchPlan = searchKnowledge(messages.at(-1)!.content, previousUserQuestions);
   const answerPlan = createAnswerPlan(searchPlan, knowledgeBase.cases);
   const allowedChunkIds = new Set(answerPlan.allowedChunkIds);
-  const sources = collectSources(searchPlan.retrieved.filter((item) => allowedChunkIds.has(item.chunkId)));
+  const answerCandidates = searchPlan.answerCandidates ?? searchPlan.retrieved;
+  const sources = collectSources(answerCandidates.filter((item) => allowedChunkIds.has(item.chunkId)));
   const systemPrompt = buildSystemPrompt(searchPlan, answerPlan);
 
   const upstreamController = new AbortController();

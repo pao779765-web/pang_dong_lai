@@ -2,7 +2,13 @@ import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 import { createCloudBaseServer } from "../scripts/cloudbase-server.mjs";
-import { createAnswerPlan, validateAnswer } from "../shared/answer-control.mjs";
+import {
+  collectFactualNumberTokens,
+  createAnswerPlan,
+  formatDateInTimeZone,
+  makeSafeFallback,
+  validateAnswer,
+} from "../shared/answer-control.mjs";
 
 let renderSequence = 0;
 
@@ -274,6 +280,7 @@ test("builds a generic AnswerPlan and validates answers without per-question pat
     claimType: "media_observation",
     canSupport: ["员工休假"],
     cannotSupport: ["不能外推为所有门店当前安排。"],
+    distinctions: [],
     topics: ["员工"],
   };
   const searchPlan = {
@@ -308,6 +315,41 @@ test("builds a generic AnswerPlan and validates answers without per-question pat
   assert.ok(wrongTime.violations.some((item) => item.code === "wrong_current_date"));
   const unrelatedCase = validateAnswer("这也可以参考乙方事件。", plan, cases);
   assert.ok(unrelatedCase.violations.some((item) => item.code === "unexpected_case"));
+});
+
+test("validates factual numbers, negated verdicts, Beijing dates and grounded fallbacks", () => {
+  assert.equal(
+    formatDateInTimeZone(new Date("2026-08-03T16:30:00Z")),
+    "2026-08-04",
+  );
+  assert.deepEqual(
+    collectFactualNumberTokens("1. 第一项\n2、第二项\n2026年8月4日，500元，49.5%"),
+    ["2026", "8", "4", "500", "49.5%"],
+  );
+
+  const claim = {
+    id: "test-claim",
+    statement: "企业公布了鸡蛋样品送检结果。",
+    sourceTitle: "测试来源",
+    effectiveAt: "2026-04-18",
+    verifiedAt: "2026-04-18",
+  };
+  const plan = {
+    question: "企业送检能证明最终没问题吗？",
+    currentDate: "2026-08-04",
+    answerability: "supported",
+    track: "general",
+    binaryVerdict: true,
+    allowedClaims: [claim],
+  };
+  const numberedAnswer = "1. 企业公布了鸡蛋样品送检结果。\n2. 这不能说监管已经证明所有鸡蛋没问题。";
+  assert.equal(validateAnswer(numberedAnswer, plan, []).passed, true);
+  const unsupportedVerdict = validateAnswer("监管已经证明所有鸡蛋没问题。", plan, []);
+  assert.ok(unsupportedVerdict.violations.some((item) => item.code === "unsupported_verdict"));
+
+  const fallback = makeSafeFallback(plan);
+  assert.match(fallback, /企业公布了鸡蛋样品送检结果/);
+  assert.doesNotMatch(fallback, /资料还不足以支持一个稳妥的完整结论/);
 });
 
 test("makes an insufficient AnswerPlan refuse similar retrieval noise", () => {
@@ -562,6 +604,39 @@ test("adopts answer-purpose filtering after improving all remaining boundary que
   ]);
   assert.match(report, /建议进入本地正式检索/);
   assert.match(packageJson.scripts["rag:evaluate:answer-purpose-filter-v1"], /--answer-purpose-filter-v1/);
+});
+
+test("builds R4 AnswerPlans from a broader candidate pool without changing BM25 top five", async () => {
+  const [{ createKnowledgeRetriever }, compiled] = await Promise.all([
+    import("../shared/retrieval.mjs"),
+    readFile(new URL("../../knowledge/compiled/knowledge-base.json", import.meta.url), "utf8").then(JSON.parse),
+  ]);
+  const retriever = createKnowledgeRetriever(compiled, {
+    queryRewriteV1: true,
+    answerPurposeFilterV1: true,
+  });
+
+  const retirementSearch = retriever.searchKnowledge(
+    "所谓‘信任员工’会不会只是老板个人魅力，老板退休就没了？",
+  );
+  assert.equal(retirementSearch.retrieved.length, 5);
+  assert.ok(retirementSearch.answerCandidates.length > retirementSearch.retrieved.length);
+  const retirementPlan = createAnswerPlan(retirementSearch, compiled.cases, "2026-08-04");
+  assert.ok(retirementPlan.allowedClaimIds.includes("jiemian-rotation-governance--claim-1"));
+
+  const complaintPlan = createAnswerPlan(
+    retriever.searchKnowledge("现在投诉胖东来一次，顾客固定能拿多少奖励？"),
+    compiled.cases,
+    "2026-08-04",
+  );
+  assert.match(complaintPlan.requiredDistinctions.join("\n"), /顾客投诉奖励、员工委屈奖励和法院判决赔偿/);
+
+  const disputePlan = createAnswerPlan(
+    retriever.searchKnowledge("一场客诉争议，能不能检验胖东来的‘自由与爱’？"),
+    compiled.cases,
+    "2026-08-04",
+  );
+  assert.equal(disputePlan.allowedClaimIds[0], "jiemian-culture-boundary-and-disputes--claim-1");
 });
 
 test("uses recent user context only when a follow-up needs it", async () => {

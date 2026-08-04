@@ -424,7 +424,12 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
   function searchGeneralKnowledge(question, detectedCultureThemes, detectedAnswerPurposes) {
     const queryTerms = makeSearchTerms(question);
     if (queryTerms.length === 0) {
-      return { retrieved: [], purposeFilteredOutChunkIds: [], purposeBoostedChunkIds: [] };
+      return {
+        retrieved: [],
+        answerCandidates: [],
+        purposeFilteredOutChunkIds: [],
+        purposeBoostedChunkIds: [],
+      };
     }
 
     const indexedChunks = knowledgeBase.documents
@@ -449,7 +454,12 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
       );
 
     if (indexedChunks.length === 0) {
-      return { retrieved: [], purposeFilteredOutChunkIds: [], purposeBoostedChunkIds: [] };
+      return {
+        retrieved: [],
+        answerCandidates: [],
+        purposeFilteredOutChunkIds: [],
+        purposeBoostedChunkIds: [],
+      };
     }
 
     const documentFrequencies = new Map();
@@ -533,15 +543,15 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
           return supportDelta || right.score - left.score;
         })
       : eligible;
-    const retrieved = purposeRanked
-      .slice(0, 5)
-      .map((item) => {
-        const retrievedItem = { ...item };
-        delete retrievedItem.evidenceText;
-        return retrievedItem;
-      });
+    const toPublicResult = (item) => {
+      const retrievedItem = { ...item };
+      delete retrievedItem.evidenceText;
+      return retrievedItem;
+    };
+    const retrieved = purposeRanked.slice(0, 5).map(toPublicResult);
+    const answerCandidates = purposeRanked.slice(0, 12).map(toPublicResult);
 
-    return { retrieved, purposeFilteredOutChunkIds, purposeBoostedChunkIds };
+    return { retrieved, answerCandidates, purposeFilteredOutChunkIds, purposeBoostedChunkIds };
   }
 
   function searchKnowledge(question, context = []) {
@@ -583,6 +593,7 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
       : undefined;
     const caseRecord = directCaseRecord ?? contextualCaseRecord;
     if (caseRecord) {
+      const retrieved = searchCase(caseRecord);
       return {
         track: "case",
         caseRecord,
@@ -597,7 +608,8 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
         detectedAnswerPurposes,
         purposeFilteredOutChunkIds: [],
         purposeBoostedChunkIds: [],
-        retrieved: searchCase(caseRecord),
+        retrieved,
+        answerCandidates: retrieved,
       };
     }
 
@@ -619,6 +631,7 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
         purposeBoostedChunkIds: [],
         insufficientReason,
         retrieved: [],
+        answerCandidates: [],
       };
     }
 
@@ -654,6 +667,7 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
       purposeFilteredOutChunkIds: generalSearch.purposeFilteredOutChunkIds,
       purposeBoostedChunkIds: generalSearch.purposeBoostedChunkIds,
       retrieved: generalSearch.retrieved,
+      answerCandidates: generalSearch.answerCandidates,
     };
   }
 

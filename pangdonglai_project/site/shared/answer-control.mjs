@@ -1,6 +1,7 @@
 export const CLAIM_ANNOTATION_VERSION = "claim-v1";
 export const ANSWER_PLAN_SCHEMA_VERSION = "answer-plan-v1";
 export const ANSWER_VALIDATION_SCHEMA_VERSION = "answer-validation-v1";
+export const DEFAULT_TIME_ZONE = "Asia/Shanghai";
 
 const SOURCE_ROLES = new Set([
   "official_record",
@@ -39,6 +40,15 @@ function buildGenericBoundaries(metadata, chunk) {
   return uniqueStrings(boundaries);
 }
 
+function buildClaimDistinctions(chunk) {
+  const text = `${chunk.title}\n${chunk.text}\n${JSON.stringify(chunk.facts ?? {})}`;
+  const distinctions = [];
+  if (/投诉奖/.test(text) && /顾客|客诉|投诉/.test(text)) {
+    distinctions.push("顾客投诉奖励、员工委屈奖励和法院判决赔偿属于不同用途，金额不能互相替代。");
+  }
+  return distinctions;
+}
+
 export function createClaimV1(metadata, chunk, cases = []) {
   const searchableText = `${chunk.title}\n${chunk.text}`.toLowerCase();
   const mentionedCaseIds = cases
@@ -69,6 +79,7 @@ export function createClaimV1(metadata, chunk, cases = []) {
       chunk.culture?.valueMeaning,
     ]),
     cannotSupport: buildGenericBoundaries(metadata, chunk),
+    distinctions: buildClaimDistinctions(chunk),
     topics: uniqueStrings([
       ...(chunk.facts?.topics ?? []),
       ...(chunk.culture?.cultureTheme ?? []),
@@ -91,7 +102,7 @@ export function validateClaimV1(claim, { chunkId, document, caseIds }) {
   if (claim.caseId !== (document.caseId ?? null) || claim.claimType !== document.claimType) {
     throw new Error(`片段 Claim 与资料元数据不一致：${chunkId}`);
   }
-  for (const field of ["mentionedCaseIds", "canSupport", "cannotSupport", "topics"]) {
+  for (const field of ["mentionedCaseIds", "canSupport", "cannotSupport", "distinctions", "topics"]) {
     if (!Array.isArray(claim[field]) || claim[field].some((value) => typeof value !== "string" || !value.trim())) {
       throw new Error(`片段 Claim 字段 ${field} 无效：${chunkId}`);
     }
@@ -118,6 +129,57 @@ function asksForBinaryVerdict(question) {
   );
 }
 
+function makeTerms(value) {
+  const normalized = value.toLowerCase().replace(/[^\u4e00-\u9fff0-9a-z]/g, "");
+  const terms = [];
+  for (let index = 0; index < normalized.length - 1; index += 1) terms.push(normalized.slice(index, index + 2));
+  return terms;
+}
+
+const GENERIC_PLAN_TERMS = new Set(makeTerms("胖东来什么怎么如何是不是能不能这个那个目前现在"));
+const PLAN_EVIDENCE_RULES = [
+  {
+    question: /为什么|怎么|如何|靠什么|会不会只是|个人魅力|创始人|老板.*(?:退休|离开)/,
+    evidenceTerms: ["制度", "机制", "手册", "轮值", "委员会", "治理", "执行", "竞聘", "评议", "授权", "培训"],
+  },
+  {
+    question: /争议|纠纷|客诉|质疑|检验|边界|真假/,
+    evidenceTerms: ["争议", "边界", "张力", "纠错", "责任", "公开", "尊重", "不能证明", "不得裁定", "不能裁定"],
+  },
+];
+
+function scoreClaimRelevance(question, claim, originalIndex) {
+  const queryTerms = [...new Set(makeTerms(question).filter((term) => !GENERIC_PLAN_TERMS.has(term)))];
+  const supportText = [claim.chunkTitle, claim.statement, ...(claim.canSupport ?? []), ...(claim.topics ?? [])].join("\n");
+  const primarySupportText = [claim.chunkTitle, claim.statement, ...(claim.topics ?? [])].join("\n");
+  const supportTerms = new Set(makeTerms(supportText));
+  const matchedTerms = queryTerms.filter((term) => supportTerms.has(term)).length;
+  const exactTopicMatches = (claim.topics ?? []).filter((topic) => topic.length >= 2 && question.includes(topic)).length;
+  const evidenceIntentMatches = PLAN_EVIDENCE_RULES.reduce((total, rule) => {
+    if (!rule.question.test(question)) return total;
+    const matches = rule.evidenceTerms.filter((term) => primarySupportText.includes(term)).length;
+    return total + Math.min(matches, 4);
+  }, 0);
+  return (
+    matchedTerms * 10 +
+    exactTopicMatches * 20 +
+    evidenceIntentMatches * 45 +
+    Number(claim.retrievalScore ?? 0) * 2 -
+    originalIndex * 0.01
+  );
+}
+
+export function formatDateInTimeZone(date = new Date(), timeZone = DEFAULT_TIME_ZONE) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(date);
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${values.year}-${values.month}-${values.day}`;
+}
+
 function describeFinalityBoundary(finality) {
   const descriptions = {
     preliminary: "企业公开初步回应，尚未见到后续调查终局",
@@ -130,13 +192,14 @@ function describeFinalityBoundary(finality) {
   return descriptions[finality] ?? "现有资料所对应的证据阶段";
 }
 
-export function createAnswerPlan(searchPlan, cases, currentDate = new Date().toISOString().slice(0, 10)) {
+export function createAnswerPlan(searchPlan, cases, currentDate = formatDateInTimeZone()) {
   const question = searchPlan.originalQueryText ?? searchPlan.queryText ?? "";
   const directCaseIds = cases
     .filter((caseRecord) => caseRecord.aliases.some((alias) => question.toLowerCase().includes(alias.toLowerCase())))
     .map((caseRecord) => caseRecord.id);
   const allowCaseExamples = asksForExamples(question);
-  const retrievedClaims = searchPlan.retrieved.flatMap((item) =>
+  const answerCandidates = searchPlan.answerCandidates ?? searchPlan.retrieved;
+  const retrievedClaims = answerCandidates.flatMap((item) =>
     (item.claims ?? []).map((claim) => ({
       ...claim,
       chunkId: item.chunkId,
@@ -145,20 +208,29 @@ export function createAnswerPlan(searchPlan, cases, currentDate = new Date().toI
       sourceUrl: item.sourceUrl,
       verifiedAt: item.verifiedAt,
       evidenceLabel: item.evidenceLabel,
+      retrievalScore: item.score,
     })),
   );
-  const allowedClaims = searchPlan.insufficientReason
+  const eligibleClaims = searchPlan.insufficientReason
     ? []
     : retrievedClaims.filter((claim) => {
         if (searchPlan.track === "case") return claim.caseId === searchPlan.caseRecord?.id;
         if (!claim.mentionedCaseIds?.length) return true;
         return allowCaseExamples || claim.mentionedCaseIds.some((caseId) => directCaseIds.includes(caseId));
       });
+  const allowedClaims = eligibleClaims
+    .map((claim, index) => ({ claim, score: scoreClaimRelevance(question, claim, index) }))
+    .sort((left, right) => right.score - left.score)
+    .slice(0, searchPlan.track === "case" ? 8 : 5)
+    .map(({ claim }) => claim);
   const allowedClaimIds = allowedClaims.map((claim) => claim.id);
   const allowedChunkIds = new Set(allowedClaims.map((claim) => claim.chunkId));
   const answerability = allowedClaims.length === 0 ? "insufficient" :
-    allowedClaims.length < retrievedClaims.length ? "partial" : "supported";
-  const requiredDistinctions = uniqueStrings(allowedClaims.flatMap((claim) => claim.cannotSupport)).slice(0, 8);
+    eligibleClaims.length < retrievedClaims.length ? "partial" : "supported";
+  const requiredDistinctions = uniqueStrings([
+    ...allowedClaims.flatMap((claim) => claim.distinctions ?? []),
+    ...allowedClaims.flatMap((claim) => claim.cannotSupport),
+  ]).slice(0, 8);
   const binaryVerdict = asksForBinaryVerdict(question);
   const maxConclusion = answerability === "insufficient"
     ? "只能自然说明目前没有足够信息，不能补写数字、名单、事件或结论。"
@@ -191,8 +263,23 @@ export function createAnswerPlan(searchPlan, cases, currentDate = new Date().toI
   };
 }
 
-function collectNumberTokens(value) {
-  return value.match(/\d+(?:\.\d+)?%?/g) ?? [];
+function stripFormattingNumbers(value) {
+  return value
+    .replace(/(^|\n)\s*(?:#{1,6}\s*)?(?:\*{1,2})?[（([]?\d{1,2}[）\])]?\s*[、.．:：]\s*(?:\*{1,2})?/g, "$1")
+    .replace(/(^|\n)\s*[（(]\d{1,2}[）)]\s*/g, "$1");
+}
+
+export function collectFactualNumberTokens(value) {
+  return stripFormattingNumbers(value).match(/\d+(?:\.\d+)?%?/g) ?? [];
+}
+
+function hasUnnegatedMatch(value, pattern) {
+  for (const match of value.matchAll(pattern)) {
+    const prefix = value.slice(Math.max(0, match.index - 16), match.index);
+    if (/(?:不|未|没有|尚未|不能|无法|无从|不足以|并非|不可|不等于|不能说)[^。！？]{0,10}$/.test(prefix)) continue;
+    return true;
+  }
+  return false;
 }
 
 export function validateAnswer(answer, answerPlan, cases) {
@@ -209,9 +296,18 @@ export function validateAnswer(answer, answerPlan, cases) {
     }
   }
 
-  const groundedText = [answerPlan.question, answerPlan.currentDate, ...answerPlan.allowedClaims.map((claim) => claim.statement)].join("\n");
-  const groundedNumbers = new Set(collectNumberTokens(groundedText));
-  for (const token of collectNumberTokens(normalized)) {
+  const groundedText = [
+    answerPlan.question,
+    answerPlan.currentDate,
+    ...answerPlan.allowedClaims.flatMap((claim) => [
+      claim.statement,
+      claim.effectiveAt,
+      claim.verifiedAt,
+      claim.sourceTitle,
+    ]),
+  ].filter(Boolean).join("\n");
+  const groundedNumbers = new Set(collectFactualNumberTokens(groundedText));
+  for (const token of collectFactualNumberTokens(normalized)) {
     if (!groundedNumbers.has(token)) {
       violations.push({ code: "unsupported_number", message: `回答使用了允许事实中没有的数字：${token}` });
     }
@@ -234,11 +330,14 @@ export function validateAnswer(answer, answerPlan, cases) {
       violations.push({ code: "wrong_current_date", message: `回答把当前年份 ${currentYear} 误当成未来。` });
     }
   }
-  if (answerPlan.binaryVerdict && /(?:肯定|一定|必然|毫无疑问|已经证明|足以证明|就是假的|不是假的|绝对)/.test(normalized)) {
+  if (
+    answerPlan.binaryVerdict &&
+    hasUnnegatedMatch(normalized, /(?:肯定|一定|必然|毫无疑问|已经证明|足以证明|就是假的|不是假的|绝对)/g)
+  ) {
     violations.push({ code: "unsupported_verdict", message: "回答作出了证据边界之外的绝对判断。" });
   }
   if (answerPlan.track === "case" && answerPlan.requestedCaseId &&
-      /(?:最终结论是|已经查清|已经定性|监管已经认定)/.test(normalized) &&
+      hasUnnegatedMatch(normalized, /(?:最终结论是|已经查清|已经定性|监管已经认定)/g) &&
       !answerPlan.allowedClaims.some((claim) => claim.sourceRole === "public_record")) {
     violations.push({ code: "unsupported_finality", message: "回答使用了当前案例证据不能支持的终局表述。" });
   }
@@ -258,5 +357,7 @@ export function buildRepairInstruction(validation) {
 
 export function makeSafeFallback(answerPlan) {
   if (answerPlan.answerability === "insufficient") return "目前没有足够信息回答这个问题。";
-  return "目前能确认的资料还不足以支持一个稳妥的完整结论，我先不作进一步推断。";
+  const claim = answerPlan.allowedClaims[0];
+  if (!claim?.statement) return "目前没有足够信息回答这个问题。";
+  return `目前能确认的是：${claim.statement}\n\n现有资料只能支持到这里，不能据此作进一步推断。`;
 }

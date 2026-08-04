@@ -42,7 +42,7 @@ knowledge/
 - 资料总数：30
 - 检索片段：135
 - `culture-v1` 已标注片段：135
-- `claim-v1`：135（首版一条审核片段对应一个 Claim）
+- `claim-v1`：135（首版一条审核片段对应一个 Claim，包含可支持范围、不可外推边界和必要区分 `distinctions`）
 - `partial_text`：24
 - `summary_only`：6（均已完成终轮审计；保留摘要是来源或版权边界结论，不是遗漏）
 
