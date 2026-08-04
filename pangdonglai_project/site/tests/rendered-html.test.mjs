@@ -152,6 +152,36 @@ test("fuses keyword and vector rankings while preserving safety routes", async (
   assert.equal(embeddingCalls, 1);
 });
 
+test("freezes the R5B semantic shadow set before its first model run", async () => {
+  const [shadowSet, knowledgeBase, packageJson] = await Promise.all([
+    readFile(new URL("../../evaluation/rag-culture-r5-semantic-shadow-v1.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../knowledge/compiled/knowledge-base.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../package.json", import.meta.url), "utf8").then(JSON.parse),
+  ]);
+  const chunkIds = new Set(
+    knowledgeBase.documents.flatMap((document) => document.chunks.map((chunk) => chunk.id)),
+  );
+  const questionIds = shadowSet.questions.map((question) => question.id);
+
+  assert.equal(shadowSet.frozenBeforeFirstRun, true);
+  assert.equal(shadowSet.questions.length, 31);
+  assert.equal(new Set(questionIds).size, questionIds.length);
+  assert.deepEqual(shadowSet.themeDistribution, { C1: 5, C2: 5, C3: 5, C4: 5, C5: 5, C6: 6 });
+  assert.ok(
+    shadowSet.questions.every((question) =>
+      [...question.mustRecallAnyOf, ...question.mustNotRecallChunkIds].every((id) => chunkIds.has(id)),
+    ),
+  );
+  const userQuestion = shadowSet.questions.find((question) => question.forms.includes("user_supplied"));
+  assert.equal(
+    userQuestion.question,
+    "胖东来因为红裤头事件开除相关员工，这件事是否和企业文化相冲突？",
+  );
+  assert.equal(userQuestion.expectedCaseId, "red-underwear-color-libel-2025");
+  assert.ok(userQuestion.mustNotRecallChunkIds.includes("noodle-initial-dismissal"));
+  assert.match(packageJson.scripts["rag:evaluate:r5-shadow"], /evaluate-rag-r5-shadow/);
+});
+
 async function render(path = "/", init = {}, env = {}, workerCacheKey) {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set(
