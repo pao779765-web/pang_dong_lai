@@ -2,10 +2,10 @@
 
 > **规则：** 谁做完谁更新本文件。下一位只认本文件 + Git，不靠聊天记录猜。
 
-**更新时间：** 2026-08-04
+**更新时间：** 2026-08-05
 
-**当前执行者：** Codex 已完成 R5C-7B 真实回答验收：三题均成功调用，自动与人工验收均为 2/3；红裤头题检索正确但 AnswerPlan 漏掉员工处理直接 Claim，需做通用前提核实覆盖修复；未部署
-**分支：** `main`
+**当前执行者：** Codex 已完成 R5C-7B 真实回答验收并交接给 Grok：三题均成功调用，自动与人工验收均为 2/3；红裤头题检索正确但 AnswerPlan 漏掉员工处理直接 Claim，需做通用前提核实覆盖修复；未部署
+**Git 状态：** 当前 Codex 工作树为 detached HEAD，最新提交 `c5f3ebd`；这些提交尚未自动并入 `main`，Grok 接手后应先确认目标分支并保留 `68d4ea3`、`c5f3ebd`
 
 ---
 
@@ -173,6 +173,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-05 | Codex | 应用户要求整理交接；确认当前工作树为 detached HEAD，最新成果在 `68d4ea3` 与 `c5f3ebd`，未自动并入 main；下一步为 R5C-8 AnswerPlan 通用前提核实 Claim 覆盖，未改代码、未部署 | docs/HANDOFF.md |
 | 2026-08-04 | Codex | 经用户明确授权执行 R5C-7B 三道本地真实回答；两道语义题调用 TokenHub，三题及允许片段调用 DeepSeek，均返回 200。自动与人工验收均为 2/3：普通文化与资料不足通过；红裤头题语义路由和 Top-5 召回正确、无跨案例污染，但 AnswerPlan 漏掉员工免职/降级直接 Claim，导致回答错误称资料未记载处理措施。结果原样记录，不按单题改规则，密钥未保存，未部署 | evaluation/rag-culture-r5c-worker-live-v1.json, docs/RAG_CULTURE_R5C_WORKER_LIVE.md, docs/RAG_CULTURE_R5C_EXPERIMENT.md, docs/RAG_CULTURE_ROADMAP.md, docs/PLAN.md, docs/HANDOFF.md |
 | 2026-08-04 | Codex | 按用户要求进行 R5C 下一步，将已验收混合检索以默认关闭的 `bm25/hybrid` 开关接入本地 Worker；CloudBase Node 入口同步支持 TokenHub 服务端变量，缺密钥、模型不一致或向量失败自动回退 BM25，页面移除 BM25 实现术语。新增真实回答验收脚本但未运行，因为三道新题及检索上下文发送给 DeepSeek 尚需单独授权。51 项测试与 lint 通过，未部署 | site/worker/index.ts, site/scripts/cloudbase-server.mjs, site/scripts/evaluate-rag-r5c-worker-live.mjs, site/.dev.vars.example, site/README.md, site/app/page.tsx, site/package.json, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_R5C_EXPERIMENT.md, docs/RAG_CULTURE_ROADMAP.md, docs/PLAN.md, docs/HANDOFF.md |
 | 2026-08-04 | Codex | 按用户要求完成R5C-1至R5C-6。冻结双基线后，让安全候选由加权RRF直接选Top5；新增基于案例chunk向量、领先差距和通用名称模糊度的语义案例路由，扩展大众终局表达，并用同一批查询向量评测8组参数。选中1:0.65配置：固定54/54、影子24/31、回归0、案例5/5、隔离31/31、资料不足2/2、终局31/31；红裤头题通过。未接Worker、未部署 | site/shared/hybrid-retrieval.mjs, site/shared/retrieval.mjs, site/scripts/evaluate-rag-r5c.mjs, site/tests/rendered-html.test.mjs, site/package.json, evaluation/rag-culture-r5c-experiment-v1.json, docs/RAG_CULTURE_R5C_EXPERIMENT.md, docs/RAG_CULTURE_R5_HYBRID_PLAN.md, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |
