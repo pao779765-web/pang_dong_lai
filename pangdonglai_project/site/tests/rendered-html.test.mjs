@@ -37,6 +37,20 @@ test("validates TokenHub embedding responses without exposing the key", async ()
   assert.equal(JSON.parse(requests[0].init.body).model, "kinfra-text-embedding-0.6b");
   assert.equal(requests[0].init.headers.authorization, "Bearer test-secret-key");
   assert.doesNotMatch(JSON.stringify(JSON.parse(requests[0].init.body)), /test-secret-key/);
+
+  let attempts = 0;
+  const retryingClient = createTokenHubEmbeddingClient({
+    apiKey: "retry-test-key",
+    maxRetries: 1,
+    retryBaseDelayMs: 0,
+    fetchImpl: async () => {
+      attempts += 1;
+      if (attempts === 1) return new Response("upstream timeout", { status: 504 });
+      return new Response(JSON.stringify({ data: [{ index: 0, embedding: [1, 0] }] }));
+    },
+  });
+  assert.deepEqual(await retryingClient.embed(["重试测试"]), [[1, 0]]);
+  assert.equal(attempts, 2);
 });
 
 test("fuses keyword and vector rankings while preserving safety routes", async () => {
@@ -72,7 +86,14 @@ test("fuses keyword and vector rankings while preserving safety routes", async (
       },
     ],
   };
-  assert.deepEqual(createVectorCorpus(knowledgeBase).map((item) => item.chunkId), ["general-1"]);
+  assert.deepEqual(createVectorCorpus(knowledgeBase).map((item) => item.chunkId), [
+    "general-1",
+    "case-1-chunk",
+  ]);
+  assert.deepEqual(
+    createVectorCorpus(knowledgeBase).map((item) => item.searchableInGeneralTrack),
+    [true, false],
+  );
   assert.equal(cosineSimilarity([1, 0], [1, 0]), 1);
   assert.deepEqual(
     reciprocalRankFusion([["keyword"], ["vector"]], { weights: [1, 0.5] }).map((item) => item.chunkId),
@@ -124,7 +145,7 @@ test("fuses keyword and vector rankings while preserving safety routes", async (
   });
 
   const hybrid = await retriever.searchKnowledge("怎么尊重员工");
-  assert.equal(hybrid.retrievalMode, "hybrid-rrf");
+  assert.equal(hybrid.retrievalMode, "hybrid-rrf-keyword-anchored");
   assert.deepEqual(hybrid.retrieved.map((item) => item.chunkId), ["general-1"]);
   assert.equal((await retriever.searchKnowledge("案例问题")).vectorApplied, false);
   assert.equal((await retriever.searchKnowledge("缺资料")).vectorApplied, false);

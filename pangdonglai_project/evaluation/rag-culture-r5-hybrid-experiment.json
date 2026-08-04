@@ -1,0 +1,3573 @@
+{
+  "id": "rag-culture-r5-hybrid-experiment",
+  "generatedAt": "2026-08-04T08:56:52.172Z",
+  "configuration": {
+    "control": "rag-culture-current-evaluation",
+    "provider": "tencent-tokenhub",
+    "model": "kinfra-text-embedding-0.6b",
+    "dimensions": 1024,
+    "vectorWeight": 0.65,
+    "rrfK": 60,
+    "apiKeyStored": false
+  },
+  "summary": {
+    "total": 54,
+    "passed": 54,
+    "regressions": [],
+    "improvements": [],
+    "severeRegressions": [],
+    "safetyGatePass": true
+  },
+  "results": [
+    {
+      "id": "C1-01",
+      "question": "胖东来的‘自由与爱’具体怎么体现在员工身上？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "xinhua-6a-quality-before-scale",
+          "jiemian-freedom-love-rousseau-origin",
+          "book-learn-pdl-toc-and-structure",
+          "shen-culture-free-love-spirit",
+          "book-learn-pdl-ch3-humanistic-management"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "xinhua-6a-quality-before-scale",
+            "score": 0.0267109,
+            "baseScore": 14.4287719,
+            "vectorScore": 0.67737364,
+            "bm25Rank": 1,
+            "vectorRank": 3
+          },
+          {
+            "chunkId": "jiemian-freedom-love-rousseau-origin",
+            "score": 0.02528396,
+            "baseScore": 14.0232711,
+            "vectorScore": 0.61179355,
+            "bm25Rank": 2,
+            "vectorRank": 11
+          },
+          {
+            "chunkId": "book-learn-pdl-toc-and-structure",
+            "score": 0.01587302,
+            "baseScore": 13.32840431,
+            "vectorScore": null,
+            "bm25Rank": 3,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "shen-culture-free-love-spirit",
+            "score": 0.02628074,
+            "baseScore": 12.90803513,
+            "vectorScore": 0.71395414,
+            "bm25Rank": 4,
+            "vectorRank": 1
+          },
+          {
+            "chunkId": "book-learn-pdl-ch3-humanistic-management",
+            "score": 0.02480491,
+            "baseScore": 12.10137301,
+            "vectorScore": 0.61766414,
+            "bm25Rank": 5,
+            "vectorRank": 9
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C1-02",
+      "question": "大家说胖东来把员工当‘完整的人’，这不是一句漂亮话吗？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "book-learn-pdl-ch3-humanistic-management",
+          "book-learn-pdl-toc-and-structure",
+          "xinhua-rest-to-service-mechanism",
+          "weiqu-award-yudonglai-purpose",
+          "xinhua-employee-home-facilities"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "book-learn-pdl-ch3-humanistic-management",
+            "score": 0.02595227,
+            "baseScore": 17.11887239,
+            "vectorScore": 0.6531224,
+            "bm25Rank": 1,
+            "vectorRank": 8
+          },
+          {
+            "chunkId": "book-learn-pdl-toc-and-structure",
+            "score": 0.01612903,
+            "baseScore": 15.65628647,
+            "vectorScore": null,
+            "bm25Rank": 2,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "xinhua-rest-to-service-mechanism",
+            "score": 0.02652875,
+            "baseScore": 10.51815002,
+            "vectorScore": 0.68861368,
+            "bm25Rank": 3,
+            "vectorRank": 1
+          },
+          {
+            "chunkId": "weiqu-award-yudonglai-purpose",
+            "score": 0.02610887,
+            "baseScore": 9.26102053,
+            "vectorScore": 0.68757903,
+            "bm25Rank": 4,
+            "vectorRank": 2
+          },
+          {
+            "chunkId": "xinhua-employee-home-facilities",
+            "score": 0.0252331,
+            "baseScore": 8.88181287,
+            "vectorScore": 0.65968161,
+            "bm25Rank": 5,
+            "vectorRank": 6
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C1-03",
+      "question": "网上说员工不开心就能直接不上班，真有这么随意吗？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "tsinghua-employee-customer-practices",
+          "xinhua-work-life-boundaries",
+          "xinhua-6a-service-and-employee-practices",
+          "xinhua-rest-to-service-mechanism",
+          "red-underwear-judgment-outcome"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "tsinghua-employee-customer-practices",
+            "score": 0.02624193,
+            "baseScore": 18.01214472,
+            "vectorScore": 0.51200573,
+            "bm25Rank": 1,
+            "vectorRank": 6
+          },
+          {
+            "chunkId": "xinhua-work-life-boundaries",
+            "score": 0.02678477,
+            "baseScore": 12.00878711,
+            "vectorScore": 0.64413995,
+            "bm25Rank": 2,
+            "vectorRank": 1
+          },
+          {
+            "chunkId": "xinhua-6a-service-and-employee-practices",
+            "score": 0.01587302,
+            "baseScore": 10.70826833,
+            "vectorScore": null,
+            "bm25Rank": 3,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "xinhua-rest-to-service-mechanism",
+            "score": 0.02594246,
+            "baseScore": 6.01613479,
+            "vectorScore": 0.53638573,
+            "bm25Rank": 4,
+            "vectorRank": 3
+          },
+          {
+            "chunkId": "red-underwear-judgment-outcome",
+            "score": 0.01538462,
+            "baseScore": 5.86760419,
+            "vectorScore": null,
+            "bm25Rank": 5,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C1-04",
+      "question": "那是不是员工只要觉得委屈就一定能拿到钱？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "weiqu-award-cultural-meaning-boundary",
+          "weiqu-award-office-response",
+          "xinhua-culture-distribution-operations",
+          "tsinghua-employee-customer-practices",
+          "jiemian-handbook-and-institutions"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "weiqu-award-cultural-meaning-boundary",
+            "score": 0.02687731,
+            "baseScore": 11.05721108,
+            "vectorScore": 0.80988717,
+            "bm25Rank": 1,
+            "vectorRank": 2
+          },
+          {
+            "chunkId": "weiqu-award-office-response",
+            "score": 0.02678477,
+            "baseScore": 10.90957449,
+            "vectorScore": 0.82559077,
+            "bm25Rank": 2,
+            "vectorRank": 1
+          },
+          {
+            "chunkId": "xinhua-culture-distribution-operations",
+            "score": 0.01587302,
+            "baseScore": 9.68832082,
+            "vectorScore": null,
+            "bm25Rank": 3,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tsinghua-employee-customer-practices",
+            "score": 0.02547348,
+            "baseScore": 9.60065932,
+            "vectorScore": 0.55905698,
+            "bm25Rank": 4,
+            "vectorRank": 6
+          },
+          {
+            "chunkId": "jiemian-handbook-and-institutions",
+            "score": 0.02467033,
+            "baseScore": 7.94439207,
+            "vectorScore": 0.50318471,
+            "bm25Rank": 5,
+            "vectorRank": 10
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C1-05",
+      "question": "胖东来员公的休息和年加到底怎么样？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "weiqu-award-work-rest-data",
+          "xinhua-yonghui-employee-community",
+          "xinhua-rest-to-service-mechanism",
+          "xinhua-employee-practices-boundary",
+          "xinhua-employee-home-facilities"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "weiqu-award-work-rest-data",
+            "score": 0.02687731,
+            "baseScore": 14.40614206,
+            "vectorScore": 0.74177299,
+            "bm25Rank": 1,
+            "vectorRank": 2
+          },
+          {
+            "chunkId": "xinhua-yonghui-employee-community",
+            "score": 0.01612903,
+            "baseScore": 10.10299764,
+            "vectorScore": null,
+            "bm25Rank": 2,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "xinhua-rest-to-service-mechanism",
+            "score": 0.02602927,
+            "baseScore": 9.2481278,
+            "vectorScore": 0.65088712,
+            "bm25Rank": 3,
+            "vectorRank": 4
+          },
+          {
+            "chunkId": "xinhua-employee-practices-boundary",
+            "score": 0.02628074,
+            "baseScore": 8.18263858,
+            "vectorScore": 0.75120028,
+            "bm25Rank": 4,
+            "vectorRank": 1
+          },
+          {
+            "chunkId": "xinhua-employee-home-facilities",
+            "score": 0.0252331,
+            "baseScore": 8.00507015,
+            "vectorScore": 0.6376766,
+            "bm25Rank": 5,
+            "vectorRank": 6
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C1-06",
+      "question": "工资高、福利好就能叫‘自由与爱’了吗？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "book-learn-pdl-ch3-humanistic-management",
+          "book-learn-pdl-flywheel-logic",
+          "xinhua-culture-love-five-levels",
+          "shen-culture-free-love-spirit",
+          "tsinghua-employee-customer-practices"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "book-learn-pdl-ch3-humanistic-management",
+            "score": 0.0267109,
+            "baseScore": 21.94848272,
+            "vectorScore": 0.56780693,
+            "bm25Rank": 1,
+            "vectorRank": 3
+          },
+          {
+            "chunkId": "book-learn-pdl-flywheel-logic",
+            "score": 0.02597752,
+            "baseScore": 14.40636378,
+            "vectorScore": 0.47395185,
+            "bm25Rank": 2,
+            "vectorRank": 6
+          },
+          {
+            "chunkId": "xinhua-culture-love-five-levels",
+            "score": 0.02635689,
+            "baseScore": 11.07260852,
+            "vectorScore": 0.59813048,
+            "bm25Rank": 3,
+            "vectorRank": 2
+          },
+          {
+            "chunkId": "shen-culture-free-love-spirit",
+            "score": 0.02578125,
+            "baseScore": 9.77587137,
+            "vectorScore": 0.56016501,
+            "bm25Rank": 4,
+            "vectorRank": 4
+          },
+          {
+            "chunkId": "tsinghua-employee-customer-practices",
+            "score": 0.02604035,
+            "baseScore": 7.92795464,
+            "vectorScore": 0.63964936,
+            "bm25Rank": 5,
+            "vectorRank": 1
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C1-07",
+      "question": "尊重员工自由，会不会导致大家都不守规矩？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "culture-system-behavior-and-reward",
+          "tsinghua-freedom-love-definition",
+          "tsinghua-employee-customer-practices",
+          "xinhua-rest-to-service-mechanism",
+          "tsinghua-case-source-and-thesis"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "culture-system-behavior-and-reward",
+            "score": 0.02704918,
+            "baseScore": 43.14484746,
+            "vectorScore": 0.61120042,
+            "bm25Rank": 1,
+            "vectorRank": 1
+          },
+          {
+            "chunkId": "tsinghua-freedom-love-definition",
+            "score": 0.02554932,
+            "baseScore": 10.50251162,
+            "vectorScore": 0.46092553,
+            "bm25Rank": 2,
+            "vectorRank": 9
+          },
+          {
+            "chunkId": "tsinghua-employee-customer-practices",
+            "score": 0.02619048,
+            "baseScore": 10.39819659,
+            "vectorScore": 0.52226236,
+            "bm25Rank": 3,
+            "vectorRank": 3
+          },
+          {
+            "chunkId": "xinhua-rest-to-service-mechanism",
+            "score": 0.025625,
+            "baseScore": 10.15269059,
+            "vectorScore": 0.51380163,
+            "bm25Rank": 4,
+            "vectorRank": 5
+          },
+          {
+            "chunkId": "tsinghua-case-source-and-thesis",
+            "score": 0.01538462,
+            "baseScore": 9.01058408,
+            "vectorScore": null,
+            "bm25Rank": 5,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C1-08",
+      "question": "请给我一份胖东来 2026 年每个岗位最新工资和奖金表。",
+      "actual": {
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [],
+        "retrieved": []
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C1-09",
+      "question": "胖东来招聘为什么还要做企业文化答题？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "recruitment-culture-screening",
+          "recruitment-special-groups",
+          "xinhua-culture-distribution-operations",
+          "recruitment-data-retention",
+          "recruitment-batch-boundary"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "recruitment-culture-screening",
+            "score": 0.0267109,
+            "baseScore": 23.07281294,
+            "vectorScore": 0.64199074,
+            "bm25Rank": 1,
+            "vectorRank": 3
+          },
+          {
+            "chunkId": "recruitment-special-groups",
+            "score": 0.01612903,
+            "baseScore": 10.44743955,
+            "vectorScore": null,
+            "bm25Rank": 2,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "xinhua-culture-distribution-operations",
+            "score": 0.01587302,
+            "baseScore": 10.3307821,
+            "vectorScore": null,
+            "bm25Rank": 3,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "recruitment-data-retention",
+            "score": 0.015625,
+            "baseScore": 6.56915727,
+            "vectorScore": null,
+            "bm25Rank": 4,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "recruitment-batch-boundary",
+            "score": 0.01538462,
+            "baseScore": 6.23526914,
+            "vectorScore": null,
+            "bm25Rank": 5,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C1-10",
+      "question": "招聘只限河南人，也能叫尊重员工生活吗？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "recruitment-local-life-rationale",
+          "xinhua-employee-home-facilities",
+          "xinhua-rest-to-service-mechanism",
+          "recruitment-special-groups",
+          "recruitment-batch-boundary"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "recruitment-local-life-rationale",
+            "score": 0.02704918,
+            "baseScore": 15.70975678,
+            "vectorScore": 0.71212681,
+            "bm25Rank": 1,
+            "vectorRank": 1
+          },
+          {
+            "chunkId": "xinhua-employee-home-facilities",
+            "score": 0.02612903,
+            "baseScore": 11.25060198,
+            "vectorScore": 0.54450628,
+            "bm25Rank": 2,
+            "vectorRank": 5
+          },
+          {
+            "chunkId": "xinhua-rest-to-service-mechanism",
+            "score": 0.02543184,
+            "baseScore": 10.62192515,
+            "vectorScore": 0.53295017,
+            "bm25Rank": 3,
+            "vectorRank": 8
+          },
+          {
+            "chunkId": "recruitment-special-groups",
+            "score": 0.02547348,
+            "baseScore": 10.3064248,
+            "vectorScore": 0.54425701,
+            "bm25Rank": 4,
+            "vectorRank": 6
+          },
+          {
+            "chunkId": "recruitment-batch-boundary",
+            "score": 0.02554087,
+            "baseScore": 8.65404933,
+            "vectorScore": 0.57141667,
+            "bm25Rank": 5,
+            "vectorRank": 4
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C1-11",
+      "question": "不是说胖东来员工都早下班吗，电影夜场和中央厨房的人怎么办？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "cnfin-night-shift-reality",
+          "tsinghua-customer-value-creation",
+          "company-profile-footprint-business-and-employment",
+          "interview-trust-returns-and-complaints",
+          "xinhua-employee-home-facilities"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "cnfin-night-shift-reality",
+            "score": 0.02639344,
+            "baseScore": 39.01292739,
+            "vectorScore": 0.62980538,
+            "bm25Rank": 1,
+            "vectorRank": 5
+          },
+          {
+            "chunkId": "tsinghua-customer-value-creation",
+            "score": 0.01612903,
+            "baseScore": 13.79494782,
+            "vectorScore": null,
+            "bm25Rank": 2,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "company-profile-footprint-business-and-employment",
+            "score": 0.01587302,
+            "baseScore": 12.98821832,
+            "vectorScore": null,
+            "bm25Rank": 3,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "interview-trust-returns-and-complaints",
+            "score": 0.015625,
+            "baseScore": 11.69629727,
+            "vectorScore": null,
+            "bm25Rank": 4,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "xinhua-employee-home-facilities",
+            "score": 0.0252331,
+            "baseScore": 10.95413536,
+            "vectorScore": 0.61167579,
+            "bm25Rank": 5,
+            "vectorRank": 6
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C1-12",
+      "question": "尝面员工后来还是被开除了吗？这件事怎么检验尊重员工？",
+      "actual": {
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "track": "case",
+        "caseId": "employee-noodle-tasting-discipline-2024-02",
+        "retrievedChunkIds": [
+          "noodle-initial-dismissal",
+          "noodle-expert-proportionality",
+          "noodle-food-vs-labor-rights",
+          "noodle-initial-stage-boundary",
+          "noodle-reconsideration-timeline",
+          "noodle-democratic-vote",
+          "noodle-reassignment-result",
+          "noodle-management-lesson",
+          "noodle-case-boundary"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "noodle-initial-dismissal",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "noodle-expert-proportionality",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "noodle-food-vs-labor-rights",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "noodle-initial-stage-boundary",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "noodle-reconsideration-timeline",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "noodle-democratic-vote",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "noodle-reassignment-result",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "noodle-management-lesson",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "noodle-case-boundary",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C1-13",
+      "question": "胖东来不让员工收彩礼已经是正式制度了吗？这不侵犯自由吗？",
+      "actual": {
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "track": "case",
+        "caseId": "employee-bride-price-boundary-2024-11",
+        "retrievedChunkIds": [
+          "bride-price-statement",
+          "bride-price-company-response-not-policy",
+          "bride-price-legal-governance",
+          "bride-price-opposing-views",
+          "bride-price-cultural-boundary"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "bride-price-statement",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "bride-price-company-response-not-policy",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "bride-price-legal-governance",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "bride-price-opposing-views",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "bride-price-cultural-boundary",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C1-14",
+      "question": "胖东来真的大幅降薪了吗，企业后来怎么解释的？",
+      "actual": {
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "track": "case",
+        "caseId": "employee-salary-policy-rumor-2026-06",
+        "retrievedChunkIds": [
+          "salary-rumor-context",
+          "salary-company-no-cut-clarification",
+          "salary-value-and-training-context",
+          "salary-evidence-boundary"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "salary-rumor-context",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "salary-company-no-cut-clarification",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "salary-value-and-training-context",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "salary-evidence-boundary",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C2-01",
+      "question": "胖东来为什么愿意让一线员工直接处理顾客问题？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "interview-frontline-trust-responsibility-and-society",
+          "xinhua-yonghui-employee-community",
+          "red-underwear-early-apology",
+          "book-learn-pdl-time-lag-and-crosscheck",
+          "book-learn-pdl-flywheel-logic"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "interview-frontline-trust-responsibility-and-society",
+            "score": 0.01639344,
+            "baseScore": 12.7402002,
+            "vectorScore": null,
+            "bm25Rank": 1,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "xinhua-yonghui-employee-community",
+            "score": 0.01612903,
+            "baseScore": 10.56912431,
+            "vectorScore": null,
+            "bm25Rank": 2,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "red-underwear-early-apology",
+            "score": 0.02619048,
+            "baseScore": 9.57104834,
+            "vectorScore": 0.65491959,
+            "bm25Rank": 3,
+            "vectorRank": 3
+          },
+          {
+            "chunkId": "book-learn-pdl-time-lag-and-crosscheck",
+            "score": 0.02465278,
+            "baseScore": 8.37044269,
+            "vectorScore": 0.62889493,
+            "bm25Rank": 4,
+            "vectorRank": 12
+          },
+          {
+            "chunkId": "book-learn-pdl-flywheel-logic",
+            "score": 0.01538462,
+            "baseScore": 8.15340825,
+            "vectorScore": null,
+            "bm25Rank": 5,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C2-02",
+      "question": "胖东来的管理者敢放权，背后靠什么兜底？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "interview-frontline-trust-responsibility-and-society",
+          "interview-operating-manuals-and-execution",
+          "book-learn-pdl-how-to-learn-method",
+          "xinhua-culture-distribution-operations",
+          "xinhua-culture-public-sharing-history"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "interview-frontline-trust-responsibility-and-society",
+            "score": 0.0267109,
+            "baseScore": 31.03337076,
+            "vectorScore": 0.58004661,
+            "bm25Rank": 1,
+            "vectorRank": 3
+          },
+          {
+            "chunkId": "interview-operating-manuals-and-execution",
+            "score": 0.02597752,
+            "baseScore": 28.17807044,
+            "vectorScore": 0.55925809,
+            "bm25Rank": 2,
+            "vectorRank": 6
+          },
+          {
+            "chunkId": "book-learn-pdl-how-to-learn-method",
+            "score": 0.02587302,
+            "baseScore": 14.67464407,
+            "vectorScore": 0.56976162,
+            "bm25Rank": 3,
+            "vectorRank": 5
+          },
+          {
+            "chunkId": "xinhua-culture-distribution-operations",
+            "score": 0.015625,
+            "baseScore": 12.8697115,
+            "vectorScore": null,
+            "bm25Rank": 4,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "xinhua-culture-public-sharing-history",
+            "score": 0.02554087,
+            "baseScore": 9.73897997,
+            "vectorScore": 0.57897503,
+            "bm25Rank": 5,
+            "vectorRank": 4
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C2-03",
+      "question": "普通店员真能自己做主给顾客退换货吗？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "interview-trust-returns-and-complaints",
+          "xinhua-culture-love-five-levels",
+          "tsinghua-customer-value-creation",
+          "weiqu-award-yudonglai-purpose",
+          "xinhua-yonghui-learn-pdl-practices"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "interview-trust-returns-and-complaints",
+            "score": 0.02704918,
+            "baseScore": 12.01969193,
+            "vectorScore": 0.48109436,
+            "bm25Rank": 1,
+            "vectorRank": 1
+          },
+          {
+            "chunkId": "xinhua-culture-love-five-levels",
+            "score": 0.01612903,
+            "baseScore": 10.42835678,
+            "vectorScore": null,
+            "bm25Rank": 2,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tsinghua-customer-value-creation",
+            "score": 0.02529331,
+            "baseScore": 9.78740664,
+            "vectorScore": 0.42370119,
+            "bm25Rank": 3,
+            "vectorRank": 9
+          },
+          {
+            "chunkId": "weiqu-award-yudonglai-purpose",
+            "score": 0.015625,
+            "baseScore": 6.77327725,
+            "vectorScore": null,
+            "bm25Rank": 4,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "xinhua-yonghui-learn-pdl-practices",
+            "score": 0.0252331,
+            "baseScore": 5.94219062,
+            "vectorScore": 0.43797695,
+            "bm25Rank": 5,
+            "vectorRank": 6
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C2-04",
+      "question": "那要是他判断错了呢？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "interview-frontline-trust-responsibility-and-society",
+          "red-underwear-early-apology",
+          "xinhua-yonghui-employee-community",
+          "book-learn-pdl-limits-of-copying",
+          "interview-criticism-traffic-and-correction"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "interview-frontline-trust-responsibility-and-society",
+            "score": 0.02687731,
+            "baseScore": 15.55660331,
+            "vectorScore": 0.65324516,
+            "bm25Rank": 1,
+            "vectorRank": 2
+          },
+          {
+            "chunkId": "red-underwear-early-apology",
+            "score": 0.02644649,
+            "baseScore": 13.84835868,
+            "vectorScore": 0.64535796,
+            "bm25Rank": 2,
+            "vectorRank": 3
+          },
+          {
+            "chunkId": "xinhua-yonghui-employee-community",
+            "score": 0.01587302,
+            "baseScore": 9.45099265,
+            "vectorScore": null,
+            "bm25Rank": 3,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "book-learn-pdl-limits-of-copying",
+            "score": 0.02477993,
+            "baseScore": 8.64933667,
+            "vectorScore": 0.58802696,
+            "bm25Rank": 4,
+            "vectorRank": 11
+          },
+          {
+            "chunkId": "interview-criticism-traffic-and-correction",
+            "score": 0.01538462,
+            "baseScore": 8.54111904,
+            "vectorScore": null,
+            "bm25Rank": 5,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C2-05",
+      "question": "一线授全和责任是怎么配套的？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "interview-frontline-trust-responsibility-and-society",
+          "interview-operating-manuals-and-execution",
+          "book-learn-pdl-how-to-learn-method",
+          "xinhua-culture-public-sharing-history",
+          "tsinghua-supply-chain-competitor-value"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "interview-frontline-trust-responsibility-and-society",
+            "score": 0.02704918,
+            "baseScore": 41.20514849,
+            "vectorScore": 0.56537376,
+            "bm25Rank": 1,
+            "vectorRank": 1
+          },
+          {
+            "chunkId": "interview-operating-manuals-and-execution",
+            "score": 0.02644649,
+            "baseScore": 27.95078546,
+            "vectorScore": 0.42589586,
+            "bm25Rank": 2,
+            "vectorRank": 3
+          },
+          {
+            "chunkId": "book-learn-pdl-how-to-learn-method",
+            "score": 0.02557451,
+            "baseScore": 15.03790847,
+            "vectorScore": 0.36481981,
+            "bm25Rank": 3,
+            "vectorRank": 7
+          },
+          {
+            "chunkId": "xinhua-culture-public-sharing-history",
+            "score": 0.02610887,
+            "baseScore": 9.27821282,
+            "vectorScore": 0.45254912,
+            "bm25Rank": 4,
+            "vectorRank": 2
+          },
+          {
+            "chunkId": "tsinghua-supply-chain-competitor-value",
+            "score": 0.01538462,
+            "baseScore": 7.51657289,
+            "vectorScore": null,
+            "bm25Rank": 5,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C2-06",
+      "question": "所谓‘信任员工’会不会只是老板个人魅力，老板退休就没了？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "xinhua-culture-love-five-levels",
+          "jiemian-retirement-culture-question",
+          "culture-system-voluntary-assessment",
+          "book-learn-pdl-flywheel-logic",
+          "interview-frontline-trust-responsibility-and-society"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "xinhua-culture-love-five-levels",
+            "score": 0.02581373,
+            "baseScore": 7.80126153,
+            "vectorScore": 0.47937307,
+            "bm25Rank": 1,
+            "vectorRank": 9
+          },
+          {
+            "chunkId": "jiemian-retirement-culture-question",
+            "score": 0.0266129,
+            "baseScore": 6.69940433,
+            "vectorScore": 0.55809546,
+            "bm25Rank": 2,
+            "vectorRank": 2
+          },
+          {
+            "chunkId": "culture-system-voluntary-assessment",
+            "score": 0.01587302,
+            "baseScore": 5.11160579,
+            "vectorScore": null,
+            "bm25Rank": 3,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "book-learn-pdl-flywheel-logic",
+            "score": 0.02578125,
+            "baseScore": 4.60698908,
+            "vectorScore": 0.52550018,
+            "bm25Rank": 4,
+            "vectorRank": 4
+          },
+          {
+            "chunkId": "interview-frontline-trust-responsibility-and-society",
+            "score": 0.02604035,
+            "baseScore": 4.58637204,
+            "vectorScore": 0.58106723,
+            "bm25Rank": 5,
+            "vectorRank": 1
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C2-07",
+      "question": "永辉照着胖东来改店，能证明这套授权文化可以直接复制吗？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "xinhua-yonghui-replication-boundary",
+          "book-learn-pdl-surface-vs-culture",
+          "book-learn-pdl-ch2-influence",
+          "interview-people-employees-and-replication",
+          "tsinghua-replication-limits"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "xinhua-yonghui-replication-boundary",
+            "score": 0.02704918,
+            "baseScore": 13.97757335,
+            "vectorScore": 0.75132521,
+            "bm25Rank": 1,
+            "vectorRank": 1
+          },
+          {
+            "chunkId": "book-learn-pdl-surface-vs-culture",
+            "score": 0.02628528,
+            "baseScore": 12.25466196,
+            "vectorScore": 0.63389951,
+            "bm25Rank": 2,
+            "vectorRank": 4
+          },
+          {
+            "chunkId": "book-learn-pdl-ch2-influence",
+            "score": 0.0257215,
+            "baseScore": 10.44772355,
+            "vectorScore": 0.60038327,
+            "bm25Rank": 3,
+            "vectorRank": 6
+          },
+          {
+            "chunkId": "interview-people-employees-and-replication",
+            "score": 0.02532649,
+            "baseScore": 6.7217042,
+            "vectorScore": 0.5734696,
+            "bm25Rank": 4,
+            "vectorRank": 7
+          },
+          {
+            "chunkId": "tsinghua-replication-limits",
+            "score": 0.02538462,
+            "baseScore": 6.01265648,
+            "vectorScore": 0.62751003,
+            "bm25Rank": 5,
+            "vectorRank": 5
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C2-08",
+      "question": "胖东来每个岗位分别能自主赔付多少元？请列出权限表。",
+      "actual": {
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [],
+        "retrieved": []
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C3-01",
+      "question": "胖东来的真诚服务具体有哪些做法？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "interview-trust-returns-and-complaints",
+          "tsinghua-customer-value-creation",
+          "jiemian-cinema-service-meaning",
+          "xinhua-yonghui-scene-service",
+          "xinhua-yonghui-employee-community"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "interview-trust-returns-and-complaints",
+            "score": 0.02704918,
+            "baseScore": 29.13448529,
+            "vectorScore": 0.60052948,
+            "bm25Rank": 1,
+            "vectorRank": 1
+          },
+          {
+            "chunkId": "tsinghua-customer-value-creation",
+            "score": 0.01612903,
+            "baseScore": 27.6821474,
+            "vectorScore": null,
+            "bm25Rank": 2,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "jiemian-cinema-service-meaning",
+            "score": 0.01587302,
+            "baseScore": 21.73063462,
+            "vectorScore": null,
+            "bm25Rank": 3,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "xinhua-yonghui-scene-service",
+            "score": 0.015625,
+            "baseScore": 18.83357544,
+            "vectorScore": null,
+            "bm25Rank": 4,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "xinhua-yonghui-employee-community",
+            "score": 0.01538462,
+            "baseScore": 15.49741288,
+            "vectorScore": null,
+            "bm25Rank": 5,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C3-02",
+      "question": "把顾客放在心上，是不是顾客说什么都得照办？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "interview-trust-returns-and-complaints",
+          "tsinghua-customer-value-creation",
+          "yudonglai-red-underwear-track-boundary",
+          "xinhua-rest-to-service-mechanism",
+          "book-learn-pdl-flywheel-logic"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "interview-trust-returns-and-complaints",
+            "score": 0.02687731,
+            "baseScore": 12.01969193,
+            "vectorScore": 0.55234555,
+            "bm25Rank": 1,
+            "vectorRank": 2
+          },
+          {
+            "chunkId": "tsinghua-customer-value-creation",
+            "score": 0.02644649,
+            "baseScore": 11.67614729,
+            "vectorScore": 0.52685184,
+            "bm25Rank": 2,
+            "vectorRank": 3
+          },
+          {
+            "chunkId": "yudonglai-red-underwear-track-boundary",
+            "score": 0.01587302,
+            "baseScore": 10.66353367,
+            "vectorScore": null,
+            "bm25Rank": 3,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "xinhua-rest-to-service-mechanism",
+            "score": 0.02547348,
+            "baseScore": 9.22260507,
+            "vectorScore": 0.51070792,
+            "bm25Rank": 4,
+            "vectorRank": 6
+          },
+          {
+            "chunkId": "book-learn-pdl-flywheel-logic",
+            "score": 0.02494344,
+            "baseScore": 8.62420381,
+            "vectorScore": 0.48251659,
+            "bm25Rank": 5,
+            "vectorRank": 8
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C3-03",
+      "question": "买回去不喜欢，胖东来是不是啥都给退？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "interview-trust-returns-and-complaints",
+          "xinhua-work-life-boundaries",
+          "xinhua-6a-service-and-employee-practices",
+          "tsinghua-customer-value-creation",
+          "red-underwear-report-testing-and-staff"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "interview-trust-returns-and-complaints",
+            "score": 0.02595227,
+            "baseScore": 24.03553278,
+            "vectorScore": 0.53245818,
+            "bm25Rank": 1,
+            "vectorRank": 8
+          },
+          {
+            "chunkId": "xinhua-work-life-boundaries",
+            "score": 0.01612903,
+            "baseScore": 8.61555055,
+            "vectorScore": null,
+            "bm25Rank": 2,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "xinhua-6a-service-and-employee-practices",
+            "score": 0.01587302,
+            "baseScore": 8.58172816,
+            "vectorScore": null,
+            "bm25Rank": 3,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tsinghua-customer-value-creation",
+            "score": 0.015625,
+            "baseScore": 8.35417895,
+            "vectorScore": null,
+            "bm25Rank": 4,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "red-underwear-report-testing-and-staff",
+            "score": 0.01065574,
+            "baseScore": 0,
+            "vectorScore": 0.58827747,
+            "bm25Rank": null,
+            "vectorRank": 1
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C3-04",
+      "question": "为什么企业还要反过来给投诉的人奖励？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "interview-trust-returns-and-complaints"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "interview-trust-returns-and-complaints",
+            "score": 0.02704918,
+            "baseScore": 8.60447046,
+            "vectorScore": 0.53437741,
+            "bm25Rank": 1,
+            "vectorRank": 1
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C3-05",
+      "question": "顾客投述奖和退换货说明了什么？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "interview-trust-returns-and-complaints",
+          "tsinghua-customer-value-creation",
+          "book-learn-pdl-toc-and-structure",
+          "red-underwear-report-customer-and-legal",
+          "red-underwear-early-apology"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "interview-trust-returns-and-complaints",
+            "score": 0.02704918,
+            "baseScore": 21.82078933,
+            "vectorScore": 0.58283987,
+            "bm25Rank": 1,
+            "vectorRank": 1
+          },
+          {
+            "chunkId": "tsinghua-customer-value-creation",
+            "score": 0.02628528,
+            "baseScore": 9.78740664,
+            "vectorScore": 0.46983736,
+            "bm25Rank": 2,
+            "vectorRank": 4
+          },
+          {
+            "chunkId": "book-learn-pdl-toc-and-structure",
+            "score": 0.01587302,
+            "baseScore": 8.37221566,
+            "vectorScore": null,
+            "bm25Rank": 3,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "red-underwear-report-customer-and-legal",
+            "score": 0.025625,
+            "baseScore": 7.26751696,
+            "vectorScore": 0.45906028,
+            "bm25Rank": 4,
+            "vectorRank": 5
+          },
+          {
+            "chunkId": "red-underwear-early-apology",
+            "score": 0.01538462,
+            "baseScore": 3.05235215,
+            "vectorScore": null,
+            "bm25Rank": 5,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C3-06",
+      "question": "那些夸张的服务细节，会不会只是用来吸引流量的表演？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "book-learn-pdl-ch4-customer",
+          "xinhua-6a-quality-before-scale",
+          "book-learn-pdl-how-to-learn-method",
+          "interview-criticism-traffic-and-correction",
+          "xinhua-culture-love-five-levels"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "book-learn-pdl-ch4-customer",
+            "score": 0.02595227,
+            "baseScore": 13.87514328,
+            "vectorScore": 0.42724777,
+            "bm25Rank": 1,
+            "vectorRank": 8
+          },
+          {
+            "chunkId": "xinhua-6a-quality-before-scale",
+            "score": 0.02644649,
+            "baseScore": 10.65997788,
+            "vectorScore": 0.48066156,
+            "bm25Rank": 2,
+            "vectorRank": 3
+          },
+          {
+            "chunkId": "book-learn-pdl-how-to-learn-method",
+            "score": 0.01587302,
+            "baseScore": 8.23605013,
+            "vectorScore": null,
+            "bm25Rank": 3,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "interview-criticism-traffic-and-correction",
+            "score": 0.02532649,
+            "baseScore": 5.60654727,
+            "vectorScore": 0.45591793,
+            "bm25Rank": 4,
+            "vectorRank": 7
+          },
+          {
+            "chunkId": "xinhua-culture-love-five-levels",
+            "score": 0.01538462,
+            "baseScore": 5.20269444,
+            "vectorScore": null,
+            "bm25Rank": 5,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C3-07",
+      "question": "茶叶里有苍蝇的反馈中，客服处理能怎么看出它的服务文化？",
+      "actual": {
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "track": "case",
+        "caseId": "tea-fly-feedback-2026-01",
+        "retrievedChunkIds": [
+          "tea-fly-timeline",
+          "tea-fly-report-stage",
+          "tea-fly-investigation-team",
+          "tea-fly-preliminary-actions",
+          "tea-fly-customer-service-apology",
+          "tea-fly-evidence-boundary"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "tea-fly-timeline",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tea-fly-report-stage",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tea-fly-investigation-team",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tea-fly-preliminary-actions",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tea-fly-customer-service-apology",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tea-fly-evidence-boundary",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C3-08",
+      "question": "现在投诉胖东来一次，顾客固定能拿多少奖励？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "interview-trust-returns-and-complaints"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "interview-trust-returns-and-complaints",
+            "score": 0.02704918,
+            "baseScore": 9.67679172,
+            "vectorScore": 0.53988991,
+            "bm25Rank": 1,
+            "vectorRank": 1
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C4-01",
+      "question": "胖东来怎样理解商品品质、价格和供应商之间的关系？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "interview-quality-suppliers-and-scale",
+          "xinhua-yonghui-product-restructure",
+          "tsinghua-supply-chain-competitor-value",
+          "tsinghua-customer-value-creation",
+          "jiemian-culture-boundary-and-disputes"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "interview-quality-suppliers-and-scale",
+            "score": 0.02704918,
+            "baseScore": 19.14750089,
+            "vectorScore": 0.66760461,
+            "bm25Rank": 1,
+            "vectorRank": 1
+          },
+          {
+            "chunkId": "xinhua-yonghui-product-restructure",
+            "score": 0.01612903,
+            "baseScore": 18.38822957,
+            "vectorScore": null,
+            "bm25Rank": 2,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tsinghua-supply-chain-competitor-value",
+            "score": 0.01587302,
+            "baseScore": 17.87565697,
+            "vectorScore": null,
+            "bm25Rank": 3,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tsinghua-customer-value-creation",
+            "score": 0.02547348,
+            "baseScore": 13.9949979,
+            "vectorScore": 0.60284688,
+            "bm25Rank": 4,
+            "vectorRank": 6
+          },
+          {
+            "chunkId": "jiemian-culture-boundary-and-disputes",
+            "score": 0.01538462,
+            "baseScore": 13.12487141,
+            "vectorScore": null,
+            "bm25Rank": 5,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C4-02",
+      "question": "东西卖得实惠，会不会只能靠牺牲质量或者压供应商？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "tsinghua-supply-chain-competitor-value",
+          "interview-quality-suppliers-and-scale",
+          "recruitment-special-groups",
+          "book-learn-pdl-ch4-customer",
+          "interview-trust-returns-and-complaints"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "tsinghua-supply-chain-competitor-value",
+            "score": 0.02687731,
+            "baseScore": 9.9582071,
+            "vectorScore": 0.47336799,
+            "bm25Rank": 1,
+            "vectorRank": 2
+          },
+          {
+            "chunkId": "interview-quality-suppliers-and-scale",
+            "score": 0.02678477,
+            "baseScore": 9.16683216,
+            "vectorScore": 0.54945036,
+            "bm25Rank": 2,
+            "vectorRank": 1
+          },
+          {
+            "chunkId": "recruitment-special-groups",
+            "score": 0.01587302,
+            "baseScore": 7.8606536,
+            "vectorScore": null,
+            "bm25Rank": 3,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "book-learn-pdl-ch4-customer",
+            "score": 0.025625,
+            "baseScore": 5.22494081,
+            "vectorScore": 0.42677406,
+            "bm25Rank": 4,
+            "vectorRank": 5
+          },
+          {
+            "chunkId": "interview-trust-returns-and-complaints",
+            "score": 0.01031746,
+            "baseScore": 0,
+            "vectorScore": 0.46614338,
+            "bm25Rank": null,
+            "vectorRank": 3
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C4-03",
+      "question": "自有品牌真出了质量问题，他们内部到底怎么查？",
+      "actual": {
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [],
+        "retrieved": []
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C4-04",
+      "question": "那是不是监管部门已经证明这些鸡蛋肯定没问题？",
+      "actual": {
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "track": "case",
+        "caseId": "egg-canthaxanthin-feedback-2026-04",
+        "retrievedChunkIds": [
+          "egg-canthaxanthin-report-stage",
+          "egg-canthaxanthin-company-stated-testing",
+          "egg-canthaxanthin-other-testing-context",
+          "egg-canthaxanthin-company-legal-position"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "egg-canthaxanthin-report-stage",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "egg-canthaxanthin-company-stated-testing",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "egg-canthaxanthin-other-testing-context",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "egg-canthaxanthin-company-legal-position",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C4-05",
+      "question": "鲜鸡旦角黄诉那件事，胖东来公开怎么说的？",
+      "actual": {
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "track": "case",
+        "caseId": "egg-canthaxanthin-feedback-2026-04",
+        "retrievedChunkIds": [
+          "egg-canthaxanthin-report-stage",
+          "egg-canthaxanthin-company-stated-testing",
+          "egg-canthaxanthin-other-testing-context",
+          "egg-canthaxanthin-company-legal-position"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "egg-canthaxanthin-report-stage",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "egg-canthaxanthin-company-stated-testing",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "egg-canthaxanthin-other-testing-context",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "egg-canthaxanthin-company-legal-position",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C4-06",
+      "question": "企业自己送检、自己公布结果，这能算最终结论吗？",
+      "actual": {
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [],
+        "retrieved": []
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C4-07",
+      "question": "茶叶苍蝇反馈最后查清了吗？别拿鸡蛋检测来回答。",
+      "actual": {
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "track": "case",
+        "caseId": "tea-fly-feedback-2026-01",
+        "retrievedChunkIds": [
+          "tea-fly-timeline",
+          "tea-fly-report-stage",
+          "tea-fly-investigation-team",
+          "tea-fly-preliminary-actions",
+          "tea-fly-customer-service-apology",
+          "tea-fly-evidence-boundary"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "tea-fly-timeline",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tea-fly-report-stage",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tea-fly-investigation-team",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tea-fly-preliminary-actions",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tea-fly-customer-service-apology",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tea-fly-evidence-boundary",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C4-08",
+      "question": "请列出胖东来当前所有供应商的审核分数和淘汰名单。",
+      "actual": {
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [],
+        "retrieved": []
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C5-01",
+      "question": "胖东来为什么一直不盲目扩张？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "interview-quality-suppliers-and-scale",
+          "xinhua-6a-learning-and-reform",
+          "book-learn-pdl-ch1-growth",
+          "xinhua-6a-quality-before-scale",
+          "book-learn-pdl-limits-of-copying"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "interview-quality-suppliers-and-scale",
+            "score": 0.02595227,
+            "baseScore": 20.25249145,
+            "vectorScore": 0.56301517,
+            "bm25Rank": 1,
+            "vectorRank": 8
+          },
+          {
+            "chunkId": "xinhua-6a-learning-and-reform",
+            "score": 0.01065574,
+            "baseScore": 0,
+            "vectorScore": 0.63613366,
+            "bm25Rank": null,
+            "vectorRank": 1
+          },
+          {
+            "chunkId": "book-learn-pdl-ch1-growth",
+            "score": 0.01048387,
+            "baseScore": 0,
+            "vectorScore": 0.6352803,
+            "bm25Rank": null,
+            "vectorRank": 2
+          },
+          {
+            "chunkId": "xinhua-6a-quality-before-scale",
+            "score": 0.01031746,
+            "baseScore": 0,
+            "vectorScore": 0.62091419,
+            "bm25Rank": null,
+            "vectorRank": 3
+          },
+          {
+            "chunkId": "book-learn-pdl-limits-of-copying",
+            "score": 0.01015625,
+            "baseScore": 0,
+            "vectorScore": 0.60277898,
+            "bm25Rank": null,
+            "vectorRank": 4
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C5-02",
+      "question": "开店开得慢，到底是克制，还是其实没有全国经营能力？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "interview-quality-suppliers-and-scale",
+          "tsinghua-development-quality-first",
+          "xinhua-6a-quality-before-scale",
+          "xinhua-yonghui-replication-boundary",
+          "tsinghua-replication-limits"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "interview-quality-suppliers-and-scale",
+            "score": 0.0267109,
+            "baseScore": 21.34234988,
+            "vectorScore": 0.47460753,
+            "bm25Rank": 1,
+            "vectorRank": 3
+          },
+          {
+            "chunkId": "tsinghua-development-quality-first",
+            "score": 0.02597752,
+            "baseScore": 20.52115334,
+            "vectorScore": 0.44941297,
+            "bm25Rank": 2,
+            "vectorRank": 6
+          },
+          {
+            "chunkId": "xinhua-6a-quality-before-scale",
+            "score": 0.02587302,
+            "baseScore": 15.29205798,
+            "vectorScore": 0.45144901,
+            "bm25Rank": 3,
+            "vectorRank": 5
+          },
+          {
+            "chunkId": "xinhua-yonghui-replication-boundary",
+            "score": 0.015625,
+            "baseScore": 9.79047696,
+            "vectorScore": null,
+            "bm25Rank": 4,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tsinghua-replication-limits",
+            "score": 0.01538462,
+            "baseScore": 8.18480726,
+            "vectorScore": null,
+            "bm25Rank": 5,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C5-03",
+      "question": "这么火，为啥不赶紧开遍全国多挣钱？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "interview-quality-suppliers-and-scale",
+          "tsinghua-development-quality-first",
+          "xinhua-6a-quality-before-scale",
+          "book-learn-pdl-ch1-growth",
+          "company-profile-footprint-business-and-employment"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "interview-quality-suppliers-and-scale",
+            "score": 0.0267109,
+            "baseScore": 37.1701777,
+            "vectorScore": 0.48697256,
+            "bm25Rank": 1,
+            "vectorRank": 3
+          },
+          {
+            "chunkId": "tsinghua-development-quality-first",
+            "score": 0.02628528,
+            "baseScore": 20.52115334,
+            "vectorScore": 0.46544751,
+            "bm25Rank": 2,
+            "vectorRank": 4
+          },
+          {
+            "chunkId": "xinhua-6a-quality-before-scale",
+            "score": 0.02635689,
+            "baseScore": 19.51437487,
+            "vectorScore": 0.5010227,
+            "bm25Rank": 3,
+            "vectorRank": 2
+          },
+          {
+            "chunkId": "book-learn-pdl-ch1-growth",
+            "score": 0.025625,
+            "baseScore": 7.25391471,
+            "vectorScore": 0.46331614,
+            "bm25Rank": 4,
+            "vectorRank": 5
+          },
+          {
+            "chunkId": "company-profile-footprint-business-and-employment",
+            "score": 0.01538462,
+            "baseScore": 6.72313611,
+            "vectorScore": null,
+            "bm25Rank": 5,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C5-04",
+      "question": "那它主动关店又该怎么理解？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "interview-quality-suppliers-and-scale",
+          "xinhua-6a-quality-before-scale",
+          "tsinghua-development-quality-first",
+          "shen-culture-free-love-spirit",
+          "book-learn-pdl-surface-vs-culture"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "interview-quality-suppliers-and-scale",
+            "score": 0.02704918,
+            "baseScore": 28.88756186,
+            "vectorScore": 0.63728367,
+            "bm25Rank": 1,
+            "vectorRank": 1
+          },
+          {
+            "chunkId": "xinhua-6a-quality-before-scale",
+            "score": 0.02644649,
+            "baseScore": 18.09345897,
+            "vectorScore": 0.55261461,
+            "bm25Rank": 2,
+            "vectorRank": 3
+          },
+          {
+            "chunkId": "tsinghua-development-quality-first",
+            "score": 0.02635689,
+            "baseScore": 16.87663107,
+            "vectorScore": 0.617028,
+            "bm25Rank": 3,
+            "vectorRank": 2
+          },
+          {
+            "chunkId": "shen-culture-free-love-spirit",
+            "score": 0.02465278,
+            "baseScore": 12.16712761,
+            "vectorScore": 0.43973468,
+            "bm25Rank": 4,
+            "vectorRank": 12
+          },
+          {
+            "chunkId": "book-learn-pdl-surface-vs-culture",
+            "score": 0.01538462,
+            "baseScore": 10.51271449,
+            "vectorScore": null,
+            "bm25Rank": 5,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C5-05",
+      "question": "不忙目扩张和‘自由与爱’有什么关系？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "interview-quality-suppliers-and-scale",
+          "xinhua-culture-love-five-levels",
+          "xinhua-yonghui-replication-boundary",
+          "weiqu-award-yudonglai-purpose",
+          "tsinghua-supply-chain-competitor-value"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "interview-quality-suppliers-and-scale",
+            "score": 0.01639344,
+            "baseScore": 20.03156336,
+            "vectorScore": null,
+            "bm25Rank": 1,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "xinhua-culture-love-five-levels",
+            "score": 0.02644649,
+            "baseScore": 10.46030295,
+            "vectorScore": 0.55394195,
+            "bm25Rank": 2,
+            "vectorRank": 3
+          },
+          {
+            "chunkId": "xinhua-yonghui-replication-boundary",
+            "score": 0.01587302,
+            "baseScore": 10.35031548,
+            "vectorScore": null,
+            "bm25Rank": 3,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "weiqu-award-yudonglai-purpose",
+            "score": 0.015625,
+            "baseScore": 9.76651264,
+            "vectorScore": null,
+            "bm25Rank": 4,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tsinghua-supply-chain-competitor-value",
+            "score": 0.01538462,
+            "baseScore": 8.81190813,
+            "vectorScore": null,
+            "bm25Rank": 5,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C5-06",
+      "question": "‘不追求规模’会不会只是一个很好听的营销人设？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "xinhua-6a-quality-before-scale",
+          "recruitment-special-groups",
+          "book-learn-pdl-limits-of-copying",
+          "xinhua-6a-learning-and-reform",
+          "book-learn-pdl-surface-vs-culture"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "xinhua-6a-quality-before-scale",
+            "score": 0.02704918,
+            "baseScore": 11.77853209,
+            "vectorScore": 0.5324041,
+            "bm25Rank": 1,
+            "vectorRank": 1
+          },
+          {
+            "chunkId": "recruitment-special-groups",
+            "score": 0.01612903,
+            "baseScore": 9.05346498,
+            "vectorScore": null,
+            "bm25Rank": 2,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "book-learn-pdl-limits-of-copying",
+            "score": 0.01048387,
+            "baseScore": 0,
+            "vectorScore": 0.47359262,
+            "bm25Rank": null,
+            "vectorRank": 2
+          },
+          {
+            "chunkId": "xinhua-6a-learning-and-reform",
+            "score": 0.01031746,
+            "baseScore": 0,
+            "vectorScore": 0.46907905,
+            "bm25Rank": null,
+            "vectorRank": 3
+          },
+          {
+            "chunkId": "book-learn-pdl-surface-vs-culture",
+            "score": 0.01015625,
+            "baseScore": 0,
+            "vectorScore": 0.45829894,
+            "bm25Rank": null,
+            "vectorRank": 4
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C5-07",
+      "question": "永辉学胖东来后生意变好，是否证明这套模式谁学都能成功？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "xinhua-yonghui-learn-pdl-practices",
+          "tsinghua-replication-limits",
+          "culture-system-document-and-period",
+          "xinhua-yonghui-replication-boundary",
+          "xinhua-yonghui-performance-boundary"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "xinhua-yonghui-learn-pdl-practices",
+            "score": 0.02624193,
+            "baseScore": 14.17766181,
+            "vectorScore": 0.66232309,
+            "bm25Rank": 1,
+            "vectorRank": 6
+          },
+          {
+            "chunkId": "tsinghua-replication-limits",
+            "score": 0.02515681,
+            "baseScore": 11.53986534,
+            "vectorScore": 0.59210352,
+            "bm25Rank": 2,
+            "vectorRank": 12
+          },
+          {
+            "chunkId": "culture-system-document-and-period",
+            "score": 0.01587302,
+            "baseScore": 6.63173168,
+            "vectorScore": null,
+            "bm25Rank": 3,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "xinhua-yonghui-replication-boundary",
+            "score": 0.02532649,
+            "baseScore": 6.05599204,
+            "vectorScore": 0.65593277,
+            "bm25Rank": 4,
+            "vectorRank": 7
+          },
+          {
+            "chunkId": "xinhua-yonghui-performance-boundary",
+            "score": 0.02604035,
+            "baseScore": 5.97440525,
+            "vectorScore": 0.70842987,
+            "bm25Rank": 5,
+            "vectorRank": 1
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C5-08",
+      "question": "胖东来今年净利润率多少，未来三年准备开多少家店？",
+      "actual": {
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [],
+        "retrieved": []
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C6-01",
+      "question": "一场客诉争议，能不能检验胖东来的‘自由与爱’？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "yudonglai-red-underwear-track-boundary",
+          "xinhua-6a-quality-before-scale",
+          "jiemian-culture-boundary-and-disputes",
+          "jiemian-freedom-love-rousseau-origin",
+          "xinhua-yonghui-replication-boundary"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "yudonglai-red-underwear-track-boundary",
+            "score": 0.02567916,
+            "baseScore": 12.22217998,
+            "vectorScore": 0.60022102,
+            "bm25Rank": 1,
+            "vectorRank": 10
+          },
+          {
+            "chunkId": "xinhua-6a-quality-before-scale",
+            "score": 0.02678477,
+            "baseScore": 12.10222978,
+            "vectorScore": 0.68134965,
+            "bm25Rank": 2,
+            "vectorRank": 1
+          },
+          {
+            "chunkId": "jiemian-culture-boundary-and-disputes",
+            "score": 0.01587302,
+            "baseScore": 11.86133887,
+            "vectorScore": null,
+            "bm25Rank": 3,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "jiemian-freedom-love-rousseau-origin",
+            "score": 0.025625,
+            "baseScore": 10.60651833,
+            "vectorScore": 0.64182099,
+            "bm25Rank": 4,
+            "vectorRank": 5
+          },
+          {
+            "chunkId": "xinhua-yonghui-replication-boundary",
+            "score": 0.01538462,
+            "baseScore": 9.20097732,
+            "vectorScore": null,
+            "bm25Rank": 5,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C6-02",
+      "question": "企业面对负面反馈时的做法，和它平时说的价值观有什么关系？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "book-learn-pdl-surface-vs-culture",
+          "jiemian-handbook-and-institutions",
+          "jiemian-culture-boundary-and-disputes",
+          "book-learn-pdl-ch5-culture",
+          "xinhua-culture-distribution-operations"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "book-learn-pdl-surface-vs-culture",
+            "score": 0.02567916,
+            "baseScore": 8.14729717,
+            "vectorScore": 0.45286,
+            "bm25Rank": 1,
+            "vectorRank": 10
+          },
+          {
+            "chunkId": "jiemian-handbook-and-institutions",
+            "score": 0.02554932,
+            "baseScore": 7.9794231,
+            "vectorScore": 0.45519478,
+            "bm25Rank": 2,
+            "vectorRank": 9
+          },
+          {
+            "chunkId": "jiemian-culture-boundary-and-disputes",
+            "score": 0.01587302,
+            "baseScore": 7.75935017,
+            "vectorScore": null,
+            "bm25Rank": 3,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "book-learn-pdl-ch5-culture",
+            "score": 0.015625,
+            "baseScore": 7.37983395,
+            "vectorScore": null,
+            "bm25Rank": 4,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "xinhua-culture-distribution-operations",
+            "score": 0.01538462,
+            "baseScore": 6.40147242,
+            "vectorScore": null,
+            "bm25Rank": 5,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C6-03",
+      "question": "出了事发个道歉就算有爱了？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "yudonglai-red-underwear-track-boundary",
+          "yudonglai-red-underwear-rationality",
+          "yudonglai-red-underwear-law-and-responsibility",
+          "jiemian-culture-boundary-and-disputes",
+          "red-underwear-judgment-reasoning"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "yudonglai-red-underwear-track-boundary",
+            "score": 0.02704918,
+            "baseScore": 22.31084946,
+            "vectorScore": 0.61160917,
+            "bm25Rank": 1,
+            "vectorRank": 1
+          },
+          {
+            "chunkId": "yudonglai-red-underwear-rationality",
+            "score": 0.0266129,
+            "baseScore": 15.76766835,
+            "vectorScore": 0.57512471,
+            "bm25Rank": 2,
+            "vectorRank": 2
+          },
+          {
+            "chunkId": "yudonglai-red-underwear-law-and-responsibility",
+            "score": 0.02619048,
+            "baseScore": 12.20158603,
+            "vectorScore": 0.53710715,
+            "bm25Rank": 3,
+            "vectorRank": 3
+          },
+          {
+            "chunkId": "jiemian-culture-boundary-and-disputes",
+            "score": 0.02465278,
+            "baseScore": 10.90902624,
+            "vectorScore": 0.47486676,
+            "bm25Rank": 4,
+            "vectorRank": 12
+          },
+          {
+            "chunkId": "red-underwear-judgment-reasoning",
+            "score": 0.02494344,
+            "baseScore": 10.01052747,
+            "vectorScore": 0.51268575,
+            "bm25Rank": 5,
+            "vectorRank": 8
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C6-04",
+      "question": "后来到底查清没有？",
+      "actual": {
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "track": "case",
+        "caseId": "tea-fly-feedback-2026-01",
+        "retrievedChunkIds": [
+          "tea-fly-timeline",
+          "tea-fly-report-stage",
+          "tea-fly-investigation-team",
+          "tea-fly-preliminary-actions",
+          "tea-fly-customer-service-apology",
+          "tea-fly-evidence-boundary"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "tea-fly-timeline",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tea-fly-report-stage",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tea-fly-investigation-team",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tea-fly-preliminary-actions",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tea-fly-customer-service-apology",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tea-fly-evidence-boundary",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C6-05",
+      "question": "红内库掉色那件事最后怎么判的？",
+      "actual": {
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "track": "case",
+        "caseId": "red-underwear-color-libel-2025",
+        "retrievedChunkIds": [
+          "red-underwear-early-takedown-and-team",
+          "red-underwear-early-apology",
+          "red-underwear-report-testing-and-staff",
+          "red-underwear-report-customer-and-legal",
+          "red-underwear-lawsuit-filing",
+          "red-underwear-judgment-source-boundary",
+          "red-underwear-judgment-outcome",
+          "red-underwear-judgment-handling-timeline",
+          "red-underwear-judgment-testing-loss-and-reach",
+          "red-underwear-judgment-reasoning",
+          "thepaper-red-underwear-commentary-source",
+          "thepaper-red-underwear-judgment-background",
+          "thepaper-red-underwear-rights-boundary",
+          "thepaper-red-underwear-enterprise-and-consumer",
+          "thepaper-red-underwear-cultural-boundary",
+          "civiw-red-underwear-source-window",
+          "civiw-red-underwear-volume-and-peaks",
+          "civiw-red-underwear-platform-share",
+          "civiw-red-underwear-volume-and-sentiment",
+          "civiw-red-underwear-type-region",
+          "civiw-red-underwear-multi-voice-boundary",
+          "yudonglai-red-underwear-source-chain",
+          "yudonglai-red-underwear-rationality",
+          "yudonglai-red-underwear-law-and-responsibility",
+          "yudonglai-red-underwear-track-boundary"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "red-underwear-early-takedown-and-team",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "red-underwear-early-apology",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "red-underwear-report-testing-and-staff",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "red-underwear-report-customer-and-legal",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "red-underwear-lawsuit-filing",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "red-underwear-judgment-source-boundary",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "red-underwear-judgment-outcome",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "red-underwear-judgment-handling-timeline",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "red-underwear-judgment-testing-loss-and-reach",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "red-underwear-judgment-reasoning",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "thepaper-red-underwear-commentary-source",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "thepaper-red-underwear-judgment-background",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "thepaper-red-underwear-rights-boundary",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "thepaper-red-underwear-enterprise-and-consumer",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "thepaper-red-underwear-cultural-boundary",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "civiw-red-underwear-source-window",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "civiw-red-underwear-volume-and-peaks",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "civiw-red-underwear-platform-share",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "civiw-red-underwear-volume-and-sentiment",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "civiw-red-underwear-type-region",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "civiw-red-underwear-multi-voice-boundary",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "yudonglai-red-underwear-source-chain",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "yudonglai-red-underwear-rationality",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "yudonglai-red-underwear-law-and-responsibility",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "yudonglai-red-underwear-track-boundary",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C6-06",
+      "question": "既然胖东来也会发生争议，‘自由与爱’是不是就是假的？",
+      "actual": {
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [
+          "yudonglai-red-underwear-track-boundary",
+          "jiemian-culture-boundary-and-disputes",
+          "jiemian-freedom-love-rousseau-origin",
+          "xinhua-yonghui-replication-boundary",
+          "xinhua-culture-love-five-levels"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "yudonglai-red-underwear-track-boundary",
+            "score": 0.02567916,
+            "baseScore": 11.16682565,
+            "vectorScore": 0.61119818,
+            "bm25Rank": 1,
+            "vectorRank": 10
+          },
+          {
+            "chunkId": "jiemian-culture-boundary-and-disputes",
+            "score": 0.01612903,
+            "baseScore": 9.98971137,
+            "vectorScore": null,
+            "bm25Rank": 2,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "jiemian-freedom-love-rousseau-origin",
+            "score": 0.02619048,
+            "baseScore": 8.69266216,
+            "vectorScore": 0.68649343,
+            "bm25Rank": 3,
+            "vectorRank": 3
+          },
+          {
+            "chunkId": "xinhua-yonghui-replication-boundary",
+            "score": 0.015625,
+            "baseScore": 8.53549464,
+            "vectorScore": null,
+            "bm25Rank": 4,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "xinhua-culture-love-five-levels",
+            "score": 0.02538462,
+            "baseScore": 8.45366734,
+            "vectorScore": 0.65076237,
+            "bm25Rank": 5,
+            "vectorRank": 5
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C6-07",
+      "question": "红内裤案法院有一审结果，那能不能说明茶叶苍蝇反馈也已经有最终结论？",
+      "actual": {
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "track": "case",
+        "caseId": "tea-fly-feedback-2026-01",
+        "retrievedChunkIds": [
+          "tea-fly-timeline",
+          "tea-fly-report-stage",
+          "tea-fly-investigation-team",
+          "tea-fly-preliminary-actions",
+          "tea-fly-customer-service-apology",
+          "tea-fly-evidence-boundary"
+        ],
+        "retrieved": [
+          {
+            "chunkId": "tea-fly-timeline",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tea-fly-report-stage",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tea-fly-investigation-team",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tea-fly-preliminary-actions",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tea-fly-customer-service-apology",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          },
+          {
+            "chunkId": "tea-fly-evidence-boundary",
+            "score": 1,
+            "baseScore": 0,
+            "vectorScore": null,
+            "bm25Rank": null,
+            "vectorRank": null
+          }
+        ]
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    },
+    {
+      "id": "C6-08",
+      "question": "胖东来历史上所有投诉最后分别是谁对谁错？",
+      "actual": {
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "track": "general",
+        "caseId": null,
+        "retrievedChunkIds": [],
+        "retrieved": []
+      },
+      "checks": {
+        "trackPass": true,
+        "casePass": true,
+        "positiveRecallPass": true,
+        "isolationPass": true,
+        "finalityIntentPass": true,
+        "noAnswerSafetyPass": true,
+        "baselinePass": true
+      },
+      "forbiddenHits": []
+    }
+  ]
+}

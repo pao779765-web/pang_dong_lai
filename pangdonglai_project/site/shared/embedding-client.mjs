@@ -5,6 +5,10 @@ export const DEFAULT_TOKENHUB_EMBEDDING_MODEL = "kinfra-text-embedding-0.6b";
 const MAX_BATCH_SIZE = 128;
 const MAX_TEXT_LENGTH = 2000;
 
+function wait(delayMs) {
+  return new Promise((resolve) => setTimeout(resolve, delayMs));
+}
+
 function validateInputs(inputs) {
   if (!Array.isArray(inputs) || inputs.length === 0) {
     throw new Error("向量输入必须是非空文本数组。");
@@ -54,6 +58,8 @@ export function createTokenHubEmbeddingClient(options = {}) {
   const model = options.model ?? DEFAULT_TOKENHUB_EMBEDDING_MODEL;
   const fetchImpl = options.fetchImpl ?? globalThis.fetch;
   const timeoutMs = options.timeoutMs ?? 30_000;
+  const maxRetries = options.maxRetries ?? 3;
+  const retryBaseDelayMs = options.retryBaseDelayMs ?? 1_000;
 
   if (!apiKey) throw new Error("缺少 TENCENT_TOKENHUB_API_KEY。");
   if (typeof fetchImpl !== "function") throw new Error("当前运行环境不支持 fetch。");
@@ -63,26 +69,44 @@ export function createTokenHubEmbeddingClient(options = {}) {
     model,
     async embed(inputs) {
       const normalizedInputs = validateInputs(inputs);
-      const response = await fetchImpl(endpoint, {
-        method: "POST",
-        headers: {
-          authorization: `Bearer ${apiKey}`,
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          model,
-          input: normalizedInputs,
-          encoding_format: "float",
-        }),
-        signal: AbortSignal.timeout(timeoutMs),
+      const body = JSON.stringify({
+        model,
+        input: normalizedInputs,
+        encoding_format: "float",
       });
 
-      if (!response.ok) {
-        const detail = (await response.text()).replace(/\s+/g, " ").slice(0, 300);
-        throw new Error(`向量服务请求失败（HTTP ${response.status}）：${detail || "无错误详情"}`);
+      for (let attempt = 0; attempt <= maxRetries; attempt += 1) {
+        try {
+          const response = await fetchImpl(endpoint, {
+            method: "POST",
+            headers: {
+              authorization: `Bearer ${apiKey}`,
+              "content-type": "application/json",
+            },
+            body,
+            signal: AbortSignal.timeout(timeoutMs),
+          });
+
+          if (response.ok) {
+            return validateVectors(await response.json(), normalizedInputs.length);
+          }
+
+          const detail = (await response.text()).replace(/\s+/g, " ").slice(0, 300);
+          const retryable = response.status === 429 || response.status >= 500;
+          if (!retryable || attempt === maxRetries) {
+            throw new Error(`向量服务请求失败（HTTP ${response.status}）：${detail || "无错误详情"}`);
+          }
+        } catch (error) {
+          const retryableNetworkError =
+            error instanceof Error &&
+            (error.name === "AbortError" || error.name === "TimeoutError" || error instanceof TypeError);
+          if (!retryableNetworkError || attempt === maxRetries) throw error;
+        }
+
+        await wait(retryBaseDelayMs * 2 ** attempt);
       }
 
-      return validateVectors(await response.json(), normalizedInputs.length);
+      throw new Error("向量服务请求未产生结果。");
     },
   };
 }

@@ -9,12 +9,12 @@ import { createVectorCorpus } from "../shared/hybrid-retrieval.mjs";
 
 const knowledgeUrl = new URL("../../knowledge/compiled/knowledge-base.json", import.meta.url);
 const outputUrl = new URL("../../knowledge/vector/r5-general-index.json", import.meta.url);
-const batchSize = 64;
+const batchSize = 16;
 
-const apiKey = process.env.TENCENT_TOKENHUB_API_KEY;
+const apiKey = process.env.TENCENT_TOKENHUB_API_KEY ?? process.env.TokenHub_Key;
 if (!apiKey) {
   throw new Error(
-    "缺少 TENCENT_TOKENHUB_API_KEY。请只在本地环境变量中设置，不要写入代码或提交到 Git。",
+    "缺少 TENCENT_TOKENHUB_API_KEY 或 TokenHub_Key。请只在本地环境变量中设置，不要写入代码或提交到 Git。",
   );
 }
 
@@ -53,7 +53,9 @@ const index = {
   generatedAt: new Date().toISOString(),
   knowledgeSchemaVersion: knowledgeBase.schemaVersion,
   corpusHash,
-  corpusScope: "approved + limited non-case; case-bound limited excluded",
+  corpusScope: "all approved and limited chunks; retrieval eligibility enforced at query time",
+  generalTrackEntryCount: corpus.filter((item) => item.searchableInGeneralTrack).length,
+  caseRestrictedEntryCount: corpus.filter((item) => !item.searchableInGeneralTrack).length,
   entryCount: entries.length,
   entries,
 };

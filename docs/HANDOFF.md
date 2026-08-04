@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-08-04
 
-**当前执行者：** Codex 已按用户决定将 R4 记录为有限通过（第三轮真实评测 15/18），并完成 R5A 本地实验骨架；等待用户在腾讯云 TokenHub 创建 API Key 后生成 96 个安全范围文档向量并运行 54 题对照评测，实验达标前不替换本地 Worker、不部署
+**当前执行者：** Codex 已完成 R5A 安全对照：135 个 TokenHub 文档向量已生成，固定 54 题第二轮达到 54/54、回归 0、严重回归 0；下一步建立冻结语义改写影子题，证明新增收益前不替换本地 Worker、不部署
 **分支：** `main`
 
 ---
@@ -73,7 +73,8 @@
 - [x] **RAG-CULTURE-R4E（用户要求继续通用修复）**：不为六道失败题逐题追加提示词。AnswerValidation 已区分列表编号与事实数字，把北京时间、资料日期和来源标题纳入数字依据，并识别“不能说已经证明”等否定语境；第二次重写仍失败时，有 Claim 的问题保留排名最高的最小可答事实。Claim 新增 `distinctions` 必要区分；AnswerPlan 保留 Top-5 BM25 验收口径，同时在同一安全过滤后的 Top-12 候选中按文字相关度、原检索分数和通用证据意图选择最多5条 Claim，能补入退休治理机制、投诉奖用途区分并优先文化争议边界。固定检索54/54、R4自动契约18/18、43项测试与lint通过；未调用第三轮DeepSeek、未接向量库、未部署，详见 `docs/RAG_ANSWER_CONTROL_V1.md`。
 - [x] **RAG-CULTURE-R4F（用户明确要求实行第三轮评测）**：同一18题及各题允许Claim发送给DeepSeek，调用18/18成功，严格验收由12/18升至15/18。第二轮三道回归全部修复且无新增回归；一般文化7/10、资料不足3/3、热点事件5/5。退休传承题已覆盖轮值、委员会和手册，茶叶客服初步回应及鸡蛋送检边界不再错误降级。剩余三题显示：最小事实降级未优先具体做法、必要区分只进Prompt未进校验、争议题未稳定说明单案不能证明整套文化真伪。未接向量库、未部署，详见 `docs/RAG_CULTURE_R4_LIVE_EVALUATION_ROUND3.md`。
 - [x] **RAG-CULTURE-R4G（用户接受有限通过）**：用户明确接受模型仍有不完美，不要求围绕剩余三道失败题继续增加专用代码；R4 以 15/18 作为本阶段有限通过结果。三类已知问题保留为后续通用质量债务，不作为 R5 的阻断条件，也不得把有限通过解释为模型不会产生幻觉。
-- [ ] **RAG-CULTURE-R5A（用户明确要求进入 R5）**：已建立不改动线上行为的 TokenHub 向量客户端、96 片段安全语料选择、RRF 混合排序、向量索引生成器和 54 题对照评测器；案例路由与资料不足会跳过向量，向量候选复用资料状态和回答用途过滤。当前 BM25 控制组仍为 54/54，45 项测试与 lint 通过。尚缺用户创建的 TokenHub API Key，因此未生成真实向量、未运行混合对照；实验达标前不接入 Worker、不部署。
+- [x] **RAG-CULTURE-R5A（用户明确要求进入 R5）**：用户明确授权发送 135 个审核片段与 54 道评测问题；TokenHub `kinfra-text-embedding-0.6b` 已生成 135 个 1024 维文档向量，普通检索许可仍为 96 个，39 个案例受限片段不进入普通向量候选。首轮纯 RRF 为50/54、4回归、2严重回归；采用 BM25 锚定、禁止向量单独引入 `context_only` 背景片段和通用投诉奖励用途识别后，第二轮54/54、回归0、严重回归0。45项测试与lint通过；未接入Worker、未部署，详见 `docs/RAG_CULTURE_R5_HYBRID_EXPERIMENT.md`。
+- [ ] **RAG-CULTURE-R5B**：建立未参与现有 Query 规则调试的冻结语义改写影子题，比较 BM25 与混合检索的新增召回；只有影子题显示真实提升且继续零严重退步，才讨论接入本地 Worker。
 - [ ] **RAG-CULTURE-R1**：用户已批准 C1“员工的尊严、自由与生活”首批两组资料。7 份资料、32 个片段和 3 个独立案例已按 `approved` / `limited` 范围入库，审核与结果见 `docs/SOURCE_AUDIT_C1_01.md`；知识库现有 30 份资料、135 个片段和 6 个案例。本阶段尚未完成后续 C1 一手资料主干，不得自动扩充。
 - [x] **RAG-RESEARCH-01**：建立 Codex 与 Grok 强制共用的互联网资料检索与 RAG 入库规范；明确候选池、来源优先级、企业身份核验、转载去重、事件阶段、用户批准、版权边界、入库测试和向量库接入条件，并在 `AGENTS.md` 设置任务前必读入口。
 - [x] **Codex【RAG-CASE-01】**：按 Grok 审核顺序完成“案例档案 + 事件事实/文化理解双轨回答”：定义 `caseId`、`claimType`、`finality` schema；事件轨仅引用同案例资料，文化轨不得裁定具体客诉真伪；无 `final` 证据时禁止终局话术；界面展示案例来源的证据阶段；补充误召回与最终结论边界测试。
@@ -168,6 +169,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-04 | Codex | 经用户明确授权，将135个审核片段与评测问题发送至腾讯云TokenHub；生成135个1024维向量。首轮纯RRF 50/54并有2个严重回归；用BM25锚定、纯背景向量过滤和通用投诉奖励用途识别修正后，第二轮54/54、回归0、严重回归0。安全门槛通过，但新增收益尚待冻结语义影子题；未接入Worker、未部署，密钥未写入文件 | knowledge/vector/r5-general-index.json, evaluation/rag-culture-r5-hybrid-experiment.json, site/shared/embedding-client.mjs, site/shared/hybrid-retrieval.mjs, site/shared/retrieval.mjs, site/scripts/generate-vector-index.mjs, site/scripts/evaluate-rag-hybrid.mjs, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_R5_HYBRID_EXPERIMENT.md, docs/RAG_CULTURE_R5_HYBRID_PLAN.md, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |
 | 2026-08-04 | Codex | 用户接受R4以15/18有限通过并要求进入R5；建立国内TokenHub embedding客户端、96片段安全向量语料、RRF混合检索、索引生成与54题对照脚本。案例轨和资料不足问题不调用向量，回答用途过滤继续生效；BM25控制组54/54，45项测试和lint通过。因尚无TokenHub API Key，未生成真实向量、未运行混合对照、未接入Worker、未部署 | site/shared/embedding-client.mjs, site/shared/hybrid-retrieval.mjs, site/shared/retrieval.mjs, site/scripts/generate-vector-index.mjs, site/scripts/evaluate-rag-hybrid.mjs, site/tests/rendered-html.test.mjs, site/package.json, site/.dev.vars.example, docs/RAG_CULTURE_R5_HYBRID_PLAN.md, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |
 | 2026-08-04 | Codex | 经用户明确要求运行R4第三轮真实评测；同一18题调用18/18成功，严格验收由12/18升至15/18。第二轮三道回归全部修复且无新增回归，热点事件5/5、资料不足3/3；剩余三题集中在最小事实可用性、必要区分覆盖和单案外推边界。未读取、显示或保存密钥，未接向量库、未部署 | evaluation/rag-culture-r4-live-answers-v1.json, evaluation/rag-culture-r4-human-review-v1.json, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_R4_LIVE_EVALUATION_ROUND3.md, docs/RAG_ANSWER_CONTROL_V1.md, docs/RAG_CULTURE_ROADMAP.md, docs/PLAN.md, docs/HANDOFF.md |
 | 2026-08-04 | Codex | 按用户要求继续完成R4通用修复：区分列表编号/事实数字并纳入北京时间与资料日期，识别绝对结论的否定语境，有资料时安全降级保留最小事实；Claim增加必要区分，AnswerPlan在不改变Top-5 BM25评测口径的前提下从安全Top-12候选优选最多5条Claim。固定检索54/54、R4自动契约18/18、43项测试与lint通过。未调用第三轮DeepSeek、未接向量库、未部署 | knowledge/chunks/*.jsonl, knowledge/README.md, site/shared/answer-control.mjs, site/shared/retrieval.mjs, site/worker/index.ts, site/tests/rendered-html.test.mjs, evaluation/rag-culture-current-evaluation.json, evaluation/rag-culture-r4-contract-evaluation.json, docs/RAG_ANSWER_CONTROL_V1.md, docs/RAG_CULTURE_CURRENT_EVALUATION.md, docs/RAG_CULTURE_ROADMAP.md, docs/PLAN.md, docs/HANDOFF.md |

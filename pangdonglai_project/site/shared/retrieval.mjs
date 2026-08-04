@@ -171,7 +171,7 @@ export function detectAnswerPurposes(value) {
     purposes.push("replication-proof-boundary");
   }
   if (
-    /(?:顾客).{0,16}(?:投诉).{0,16}(?:奖励|多少|金额)|(?:投诉).{0,16}(?:顾客).{0,16}(?:奖励|多少|金额)/.test(
+    /(?:顾客).{0,16}(?:投诉).{0,16}(?:奖励|多少|金额)|(?:投诉).{0,16}(?:(?:顾客).{0,16})?(?:奖励|多少|金额)/.test(
       normalized,
     )
   ) {

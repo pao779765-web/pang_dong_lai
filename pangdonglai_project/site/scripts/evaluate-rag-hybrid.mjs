@@ -16,9 +16,9 @@ const reportUrl = new URL("../../../docs/RAG_CULTURE_R5_HYBRID_EXPERIMENT.md", i
 const vectorWeightArgument = process.argv.find((argument) => argument.startsWith("--vector-weight="));
 const vectorWeight = vectorWeightArgument ? Number(vectorWeightArgument.split("=")[1]) : 0.65;
 
-const apiKey = process.env.TENCENT_TOKENHUB_API_KEY;
+const apiKey = process.env.TENCENT_TOKENHUB_API_KEY ?? process.env.TokenHub_Key;
 if (!apiKey) {
-  throw new Error("缺少 TENCENT_TOKENHUB_API_KEY；真实 R5 对照评测不会使用伪向量代替。 ");
+  throw new Error("缺少 TENCENT_TOKENHUB_API_KEY 或 TokenHub_Key；真实 R5 对照评测不会使用伪向量代替。 ");
 }
 
 const [evaluation, knowledgeBase, control, vectorIndex] = await Promise.all([
@@ -50,8 +50,8 @@ const queryTexts = [...new Set(
     .map((plan) => plan.queryText),
 )];
 const queryVectors = new Map();
-for (let offset = 0; offset < queryTexts.length; offset += 64) {
-  const batch = queryTexts.slice(offset, offset + 64);
+for (let offset = 0; offset < queryTexts.length; offset += 16) {
+  const batch = queryTexts.slice(offset, offset + 16);
   const vectors = await client.embed(batch);
   batch.forEach((text, index) => queryVectors.set(text, vectors[index]));
 }

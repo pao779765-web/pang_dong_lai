@@ -22,7 +22,6 @@ function cultureText(culture) {
 
 export function createVectorCorpus(knowledgeBase) {
   return knowledgeBase.documents
-    .filter(isSearchableInGeneralTrack)
     .flatMap((document) =>
       document.chunks.map((chunk) => {
         const content = `${document.title}\n${chunk.title}\n${chunk.text}`;
@@ -34,6 +33,7 @@ export function createVectorCorpus(knowledgeBase) {
         return {
           chunkId: chunk.id,
           embeddingText,
+          searchableInGeneralTrack: isSearchableInGeneralTrack(document),
           result: {
             chunkId: chunk.id,
             chunkTitle: chunk.title,
@@ -136,7 +136,9 @@ export function createHybridKnowledgeRetriever({
   validateVectorIndex(vectorIndex);
 
   const corpusById = new Map(createVectorCorpus(knowledgeBase).map((item) => [item.chunkId, item]));
-  const safeVectorEntries = vectorIndex.entries.filter((entry) => corpusById.has(entry.chunkId));
+  const safeVectorEntries = vectorIndex.entries.filter(
+    (entry) => corpusById.get(entry.chunkId)?.searchableInGeneralTrack,
+  );
 
   async function searchKnowledge(question, context = []) {
     const keywordPlan = keywordRetriever.searchKnowledge(question, context);
@@ -166,7 +168,10 @@ export function createHybridKnowledgeRetriever({
           };
         })
         .filter((entry) => {
-          const allowed = hardPurposes.length === 0 || supportsAnswerPurposes(corpusById.get(entry.chunkId).result, hardPurposes);
+          const corpusResult = corpusById.get(entry.chunkId).result;
+          const allowed =
+            corpusResult.cultureRelevance !== "context_only" &&
+            (hardPurposes.length === 0 || supportsAnswerPurposes(corpusResult, hardPurposes));
           if (!allowed) filteredOut.push(entry.chunkId);
           return allowed;
         })
@@ -199,18 +204,29 @@ export function createHybridKnowledgeRetriever({
         delete result.cultureRelevance;
         return result;
       });
+      const fusedById = new Map(fusedResults.map((item) => [item.chunkId, item]));
+      const keywordRetrievedIds = new Set(keywordPlan.retrieved.map((item) => item.chunkId));
+      const keywordCandidateIds = new Set(keywordRanking.map((item) => item.chunkId));
+      const retrieved = [
+        ...keywordPlan.retrieved.map((item) => fusedById.get(item.chunkId) ?? item),
+        ...fusedResults.filter((item) => !keywordRetrievedIds.has(item.chunkId)),
+      ].slice(0, 5);
+      const answerCandidates = [
+        ...keywordRanking.map((item) => fusedById.get(item.chunkId) ?? item),
+        ...fusedResults.filter((item) => !keywordCandidateIds.has(item.chunkId)),
+      ].slice(0, 12);
 
       return {
         ...keywordPlan,
-        retrievalMode: "hybrid-rrf",
+        retrievalMode: "hybrid-rrf-keyword-anchored",
         vectorApplied: true,
         vectorModel: vectorIndex.model,
         vectorWeight,
         purposeFilteredOutChunkIds: [
           ...new Set([...(keywordPlan.purposeFilteredOutChunkIds ?? []), ...filteredOut]),
         ],
-        retrieved: fusedResults.slice(0, 5),
-        answerCandidates: fusedResults.slice(0, 12),
+        retrieved,
+        answerCandidates,
       };
     } catch (error) {
       if (!fallbackToKeyword) throw error;

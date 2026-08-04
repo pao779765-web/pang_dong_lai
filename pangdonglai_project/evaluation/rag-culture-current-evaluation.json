@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "id": "rag-culture-current-evaluation",
-  "evaluatedAt": "2026-08-04T08:08:18.009Z",
+  "evaluatedAt": "2026-08-04T08:59:04.446Z",
   "evaluationSet": "rag-culture-questions-v1",
   "knowledgeSnapshot": {
     "sources": 30,
@@ -199,10 +199,12 @@
     "detectedQuestionIds": [
       "C1-06",
       "C2-07",
+      "C3-04",
       "C3-08"
     ],
     "filteredQuestionIds": [
       "C2-07",
+      "C3-04",
       "C3-08"
     ],
     "boostedQuestionIds": [
@@ -229,6 +231,16 @@
         "xinhua-book-source-nature",
         "yudonglai-red-underwear-track-boundary",
         "interview-trust-returns-and-complaints"
+      ],
+      "C3-04": [
+        "book-learn-pdl-toc-and-structure",
+        "book-learn-pdl-ch3-humanistic-management",
+        "culture-system-behavior-and-reward",
+        "culture-system-document-and-period",
+        "culture-system-life-modules",
+        "red-underwear-judgment-reasoning",
+        "red-underwear-report-customer-and-legal",
+        "weiqu-award-office-response"
       ],
       "C3-08": [
         "weiqu-award-office-response",
@@ -2854,16 +2866,23 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
-        "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
-        "insufficientReason": null,
-        "retrievedChunkIds": [
-          "interview-trust-returns-and-complaints",
+        "detectedAnswerPurposes": [
+          "customer-complaint-award"
+        ],
+        "purposeFilteredOutChunkIds": [
           "book-learn-pdl-toc-and-structure",
           "book-learn-pdl-ch3-humanistic-management",
           "culture-system-behavior-and-reward",
-          "culture-system-document-and-period"
+          "culture-system-document-and-period",
+          "culture-system-life-modules",
+          "red-underwear-judgment-reasoning",
+          "red-underwear-report-customer-and-legal",
+          "weiqu-award-office-response"
+        ],
+        "purposeBoostedChunkIds": [],
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "interview-trust-returns-and-complaints"
         ],
         "retrieved": [
           {
@@ -2872,38 +2891,6 @@
             "sourceTitle": "人民日报于东来访谈：用真诚换取信任，用信任赢得市场",
             "score": 8.60447,
             "baseScore": 8.60447,
-            "cultureThemeMatches": 0
-          },
-          {
-            "chunkId": "book-learn-pdl-toc-and-structure",
-            "chunkTitle": "公开目录与全书结构概览",
-            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 7.359064,
-            "baseScore": 7.359064,
-            "cultureThemeMatches": 0
-          },
-          {
-            "chunkId": "book-learn-pdl-ch3-humanistic-management",
-            "chunkTitle": "第三章议题：人性化管理与员工（书中讨论）",
-            "sourceTitle": "《胖东来，你要怎么学？》（王慧中）",
-            "score": 5.406472,
-            "baseScore": 5.406472,
-            "cultureThemeMatches": 0
-          },
-          {
-            "chunkId": "culture-system-behavior-and-reward",
-            "chunkTitle": "行为规范与全年奖励资格相联系",
-            "sourceTitle": "行业媒体转载：《胖东来企业文化制度》与考评奖励方案（2022）",
-            "score": 5.227728,
-            "baseScore": 5.227728,
-            "cultureThemeMatches": 0
-          },
-          {
-            "chunkId": "culture-system-document-and-period",
-            "chunkTitle": "2022 年转载文本的身份与时效边界",
-            "sourceTitle": "行业媒体转载：《胖东来企业文化制度》与考评奖励方案（2022）",
-            "score": 5.078572,
-            "baseScore": 5.078572,
             "cultureThemeMatches": 0
           }
         ]
