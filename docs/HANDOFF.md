@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-08-04
 
-**当前执行者：** Codex 已完成 R5B 首次冻结影子评测：BM25 17/31，混合检索 19/31，新增 2、回归 0；下一步是 R5C 通用融合、语义案例路由与终局意图实验，未达到双题集安全门槛前不接入 Worker、不部署
+**当前执行者：** Codex 已完成用户要求的 R5C-1 至 R5C-6：真正的加权 RRF、通用语义案例路由与自然终局意图通过双基线，固定题 54/54、影子题 24/31、回归 0；尚未接入 Worker、未部署，下一步需用户决定是否执行 R5C-7 本地接入
 **分支：** `main`
 
 ---
@@ -75,7 +75,8 @@
 - [x] **RAG-CULTURE-R4G（用户接受有限通过）**：用户明确接受模型仍有不完美，不要求围绕剩余三道失败题继续增加专用代码；R4 以 15/18 作为本阶段有限通过结果。三类已知问题保留为后续通用质量债务，不作为 R5 的阻断条件，也不得把有限通过解释为模型不会产生幻觉。
 - [x] **RAG-CULTURE-R5A（用户明确要求进入 R5）**：用户明确授权发送 135 个审核片段与 54 道评测问题；TokenHub `kinfra-text-embedding-0.6b` 已生成 135 个 1024 维文档向量，普通检索许可仍为 96 个，39 个案例受限片段不进入普通向量候选。首轮纯 RRF 为50/54、4回归、2严重回归；采用 BM25 锚定、禁止向量单独引入 `context_only` 背景片段和通用投诉奖励用途识别后，第二轮54/54、回归0、严重回归0。45项测试与lint通过；未接入Worker、未部署，详见 `docs/RAG_CULTURE_R5_HYBRID_EXPERIMENT.md`。
 - [x] **RAG-CULTURE-R5B（用户已授权发送本批问题）**：31 道语义影子题在首次运行前以提交 `5f3f99a` 冻结。真实对照为 BM25 17/31、混合检索 19/31；一般题 Hit@5 从 13/24 升至 15/24，MRR@5 从 0.4444 升至 0.4965，新增通过 2、回归 0、资料不足 2/2、隔离 31/31。用户指定“红裤头开除员工”题两组均失败：正确文化边界片段排第 1 且未串入尝面员工解除合同材料，但因关键词案例路由未识别“红裤头”而停在一般轨，未稳定调出本案免职/降级事实。结论是向量有真实收益，但 BM25 锚定过强、语义案例路由和自然终局意图仍不足；未接入 Worker、未部署，详见 `docs/RAG_CULTURE_R5_SEMANTIC_SHADOW_V1.md`。
-- [ ] **RAG-CULTURE-R5C**：只做通用架构实验，不按失败题追加专用代码：让高置信向量候选可替换弱 BM25 候选；建立语义案例路由以处理事件换称、错称和跨事件假前提；归一化自然终局表达。每轮同时重跑固定 54 题与冻结 31 题，要求资料不足与隔离不下降、无严重回归；通过前不接入 Worker、不部署。
+- [x] **RAG-CULTURE-R5C-1～6（用户要求执行）**：冻结 54+31 双基线并记录 SHA-256；BM25 Top 12 与向量 Top 12 经安全过滤后由加权 RRF（k=60、权重 1:0.65）直接决定 Top 5，不再固定 BM25 前五。语义案例路由使用现有案例 chunks 的向量相似度、领先差距和案例名称通用模糊匹配；终局意图覆盖监管盖章、尘埃落定、一审结果、法院处理、终审与定论等表达。固定题 54/54、影子题 24/31，相对 R5B 混合检索增加 5、回归 0，案例路由 5/5、隔离 31/31、资料不足 2/2、终局 31/31；用户红裤头题进入正确案例并避免串入尝面员工材料。49项测试与lint通过；未接 Worker、未部署，详见 `docs/RAG_CULTURE_R5C_EXPERIMENT.md`。
+- [ ] **RAG-CULTURE-R5C-7（待用户决定）**：把已通过双基线的混合检索以可回退开关接入本地 Worker，先做本地真实回答验收；这一步不等于部署，线上仍保持当前 BM25，除非用户另行授权。
 - [ ] **RAG-CULTURE-R1**：用户已批准 C1“员工的尊严、自由与生活”首批两组资料。7 份资料、32 个片段和 3 个独立案例已按 `approved` / `limited` 范围入库，审核与结果见 `docs/SOURCE_AUDIT_C1_01.md`；知识库现有 30 份资料、135 个片段和 6 个案例。本阶段尚未完成后续 C1 一手资料主干，不得自动扩充。
 - [x] **RAG-RESEARCH-01**：建立 Codex 与 Grok 强制共用的互联网资料检索与 RAG 入库规范；明确候选池、来源优先级、企业身份核验、转载去重、事件阶段、用户批准、版权边界、入库测试和向量库接入条件，并在 `AGENTS.md` 设置任务前必读入口。
 - [x] **Codex【RAG-CASE-01】**：按 Grok 审核顺序完成“案例档案 + 事件事实/文化理解双轨回答”：定义 `caseId`、`claimType`、`finality` schema；事件轨仅引用同案例资料，文化轨不得裁定具体客诉真伪；无 `final` 证据时禁止终局话术；界面展示案例来源的证据阶段；补充误召回与最终结论边界测试。
@@ -170,6 +171,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-04 | Codex | 按用户要求完成R5C-1至R5C-6。冻结双基线后，让安全候选由加权RRF直接选Top5；新增基于案例chunk向量、领先差距和通用名称模糊度的语义案例路由，扩展大众终局表达，并用同一批查询向量评测8组参数。选中1:0.65配置：固定54/54、影子24/31、回归0、案例5/5、隔离31/31、资料不足2/2、终局31/31；红裤头题通过。未接Worker、未部署 | site/shared/hybrid-retrieval.mjs, site/shared/retrieval.mjs, site/scripts/evaluate-rag-r5c.mjs, site/tests/rendered-html.test.mjs, site/package.json, evaluation/rag-culture-r5c-experiment-v1.json, docs/RAG_CULTURE_R5C_EXPERIMENT.md, docs/RAG_CULTURE_R5_HYBRID_PLAN.md, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |
 | 2026-08-04 | Codex | 经用户授权将冻结的31道R5B语义影子题发送至TokenHub并完成首次真实对照。BM25 17/31，混合检索19/31；Hit@5提升8.33个百分点、MRR@5提升0.0521、新增2、回归0、资料不足2/2、隔离31/31。用户指定红裤头题没有跨事件误召回，但暴露关键词案例路由不能识别事件换称。结果原样记录，未按单题改规则，未接Worker、未部署 | evaluation/rag-culture-r5-semantic-shadow-results-v1.json, docs/RAG_CULTURE_R5_SEMANTIC_SHADOW_V1.md, site/scripts/evaluate-rag-r5-shadow.mjs, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_R5_HYBRID_PLAN.md, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |
 | 2026-08-04 | Codex | 经用户授权启动R5B；在首次运行前冻结31道全新语义影子题和预期chunk，新增同题BM25/混合检索评测器。用户指定的红裤头题被定义为跨事件假前提测试：命中红内裤免职/降级材料，禁止召回尝面员工解除合同材料。当前只冻结试卷与工具，尚未发送、未看结果、未调规则 | evaluation/rag-culture-r5-semantic-shadow-v1.json, site/scripts/evaluate-rag-r5-shadow.mjs, site/tests/rendered-html.test.mjs, site/package.json, docs/HANDOFF.md |
 | 2026-08-04 | Codex | 经用户明确授权，将135个审核片段与评测问题发送至腾讯云TokenHub；生成135个1024维向量。首轮纯RRF 50/54并有2个严重回归；用BM25锚定、纯背景向量过滤和通用投诉奖励用途识别修正后，第二轮54/54、回归0、严重回归0。安全门槛通过，但新增收益尚待冻结语义影子题；未接入Worker、未部署，密钥未写入文件 | knowledge/vector/r5-general-index.json, evaluation/rag-culture-r5-hybrid-experiment.json, site/shared/embedding-client.mjs, site/shared/hybrid-retrieval.mjs, site/shared/retrieval.mjs, site/scripts/generate-vector-index.mjs, site/scripts/evaluate-rag-hybrid.mjs, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_R5_HYBRID_EXPERIMENT.md, docs/RAG_CULTURE_R5_HYBRID_PLAN.md, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |

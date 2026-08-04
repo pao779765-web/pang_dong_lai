@@ -177,8 +177,19 @@ export function detectAnswerPurposes(value) {
   ) {
     purposes.push("customer-complaint-award");
   }
+  const asksAboutCultureProof = /自由与爱|企业文化|文化|有爱/.test(normalized);
+  const mentionsDispute = /争议|案例|客诉|出了事|发生争议|道歉/.test(normalized);
+  const asksForProofBoundary = /检验|证明|证实|真的|假的|全假|就算|成立/.test(normalized);
+  if (asksAboutCultureProof && mentionsDispute && asksForProofBoundary) {
+    purposes.push("culture-dispute-proof-boundary");
+  }
 
   return purposes;
+}
+
+export function isSoftAnswerPurpose(purpose) {
+  return purpose === "employee-culture-beyond-compensation" ||
+    purpose === "culture-dispute-proof-boundary";
 }
 
 export function supportsAnswerPurposes(item, purposes) {
@@ -200,6 +211,12 @@ export function supportsAnswerPurposes(item, purposes) {
       const supportsCustomerComplaint = /投诉奖|顾客.{0,12}投诉|投诉.{0,12}顾客/.test(normalized);
       const confusesEmployeeGrievance = /委屈奖/.test(normalized) && !/投诉奖/.test(normalized);
       return !item.caseId && supportsCustomerComplaint && !confusesEmployeeGrievance;
+    }
+    if (purpose === "culture-dispute-proof-boundary") {
+      return item.cultureRelevance === "boundary" ||
+        /不能用于判定具体争议|不能.*裁定|不能代替事件事实|文化.*不能代替|争议处理中.*纠错|合理质疑|文化存在真实张力/.test(
+          normalized,
+        );
     }
     return true;
   });
@@ -353,9 +370,10 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
 
   function asksForFinality(question) {
     const normalized = question.replace(/\s+/g, "");
-    return /最终|结论|定性|查清|结案|调查结果|监管认定|怎么判|如何判|判的|正式制度|正式生效|已经生效|已经证明|谁对谁错|监管部门.{0,6}(?:证明|认定)/.test(
+    return /最终|结论|定性|定论|查清|结案|调查结果|监管认定|监管部门.{0,8}(?:盖章|证明|认定)|盖章|尘埃落定|怎么判|如何判|判的|一审(?:结果|判决|处理)|法院.{0,10}(?:结果|判决|处理)|终审|生效判决|正式制度|正式生效|已经生效|已经证明|谁对谁错|究竟处理了什么/.test(
       normalized,
-    ) || /还(?:是|会|有没有).*?(?:开除|辞退|处理|处罚)/.test(normalized);
+    ) || /还(?:是|会|有没有).*?(?:开除|辞退|处理|处罚)/.test(normalized) ||
+      /(?:最后|后来).{0,8}(?:结果|结论|怎么判|如何判|查清|定性|定论)/.test(normalized);
   }
 
   function detectKnownEvidenceGap(question) {
@@ -512,11 +530,9 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
       })
       .filter((item) => item.score > 0 && item.hasDistinctiveEvidence)
       .sort((left, right) => right.score - left.score);
-    const softRankingPurposes = detectedAnswerPurposes.filter(
-      (purpose) => purpose === "employee-culture-beyond-compensation",
-    );
+    const softRankingPurposes = detectedAnswerPurposes.filter(isSoftAnswerPurpose);
     const hardFilterPurposes = detectedAnswerPurposes.filter(
-      (purpose) => purpose !== "employee-culture-beyond-compensation",
+      (purpose) => !isSoftAnswerPurpose(purpose),
     );
     const purposeFilteredOutChunkIds = answerPurposeFilterV1 && hardFilterPurposes.length
       ? scored
@@ -554,7 +570,7 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
     return { retrieved, answerCandidates, purposeFilteredOutChunkIds, purposeBoostedChunkIds };
   }
 
-  function searchKnowledge(question, context = []) {
+  function searchKnowledge(question, context = [], searchOptions = {}) {
     const currentRewrite = queryRewriteV1
       ? rewriteKnowledgeQuery(question)
       : {
@@ -591,12 +607,23 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
     const contextualCaseRecord = contextDependent
       ? [...contextRewrites].reverse().map((item) => findCase(item.corrected)).find(Boolean)
       : undefined;
-    const caseRecord = directCaseRecord ?? contextualCaseRecord;
+    const forcedCaseRecord = searchOptions.forcedCaseId
+      ? knowledgeBase.cases.find((item) => item.id === searchOptions.forcedCaseId)
+      : undefined;
+    if (searchOptions.forcedCaseId && !forcedCaseRecord) {
+      throw new Error(`未知案例：${searchOptions.forcedCaseId}`);
+    }
+    const caseRecord = directCaseRecord ?? contextualCaseRecord ?? forcedCaseRecord;
     if (caseRecord) {
       const retrieved = searchCase(caseRecord);
       return {
         track: "case",
         caseRecord,
+        caseRoutingMode: directCaseRecord
+          ? "keyword-alias"
+          : contextualCaseRecord
+            ? "context"
+            : "forced-semantic",
         asksForFinality: asksForFinality(`${question}\n${currentRewrite.corrected}`),
         contextApplied: !directCaseRecord && Boolean(contextualCaseRecord),
         originalQueryText: question,

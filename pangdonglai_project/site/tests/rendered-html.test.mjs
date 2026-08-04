@@ -145,11 +145,98 @@ test("fuses keyword and vector rankings while preserving safety routes", async (
   });
 
   const hybrid = await retriever.searchKnowledge("怎么尊重员工");
-  assert.equal(hybrid.retrievalMode, "hybrid-rrf-keyword-anchored");
+  assert.equal(hybrid.retrievalMode, "hybrid-rrf");
   assert.deepEqual(hybrid.retrieved.map((item) => item.chunkId), ["general-1"]);
   assert.equal((await retriever.searchKnowledge("案例问题")).vectorApplied, false);
   assert.equal((await retriever.searchKnowledge("缺资料")).vectorApplied, false);
   assert.equal(embeddingCalls, 1);
+});
+
+test("uses semantic case routing before RRF without mixing case evidence into general retrieval", async () => {
+  const knowledgeBase = {
+    documents: [
+      {
+        id: "general",
+        title: "一般文化",
+        status: "approved",
+        caseId: null,
+        claimType: "practice",
+        finality: "not_applicable",
+        evidenceLevel: "L1",
+        evidenceLabel: "可核验",
+        answerMode: "fact_with_source",
+        answeringRules: [],
+        source: { url: "https://example.com/general", verifiedAt: "2026-08-04" },
+        chunks: [{ id: "general", title: "一般文化", text: "尊重员工。", facts: {}, claims: [] }],
+      },
+      {
+        id: "case",
+        title: "具体事件",
+        status: "limited",
+        caseId: "case-1",
+        claimType: "company_response",
+        finality: "preliminary",
+        evidenceLevel: "L2",
+        evidenceLabel: "有限使用",
+        answerMode: "case_only",
+        answeringRules: [],
+        source: { url: "https://example.com/case", verifiedAt: "2026-08-04" },
+        chunks: [{ id: "case", title: "事件处理", text: "企业公布了处理情况。", facts: {}, claims: [] }],
+      },
+    ],
+  };
+  const generalResult = {
+    chunkId: "general",
+    content: "一般文化",
+    sourceTitle: "一般文化",
+    sourceUrl: "https://example.com/general",
+    score: 1,
+    baseScore: 1,
+  };
+  const keywordRetriever = {
+    searchKnowledge(question, context, options = {}) {
+      if (options.forcedCaseId) {
+        return {
+          track: "case",
+          caseRecord: { id: options.forcedCaseId },
+          queryText: question,
+          retrieved: [{ chunkId: "case", caseId: options.forcedCaseId, score: 1 }],
+          answerCandidates: [{ chunkId: "case", caseId: options.forcedCaseId, score: 1 }],
+        };
+      }
+      return {
+        track: "general",
+        queryText: question,
+        detectedAnswerPurposes: [],
+        retrieved: [generalResult],
+        answerCandidates: [generalResult],
+      };
+    },
+  };
+  const retriever = createHybridKnowledgeRetriever({
+    knowledgeBase,
+    keywordRetriever,
+    vectorIndex: {
+      schemaVersion: "r5-vector-index-v1",
+      model: "test-model",
+      dimensions: 2,
+      entries: [
+        { chunkId: "general", embedding: [1, 0] },
+        { chunkId: "case", embedding: [0, 1] },
+      ],
+    },
+    embedQuery: async () => [0, 1],
+    semanticCaseRouting: true,
+    caseRouteMinScore: 0.5,
+    caseRouteMinMargin: 0.1,
+    fallbackToKeyword: false,
+  });
+
+  const result = await retriever.searchKnowledge("这件事后来是怎么处理的？");
+  assert.equal(result.track, "case");
+  assert.equal(result.caseRecord.id, "case-1");
+  assert.equal(result.retrievalMode, "semantic-case-route");
+  assert.deepEqual(result.retrieved.map((item) => item.chunkId), ["case"]);
 });
 
 test("freezes the R5B semantic shadow set before its first model run", async () => {
@@ -204,6 +291,36 @@ test("records the first frozen R5B comparison without hiding regressions", async
     keywordForbiddenHits: [],
     hybridForbiddenHits: [],
   });
+});
+
+test("records R5C dual-baseline acceptance with real RRF and semantic case routing", async () => {
+  const [result, report, packageJson] = await Promise.all([
+    readFile(new URL("../../evaluation/rag-culture-r5c-experiment-v1.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../../docs/RAG_CULTURE_R5C_EXPERIMENT.md", import.meta.url), "utf8"),
+    readFile(new URL("../package.json", import.meta.url), "utf8").then(JSON.parse),
+  ]);
+  const selected = result.experiments.find(
+    (experiment) => experiment.configuration.id === result.selectedConfigurationId,
+  );
+  const userQuestion = result.selectedResults.shadow.find((item) => item.id === "S-C6-06");
+
+  assert.equal(result.acceptance.pass, true);
+  assert.equal(result.selectedConfigurationId, "rrf-v0-65-g0");
+  assert.equal(selected.configuration.keywordGuardWeight, 0);
+  assert.equal(selected.summaries.fixed.passed, 54);
+  assert.deepEqual(selected.summaries.fixed.regressions, []);
+  assert.equal(selected.summaries.shadow.passed, 24);
+  assert.deepEqual(selected.summaries.shadow.regressions, []);
+  assert.equal(selected.summaries.shadow.caseRoutePassed, 5);
+  assert.equal(selected.summaries.shadow.noAnswerTotal, 2);
+  assert.equal(selected.summaries.shadow.noAnswerSafetyPassed, 2);
+  assert.equal(selected.summaries.shadow.isolationPassed, 31);
+  assert.equal(selected.summaries.shadow.finalityPassed, 31);
+  assert.equal(userQuestion.checks.pass, true);
+  assert.equal(userQuestion.actual.caseId, "red-underwear-color-libel-2025");
+  assert.equal(userQuestion.actual.caseRoutingMode, "forced-semantic");
+  assert.match(report, /固定题：54\/54，回归 0/);
+  assert.match(packageJson.scripts["rag:evaluate:r5c"], /evaluate-rag-r5c/);
 });
 
 async function render(path = "/", init = {}, env = {}, workerCacheKey) {
@@ -882,6 +999,14 @@ test("recognizes natural finality intent and blocks known unsupported detail req
     retriever.searchKnowledge("那是不是监管部门已经证明这些鸡蛋没问题？", [
       "胖东来公布了鲜鸡蛋样品的送检结果。",
     ]).asksForFinality,
+    true,
+  );
+  assert.equal(
+    retriever.searchKnowledge("监管部门已经盖章了吗？").asksForFinality,
+    true,
+  );
+  assert.equal(
+    retriever.searchKnowledge("法院公开的一审结果究竟处理了什么？").asksForFinality,
     true,
   );
 

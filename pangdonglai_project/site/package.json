@@ -18,6 +18,7 @@
     "rag:vectorize:r5": "npm run knowledge:build && node scripts/generate-vector-index.mjs",
     "rag:evaluate:r5": "npm run knowledge:build && node scripts/evaluate-rag-hybrid.mjs",
     "rag:evaluate:r5-shadow": "npm run knowledge:build && node scripts/evaluate-rag-r5-shadow.mjs",
+    "rag:evaluate:r5c": "npm run knowledge:build && node scripts/evaluate-rag-r5c.mjs",
     "predev": "npm run knowledge:build",
     "dev": "vinext dev",
     "prebuild": "npm run knowledge:build",

@@ -1,6 +1,6 @@
 # R5 关键词与向量混合检索实施说明
 
-**状态：** R5A 安全对照已通过；R5B 31 道冻结语义影子题首次真实对照已完成，BM25 17/31、混合检索 19/31、新增 2、回归 0。下一步进入 R5C 通用架构实验；暂不替换 Worker，不部署。
+**状态：** R5C-1 至 R5C-6 已通过双基线：固定题 54/54、冻结影子题 24/31、回归 0、案例路由 5/5。已选定安全加权 RRF 配置，但尚未执行 R5C-7 Worker 接入，不部署。
 
 ## 1. 为什么先不购买向量数据库
 
@@ -39,4 +39,4 @@ npm run rag:vectorize:r5
 npm run rag:evaluate:r5
 ```
 
-R5A 安全报告为 `docs/RAG_CULTURE_R5_HYBRID_EXPERIMENT.md`，R5B 影子评测见 `docs/RAG_CULTURE_R5_SEMANTIC_SHADOW_V1.md`。R5B 已证明向量存在新增语义召回，但总体仅从 17/31 升至 19/31，案例路由仍为 3/5。下一步 R5C 只实验置信度感知融合、语义案例路由和自然终局意图归一化；每次同时重跑固定 54 题与冻结 31 题，在双门槛通过前 Worker 继续使用 BM25。
+R5A 安全报告为 `docs/RAG_CULTURE_R5_HYBRID_EXPERIMENT.md`，R5B 影子评测见 `docs/RAG_CULTURE_R5_SEMANTIC_SHADOW_V1.md`，R5C 双基线报告见 `docs/RAG_CULTURE_R5C_EXPERIMENT.md`。R5C 选中的配置为 RRF k=60、BM25 权重 1、向量权重 0.65、无短名单附加票；固定题 54/54，影子题 24/31，回归 0。下一步只有在用户决定后才执行 R5C-7：以可回退开关接入本地 Worker；线上部署继续保持未授权状态。
