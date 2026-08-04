@@ -160,6 +160,12 @@ export async function createCloudBaseServer(options = {}) {
     ASSETS: { fetch: fetchAsset },
     IMAGES: createPassthroughImageService(),
     DEEPSEEK_API_KEY: options.deepseekApiKey ?? process.env.DEEPSEEK_API_KEY,
+    RAG_RETRIEVAL_MODE: options.ragRetrievalMode ?? process.env.RAG_RETRIEVAL_MODE,
+    TENCENT_TOKENHUB_API_KEY:
+      options.tokenHubApiKey ?? process.env.TENCENT_TOKENHUB_API_KEY ?? process.env.TokenHub_Key,
+    TENCENT_TOKENHUB_ENDPOINT:
+      options.tokenHubEndpoint ?? process.env.TENCENT_TOKENHUB_ENDPOINT,
+    TENCENT_TOKENHUB_MODEL: options.tokenHubModel ?? process.env.TENCENT_TOKENHUB_MODEL,
     ...options.env,
   };
   const executionContext = {

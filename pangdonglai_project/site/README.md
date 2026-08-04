@@ -6,7 +6,7 @@
 - A「向下探索」和 B「与胖东来对话」双锚点
 - `#explore` 详情承接区
 - `#ai-dialogue` 非官方 AI 文化问答概念区
-- 目录化 RAG 资料库、BM25 检索、来源绑定与事件阶段保护
+- 目录化 RAG 资料库、BM25 / 向量混合检索、来源绑定与事件阶段保护
 - 移动端适配、键盘焦点与减少动态效果模式
 
 原始单文件网页保存在上一级目录，本工程不覆盖它。
@@ -66,11 +66,24 @@ cd D:\ai沙盒\codex+grok\pangdonglai_project\site
 copy .dev.vars.example .dev.vars
 ```
 
-3. 用记事本或编辑器打开 `.dev.vars`，改成你的真实 Key（只保留一行键值）：
+3. 用记事本或编辑器打开 `.dev.vars`，填入真实 Key。日常开发默认继续使用 BM25：
 
 ```text
 DEEPSEEK_API_KEY=sk-xxxxxxxxxxxxxxxx
+RAG_RETRIEVAL_MODE=bm25
 ```
+
+需要本地验证 R5C 混合检索时，再改为：
+
+```text
+DEEPSEEK_API_KEY=sk-xxxxxxxxxxxxxxxx
+RAG_RETRIEVAL_MODE=hybrid
+TENCENT_TOKENHUB_API_KEY=xxxxxxxxxxxxxxxx
+TENCENT_TOKENHUB_ENDPOINT=https://tokenhub.tencentmaas.com/v1/embeddings
+TENCENT_TOKENHUB_MODEL=kinfra-text-embedding-0.6b
+```
+
+混合模式缺少 TokenHub 密钥、模型与现有索引不一致或向量请求失败时，会自动退回 BM25。不要把任何真实密钥提交到 Git。
 
 4. **关掉**正在跑的 `npm run dev`，再重新启动：
 

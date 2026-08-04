@@ -294,10 +294,11 @@ test("records the first frozen R5B comparison without hiding regressions", async
 });
 
 test("records R5C dual-baseline acceptance with real RRF and semantic case routing", async () => {
-  const [result, report, packageJson] = await Promise.all([
+  const [result, report, packageJson, liveRunner] = await Promise.all([
     readFile(new URL("../../evaluation/rag-culture-r5c-experiment-v1.json", import.meta.url), "utf8").then(JSON.parse),
     readFile(new URL("../../../docs/RAG_CULTURE_R5C_EXPERIMENT.md", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../scripts/evaluate-rag-r5c-worker-live.mjs", import.meta.url), "utf8"),
   ]);
   const selected = result.experiments.find(
     (experiment) => experiment.configuration.id === result.selectedConfigurationId,
@@ -321,6 +322,11 @@ test("records R5C dual-baseline acceptance with real RRF and semantic case routi
   assert.equal(userQuestion.actual.caseRoutingMode, "forced-semantic");
   assert.match(report, /固定题：54\/54，回归 0/);
   assert.match(packageJson.scripts["rag:evaluate:r5c"], /evaluate-rag-r5c/);
+  assert.match(packageJson.scripts["rag:evaluate:r5c-worker-live"], /evaluate-rag-r5c-worker-live/);
+  assert.match(liveRunner, /process\.env\.DEEPSEEK_API_KEY/);
+  assert.match(liveRunner, /process\.env\.TENCENT_TOKENHUB_API_KEY \?\? process\.env\.TokenHub_Key/);
+  assert.match(liveRunner, /apiKeyStored: false/);
+  assert.doesNotMatch(liveRunner, /writeFile\([^\n]+apiKey/);
 });
 
 async function render(path = "/", init = {}, env = {}, workerCacheKey) {
@@ -363,6 +369,11 @@ test("keeps store content and chat contract outside their UI and Worker entrypoi
   assert.match(worker, /from "\.\.\/shared\/chat"/);
   assert.match(worker, /knowledge\/compiled\/knowledge-base\.json/);
   assert.match(worker, /createKnowledgeRetriever/);
+  assert.match(worker, /createHybridKnowledgeRetriever/);
+  assert.match(worker, /RAG_RETRIEVAL_MODE/);
+  assert.match(worker, /vectorWeight: 0\.65/);
+  assert.match(worker, /keywordGuardWeight: 0/);
+  assert.match(worker, /semanticCaseRouting: true/);
   assert.match(worker, /queryRewriteV1: true/);
   assert.match(worker, /answerPurposeFilterV1: true/);
   assert.match(worker, /previousUserQuestions/);
@@ -1103,7 +1114,7 @@ test("server-renders the Pangdonglai culture homepage", async () => {
   assert.match(html, /id="ai-dialogue"/);
   assert.match(html, /id="store-directory"/);
   assert.match(html, /aria-hidden="true"/);
-  assert.match(html, /BM25 本地检索/);
+  assert.match(html, /基于已审核资料回答/);
   assert.match(html, /输入你的问题/);
   for (const storeName of ["许昌天使城", "许昌时代广场", "许昌生活广场", "许昌大众服饰", "许昌金三角店", "许昌云鼎店", "许昌北海店", "许昌金汇店", "许昌劳动店", "许昌人民店", "禹州店", "新乡大胖", "新乡二胖", "新乡三胖"]) {
     assert.match(html, new RegExp(storeName));
@@ -1163,6 +1174,118 @@ test("streams BM25-grounded DeepSeek tokens and verified sources", async () => {
     assert.match(deepseekRequest.messages[0].content, /为什么这么做/);
     assert.match(deepseekRequest.messages[0].content, /还要分清/);
     assert.match(deepseekRequest.messages[0].content, /不是必须逐字显示的四个标题/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("uses the accepted R5C hybrid retriever when the local switch is enabled", async () => {
+  const originalFetch = globalThis.fetch;
+  const vectorIndex = await readFile(
+    new URL("../../knowledge/vector/r5-general-index.json", import.meta.url),
+    "utf8",
+  ).then(JSON.parse);
+  const matchingEntry = vectorIndex.entries.find(
+    (entry) => entry.chunkId === "red-underwear-report-testing-and-staff",
+  );
+  assert.ok(matchingEntry);
+
+  let embeddingRequest;
+  let deepseekRequest;
+  globalThis.fetch = async (input, init) => {
+    const url = String(input);
+    if (url === "https://tokenhub.tencentmaas.com/v1/embeddings") {
+      embeddingRequest = {
+        authorization: new Headers(init.headers).get("authorization"),
+        body: JSON.parse(init.body),
+      };
+      return new Response(JSON.stringify({
+        data: [{ index: 0, embedding: matchingEntry.embedding }],
+      }), {
+        headers: { "content-type": "application/json" },
+      });
+    }
+    if (url === "https://api.deepseek.com/chat/completions") {
+      deepseekRequest = JSON.parse(init.body);
+      const content = "企业公开报告提到的是对相关员工免职或降级，不等于开除；单个事件也不能直接证明整套企业文化的真伪。";
+      return new Response(
+        `data: ${JSON.stringify({ choices: [{ delta: { content } }] })}\n\ndata: [DONE]\n\n`,
+        { headers: { "content-type": "text/event-stream" } },
+      );
+    }
+    return originalFetch(input, init);
+  };
+
+  try {
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          messages: [{
+            role: "user",
+            content: "胖东来因为红裤头事件开除相关员工，这件事是否和企业文化相冲突？",
+          }],
+        }),
+      },
+      {
+        DEEPSEEK_API_KEY: "test-deepseek-key",
+        RAG_RETRIEVAL_MODE: "hybrid",
+        TENCENT_TOKENHUB_API_KEY: "test-tokenhub-key",
+      },
+    );
+
+    assert.equal(response.status, 200);
+    const body = await response.text();
+    assert.match(body, /免职或降级/);
+    assert.match(body, /红色内裤掉色过敏争议与名誉权诉讼/);
+    assert.equal(embeddingRequest.authorization, "Bearer test-tokenhub-key");
+    assert.equal(embeddingRequest.body.model, vectorIndex.model);
+    assert.equal(embeddingRequest.body.input.length, 1);
+    assert.match(deepseekRequest.messages[0].content, /事件：红色内裤掉色过敏争议与名誉权诉讼/);
+    assert.match(deepseekRequest.messages[0].content, /报告要点：对顾客措施与拟依法追责/);
+    assert.match(deepseekRequest.messages[0].content, /不得引用其他案例/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("falls back to BM25 when hybrid mode has no TokenHub key", async () => {
+  const originalFetch = globalThis.fetch;
+  let tokenHubCalled = false;
+  globalThis.fetch = async (input, init) => {
+    const url = String(input);
+    if (url === "https://tokenhub.tencentmaas.com/v1/embeddings") {
+      tokenHubCalled = true;
+      throw new Error("TokenHub should not be called without a key");
+    }
+    if (url === "https://api.deepseek.com/chat/completions") {
+      return new Response(
+        'data: {"choices":[{"delta":{"content":"官网门店资料列出了周二闭店安排。"}}]}\n\ndata: [DONE]\n\n',
+        { headers: { "content-type": "text/event-stream" } },
+      );
+    }
+    return originalFetch(input, init);
+  };
+
+  try {
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ messages: [{ role: "user", content: "胖东来周二是否闭店？" }] }),
+      },
+      {
+        DEEPSEEK_API_KEY: "test-key",
+        RAG_RETRIEVAL_MODE: "hybrid",
+      },
+    );
+
+    assert.equal(response.status, 200);
+    assert.equal(tokenHubCalled, false);
+    assert.match(await response.text(), /胖东来各门店信息/);
   } finally {
     globalThis.fetch = originalFetch;
   }

@@ -246,7 +246,7 @@ function RagChat() {
         </h2>
         <span className="dialogue-disclaimer">
           <span className="dialogue-dot" aria-hidden="true" />
-          非官方资料助手 · BM25 本地检索
+          非官方资料助手 · 基于已审核资料回答
         </span>
       </header>
 
