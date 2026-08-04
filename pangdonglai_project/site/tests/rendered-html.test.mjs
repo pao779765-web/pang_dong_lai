@@ -294,11 +294,12 @@ test("records the first frozen R5B comparison without hiding regressions", async
 });
 
 test("records R5C dual-baseline acceptance with real RRF and semantic case routing", async () => {
-  const [result, report, packageJson, liveRunner] = await Promise.all([
+  const [result, report, packageJson, liveRunner, liveResult] = await Promise.all([
     readFile(new URL("../../evaluation/rag-culture-r5c-experiment-v1.json", import.meta.url), "utf8").then(JSON.parse),
     readFile(new URL("../../../docs/RAG_CULTURE_R5C_EXPERIMENT.md", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8").then(JSON.parse),
     readFile(new URL("../scripts/evaluate-rag-r5c-worker-live.mjs", import.meta.url), "utf8"),
+    readFile(new URL("../../evaluation/rag-culture-r5c-worker-live-v1.json", import.meta.url), "utf8").then(JSON.parse),
   ]);
   const selected = result.experiments.find(
     (experiment) => experiment.configuration.id === result.selectedConfigurationId,
@@ -327,6 +328,13 @@ test("records R5C dual-baseline acceptance with real RRF and semantic case routi
   assert.match(liveRunner, /process\.env\.TENCENT_TOKENHUB_API_KEY \?\? process\.env\.TokenHub_Key/);
   assert.match(liveRunner, /apiKeyStored: false/);
   assert.doesNotMatch(liveRunner, /writeFile\([^\n]+apiKey/);
+  assert.deepEqual(liveResult.summary, { total: 3, passed: 2, failed: 1 });
+  assert.deepEqual(liveResult.humanReviewSummary, { pass: 2, revise: 1, fail: 0 });
+  assert.equal(liveResult.configuration.apiKeyStored, false);
+  assert.equal(liveResult.results[0].calls.tokenHub, 1);
+  assert.equal(liveResult.results[1].humanReview.status, "revise");
+  assert.equal(liveResult.results[2].calls.tokenHub, 0);
+  assert.doesNotMatch(JSON.stringify(liveResult), /DEEPSEEK_API_KEY|TokenHub_Key/);
 });
 
 async function render(path = "/", init = {}, env = {}, workerCacheKey) {
