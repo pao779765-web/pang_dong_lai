@@ -173,6 +173,10 @@ const regressions = results
   .filter((result) => result.keyword.checks.pass && !result.hybrid.checks.pass)
   .map((result) => result.id);
 const userQuestion = results.find((result) => result.forms.includes("user_supplied"));
+const hitRateGain = Number(
+  ((hybridSummary.hitAt5Rate - keywordSummary.hitAt5Rate) * 100).toFixed(2),
+);
+const mrrGain = Number((hybridSummary.mrrAt5 - keywordSummary.mrrAt5).toFixed(4));
 
 const output = {
   schemaVersion: "1.0",
@@ -215,10 +219,15 @@ const report = `# R5B 语义改写影子评测\n\n` +
   `| 一般问题 MRR@5 | ${keywordSummary.mrrAt5} | ${hybridSummary.mrrAt5} |\n` +
   `| 案例路由 | ${keywordSummary.caseRoutePassed}/${keywordSummary.caseTotal} | ${hybridSummary.caseRoutePassed}/${hybridSummary.caseTotal} |\n` +
   `| 资料不足安全 | ${keywordSummary.noAnswerSafetyPassed}/${keywordSummary.noAnswerTotal} | ${hybridSummary.noAnswerSafetyPassed}/${hybridSummary.noAnswerTotal} |\n` +
-  `| 隔离 | ${keywordSummary.isolationPassed}/${keywordSummary.total} | ${hybridSummary.isolationPassed}/${hybridSummary.total} |\n\n` +
+  `| 隔离 | ${keywordSummary.isolationPassed}/${keywordSummary.total} | ${hybridSummary.isolationPassed}/${hybridSummary.total} |\n` +
+  `| 终局意图 | ${keywordSummary.finalityPassed}/${keywordSummary.total} | ${hybridSummary.finalityPassed}/${hybridSummary.total} |\n\n` +
   `- 向量新增通过：${improvements.length ? improvements.join("、") : "0"}\n` +
   `- 向量回归：${regressions.length ? regressions.join("、") : "0"}\n` +
+  `- 一般问题 Hit@5 提升：${hitRateGain} 个百分点\n` +
+  `- 一般问题 MRR@5 提升：${mrrGain}\n` +
   `- 用户指定题：${userQuestion ? `BM25 ${userQuestion.keyword.checks.pass ? "通过" : "失败"}，混合检索 ${userQuestion.hybrid.checks.pass ? "通过" : "失败"}` : "未找到"}\n\n` +
+  `## 结论\n\n` +
+  `向量召回带来了可验证的新增收益，且本轮没有破坏资料不足安全与跨案例隔离；但总体只从 ${keywordSummary.passed}/${keywordSummary.total} 提升到 ${hybridSummary.passed}/${hybridSummary.total}，案例路由没有改善，因此还不能接入 Worker。下一轮应做通用架构实验：让高置信向量候选能够替换弱 BM25 候选、增加语义案例路由，并扩展自然终局意图识别；不得围绕单道失败题增加专用补丁。\n\n` +
   `完整逐题结果见 \`pangdonglai_project/evaluation/rag-culture-r5-semantic-shadow-results-v1.json\`。\n`;
 
 await Promise.all([

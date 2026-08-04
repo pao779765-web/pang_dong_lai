@@ -1,0 +1,2304 @@
+{
+  "schemaVersion": "1.0",
+  "id": "rag-culture-r5-semantic-shadow-results-v1",
+  "evaluatedAt": "2026-08-04T10:05:52.307Z",
+  "evaluationSet": "rag-culture-r5-semantic-shadow-v1",
+  "frozenBeforeFirstRun": true,
+  "configuration": {
+    "provider": "tencent-tokenhub",
+    "model": "kinfra-text-embedding-0.6b",
+    "dimensions": 1024,
+    "vectorWeight": 0.65,
+    "apiKeyStored": false
+  },
+  "summary": {
+    "keyword": {
+      "total": 31,
+      "passed": 17,
+      "failedQuestionIds": [
+        "S-C1-03",
+        "S-C1-04",
+        "S-C2-01",
+        "S-C2-04",
+        "S-C3-02",
+        "S-C3-04",
+        "S-C4-01",
+        "S-C4-02",
+        "S-C4-03",
+        "S-C5-01",
+        "S-C5-02",
+        "S-C6-01",
+        "S-C6-05",
+        "S-C6-06"
+      ],
+      "generalPositiveTotal": 24,
+      "hitAt5": 13,
+      "hitAt5Rate": 0.5417,
+      "mrrAt5": 0.4444,
+      "caseTotal": 5,
+      "caseRoutePassed": 3,
+      "noAnswerTotal": 2,
+      "noAnswerSafetyPassed": 2,
+      "isolationPassed": 31,
+      "finalityPassed": 29
+    },
+    "hybrid": {
+      "total": 31,
+      "passed": 19,
+      "failedQuestionIds": [
+        "S-C1-03",
+        "S-C1-04",
+        "S-C2-01",
+        "S-C2-04",
+        "S-C3-02",
+        "S-C4-01",
+        "S-C4-02",
+        "S-C4-03",
+        "S-C5-01",
+        "S-C6-01",
+        "S-C6-05",
+        "S-C6-06"
+      ],
+      "generalPositiveTotal": 24,
+      "hitAt5": 15,
+      "hitAt5Rate": 0.625,
+      "mrrAt5": 0.4965,
+      "caseTotal": 5,
+      "caseRoutePassed": 3,
+      "noAnswerTotal": 2,
+      "noAnswerSafetyPassed": 2,
+      "isolationPassed": 31,
+      "finalityPassed": 29
+    },
+    "improvements": [
+      "S-C3-04",
+      "S-C5-02"
+    ],
+    "regressions": [],
+    "userSuppliedQuestion": {
+      "id": "S-C6-06",
+      "keywordPass": false,
+      "hybridPass": false,
+      "keywordTrack": "general",
+      "hybridTrack": "general",
+      "keywordForbiddenHits": [],
+      "hybridForbiddenHits": []
+    }
+  },
+  "results": [
+    {
+      "id": "S-C1-01",
+      "theme": "C1",
+      "forms": [
+        "semantic_shadow"
+      ],
+      "question": "一家企业如果真把员工当人而不是耗材，公开材料里能看到哪些安排？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "xinhua-employee-home-facilities",
+        "tsinghua-employee-customer-practices",
+        "interview-people-employees-and-replication"
+      ],
+      "mustNotRecallChunkIds": [
+        "company-profile-footprint-business-and-employment"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "book-learn-pdl-ch3-humanistic-management",
+          "xinhua-rest-to-service-mechanism",
+          "xinhua-employee-home-facilities",
+          "book-learn-pdl-surface-vs-culture",
+          "book-learn-pdl-ch1-growth"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 3,
+        "reciprocalRankAt5": 0.3333333333333333,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "book-learn-pdl-ch3-humanistic-management",
+          "xinhua-rest-to-service-mechanism",
+          "xinhua-employee-home-facilities",
+          "book-learn-pdl-surface-vs-culture",
+          "book-learn-pdl-ch1-growth"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 3,
+        "reciprocalRankAt5": 0.3333333333333333,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C1-02",
+      "theme": "C1",
+      "forms": [
+        "semantic_shadow",
+        "mechanism"
+      ],
+      "question": "员工状态好，服务才可能好，这条因果链有公开资料支撑吗？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "xinhua-rest-to-service-mechanism",
+        "xinhua-work-life-boundaries",
+        "xinhua-employee-home-facilities"
+      ],
+      "mustNotRecallChunkIds": [
+        "xinhua-6a-spring-festival-crowds"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "xinhua-rest-to-service-mechanism",
+          "xinhua-6a-quality-before-scale",
+          "jiemian-handbook-and-institutions",
+          "jiemian-freedom-love-rousseau-origin",
+          "book-learn-pdl-flywheel-logic"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 1,
+        "reciprocalRankAt5": 1,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "xinhua-rest-to-service-mechanism",
+          "xinhua-6a-quality-before-scale",
+          "jiemian-handbook-and-institutions",
+          "jiemian-freedom-love-rousseau-origin",
+          "book-learn-pdl-flywheel-logic"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 1,
+        "reciprocalRankAt5": 1,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C1-03",
+      "theme": "C1",
+      "forms": [
+        "semantic_shadow",
+        "boundary"
+      ],
+      "question": "有些岗位晚上还在工作，企业怎样照顾他们的安全和生活节奏？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "cnfin-night-shift-reality",
+        "cnfin-night-shift-safety-flow"
+      ],
+      "mustNotRecallChunkIds": [
+        "store-directory-hours"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "recruitment-local-life-rationale",
+          "shen-happiness-life-handbook",
+          "xinhua-work-life-boundaries",
+          "xinhua-yonghui-employee-community",
+          "jiemian-retirement-culture-question"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": false,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "recruitment-local-life-rationale",
+          "shen-happiness-life-handbook",
+          "xinhua-work-life-boundaries",
+          "xinhua-yonghui-employee-community",
+          "jiemian-retirement-culture-question"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": false,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C1-04",
+      "theme": "C1",
+      "forms": [
+        "semantic_shadow",
+        "mechanism"
+      ],
+      "question": "招人时为什么要看应聘者认不认同一种生活方式，而不只是考技能？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "recruitment-culture-screening",
+        "recruitment-local-life-rationale",
+        "recruitment-batch-boundary"
+      ],
+      "mustNotRecallChunkIds": [
+        "company-profile-identity-and-foundation"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "weiqu-award-yudonglai-purpose",
+          "tsinghua-supply-chain-competitor-value",
+          "xinhua-culture-love-five-levels",
+          "xinhua-yonghui-employee-community",
+          "shen-happiness-life-handbook"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": false,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "weiqu-award-yudonglai-purpose",
+          "tsinghua-supply-chain-competitor-value",
+          "xinhua-culture-love-five-levels",
+          "xinhua-yonghui-employee-community",
+          "shen-happiness-life-handbook"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": false,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C1-05",
+      "theme": "C1",
+      "forms": [
+        "semantic_shadow",
+        "boundary"
+      ],
+      "question": "所谓委屈奖是受了气就无条件发钱，还是一种组织支持信号？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "weiqu-award-office-response",
+        "weiqu-award-cultural-meaning-boundary"
+      ],
+      "mustNotRecallChunkIds": [
+        "interview-trust-returns-and-complaints"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "weiqu-award-cultural-meaning-boundary",
+          "tsinghua-employee-customer-practices",
+          "weiqu-award-office-response",
+          "jiemian-handbook-and-institutions",
+          "tsinghua-replication-limits"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 1,
+        "reciprocalRankAt5": 1,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "weiqu-award-cultural-meaning-boundary",
+          "tsinghua-employee-customer-practices",
+          "weiqu-award-office-response",
+          "jiemian-handbook-and-institutions",
+          "tsinghua-replication-limits"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 1,
+        "reciprocalRankAt5": 1,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C2-01",
+      "theme": "C2",
+      "forms": [
+        "semantic_shadow"
+      ],
+      "question": "把顾客问题留给现场的人处理、不层层请示，靠什么才不会失控？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "interview-frontline-trust-responsibility-and-society",
+        "interview-operating-manuals-and-execution"
+      ],
+      "mustNotRecallChunkIds": [
+        "store-directory-public-contact-numbers"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "red-underwear-early-apology",
+          "book-learn-pdl-toc-and-structure",
+          "book-learn-pdl-time-lag-and-crosscheck",
+          "book-learn-pdl-ch5-culture",
+          "jiemian-cinema-rule-boundary"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": false,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "red-underwear-early-apology",
+          "book-learn-pdl-toc-and-structure",
+          "book-learn-pdl-time-lag-and-crosscheck",
+          "book-learn-pdl-ch5-culture",
+          "jiemian-cinema-rule-boundary"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": false,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C2-02",
+      "theme": "C2",
+      "forms": [
+        "semantic_shadow",
+        "succession"
+      ],
+      "question": "创始人退下来以后，价值观靠哪些组织装置继续运行？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "jiemian-retirement-culture-question",
+        "jiemian-handbook-and-institutions",
+        "jiemian-rotation-governance"
+      ],
+      "mustNotRecallChunkIds": [
+        "company-profile-identity-and-foundation"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "jiemian-retirement-culture-question",
+          "jiemian-handbook-and-institutions",
+          "jiemian-rotation-governance",
+          "book-learn-pdl-limits-of-copying",
+          "tsinghua-replication-limits"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 1,
+        "reciprocalRankAt5": 1,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "jiemian-retirement-culture-question",
+          "jiemian-handbook-and-institutions",
+          "jiemian-rotation-governance",
+          "book-learn-pdl-limits-of-copying",
+          "tsinghua-replication-limits"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 1,
+        "reciprocalRankAt5": 1,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C2-03",
+      "theme": "C2",
+      "forms": [
+        "semantic_shadow",
+        "mechanism"
+      ],
+      "question": "手册、轮值和决策委员会，分别怎样降低企业只靠老板个人的风险？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "jiemian-handbook-and-institutions",
+        "jiemian-rotation-governance"
+      ],
+      "mustNotRecallChunkIds": [
+        "xinhua-book-source-nature"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "jiemian-rotation-governance",
+          "jiemian-handbook-and-institutions",
+          "jiemian-retirement-culture-question",
+          "jiemian-culture-boundary-and-disputes",
+          "shen-culture-free-love-spirit"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 1,
+        "reciprocalRankAt5": 1,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "jiemian-rotation-governance",
+          "jiemian-handbook-and-institutions",
+          "jiemian-retirement-culture-question",
+          "jiemian-culture-boundary-and-disputes",
+          "shen-culture-free-love-spirit"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 1,
+        "reciprocalRankAt5": 1,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C2-04",
+      "theme": "C2",
+      "forms": [
+        "semantic_shadow",
+        "boundary"
+      ],
+      "question": "员工自己作决定出了差错，公司是只追责，还是也有培训和纠错机制？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "interview-frontline-trust-responsibility-and-society",
+        "interview-operating-manuals-and-execution"
+      ],
+      "mustNotRecallChunkIds": [
+        "noodle-initial-dismissal"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "xinhua-culture-love-five-levels",
+          "xinhua-culture-public-sharing-history",
+          "book-learn-pdl-ch1-growth",
+          "xinhua-culture-distribution-operations",
+          "interview-quality-suppliers-and-scale"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": false,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "xinhua-culture-love-five-levels",
+          "xinhua-culture-public-sharing-history",
+          "book-learn-pdl-ch1-growth",
+          "xinhua-culture-distribution-operations",
+          "interview-quality-suppliers-and-scale"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": false,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C2-05",
+      "theme": "C2",
+      "forms": [
+        "semantic_shadow",
+        "mechanism"
+      ],
+      "question": "公开制度里一边说自愿考评，一边又把行为和奖励挂钩，这两件事能并存吗？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "culture-system-voluntary-assessment",
+        "culture-system-behavior-and-reward"
+      ],
+      "mustNotRecallChunkIds": [
+        "weiqu-award-office-response"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "culture-system-behavior-and-reward",
+          "culture-system-voluntary-assessment",
+          "culture-system-document-and-period",
+          "culture-system-life-modules",
+          "jiemian-retirement-culture-question"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 1,
+        "reciprocalRankAt5": 1,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "culture-system-behavior-and-reward",
+          "culture-system-voluntary-assessment",
+          "culture-system-document-and-period",
+          "culture-system-life-modules",
+          "jiemian-retirement-culture-question"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 1,
+        "reciprocalRankAt5": 1,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C3-01",
+      "theme": "C3",
+      "forms": [
+        "semantic_shadow",
+        "mechanism"
+      ],
+      "question": "企业为什么愿意承担退货成本，给顾客留下反悔空间？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "interview-trust-returns-and-complaints",
+        "tsinghua-customer-value-creation"
+      ],
+      "mustNotRecallChunkIds": [
+        "jiemian-cinema-half-ticket-refund"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "jiemian-cinema-service-meaning",
+          "interview-trust-returns-and-complaints",
+          "book-learn-pdl-ch2-influence",
+          "tsinghua-freedom-love-definition",
+          "book-learn-pdl-flywheel-logic"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 2,
+        "reciprocalRankAt5": 0.5,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "jiemian-cinema-service-meaning",
+          "interview-trust-returns-and-complaints",
+          "book-learn-pdl-ch2-influence",
+          "tsinghua-freedom-love-definition",
+          "book-learn-pdl-flywheel-logic"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 2,
+        "reciprocalRankAt5": 0.5,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C3-02",
+      "theme": "C3",
+      "forms": [
+        "semantic_shadow",
+        "boundary"
+      ],
+      "question": "服务做得好，是否意味着顾客永远正确、企业不能核实事实？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "interview-trust-returns-and-complaints",
+        "thepaper-red-underwear-rights-boundary"
+      ],
+      "mustNotRecallChunkIds": [
+        "red-underwear-judgment-outcome"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "red-underwear-judgment-reasoning",
+          "xinhua-culture-love-five-levels",
+          "book-learn-pdl-limits-of-copying",
+          "xinhua-yonghui-learn-pdl-practices",
+          "tsinghua-replication-limits"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": false,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "red-underwear-judgment-reasoning",
+          "xinhua-culture-love-five-levels",
+          "book-learn-pdl-limits-of-copying",
+          "xinhua-yonghui-learn-pdl-practices",
+          "tsinghua-replication-limits"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": false,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C3-03",
+      "theme": "C3",
+      "forms": [
+        "semantic_shadow",
+        "specific_practice"
+      ],
+      "question": "电影已经看了一小段还能退回部分票钱，这种规定想保护什么体验？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "jiemian-cinema-half-ticket-refund",
+        "jiemian-cinema-service-meaning"
+      ],
+      "mustNotRecallChunkIds": [
+        "interview-trust-returns-and-complaints"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "jiemian-cinema-rule-boundary",
+          "jiemian-cinema-service-meaning",
+          "jiemian-cinema-half-ticket-refund",
+          "jiemian-cinema-source-chain",
+          "red-underwear-lawsuit-filing"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 2,
+        "reciprocalRankAt5": 0.5,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "jiemian-cinema-rule-boundary",
+          "jiemian-cinema-service-meaning",
+          "jiemian-cinema-half-ticket-refund",
+          "jiemian-cinema-source-chain",
+          "red-underwear-lawsuit-filing"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 2,
+        "reciprocalRankAt5": 0.5,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C3-04",
+      "theme": "C3",
+      "forms": [
+        "semantic_shadow",
+        "mechanism"
+      ],
+      "question": "投诉者为什么还可能得到奖励，这个安排试图解决什么问题？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "interview-trust-returns-and-complaints"
+      ],
+      "mustNotRecallChunkIds": [
+        "weiqu-award-office-response"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": false,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "interview-trust-returns-and-complaints"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 1,
+        "reciprocalRankAt5": 1,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C3-05",
+      "theme": "C3",
+      "forms": [
+        "semantic_shadow",
+        "cross_theme"
+      ],
+      "question": "热情服务与员工能不能充分休息，为什么可能是一件事的两面？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "xinhua-rest-to-service-mechanism",
+        "xinhua-work-life-boundaries"
+      ],
+      "mustNotRecallChunkIds": [
+        "xinhua-6a-spring-festival-crowds"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "xinhua-rest-to-service-mechanism",
+          "xinhua-culture-distribution-operations",
+          "book-learn-pdl-surface-vs-culture",
+          "xinhua-6a-service-and-employee-practices",
+          "xinhua-employee-home-facilities"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 1,
+        "reciprocalRankAt5": 1,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "xinhua-rest-to-service-mechanism",
+          "xinhua-culture-distribution-operations",
+          "book-learn-pdl-surface-vs-culture",
+          "xinhua-6a-service-and-employee-practices",
+          "xinhua-employee-home-facilities"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 1,
+        "reciprocalRankAt5": 1,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C4-01",
+      "theme": "C4",
+      "forms": [
+        "semantic_shadow"
+      ],
+      "question": "低价和好品质想同时成立，企业应当怎样处理自己、顾客和供货方的利益？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "interview-quality-suppliers-and-scale",
+        "tsinghua-supply-chain-competitor-value",
+        "tsinghua-customer-value-creation"
+      ],
+      "mustNotRecallChunkIds": [
+        "company-profile-footprint-business-and-employment"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "xinhua-culture-love-five-levels",
+          "tsinghua-freedom-love-definition",
+          "red-underwear-early-apology",
+          "xinhua-yonghui-replication-boundary",
+          "red-underwear-report-customer-and-legal"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": false,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "xinhua-culture-love-five-levels",
+          "tsinghua-freedom-love-definition",
+          "red-underwear-early-apology",
+          "xinhua-yonghui-replication-boundary",
+          "red-underwear-report-customer-and-legal"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": false,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C4-02",
+      "theme": "C4",
+      "forms": [
+        "semantic_shadow",
+        "tradeoff"
+      ],
+      "question": "宁可少开店也要把商品做稳，这种取舍在公开材料里有依据吗？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "interview-quality-suppliers-and-scale",
+        "xinhua-6a-quality-before-scale",
+        "tsinghua-development-quality-first"
+      ],
+      "mustNotRecallChunkIds": [
+        "company-profile-footprint-business-and-employment"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "jiemian-freedom-love-rousseau-origin",
+          "jiemian-handbook-and-institutions",
+          "red-underwear-report-customer-and-legal",
+          "book-learn-pdl-time-lag-and-crosscheck",
+          "tsinghua-employee-customer-practices"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": false,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "jiemian-freedom-love-rousseau-origin",
+          "jiemian-handbook-and-institutions",
+          "red-underwear-report-customer-and-legal",
+          "book-learn-pdl-time-lag-and-crosscheck",
+          "tsinghua-employee-customer-practices"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": false,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C4-03",
+      "theme": "C4",
+      "forms": [
+        "semantic_shadow",
+        "case_boundary",
+        "finality"
+      ],
+      "question": "黄天鹅鸡蛋样品由企业送检后称未检出，能不能等于监管部门已经盖章？",
+      "expectedTrack": "case",
+      "expectedCaseId": "egg-canthaxanthin-feedback-2026-04",
+      "mustRecallAnyOf": [
+        "egg-canthaxanthin-report-stage",
+        "egg-canthaxanthin-company-stated-testing"
+      ],
+      "mustNotRecallChunkIds": [
+        "tea-fly-report-stage",
+        "red-underwear-judgment-outcome"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "recruitment-batch-boundary",
+          "red-underwear-judgment-source-boundary",
+          "red-underwear-report-testing-and-staff",
+          "cnfin-process-not-outcome",
+          "xinhua-yonghui-replication-boundary"
+        ],
+        "checks": {
+          "trackPass": false,
+          "casePass": false,
+          "caseEvidencePass": false,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": false,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "recruitment-batch-boundary",
+          "red-underwear-judgment-source-boundary",
+          "red-underwear-report-testing-and-staff",
+          "cnfin-process-not-outcome",
+          "xinhua-yonghui-replication-boundary"
+        ],
+        "checks": {
+          "trackPass": false,
+          "casePass": false,
+          "caseEvidencePass": false,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": false,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C4-04",
+      "theme": "C4",
+      "forms": [
+        "semantic_shadow",
+        "case_boundary"
+      ],
+      "question": "茶叶异物反馈出现后，企业公开说自己先做了哪些排查动作？",
+      "expectedTrack": "case",
+      "expectedCaseId": "tea-fly-feedback-2026-01",
+      "mustRecallAnyOf": [
+        "tea-fly-investigation-team",
+        "tea-fly-preliminary-actions"
+      ],
+      "mustNotRecallChunkIds": [
+        "egg-canthaxanthin-company-stated-testing"
+      ],
+      "keyword": {
+        "track": "case",
+        "caseId": "tea-fly-feedback-2026-01",
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "tea-fly-timeline",
+          "tea-fly-report-stage",
+          "tea-fly-investigation-team",
+          "tea-fly-preliminary-actions",
+          "tea-fly-customer-service-apology"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "case",
+        "caseId": "tea-fly-feedback-2026-01",
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "tea-fly-timeline",
+          "tea-fly-report-stage",
+          "tea-fly-investigation-team",
+          "tea-fly-preliminary-actions",
+          "tea-fly-customer-service-apology"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C4-05",
+      "theme": "C4",
+      "forms": [
+        "semantic_shadow",
+        "no_answer"
+      ],
+      "question": "没有内部文件时，能不能概括胖东来所有自有品牌出现质量问题后的完整调查步骤？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [],
+      "mustNotRecallChunkIds": [
+        "red-underwear-report-testing-and-staff",
+        "egg-canthaxanthin-company-stated-testing"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": "当前资料库没有适用于全部自有商品的完整内部调查流程。",
+        "retrievedChunkIds": [],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "insufficientReason": "当前资料库没有适用于全部自有商品的完整内部调查流程。",
+        "retrievedChunkIds": [],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C5-01",
+      "theme": "C5",
+      "forms": [
+        "semantic_shadow",
+        "tradeoff"
+      ],
+      "question": "生意这么火却不复制到全国，是担心管理失控，还是一种主动的价值选择？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "interview-quality-suppliers-and-scale",
+        "tsinghua-development-quality-first",
+        "xinhua-6a-quality-before-scale"
+      ],
+      "mustNotRecallChunkIds": [
+        "company-profile-footprint-business-and-employment"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "tsinghua-replication-limits",
+          "book-learn-pdl-surface-vs-culture",
+          "xinhua-yonghui-replication-boundary",
+          "tsinghua-freedom-love-definition",
+          "jiemian-culture-boundary-and-disputes"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": false,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "tsinghua-replication-limits",
+          "book-learn-pdl-surface-vs-culture",
+          "xinhua-yonghui-replication-boundary",
+          "tsinghua-freedom-love-definition",
+          "jiemian-culture-boundary-and-disputes"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": false,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C5-02",
+      "theme": "C5",
+      "forms": [
+        "semantic_shadow",
+        "tradeoff"
+      ],
+      "question": "一家店明明还能赚钱却主动关掉，可能是在保护哪些比收入更重要的东西？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "interview-quality-suppliers-and-scale",
+        "tsinghua-development-quality-first"
+      ],
+      "mustNotRecallChunkIds": [
+        "store-directory-hours"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "book-learn-pdl-how-to-learn-method",
+          "jiemian-cinema-rule-boundary",
+          "interview-trust-returns-and-complaints"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": false,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "book-learn-pdl-how-to-learn-method",
+          "jiemian-cinema-rule-boundary",
+          "interview-trust-returns-and-complaints",
+          "interview-quality-suppliers-and-scale",
+          "weiqu-award-yudonglai-purpose"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 4,
+        "reciprocalRankAt5": 0.25,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C5-03",
+      "theme": "C5",
+      "forms": [
+        "semantic_shadow",
+        "replication"
+      ],
+      "question": "别的超市照着改陈列、商品和服务动作，就能复制出同样的组织能力吗？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "xinhua-yonghui-replication-boundary",
+        "tsinghua-replication-limits",
+        "book-learn-pdl-limits-of-copying"
+      ],
+      "mustNotRecallChunkIds": [
+        "xinhua-yonghui-performance-boundary"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "tsinghua-replication-limits",
+          "xinhua-yonghui-replication-boundary",
+          "xinhua-6a-learning-and-reform",
+          "book-learn-pdl-surface-vs-culture",
+          "xinhua-yonghui-product-restructure"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 1,
+        "reciprocalRankAt5": 1,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "tsinghua-replication-limits",
+          "xinhua-yonghui-replication-boundary",
+          "xinhua-6a-learning-and-reform",
+          "book-learn-pdl-surface-vs-culture",
+          "xinhua-yonghui-product-restructure"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 1,
+        "reciprocalRankAt5": 1,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C5-04",
+      "theme": "C5",
+      "forms": [
+        "semantic_shadow",
+        "replication",
+        "boundary"
+      ],
+      "question": "永辉调改门店后经营数据变好，是否足以证明文化也已经被复制？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "xinhua-yonghui-performance-boundary",
+        "xinhua-yonghui-replication-boundary",
+        "tsinghua-replication-limits"
+      ],
+      "mustNotRecallChunkIds": [
+        "company-profile-footprint-business-and-employment"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "xinhua-yonghui-replication-boundary",
+          "xinhua-6a-learning-and-reform",
+          "book-learn-pdl-limits-of-copying",
+          "book-learn-pdl-surface-vs-culture",
+          "culture-system-life-modules"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 1,
+        "reciprocalRankAt5": 1,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "xinhua-yonghui-replication-boundary",
+          "xinhua-6a-learning-and-reform",
+          "book-learn-pdl-limits-of-copying",
+          "book-learn-pdl-surface-vs-culture",
+          "culture-system-life-modules"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 1,
+        "reciprocalRankAt5": 1,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C5-05",
+      "theme": "C5",
+      "forms": [
+        "semantic_shadow",
+        "no_answer",
+        "current_fact"
+      ],
+      "question": "请直接给我未来三年的逐年开店数量和最新净利润率。",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [],
+      "mustNotRecallChunkIds": [
+        "company-profile-footprint-business-and-employment",
+        "interview-quality-suppliers-and-scale"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": "当前资料库没有最新净利润率或未来三年开店计划。",
+        "retrievedChunkIds": [],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "insufficientReason": "当前资料库没有最新净利润率或未来三年开店计划。",
+        "retrievedChunkIds": [],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C6-01",
+      "theme": "C6",
+      "forms": [
+        "semantic_shadow",
+        "boundary"
+      ],
+      "question": "公开道歉、下架和自行送检，各自能证明到哪一步，又不能证明什么？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "interview-criticism-traffic-and-correction",
+        "thepaper-red-underwear-rights-boundary",
+        "jiemian-culture-boundary-and-disputes"
+      ],
+      "mustNotRecallChunkIds": [
+        "tea-fly-customer-service-apology",
+        "egg-canthaxanthin-company-stated-testing"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "red-underwear-judgment-testing-loss-and-reach",
+          "red-underwear-judgment-handling-timeline",
+          "red-underwear-judgment-outcome",
+          "red-underwear-early-apology",
+          "red-underwear-early-takedown-and-team"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": false,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "red-underwear-judgment-testing-loss-and-reach",
+          "red-underwear-judgment-handling-timeline",
+          "red-underwear-judgment-outcome",
+          "red-underwear-early-apology",
+          "red-underwear-early-takedown-and-team"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": false,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C6-02",
+      "theme": "C6",
+      "forms": [
+        "semantic_shadow",
+        "boundary"
+      ],
+      "question": "企业愿意听取批评，同时对没有核实的说法依法维权，这两件事矛盾吗？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "interview-criticism-traffic-and-correction",
+        "thepaper-red-underwear-rights-boundary",
+        "yudonglai-red-underwear-law-and-responsibility"
+      ],
+      "mustNotRecallChunkIds": [
+        "red-underwear-judgment-outcome"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "red-underwear-judgment-reasoning",
+          "red-underwear-report-customer-and-legal",
+          "interview-criticism-traffic-and-correction",
+          "yudonglai-red-underwear-law-and-responsibility",
+          "jiemian-cinema-service-meaning"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 3,
+        "reciprocalRankAt5": 0.3333333333333333,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "red-underwear-judgment-reasoning",
+          "red-underwear-report-customer-and-legal",
+          "interview-criticism-traffic-and-correction",
+          "yudonglai-red-underwear-law-and-responsibility",
+          "jiemian-cinema-service-meaning"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 3,
+        "reciprocalRankAt5": 0.3333333333333333,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C6-03",
+      "theme": "C6",
+      "forms": [
+        "semantic_shadow",
+        "skeptical"
+      ],
+      "question": "一个争议案例能够证实整套企业文化是真的，或者直接证明它全是假的吗？",
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [
+        "jiemian-culture-boundary-and-disputes",
+        "thepaper-red-underwear-cultural-boundary",
+        "interview-criticism-traffic-and-correction"
+      ],
+      "mustNotRecallChunkIds": [
+        "red-underwear-judgment-outcome"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "jiemian-culture-boundary-and-disputes",
+          "interview-frontline-trust-responsibility-and-society",
+          "culture-system-purpose-and-principles",
+          "culture-system-document-and-period",
+          "tsinghua-freedom-love-definition"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 1,
+        "reciprocalRankAt5": 1,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "jiemian-culture-boundary-and-disputes",
+          "interview-frontline-trust-responsibility-and-society",
+          "culture-system-purpose-and-principles",
+          "culture-system-document-and-period",
+          "tsinghua-freedom-love-definition"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": 1,
+        "reciprocalRankAt5": 1,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C6-04",
+      "theme": "C6",
+      "forms": [
+        "semantic_shadow",
+        "cross_case",
+        "finality"
+      ],
+      "question": "茶叶调查还没有终局时，能不能拿红内裤案的法院结果来补上结论？",
+      "expectedTrack": "case",
+      "expectedCaseId": "tea-fly-feedback-2026-01",
+      "mustRecallAnyOf": [
+        "tea-fly-report-stage",
+        "tea-fly-evidence-boundary"
+      ],
+      "mustNotRecallChunkIds": [
+        "red-underwear-judgment-outcome",
+        "red-underwear-judgment-reasoning"
+      ],
+      "keyword": {
+        "track": "case",
+        "caseId": "tea-fly-feedback-2026-01",
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "tea-fly-timeline",
+          "tea-fly-report-stage",
+          "tea-fly-investigation-team",
+          "tea-fly-preliminary-actions",
+          "tea-fly-customer-service-apology"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "case",
+        "caseId": "tea-fly-feedback-2026-01",
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "tea-fly-timeline",
+          "tea-fly-report-stage",
+          "tea-fly-investigation-team",
+          "tea-fly-preliminary-actions",
+          "tea-fly-customer-service-apology"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": true
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C6-05",
+      "theme": "C6",
+      "forms": [
+        "semantic_shadow",
+        "case_boundary",
+        "finality"
+      ],
+      "question": "红色内衣掉色争议里，法院公开的一审结果究竟处理了什么？",
+      "expectedTrack": "case",
+      "expectedCaseId": "red-underwear-color-libel-2025",
+      "mustRecallAnyOf": [
+        "red-underwear-judgment-outcome",
+        "red-underwear-judgment-reasoning",
+        "red-underwear-judgment-source-boundary"
+      ],
+      "mustNotRecallChunkIds": [
+        "tea-fly-report-stage",
+        "noodle-initial-dismissal"
+      ],
+      "keyword": {
+        "track": "case",
+        "caseId": "red-underwear-color-libel-2025",
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "red-underwear-early-takedown-and-team",
+          "red-underwear-early-apology",
+          "red-underwear-report-testing-and-staff",
+          "red-underwear-report-customer-and-legal",
+          "red-underwear-lawsuit-filing"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": false,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "case",
+        "caseId": "red-underwear-color-libel-2025",
+        "retrievalMode": "keyword-safety-route",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "red-underwear-early-takedown-and-team",
+          "red-underwear-early-apology",
+          "red-underwear-report-testing-and-staff",
+          "red-underwear-report-customer-and-legal",
+          "red-underwear-lawsuit-filing"
+        ],
+        "checks": {
+          "trackPass": true,
+          "casePass": true,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": false,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      }
+    },
+    {
+      "id": "S-C6-06",
+      "theme": "C6",
+      "forms": [
+        "user_supplied",
+        "semantic_shadow",
+        "false_premise",
+        "cross_case"
+      ],
+      "question": "胖东来因为红裤头事件开除相关员工，这件事是否和企业文化相冲突？",
+      "expectedTrack": "case",
+      "expectedCaseId": "red-underwear-color-libel-2025",
+      "mustRecallAnyOf": [
+        "red-underwear-report-testing-and-staff",
+        "red-underwear-judgment-handling-timeline",
+        "yudonglai-red-underwear-track-boundary"
+      ],
+      "mustNotRecallChunkIds": [
+        "noodle-initial-dismissal",
+        "noodle-reassignment-result"
+      ],
+      "keyword": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "keyword",
+        "vectorApplied": false,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "yudonglai-red-underwear-track-boundary",
+          "culture-system-purpose-and-principles",
+          "book-learn-pdl-surface-vs-culture",
+          "tsinghua-freedom-love-definition",
+          "culture-system-voluntary-assessment"
+        ],
+        "checks": {
+          "trackPass": false,
+          "casePass": false,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      },
+      "hybrid": {
+        "track": "general",
+        "caseId": null,
+        "retrievalMode": "hybrid-rrf-keyword-anchored",
+        "vectorApplied": true,
+        "insufficientReason": null,
+        "retrievedChunkIds": [
+          "yudonglai-red-underwear-track-boundary",
+          "culture-system-purpose-and-principles",
+          "book-learn-pdl-surface-vs-culture",
+          "tsinghua-freedom-love-definition",
+          "culture-system-voluntary-assessment"
+        ],
+        "checks": {
+          "trackPass": false,
+          "casePass": false,
+          "caseEvidencePass": true,
+          "hitAt5": true,
+          "isolationPass": true,
+          "finalityIntentPass": true,
+          "noAnswerSafetyPass": true,
+          "pass": false
+        },
+        "firstRelevantRank": null,
+        "reciprocalRankAt5": 0,
+        "forbiddenHits": []
+      }
+    }
+  ]
+}

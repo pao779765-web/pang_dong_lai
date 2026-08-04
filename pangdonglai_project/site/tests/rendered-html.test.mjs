@@ -182,6 +182,30 @@ test("freezes the R5B semantic shadow set before its first model run", async () 
   assert.match(packageJson.scripts["rag:evaluate:r5-shadow"], /evaluate-rag-r5-shadow/);
 });
 
+test("records the first frozen R5B comparison without hiding regressions", async () => {
+  const result = await readFile(
+    new URL("../../evaluation/rag-culture-r5-semantic-shadow-results-v1.json", import.meta.url),
+    "utf8",
+  ).then(JSON.parse);
+
+  assert.equal(result.frozenBeforeFirstRun, true);
+  assert.equal(result.summary.keyword.passed, 17);
+  assert.equal(result.summary.hybrid.passed, 19);
+  assert.deepEqual(result.summary.improvements, ["S-C3-04", "S-C5-02"]);
+  assert.deepEqual(result.summary.regressions, []);
+  assert.equal(result.summary.hybrid.noAnswerSafetyPassed, 2);
+  assert.equal(result.summary.hybrid.isolationPassed, 31);
+  assert.deepEqual(result.summary.userSuppliedQuestion, {
+    id: "S-C6-06",
+    keywordPass: false,
+    hybridPass: false,
+    keywordTrack: "general",
+    hybridTrack: "general",
+    keywordForbiddenHits: [],
+    hybridForbiddenHits: [],
+  });
+});
+
 async function render(path = "/", init = {}, env = {}, workerCacheKey) {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set(

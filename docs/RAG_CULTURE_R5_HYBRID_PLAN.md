@@ -1,6 +1,6 @@
 # R5 关键词与向量混合检索实施说明
 
-**状态：** R5A 安全对照已通过；R5B 31 道语义改写影子题已冻结，等待首次真实对照。暂不替换 Worker，不部署。
+**状态：** R5A 安全对照已通过；R5B 31 道冻结语义影子题首次真实对照已完成，BM25 17/31、混合检索 19/31、新增 2、回归 0。下一步进入 R5C 通用架构实验；暂不替换 Worker，不部署。
 
 ## 1. 为什么先不购买向量数据库
 
@@ -39,4 +39,4 @@ npm run rag:vectorize:r5
 npm run rag:evaluate:r5
 ```
 
-实验报告为 `docs/RAG_CULTURE_R5_HYBRID_EXPERIMENT.md`。下一步建立未参与规则调试的语义改写影子题；在证明新增收益前，Worker 继续使用 BM25。
+R5A 安全报告为 `docs/RAG_CULTURE_R5_HYBRID_EXPERIMENT.md`，R5B 影子评测见 `docs/RAG_CULTURE_R5_SEMANTIC_SHADOW_V1.md`。R5B 已证明向量存在新增语义召回，但总体仅从 17/31 升至 19/31，案例路由仍为 3/5。下一步 R5C 只实验置信度感知融合、语义案例路由和自然终局意图归一化；每次同时重跑固定 54 题与冻结 31 题，在双门槛通过前 Worker 继续使用 BM25。
