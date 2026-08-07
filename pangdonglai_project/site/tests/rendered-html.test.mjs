@@ -1310,10 +1310,12 @@ test("ships phase-2 mobile product polish for chat shell and fab", async () => {
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
   ]);
   assert.match(css, /\.dialogue-window\s*\{[\s\S]*?flex-direction:\s*column/);
-  assert.match(css, /height:\s*min\(78dvh/);
+  assert.match(css, /70dvh|72dvh|78dvh/);
   assert.match(css, /\.mobile-chat-fab/);
   assert.match(css, /@media \(max-width: 480px\)/);
   assert.match(css, /orientation:\s*landscape/);
+  assert.match(css, /@media \(hover: none\)/);
+  assert.match(css, /grid-template-columns:\s*minmax\(0,\s*1fr\)/);
   assert.match(page, /mobile-chat-fab/);
   assert.match(page, /dialogueBodyRef/);
   assert.match(page, /showChatFab/);

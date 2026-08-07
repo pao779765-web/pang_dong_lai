@@ -1621,8 +1621,11 @@ button:disabled {
   }
 
   .hero-core {
-    width: min(100% - 32px, 100%);
+    width: calc(100% - 32px);
     max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
     padding:
       calc(88px + env(safe-area-inset-top, 0px))
       0
@@ -1658,20 +1661,50 @@ button:disabled {
   }
 
   .hero-actions {
-    width: min(100%, 360px);
+    display: flex;
+    width: 100%;
+    max-width: 360px;
     margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
     flex-direction: column;
     align-items: stretch;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
     gap: 12px;
+  }
+
+  /* 安卓：明确 grid + 全宽，避免 order/justify-self 挤乱 */
+  .hero-actions .anchor-link {
+    display: grid;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    align-items: center;
+    justify-self: stretch;
+  }
+
+  .hero-actions .anchor-copy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .hero-actions .anchor-arrow {
+    justify-self: end;
   }
 
   /* 触控热区 ≥44px */
   .anchor-primary {
     width: 100%;
-    min-height: 48px;
-    padding: 12px 16px 12px 12px;
-    justify-self: center;
-    order: 1;
+    max-width: 100%;
+    min-height: 52px;
+    padding: 12px 14px 12px 12px;
+    grid-template-columns: 32px minmax(0, 1fr) 22px;
+    gap: 10px;
+    order: 0;
   }
 
   .anchor-primary .anchor-copy {
@@ -1679,18 +1712,26 @@ button:disabled {
   }
 
   .anchor-primary .anchor-copy small {
+    display: block;
     font-size: 0.62rem;
   }
 
   .anchor-dialogue {
     width: 100%;
-    min-height: 56px;
-    padding: 14px 18px 14px 14px;
-    order: 2;
+    max-width: 100%;
+    min-height: 58px;
+    padding: 12px 16px 12px 12px;
+    grid-template-columns: 38px minmax(0, 1fr) 24px;
+    gap: 10px;
+    order: 0;
   }
 
   .anchor-dialogue .anchor-copy {
-    font-size: 1rem;
+    font-size: 0.95rem;
+  }
+
+  .anchor-dialogue .anchor-copy small {
+    display: block;
   }
 
   .keyword {
@@ -1734,9 +1775,13 @@ button:disabled {
     animation: none;
   }
 
+  /* 避免 min(100% - 32px) 在部分安卓 WebView 整条规则失效 */
   .section-shell {
-    width: min(100% - 32px, 100%);
+    width: calc(100% - 32px);
     max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
   }
 
   .explore-section {
@@ -1769,15 +1814,25 @@ button:disabled {
   }
 
   .next-chapters {
-    grid-template-columns: 1fr;
+    display: grid;
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: minmax(0, 1fr);
     gap: 12px;
   }
 
-  .chapter-card {
-    min-height: 212px;
+  .chapter-card,
+  button.chapter-card-link {
+    display: flex;
+    min-height: 200px;
     min-width: 0;
     width: 100%;
-    padding: 28px 22px;
+    max-width: 100%;
+    margin: 0;
+    padding: 26px 20px;
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
   }
 
   .chapter-card + .chapter-card {
@@ -1787,13 +1842,16 @@ button:disabled {
 
   .chapter-card h3 {
     max-width: none;
-    font-size: clamp(1.4rem, 5.8vw, 1.95rem);
+    margin-right: 2rem;
+    font-size: clamp(1.35rem, 5.5vw, 1.85rem);
+    line-height: 1.25;
   }
 
   .chapter-arrow {
-    right: 22px;
-    bottom: 24px;
-    font-size: 1.25rem;
+    position: absolute;
+    right: 20px;
+    bottom: 22px;
+    font-size: 1.2rem;
   }
 
   .store-section-inner {
@@ -1880,15 +1938,21 @@ button:disabled {
     line-height: 1.7;
   }
 
-  /* 二期：对话窗类 App 布局 — 消息可滚，输入贴窗底 */
+  /* 二期：对话窗类 App 布局 — 消息可滚，输入贴窗底（先 vh 再 dvh，兼容旧安卓） */
   .dialogue-window {
     display: flex;
     flex-direction: column;
-    height: min(78dvh, 680px);
-    max-height: min(78dvh, 680px);
-    min-height: min(58dvh, 500px);
-    border-radius: 20px;
+    width: 100%;
     max-width: 100%;
+    height: 70vh;
+    max-height: 70vh;
+    min-height: 420px;
+    height: 70dvh;
+    max-height: 70dvh;
+    min-height: 50dvh;
+    border-radius: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
   .dialogue-bar {
@@ -2009,27 +2073,38 @@ button:disabled {
     margin-bottom: 8px;
   }
 
+  /* 安卓：flex 行布局比 1fr auto grid 更稳，避免发送键挤没 */
   .question-row {
-    gap: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 8px;
   }
 
-  /* iOS：输入框 ≥16px 避免聚焦整页放大 */
+  /* iOS/安卓：输入框 ≥16px 避免聚焦整页放大 */
   .question-shell input,
   .question-shell button {
     height: 48px;
     min-height: 48px;
+    box-sizing: border-box;
   }
 
   .question-shell input {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
     padding: 0 16px;
     font-size: 16px;
     letter-spacing: 0.02em;
   }
 
   .question-shell button {
-    min-width: 88px;
-    padding: 0 16px;
+    flex: 0 0 auto;
+    min-width: 80px;
+    max-width: 36%;
+    padding: 0 14px;
     font-size: 0.875rem;
+    white-space: nowrap;
   }
 
   .question-shell small {
@@ -2038,14 +2113,18 @@ button:disabled {
   }
 
   .site-footer {
-    width: min(100% - 32px, 100%);
+    width: calc(100% - 32px);
+    max-width: 100%;
     margin-top: 64px;
+    margin-left: auto;
+    margin-right: auto;
     margin-bottom: env(safe-area-inset-bottom, 0px);
     padding: 18px 0 calc(18px + env(safe-area-inset-bottom, 0px));
     align-items: flex-start;
     flex-direction: column;
     gap: 10px;
     font-size: 0.8rem;
+    box-sizing: border-box;
   }
 
   .site-footer a {
@@ -2079,9 +2158,11 @@ button:disabled {
   .keyword-entry[data-index="8"] { --x: 70%; --y: 90%; }
 
   .dialogue-window {
-    height: min(82dvh, 640px);
-    max-height: min(82dvh, 640px);
-    min-height: min(62dvh, 460px);
+    height: 72vh;
+    max-height: 72vh;
+    min-height: 400px;
+    height: 72dvh;
+    max-height: 72dvh;
   }
 
   .store-card img {
@@ -2100,7 +2181,32 @@ button:disabled {
   }
 
   .dialogue-window {
-    height: min(76dvh, 660px);
+    height: 72vh;
+    max-height: 72vh;
+    height: 72dvh;
+    max-height: 72dvh;
+  }
+}
+
+/* 触屏：取消 hover 位移，避免安卓点按后按钮“卡住/错位” */
+@media (hover: none) {
+  .chapter-card-link:hover,
+  .chapter-card:not(.chapter-card-link):hover,
+  .anchor-primary:hover,
+  .anchor-dialogue:hover {
+    transform: none;
+    filter: none;
+  }
+
+  .anchor-primary:hover .anchor-arrow,
+  .anchor-dialogue:hover .anchor-arrow {
+    transform: none;
+  }
+
+  .store-photo-link:hover img,
+  .store-photo-link:focus-visible img {
+    transform: none;
+    filter: none;
   }
 }
 
