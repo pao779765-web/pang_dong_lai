@@ -1289,6 +1289,19 @@ test("server-renders the Pangdonglai culture homepage", async () => {
   }
   assert.equal((html.match(/<img[^>]+alt="[^"]*官方门店照片"/g) ?? []).length, 14);
   assert.equal((html.match(/href="https:\/\/web\.azpdl\.cn\/"/g) ?? []).length, 14);
+  assert.equal((html.match(/src="\/stores\/[^"]+"/g) ?? []).length, 14);
+  // 一期移动端：viewport 与安全区/防 iOS 放大相关声明应存在于页面或样式中
+  assert.match(html, /viewport|device-width/i);
+});
+
+test("ships phase-1 mobile CSS baselines for touch and iOS inputs", async () => {
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.match(css, /@media \(max-width: 760px\)/);
+  assert.match(css, /@media \(max-width: 390px\)/);
+  assert.match(css, /safe-area-inset/);
+  assert.match(css, /font-size:\s*16px/);
+  assert.match(css, /min-height:\s*48px/);
+  assert.match(css, /chat-suggest-chip[\s\S]*?min-height:\s*44px/);
 });
 
 test("streams BM25-grounded DeepSeek tokens and verified sources", async () => {
