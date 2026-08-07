@@ -1118,8 +1118,9 @@ button:disabled {
   backdrop-filter: blur(8px);
 }
 
+/* 旧结构示例已移除；若残留 class，强制隐藏避免与正式对话窗叠层 */
 .dialogue-window-prototype {
-  display: none;
+  display: none !important;
 }
 
 .dialogue-bar {
@@ -1938,8 +1939,8 @@ button:disabled {
     line-height: 1.7;
   }
 
-  /* 二期：对话窗类 App 布局 — 消息可滚，输入贴窗底（先 vh 再 dvh，兼容旧安卓） */
-  .dialogue-window {
+  /* 二期：仅正式对话窗 flex 贴底（勿选中 .dialogue-window-prototype） */
+  .dialogue-window:not(.dialogue-window-prototype) {
     display: flex;
     flex-direction: column;
     width: 100%;

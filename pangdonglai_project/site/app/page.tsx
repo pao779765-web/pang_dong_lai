@@ -610,42 +610,6 @@ export default function Home() {
           </h2>
 
           <RagChat />
-
-          <div className="dialogue-window dialogue-window-prototype" aria-label="AI 问答概念界面">
-            <div className="dialogue-bar">
-              <span>PDL CULTURE / ASK</span>
-              <span className="dialogue-state">结构示例</span>
-            </div>
-            <div className="message message-user">
-              <span>你的问题</span>
-              <p>“自由与爱”在具体管理制度里，意味着什么？</p>
-            </div>
-            <div className="message message-ai">
-              <span>文化馆回答</span>
-              <p>
-                我会先区分企业表达、媒体叙述与员工体验，再把能被核验的制度与案例列出来。
-              </p>
-              <div className="answer-structure">
-                <span>01 / 概念背景</span>
-                <span>02 / 现实做法</span>
-                <span>03 / 来源与争议</span>
-              </div>
-            </div>
-            <div className="question-shell">
-              <label htmlFor="prototype-question">继续追问</label>
-              <div>
-                <input
-                  id="prototype-question"
-                  type="text"
-                  value="问一个关于胖东来文化的问题…"
-                  readOnly
-                  aria-describedby="prototype-help"
-                />
-                <button type="button" disabled aria-label="发送功能开发中">发送</button>
-              </div>
-              <small id="prototype-help">问答功能将在资料库完成后开放</small>
-            </div>
-          </div>
         </div>
 
         <footer className="site-footer">
