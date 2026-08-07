@@ -1,6 +1,6 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element -- 门店照片直接来自胖东来官网，避免额外图片代理。 */
+/* eslint-disable @next/next/no-img-element -- 门店照片直接来自胖东来官网 URL；用 referrerPolicy 规避防盗链，避免额外图片代理。 */
 
 import type { CSSProperties, FormEvent, MouseEvent } from "react";
 import { useEffect, useRef, useState } from "react";
@@ -542,7 +542,14 @@ export default function Home() {
                 {region.stores.map((store, storeIndex) => (
                   <article className="store-card" key={store.name} style={{ "--store-delay": `${(regionOffset + storeIndex) * 85}ms`, "--store-reverse-delay": `${(13 - (regionOffset + storeIndex)) * 30}ms` } as CSSProperties}>
                     <a className="store-photo-link" href="https://web.azpdl.cn/" target="_blank" rel="noreferrer" aria-label={`前往胖东来官网了解${store.name}`}>
-                      <img src={store.photoUrl} alt={`${store.name}官方门店照片`} loading="lazy" />
+                      {/* no-referrer: 官网图床常按 Referer 防盗链；CloudBase 域名会被拦，本地 localhost 往往仍能显示 */}
+                      <img
+                        src={store.photoUrl}
+                        alt={`${store.name}官方门店照片`}
+                        loading="lazy"
+                        decoding="async"
+                        referrerPolicy="no-referrer"
+                      />
                       <span>前往官网 ↗</span>
                     </a>
                     <div className="store-card-body">
