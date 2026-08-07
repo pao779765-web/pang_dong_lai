@@ -42,6 +42,22 @@ npm run start:cloudbase
 
 容器默认以非 root 用户运行。项目根目录的 `.dockerignore` 采用最小允许清单，只纳入网站源码、知识库与构建所需的非敏感 Sites 项目配置，并排除本地密钥、环境文件、构建缓存、测试文件和 Git 元数据。
 
+部署包必须包含 `knowledge/vector/r5-general-index.json`：Worker 在构建期会 `import` 该文件；缺文件会导致云端 `vinext build` 失败。`knowledge/compiled` 可在镜像构建时由 `knowledge:build` 生成，不必预打包。
+
+### CLI 快速发布（已登录账号时）
+
+在本机已执行过 `tcb login` 的前提下：
+
+```powershell
+# 准备最小包：Dockerfile + .dockerignore + cloudbaserc.json + site + knowledge（含 vector，排除 compiled/legacy）
+cd D:\ai沙盒\codex+grok\tmp\pdl-cloudbase-<hash>
+# 交互里灰度选「否」会自动切 100% 流量；也可用 echo 默认项：
+cmd /c "echo.| tcb cloudrun deploy -e pangdonglai-site-d2eqrsj5b8ada0f -s pangdonglai-site --port 3000 --source . --force --wait"
+```
+
+环境 Id：`pangdonglai-site-d2eqrsj5b8ada0f`；服务名：`pangdonglai-site`；端口：`3000`。  
+默认检索模式仍为 `bm25`（不配置 `RAG_RETRIEVAL_MODE=hybrid` 时）。`DEEPSEEK_API_KEY` 只写在云托管服务端环境变量，不要写进镜像或 Git。
+
 第一次部署建议只使用 CloudBase 测试域名验收，不立即切换当前预览站。确认首页、静态资源和 AI 流式回答正常后，再绑定已经完成 ICP 备案的自定义域名。
 
 ## 正式上线前

@@ -4,8 +4,8 @@
 
 **更新时间：** 2026-08-07
 
-**当前执行者：** Grok 已完成 R5C-8：AnswerPlan 通用“具体前提 Claim 覆盖”已落地；离线 53 项测试、固定检索 54/54、R4 契约 18/18、lint 通过。未调用 DeepSeek/TokenHub、未部署。
-**Git 状态：** `main` 最新提交为 R5C-8（`git log -1` 可查）；未部署
+**当前执行者：** Grok 已将当前 `main`（含 R5C-8）部署到 CloudBase 云托管；版本 `pangdonglai-site-007` 承接 100% 流量。
+**Git 状态：** `main`；CloudBase 环境 `pangdonglai-site-d2eqrsj5b8ada0f` 服务 `pangdonglai-site` 已更新；未绑定正式自定义域名
 
 ---
 
@@ -118,7 +118,7 @@
 
 待用户确认：AI 对话区新视觉。
 
-未推送远端；CloudBase 测试域名已部署安全版本 004。
+未推送远端；CloudBase 测试域名已部署版本 007（100% 流量）。测试域名见 `tcb cloudrun detail` 的 DefaultDomainName。
 
 ---
 
@@ -127,14 +127,14 @@
 ### 给 Codex
 
 1. 资料架构只维护 `pangdonglai_project/knowledge/**`；禁止手工修改 `knowledge/compiled/knowledge-base.json` 或恢复旧根文件。
-2. R5C-8 离线已完成；若用户授权重跑 R5C-7B 三道真实题或 31 题混合检索，需显式 TokenHub/DeepSeek 授权；默认 `RAG_RETRIEVAL_MODE=bm25`，未授权不得部署。
+2. CloudBase 已更新到版本 007；后续发布务必带上 `knowledge/vector/r5-general-index.json`，见 `docs/DEPLOY_CN.md`。
 3. 所有 RAG 工作先读 `docs/RAG_RESEARCH_PROTOCOL.md` 和 `docs/RAG_CULTURE_ROADMAP.md`；不修改原始 HTML，完成后更新本 HANDOFF 并小步提交。
 
 ### 给 Grok
 
 1. 先完整阅读 `docs/RAG_RESEARCH_PROTOCOL.md` 与 `docs/RAG_CULTURE_ROADMAP.md`。
-2. R5C-8 已合并到工作树（见最近变更）；后续若验收真实回答，只核对 AnswerPlan 是否带上前提覆盖 Claim，勿为单题加补丁。
-3. 未经用户批准不得新增来源入库，不得调用 DeepSeek/TokenHub/部署。
+2. 线上默认 BM25；若要开 hybrid 需用户明确授权并配置 TokenHub 服务端变量。
+3. 未经用户批准不得新增来源入库；部署与密钥只走云端环境变量，禁止写入镜像/Git。
 
 ### 给用户
 
@@ -173,6 +173,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-07 | Grok | 用户要求部署当前网站到 CloudBase：首轮包漏向量索引导致 build_failed(006)；补入 `knowledge/vector/r5-general-index.json` 后版本 007 构建成功并 100% 切流。公网 `/healthz`、首页、静态资源 200；UTF-8 问答 200 且有来源。默认仍 BM25；未配 hybrid/TokenHub。控制台详情勿回显密钥 | pangdonglai_project/cloudbaserc.json, docs/DEPLOY_CN.md, docs/HANDOFF.md, tmp/pdl-cloudbase-7699d52.zip |
 | 2026-08-07 | Grok | 用户要求执行 R5C-8：在 AnswerPlan 增加通用前提 Claim 覆盖（支持或纠正），不为红裤头单题打补丁；补单测与混合检索离线集成测。固定 54/54、R4 契约 18/18、53 项测试与 lint 通过。未调用 DeepSeek/TokenHub、未部署 | site/shared/answer-control.mjs, site/tests/rendered-html.test.mjs, evaluation/rag-culture-current-evaluation.json, evaluation/rag-culture-r4-contract-evaluation.json, docs/RAG_CULTURE_CURRENT_EVALUATION.md, docs/RAG_ANSWER_CONTROL_V1.md, docs/RAG_CULTURE_R5C_WORKER_LIVE.md, docs/PLAN.md, docs/HANDOFF.md |
 | 2026-08-05 | Codex | 应用户要求整理交接；确认当前工作树为 detached HEAD，最新成果在 `68d4ea3` 与 `c5f3ebd`，未自动并入 main；下一步为 R5C-8 AnswerPlan 通用前提核实 Claim 覆盖，未改代码、未部署 | docs/HANDOFF.md |
 | 2026-08-04 | Codex | 经用户明确授权执行 R5C-7B 三道本地真实回答；两道语义题调用 TokenHub，三题及允许片段调用 DeepSeek，均返回 200。自动与人工验收均为 2/3：普通文化与资料不足通过；红裤头题语义路由和 Top-5 召回正确、无跨案例污染，但 AnswerPlan 漏掉员工免职/降级直接 Claim，导致回答错误称资料未记载处理措施。结果原样记录，不按单题改规则，密钥未保存，未部署 | evaluation/rag-culture-r5c-worker-live-v1.json, docs/RAG_CULTURE_R5C_WORKER_LIVE.md, docs/RAG_CULTURE_R5C_EXPERIMENT.md, docs/RAG_CULTURE_ROADMAP.md, docs/PLAN.md, docs/HANDOFF.md |
