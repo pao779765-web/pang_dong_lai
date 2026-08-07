@@ -4,8 +4,8 @@
 
 **更新时间：** 2026-08-07
 
-**当前执行者：** Grok 已将当前 `main`（含 R5C-8）部署到 CloudBase 云托管；版本 `pangdonglai-site-007` 承接 100% 流量。
-**Git 状态：** `main`；CloudBase 环境 `pangdonglai-site-d2eqrsj5b8ada0f` 服务 `pangdonglai-site` 已更新；未绑定正式自定义域名
+**当前执行者：** Grok 已完成一期移动端基础适配并持续更新 CloudBase；门店图已本站托管；GitHub 分支 `main-2026-08-07` 跟踪当前工程。
+**Git 状态：** 本地 `main` / 远端分支 `main-2026-08-07`；CloudBase 服务 `pangdonglai-site`（hybrid + TokenHub 已配置）；未绑定正式自定义域名
 
 ---
 
@@ -173,7 +173,9 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
-| 2026-08-07 | Grok | 用户要求部署当前网站到 CloudBase：首轮包漏向量索引导致 build_failed(006)；补入 `knowledge/vector/r5-general-index.json` 后版本 007 构建成功并 100% 切流。公网 `/healthz`、首页、静态资源 200；UTF-8 问答 200 且有来源。默认仍 BM25；未配 hybrid/TokenHub。控制台详情勿回显密钥 | pangdonglai_project/cloudbaserc.json, docs/DEPLOY_CN.md, docs/HANDOFF.md, tmp/pdl-cloudbase-7699d52.zip |
+| 2026-08-07 | Grok | 一期移动端：viewport/安全区、≤760与390断点、触控热区、输入16px防iOS放大、防横溢与门店/对话收尾；测试通过；推送 `main-2026-08-07` 并部署 CloudBase | site/app/layout.tsx, site/app/globals.css, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
+| 2026-08-07 | Grok | 门店照片下载到 `public/stores` 本站托管，消除官网防盗链；CloudBase 版本 011 起生效 | site/public/stores/*, site/data/store-directory.json, site/scripts/download-store-photos.mjs |
+| 2026-08-07 | Grok | 用户要求部署当前网站到 CloudBase：首轮包漏向量索引导致 build_failed(006)；补入 `knowledge/vector/r5-general-index.json` 后版本 007 构建成功并 100% 切流。公网 `/healthz`、首页、静态资源 200；UTF-8 问答 200 且有来源。后续已开 hybrid+TokenHub | pangdonglai_project/cloudbaserc.json, docs/DEPLOY_CN.md, docs/HANDOFF.md, tmp/pdl-cloudbase-7699d52.zip |
 | 2026-08-07 | Grok | 用户要求执行 R5C-8：在 AnswerPlan 增加通用前提 Claim 覆盖（支持或纠正），不为红裤头单题打补丁；补单测与混合检索离线集成测。固定 54/54、R4 契约 18/18、53 项测试与 lint 通过。未调用 DeepSeek/TokenHub、未部署 | site/shared/answer-control.mjs, site/tests/rendered-html.test.mjs, evaluation/rag-culture-current-evaluation.json, evaluation/rag-culture-r4-contract-evaluation.json, docs/RAG_CULTURE_CURRENT_EVALUATION.md, docs/RAG_ANSWER_CONTROL_V1.md, docs/RAG_CULTURE_R5C_WORKER_LIVE.md, docs/PLAN.md, docs/HANDOFF.md |
 | 2026-08-05 | Codex | 应用户要求整理交接；确认当前工作树为 detached HEAD，最新成果在 `68d4ea3` 与 `c5f3ebd`，未自动并入 main；下一步为 R5C-8 AnswerPlan 通用前提核实 Claim 覆盖，未改代码、未部署 | docs/HANDOFF.md |
 | 2026-08-04 | Codex | 经用户明确授权执行 R5C-7B 三道本地真实回答；两道语义题调用 TokenHub，三题及允许片段调用 DeepSeek，均返回 200。自动与人工验收均为 2/3：普通文化与资料不足通过；红裤头题语义路由和 Top-5 召回正确、无跨案例污染，但 AnswerPlan 漏掉员工免职/降级直接 Claim，导致回答错误称资料未记载处理措施。结果原样记录，不按单题改规则，密钥未保存，未部署 | evaluation/rag-culture-r5c-worker-live-v1.json, docs/RAG_CULTURE_R5C_WORKER_LIVE.md, docs/RAG_CULTURE_R5C_EXPERIMENT.md, docs/RAG_CULTURE_ROADMAP.md, docs/PLAN.md, docs/HANDOFF.md |
