@@ -2,10 +2,10 @@
 
 > **规则：** 谁做完谁更新本文件。下一位只认本文件 + Git，不靠聊天记录猜。
 
-**更新时间：** 2026-08-07
+**更新时间：** 2026-08-08
 
-**当前执行者：** Grok 已完成一期移动端基础适配并持续更新 CloudBase；门店图已本站托管；GitHub 分支 `main-2026-08-07` 跟踪当前工程。
-**Git 状态：** 本地 `main` / 远端分支 `main-2026-08-07`；CloudBase 服务 `pangdonglai-site`（hybrid + TokenHub 已配置）；未绑定正式自定义域名
+**当前执行者：** Grok 已完成一、二期移动端适配；门店图本站托管；GitHub 分支 `main-2026-08-08` 为当前推荐跟踪分支。
+**Git 状态：** 本地 `main` / 远端 `main-2026-08-08`；CloudBase 服务 `pangdonglai-site`（hybrid + TokenHub）；未绑定正式自定义域名
 
 ---
 
@@ -173,6 +173,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-08 | Grok | 二期移动端：对话窗 flex 贴底输入、消息自动滚底、来源触控卡片、章节全宽、门店图更矮+地图按钮、关键词静止、480/矮屏横屏、「去提问」FAB；测试 55 通过；分支 `main-2026-08-08` | site/app/page.tsx, site/app/globals.css, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-07 | Grok | 一期移动端：viewport/安全区、≤760与390断点、触控热区、输入16px防iOS放大、防横溢与门店/对话收尾；测试通过；推送 `main-2026-08-07` 并部署 CloudBase | site/app/layout.tsx, site/app/globals.css, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-07 | Grok | 门店照片下载到 `public/stores` 本站托管，消除官网防盗链；CloudBase 版本 011 起生效 | site/public/stores/*, site/data/store-directory.json, site/scripts/download-store-photos.mjs |
 | 2026-08-07 | Grok | 用户要求部署当前网站到 CloudBase：首轮包漏向量索引导致 build_failed(006)；补入 `knowledge/vector/r5-general-index.json` 后版本 007 构建成功并 100% 切流。公网 `/healthz`、首页、静态资源 200；UTF-8 问答 200 且有来源。后续已开 hybrid+TokenHub | pangdonglai_project/cloudbaserc.json, docs/DEPLOY_CN.md, docs/HANDOFF.md, tmp/pdl-cloudbase-7699d52.zip |
