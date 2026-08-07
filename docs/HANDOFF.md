@@ -2,10 +2,10 @@
 
 > **规则：** 谁做完谁更新本文件。下一位只认本文件 + Git，不靠聊天记录猜。
 
-**更新时间：** 2026-08-05
+**更新时间：** 2026-08-07
 
-**当前执行者：** Codex 已完成 R5C-7B 真实回答验收并交接给 Grok：三题均成功调用，自动与人工验收均为 2/3；红裤头题检索正确但 AnswerPlan 漏掉员工处理直接 Claim，需做通用前提核实覆盖修复；未部署
-**Git 状态：** 当前 Codex 工作树为 detached HEAD，最新提交 `c5f3ebd`；这些提交尚未自动并入 `main`，Grok 接手后应先确认目标分支并保留 `68d4ea3`、`c5f3ebd`
+**当前执行者：** Grok 已完成 R5C-8：AnswerPlan 通用“具体前提 Claim 覆盖”已落地；离线 53 项测试、固定检索 54/54、R4 契约 18/18、lint 通过。未调用 DeepSeek/TokenHub、未部署。
+**Git 状态：** `main` 最新提交为 R5C-8（`git log -1` 可查）；未部署
 
 ---
 
@@ -78,7 +78,7 @@
 - [x] **RAG-CULTURE-R5C-1～6（用户要求执行）**：冻结 54+31 双基线并记录 SHA-256；BM25 Top 12 与向量 Top 12 经安全过滤后由加权 RRF（k=60、权重 1:0.65）直接决定 Top 5，不再固定 BM25 前五。语义案例路由使用现有案例 chunks 的向量相似度、领先差距和案例名称通用模糊匹配；终局意图覆盖监管盖章、尘埃落定、一审结果、法院处理、终审与定论等表达。固定题 54/54、影子题 24/31，相对 R5B 混合检索增加 5、回归 0，案例路由 5/5、隔离 31/31、资料不足 2/2、终局 31/31；用户红裤头题进入正确案例并避免串入尝面员工材料。49项测试与lint通过；未接 Worker、未部署，详见 `docs/RAG_CULTURE_R5C_EXPERIMENT.md`。
 - [x] **RAG-CULTURE-R5C-7A（用户要求进行下一步）**：把已通过双基线的混合检索接入本地 Worker；新增 `RAG_RETRIEVAL_MODE=bm25|hybrid`，默认 `bm25`。显式启用 hybrid 后使用 RRF 1:0.65、向量 Top 12 与语义案例路由；缺 TokenHub 密钥、模型不一致或请求失败时自动退回 BM25。CloudBase Node 入口同步读取服务端变量，页面移除面向用户的 BM25 术语。51 项测试和 lint 通过，未部署。
 - [x] **RAG-CULTURE-R5C-7B（用户明确授权）**：三道本地 Worker 真实问答均调用成功；普通文化题和资料不足题通过，用户红裤头题需修改，自动与人工验收均为 2/3。该题语义案例路由正确、Top-5 第三名已召回员工免职/降级直接资料且没有串入尝面员工案例，但 AnswerPlan 漏掉该 Claim，导致回答错误称公开资料未明确记载处理措施。结果原样保存且未记录密钥，未部署；详见 `docs/RAG_CULTURE_R5C_WORKER_LIVE.md`。
-- [ ] **RAG-CULTURE-R5C-8（待用户决定）**：不为红裤头单题加补丁；在 AnswerPlan 增加通用“问题中的具体前提若有直接支持或纠正 Claim，必须至少保留一条”机制，并用固定 54 题、冻结 31 题和本次 3 道真实题共同回归。
+- [x] **RAG-CULTURE-R5C-8（用户要求执行）**：不为红裤头单题加补丁；在 `createAnswerPlan` 增加通用前提覆盖：当问题含可核实具体前提（员工处置、金额、比例、假期天数、处理结果等），且安全 `eligibleClaims` 中已有直接支持或纠正该前提的 Claim 时，强制至少保留 1 条。匹配只用 statement/title/topics，避免 `canSupport` 范围短语误覆盖。离线回归：53 项测试、固定 54/54、R4 契约 18/18、lint 通过；混合检索用冻结向量索引 mock 嵌入验证红裤头题必保留 `red-underwear-report-testing-and-staff` 且不串尝面案。未再跑需 TokenHub 的 31 题全量混合评测、未调用 DeepSeek、未部署。
 - [ ] **RAG-CULTURE-R1**：用户已批准 C1“员工的尊严、自由与生活”首批两组资料。7 份资料、32 个片段和 3 个独立案例已按 `approved` / `limited` 范围入库，审核与结果见 `docs/SOURCE_AUDIT_C1_01.md`；知识库现有 30 份资料、135 个片段和 6 个案例。本阶段尚未完成后续 C1 一手资料主干，不得自动扩充。
 - [x] **RAG-RESEARCH-01**：建立 Codex 与 Grok 强制共用的互联网资料检索与 RAG 入库规范；明确候选池、来源优先级、企业身份核验、转载去重、事件阶段、用户批准、版权边界、入库测试和向量库接入条件，并在 `AGENTS.md` 设置任务前必读入口。
 - [x] **Codex【RAG-CASE-01】**：按 Grok 审核顺序完成“案例档案 + 事件事实/文化理解双轨回答”：定义 `caseId`、`claimType`、`finality` schema；事件轨仅引用同案例资料，文化轨不得裁定具体客诉真伪；无 `final` 证据时禁止终局话术；界面展示案例来源的证据阶段；补充误召回与最终结论边界测试。
@@ -127,14 +127,14 @@
 ### 给 Codex
 
 1. 资料架构只维护 `pangdonglai_project/knowledge/**`；禁止手工修改 `knowledge/compiled/knowledge-base.json` 或恢复旧根文件。
-2. 用户已接受 `RAG-CULTURE-R4F` 15/18 为 R4 有限通过并授权进入 R5。保留三类已知问题，不按题追加专用代码；当前只做 R5 本地对照实验，BM25 继续作为冻结控制组，混合检索达到零严重退步前不得替换 Worker、不得部署。
+2. R5C-8 离线已完成；若用户授权重跑 R5C-7B 三道真实题或 31 题混合检索，需显式 TokenHub/DeepSeek 授权；默认 `RAG_RETRIEVAL_MODE=bm25`，未授权不得部署。
 3. 所有 RAG 工作先读 `docs/RAG_RESEARCH_PROTOCOL.md` 和 `docs/RAG_CULTURE_ROADMAP.md`；不修改原始 HTML，完成后更新本 HANDOFF 并小步提交。
 
 ### 给 Grok
 
 1. 先完整阅读 `docs/RAG_RESEARCH_PROTOCOL.md` 与 `docs/RAG_CULTURE_ROADMAP.md`。
-2. 现有 23 份资料终轮回填已完成；如审核本轮，应重点检查 4 份新 `partial_text` 的归因与终局边界，以及 6 份保留 `summary_only` 的理由，不要把摘要认作原文。
-3. R0 阶段独立检查文化问题是否覆盖六条主线，并复核误召回、跨案例和最终结论边界；未经用户批准不得新增来源或入库。
+2. R5C-8 已合并到工作树（见最近变更）；后续若验收真实回答，只核对 AnswerPlan 是否带上前提覆盖 Claim，勿为单题加补丁。
+3. 未经用户批准不得新增来源入库，不得调用 DeepSeek/TokenHub/部署。
 
 ### 给用户
 
@@ -173,6 +173,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-07 | Grok | 用户要求执行 R5C-8：在 AnswerPlan 增加通用前提 Claim 覆盖（支持或纠正），不为红裤头单题打补丁；补单测与混合检索离线集成测。固定 54/54、R4 契约 18/18、53 项测试与 lint 通过。未调用 DeepSeek/TokenHub、未部署 | site/shared/answer-control.mjs, site/tests/rendered-html.test.mjs, evaluation/rag-culture-current-evaluation.json, evaluation/rag-culture-r4-contract-evaluation.json, docs/RAG_CULTURE_CURRENT_EVALUATION.md, docs/RAG_ANSWER_CONTROL_V1.md, docs/RAG_CULTURE_R5C_WORKER_LIVE.md, docs/PLAN.md, docs/HANDOFF.md |
 | 2026-08-05 | Codex | 应用户要求整理交接；确认当前工作树为 detached HEAD，最新成果在 `68d4ea3` 与 `c5f3ebd`，未自动并入 main；下一步为 R5C-8 AnswerPlan 通用前提核实 Claim 覆盖，未改代码、未部署 | docs/HANDOFF.md |
 | 2026-08-04 | Codex | 经用户明确授权执行 R5C-7B 三道本地真实回答；两道语义题调用 TokenHub，三题及允许片段调用 DeepSeek，均返回 200。自动与人工验收均为 2/3：普通文化与资料不足通过；红裤头题语义路由和 Top-5 召回正确、无跨案例污染，但 AnswerPlan 漏掉员工免职/降级直接 Claim，导致回答错误称资料未记载处理措施。结果原样记录，不按单题改规则，密钥未保存，未部署 | evaluation/rag-culture-r5c-worker-live-v1.json, docs/RAG_CULTURE_R5C_WORKER_LIVE.md, docs/RAG_CULTURE_R5C_EXPERIMENT.md, docs/RAG_CULTURE_ROADMAP.md, docs/PLAN.md, docs/HANDOFF.md |
 | 2026-08-04 | Codex | 按用户要求进行 R5C 下一步，将已验收混合检索以默认关闭的 `bm25/hybrid` 开关接入本地 Worker；CloudBase Node 入口同步支持 TokenHub 服务端变量，缺密钥、模型不一致或向量失败自动回退 BM25，页面移除 BM25 实现术语。新增真实回答验收脚本但未运行，因为三道新题及检索上下文发送给 DeepSeek 尚需单独授权。51 项测试与 lint 通过，未部署 | site/worker/index.ts, site/scripts/cloudbase-server.mjs, site/scripts/evaluate-rag-r5c-worker-live.mjs, site/.dev.vars.example, site/README.md, site/app/page.tsx, site/package.json, site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_R5C_EXPERIMENT.md, docs/RAG_CULTURE_ROADMAP.md, docs/PLAN.md, docs/HANDOFF.md |

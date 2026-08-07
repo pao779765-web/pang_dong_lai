@@ -3,8 +3,10 @@ import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 import { createCloudBaseServer } from "../scripts/cloudbase-server.mjs";
 import {
+  claimCoversPremise,
   collectFactualNumberTokens,
   createAnswerPlan,
+  extractVerifiablePremises,
   formatDateInTimeZone,
   makeSafeFallback,
   validateAnswer,
@@ -966,6 +968,164 @@ test("builds R4 AnswerPlans from a broader candidate pool without changing BM25 
   assert.equal(disputePlan.allowedClaimIds[0], "jiemian-culture-boundary-and-disputes--claim-1");
 });
 
+test("forces premise-covering claims into AnswerPlan when safe candidates already have them", () => {
+  const premises = extractVerifiablePremises(
+    "企业因为客诉事件开除相关员工，这件事是否和企业文化相冲突？",
+  );
+  assert.ok(premises.some((item) => item.family === "staff_disposition"));
+  assert.equal(extractVerifiablePremises("员工是否被当作完整的人？").length, 0);
+
+  const staffClaim = {
+    id: "staff-handling--claim-1",
+    statement: "企业公开报告称对相关岗位作出免职等处理，并对管理岗位给予降级等连带处理。",
+    chunkTitle: "内部处理要点",
+    canSupport: ["内部处理"],
+    topics: ["免职", "降级"],
+    caseId: "case-a",
+    mentionedCaseIds: ["case-a"],
+    distinctions: [],
+    cannotSupport: ["不能外推为当前状态"],
+    sourceRole: "official_record",
+    claimType: "company_report",
+  };
+  const boundaryClaim = {
+    id: "culture-boundary--claim-1",
+    statement: "单案争议不能证明整套文化真伪，需要分清责任、公开与边界。",
+    chunkTitle: "文化边界",
+    canSupport: ["边界", "争议", "责任", "公开", "尊重", "不能证明"],
+    topics: ["争议", "边界", "张力", "纠错"],
+    caseId: "case-a",
+    mentionedCaseIds: ["case-a"],
+    distinctions: [],
+    cannotSupport: ["不能裁定客诉真伪"],
+    sourceRole: "third_party_analysis",
+    claimType: "analysis",
+  };
+  // More than case-track limit (8) so pure score ranking can drop the staff claim.
+  const noiseClaims = Array.from({ length: 10 }, (_, index) => ({
+    id: `noise-${index}--claim-1`,
+    statement: `公开资料讨论责任、争议边界与公开纠错第${index + 1}点。`,
+    chunkTitle: `争议边界资料${index + 1}`,
+    canSupport: ["争议", "边界", "责任", "公开", "纠错", "尊重", "不能证明"],
+    topics: ["争议", "边界", "张力"],
+    caseId: "case-a",
+    mentionedCaseIds: ["case-a"],
+    distinctions: [],
+    cannotSupport: [],
+    sourceRole: "reported_account",
+    claimType: "report",
+  }));
+
+  assert.equal(
+    claimCoversPremise(staffClaim, premises.find((item) => item.family === "staff_disposition")),
+    true,
+  );
+  assert.equal(
+    claimCoversPremise(boundaryClaim, premises.find((item) => item.family === "staff_disposition")),
+    false,
+  );
+
+  const plan = createAnswerPlan({
+    track: "case",
+    originalQueryText: "企业因为客诉事件开除相关员工，这件事是否和企业文化相冲突？",
+    queryText: "企业因为客诉事件开除相关员工，这件事是否和企业文化相冲突？",
+    caseRecord: { id: "case-a", finality: "company_clarification_only" },
+    retrieved: [
+      {
+        chunkId: "boundary",
+        chunkTitle: boundaryClaim.chunkTitle,
+        score: 20,
+        claims: [boundaryClaim],
+      },
+      ...noiseClaims.map((claim, index) => ({
+        chunkId: `noise-${index}`,
+        chunkTitle: claim.chunkTitle,
+        score: 19 - index,
+        claims: [claim],
+      })),
+      {
+        chunkId: "staff-handling",
+        chunkTitle: staffClaim.chunkTitle,
+        score: 12,
+        claims: [staffClaim],
+      },
+    ],
+  }, [{ id: "case-a", aliases: ["客诉事件"] }, { id: "case-b", aliases: ["另一事件"] }], "2026-08-04");
+
+  assert.ok(
+    plan.allowedClaimIds.includes(staffClaim.id),
+    "staff disposition premise must keep a direct supporting or correcting claim",
+  );
+  assert.ok(plan.allowedClaimIds.length <= 8);
+  assert.ok(!plan.forbiddenCaseIds.includes("case-a"));
+
+  const noPremisePlan = createAnswerPlan({
+    track: "general",
+    originalQueryText: "员工是否被当作完整的人？",
+    queryText: "员工是否被当作完整的人？",
+    retrieved: [{
+      chunkId: "ordinary",
+      chunkTitle: "员工假期",
+      score: 10,
+      claims: [{
+        id: "ordinary--claim-1",
+        statement: "员工每年可以使用相关假期。",
+        canSupport: ["假期"],
+        topics: ["员工"],
+        mentionedCaseIds: [],
+        distinctions: [],
+        cannotSupport: [],
+      }],
+    }],
+  }, [], "2026-08-04");
+  assert.deepEqual(noPremisePlan.allowedClaimIds, ["ordinary--claim-1"]);
+});
+
+test("keeps staff-disposition premise claims after hybrid case routing without live APIs", async () => {
+  const [{ createKnowledgeRetriever }, compiled, vectorIndex] = await Promise.all([
+    import("../shared/retrieval.mjs"),
+    readFile(new URL("../../knowledge/compiled/knowledge-base.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../../knowledge/vector/r5-general-index.json", import.meta.url), "utf8").then(JSON.parse),
+  ]);
+  const staffEntry = vectorIndex.entries.find(
+    (entry) => entry.chunkId === "red-underwear-report-testing-and-staff",
+  );
+  assert.ok(staffEntry, "vector index must include staff-handling chunk");
+
+  const keywordRetriever = createKnowledgeRetriever(compiled, {
+    queryRewriteV1: true,
+    answerPurposeFilterV1: true,
+  });
+  const hybrid = createHybridKnowledgeRetriever({
+    knowledgeBase: compiled,
+    keywordRetriever,
+    vectorIndex,
+    semanticCaseRouting: true,
+    vectorWeight: 0.65,
+    keywordGuardWeight: 0,
+    embedQuery: async () => staffEntry.embedding,
+  });
+
+  const question = "胖东来因为红裤头事件开除相关员工，这件事是否和企业文化相冲突？";
+  const search = await hybrid.searchKnowledge(question);
+  assert.equal(search.track, "case");
+  assert.equal(search.caseRecord?.id, "red-underwear-color-libel-2025");
+  assert.ok(
+    (search.answerCandidates ?? search.retrieved).some(
+      (item) => item.chunkId === "red-underwear-report-testing-and-staff",
+    ),
+  );
+
+  const plan = createAnswerPlan(search, compiled.cases, "2026-08-04");
+  assert.ok(
+    plan.allowedClaimIds.includes("red-underwear-report-testing-and-staff--claim-1"),
+    "AnswerPlan must keep the claim that corrects or supports the staff-handling premise",
+  );
+  assert.ok(plan.allowedClaims.some((claim) => /免职|降级/.test(claim.statement ?? "")));
+  assert.ok(!plan.allowedClaims.some((claim) => claim.caseId && claim.caseId !== "red-underwear-color-libel-2025"));
+  assert.doesNotMatch(plan.allowedClaims.map((claim) => claim.statement).join("\n"), /美食城员工制作员工餐|尝面/);
+});
+
 test("uses recent user context only when a follow-up needs it", async () => {
   const [{ createKnowledgeRetriever }, compiled] = await Promise.all([
     import("../shared/retrieval.mjs"),
@@ -1253,7 +1413,9 @@ test("uses the accepted R5C hybrid retriever when the local switch is enabled", 
     assert.equal(embeddingRequest.body.input.length, 1);
     assert.match(deepseekRequest.messages[0].content, /事件：红色内裤掉色过敏争议与名誉权诉讼/);
     assert.match(deepseekRequest.messages[0].content, /报告要点：对顾客措施与拟依法追责/);
+    assert.match(deepseekRequest.messages[0].content, /免职/);
     assert.match(deepseekRequest.messages[0].content, /不得引用其他案例/);
+    assert.doesNotMatch(deepseekRequest.messages[0].content, /尝面员工|美食城员工制作员工餐/);
   } finally {
     globalThis.fetch = originalFetch;
   }

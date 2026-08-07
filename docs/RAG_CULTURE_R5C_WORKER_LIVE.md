@@ -28,4 +28,8 @@ R5C 混合检索与运行时回退链路工作正常，但“检索命中”不�
 
 下一步如要修复，应在回答规划层建立通用规则：当用户问题包含一个需要核实的具体前提，而安全检索结果里存在直接支持或纠正该前提的 Claim 时，AnswerPlan 必须至少保留一条这种 Claim；随后用固定 54 题、冻结 31 题和本次三道真实题共同回归。
 
+## R5C-8 修复状态（2026-08-07）
+
+已在 `createAnswerPlan` 落地通用前提覆盖，不为红裤头单题加补丁。离线验证：混合检索语义案例路由命中 `red-underwear-color-libel-2025` 后，`allowedClaims` 必含 `red-underwear-report-testing-and-staff--claim-1`（免职/降级纠正“开除”前提），且不串入尝面员工材料；固定检索 54/54、R4 契约 18/18、53 项测试与 lint 通过。本轮未重跑 DeepSeek 真实三题、未部署。
+
 原始结果：`pangdonglai_project/evaluation/rag-culture-r5c-worker-live-v1.json`。

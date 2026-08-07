@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "evaluationId": "rag-culture-r4-answer-set-v1",
-  "generatedAt": "2026-08-04T06:46:53.719Z",
+  "generatedAt": "2026-08-07T11:30:34.257Z",
   "configuration": {
     "retriever": "BM25 + Query 改写 V1 + 回答用途过滤 V1",
     "answerContract": "R4 大众回答结构",
@@ -682,8 +682,8 @@
         "yudonglai-red-underwear-track-boundary",
         "xinhua-6a-quality-before-scale",
         "jiemian-culture-boundary-and-disputes",
-        "jiemian-freedom-love-rousseau-origin",
-        "xinhua-yonghui-replication-boundary"
+        "xinhua-yonghui-replication-boundary",
+        "pdl-baike-portal-exists"
       ],
       "checks": {
         "trackPass": true,
@@ -789,9 +789,9 @@
       "retrievedChunkIds": [
         "yudonglai-red-underwear-track-boundary",
         "jiemian-culture-boundary-and-disputes",
-        "jiemian-freedom-love-rousseau-origin",
         "xinhua-yonghui-replication-boundary",
-        "xinhua-culture-love-five-levels"
+        "xinhua-6a-quality-before-scale",
+        "pdl-baike-portal-exists"
       ],
       "checks": {
         "trackPass": true,

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "id": "rag-culture-current-evaluation",
-  "evaluatedAt": "2026-08-04T08:59:04.446Z",
+  "evaluatedAt": "2026-08-07T11:30:39.175Z",
   "evaluationSet": "rag-culture-questions-v1",
   "knowledgeSnapshot": {
     "sources": 30,
@@ -200,7 +200,10 @@
       "C1-06",
       "C2-07",
       "C3-04",
-      "C3-08"
+      "C3-08",
+      "C6-01",
+      "C6-03",
+      "C6-06"
     ],
     "filteredQuestionIds": [
       "C2-07",
@@ -208,7 +211,10 @@
       "C3-08"
     ],
     "boostedQuestionIds": [
-      "C1-06"
+      "C1-06",
+      "C6-01",
+      "C6-03",
+      "C6-06"
     ],
     "filteredChunkIdsByQuestion": {
       "C2-07": [
@@ -4727,16 +4733,26 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
+        "detectedAnswerPurposes": [
+          "culture-dispute-proof-boundary"
+        ],
         "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
+        "purposeBoostedChunkIds": [
+          "yudonglai-red-underwear-track-boundary",
+          "xinhua-6a-quality-before-scale",
+          "jiemian-culture-boundary-and-disputes",
+          "xinhua-yonghui-replication-boundary",
+          "pdl-baike-portal-exists",
+          "jiemian-retirement-culture-question",
+          "book-learn-pdl-ch4-customer"
+        ],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "yudonglai-red-underwear-track-boundary",
           "xinhua-6a-quality-before-scale",
           "jiemian-culture-boundary-and-disputes",
-          "jiemian-freedom-love-rousseau-origin",
-          "xinhua-yonghui-replication-boundary"
+          "xinhua-yonghui-replication-boundary",
+          "pdl-baike-portal-exists"
         ],
         "retrieved": [
           {
@@ -4764,19 +4780,19 @@
             "cultureThemeMatches": 0
           },
           {
-            "chunkId": "jiemian-freedom-love-rousseau-origin",
-            "chunkTitle": "媒体整理的“自由·爱”形成时间线",
-            "sourceTitle": "界面新闻：自由·爱理念形成线索与《幸福生命手册》等公开叙述",
-            "score": 10.606518,
-            "baseScore": 10.606518,
-            "cultureThemeMatches": 0
-          },
-          {
             "chunkId": "xinhua-yonghui-replication-boundary",
             "chunkTitle": "可见动作不等于复制文化内核",
             "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
             "score": 9.200977,
             "baseScore": 9.200977,
+            "cultureThemeMatches": 0
+          },
+          {
+            "chunkId": "pdl-baike-portal-exists",
+            "chunkTitle": "企业百科门户：入口与使用边界",
+            "sourceTitle": "胖东来百科系统（企业公开知识门户）",
+            "score": 6.425148,
+            "baseScore": 6.425148,
             "cultureThemeMatches": 0
           }
         ]
@@ -4938,16 +4954,40 @@
         ],
         "queryRewriteApplied": true,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
+        "detectedAnswerPurposes": [
+          "culture-dispute-proof-boundary"
+        ],
         "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
+        "purposeBoostedChunkIds": [
+          "yudonglai-red-underwear-track-boundary",
+          "jiemian-culture-boundary-and-disputes",
+          "red-underwear-judgment-reasoning",
+          "tsinghua-replication-limits",
+          "red-underwear-judgment-handling-timeline",
+          "cnfin-process-not-outcome",
+          "xinhua-employee-practices-boundary",
+          "cnfin-feishu-source-boundary",
+          "culture-system-behavior-and-reward",
+          "recruitment-batch-boundary",
+          "tsinghua-case-source-and-thesis",
+          "weiqu-award-cultural-meaning-boundary",
+          "interview-people-employees-and-replication",
+          "book-learn-pdl-limits-of-copying",
+          "culture-system-document-and-period",
+          "book-learn-pdl-time-lag-and-crosscheck",
+          "xinhua-yonghui-replication-boundary",
+          "xinhua-book-source-nature",
+          "culture-system-life-modules",
+          "pdl-baike-portal-exists",
+          "jiemian-retirement-culture-question"
+        ],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "yudonglai-red-underwear-track-boundary",
-          "yudonglai-red-underwear-rationality",
-          "yudonglai-red-underwear-law-and-responsibility",
           "jiemian-culture-boundary-and-disputes",
-          "red-underwear-judgment-reasoning"
+          "red-underwear-judgment-reasoning",
+          "tsinghua-replication-limits",
+          "red-underwear-judgment-handling-timeline"
         ],
         "retrieved": [
           {
@@ -4956,22 +4996,6 @@
             "sourceTitle": "媒体转述：于东来就红内裤追责谈「要有理性」",
             "score": 22.310849,
             "baseScore": 22.310849,
-            "cultureThemeMatches": 0
-          },
-          {
-            "chunkId": "yudonglai-red-underwear-rationality",
-            "chunkTitle": "于东来谈理性、承担、友善与尊重（媒体转述）",
-            "sourceTitle": "媒体转述：于东来就红内裤追责谈「要有理性」",
-            "score": 15.767668,
-            "baseScore": 15.767668,
-            "cultureThemeMatches": 0
-          },
-          {
-            "chunkId": "yudonglai-red-underwear-law-and-responsibility",
-            "chunkTitle": "理性表态与依法追责并不矛盾",
-            "sourceTitle": "媒体转述：于东来就红内裤追责谈「要有理性」",
-            "score": 12.201586,
-            "baseScore": 12.201586,
             "cultureThemeMatches": 0
           },
           {
@@ -4988,6 +5012,22 @@
             "sourceTitle": "红内裤案一审判决公开报道：赔偿 40 万并道歉",
             "score": 10.010527,
             "baseScore": 10.010527,
+            "cultureThemeMatches": 0
+          },
+          {
+            "chunkId": "tsinghua-replication-limits",
+            "chunkTitle": "复制模式要理解价值分配和组织条件",
+            "sourceTitle": "清华管理评论：胖东来「自由·爱」与企业社会责任案例",
+            "score": 7.954499,
+            "baseScore": 7.954499,
+            "cultureThemeMatches": 0
+          },
+          {
+            "chunkId": "red-underwear-judgment-handling-timeline",
+            "chunkTitle": "法院公告所述投诉、就医与下架时间线",
+            "sourceTitle": "红内裤案一审判决公开报道：赔偿 40 万并道歉",
+            "score": 7.116332,
+            "baseScore": 7.116332,
             "cultureThemeMatches": 0
           }
         ]
@@ -5447,16 +5487,24 @@
         "queryExpansions": [],
         "queryRewriteApplied": false,
         "detectedCultureThemes": [],
-        "detectedAnswerPurposes": [],
+        "detectedAnswerPurposes": [
+          "culture-dispute-proof-boundary"
+        ],
         "purposeFilteredOutChunkIds": [],
-        "purposeBoostedChunkIds": [],
+        "purposeBoostedChunkIds": [
+          "yudonglai-red-underwear-track-boundary",
+          "jiemian-culture-boundary-and-disputes",
+          "xinhua-yonghui-replication-boundary",
+          "xinhua-6a-quality-before-scale",
+          "pdl-baike-portal-exists"
+        ],
         "insufficientReason": null,
         "retrievedChunkIds": [
           "yudonglai-red-underwear-track-boundary",
           "jiemian-culture-boundary-and-disputes",
-          "jiemian-freedom-love-rousseau-origin",
           "xinhua-yonghui-replication-boundary",
-          "xinhua-culture-love-five-levels"
+          "xinhua-6a-quality-before-scale",
+          "pdl-baike-portal-exists"
         ],
         "retrieved": [
           {
@@ -5476,14 +5524,6 @@
             "cultureThemeMatches": 0
           },
           {
-            "chunkId": "jiemian-freedom-love-rousseau-origin",
-            "chunkTitle": "媒体整理的“自由·爱”形成时间线",
-            "sourceTitle": "界面新闻：自由·爱理念形成线索与《幸福生命手册》等公开叙述",
-            "score": 8.692662,
-            "baseScore": 8.692662,
-            "cultureThemeMatches": 0
-          },
-          {
             "chunkId": "xinhua-yonghui-replication-boundary",
             "chunkTitle": "可见动作不等于复制文化内核",
             "sourceTitle": "新华网：永辉门店学习胖东来调改与「照顾员工、服务顾客」",
@@ -5492,11 +5532,19 @@
             "cultureThemeMatches": 0
           },
           {
-            "chunkId": "xinhua-culture-love-five-levels",
-            "chunkTitle": "作者把“爱”解释为自己、家人、员工、顾客和社会",
-            "sourceTitle": "新华网书评转述：文化理念培训大纲中的信仰·使命·愿景",
-            "score": 8.453667,
-            "baseScore": 8.453667,
+            "chunkId": "xinhua-6a-quality-before-scale",
+            "chunkTitle": "质量优先于规模的文化解释",
+            "sourceTitle": "新华社千笔楼：卖东西的胖东来，咋卖成了“6A级景区”？",
+            "score": 8.351321,
+            "baseScore": 8.351321,
+            "cultureThemeMatches": 0
+          },
+          {
+            "chunkId": "pdl-baike-portal-exists",
+            "chunkTitle": "企业百科门户：入口与使用边界",
+            "sourceTitle": "胖东来百科系统（企业公开知识门户）",
+            "score": 6.425148,
+            "baseScore": 6.425148,
             "cultureThemeMatches": 0
           }
         ]

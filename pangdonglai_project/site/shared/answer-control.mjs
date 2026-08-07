@@ -169,6 +169,135 @@ function scoreClaimRelevance(question, claim, originalIndex) {
   );
 }
 
+/**
+ * Extract concrete premises in the user question that need factual support or correction.
+ * Generic families only — no case-specific keywords.
+ */
+export function extractVerifiablePremises(question) {
+  const normalized = String(question ?? "").replace(/\s+/g, "");
+  if (!normalized) return [];
+
+  const premises = [];
+
+  // Staff handling / penalty outcomes (supports or corrects e.g. 开除 vs 免职/降级)
+  if (
+    /开除|辞退|解雇|解聘|解除(?:劳动)?合同|免职|降级|处罚.{0,8}员工|员工.{0,8}(?:处罚|处分|处理)|处理(?:相关)?员工|处分|被开/.test(
+      normalized,
+    )
+  ) {
+    premises.push({
+      family: "staff_disposition",
+      // Concrete outcomes only — avoid vague "内部处理/处罚" which appear in scope blurbs.
+      markers: [
+        "开除",
+        "辞退",
+        "解雇",
+        "解聘",
+        "解除劳动合同",
+        "解除合同",
+        "免职",
+        "降级",
+        "调整岗位",
+        "转岗",
+      ],
+    });
+  }
+
+  // Explicit money amounts used as a factual premise
+  const moneyMarkers = uniqueStrings([...normalized.matchAll(/(\d+(?:\.\d+)?)元/g)].map((match) => match[0]));
+  if (moneyMarkers.length) {
+    premises.push({ family: "money_amount", markers: moneyMarkers });
+  }
+
+  // Explicit percentages used as a factual premise
+  const percentMarkers = uniqueStrings([...normalized.matchAll(/(\d+(?:\.\d+)?)%/g)].map((match) => match[0]));
+  if (percentMarkers.length) {
+    premises.push({ family: "percentage", markers: percentMarkers });
+  }
+
+  // Leave / rest day counts when tied to leave vocabulary
+  const dayMarkers = uniqueStrings([...normalized.matchAll(/(\d+)天/g)].map((match) => match[0]));
+  if (dayMarkers.length && /假|休|休息|年假|带薪|假期/.test(normalized)) {
+    premises.push({ family: "leave_days", markers: dayMarkers });
+  }
+
+  // Concrete handling / process outcomes stated as premises
+  if (
+    /(?:最终|后来|当时|已经|是否|有没有).{0,12}(?:送检|下架|致歉|起诉|判决|赔偿|公开报告)|(?:送检|下架|致歉|起诉).{0,8}(?:了吗|没有|结果)/.test(
+      normalized,
+    )
+  ) {
+    premises.push({
+      family: "handling_outcome",
+      markers: ["送检", "下架", "致歉", "起诉", "判决", "赔偿", "调查报告", "处理公示", "公开报告"],
+    });
+  }
+
+  return premises;
+}
+
+function claimPremiseMatchText(claim) {
+  // Prefer factual surfaces. canSupport often repeats document-level scope phrases and is too noisy for coverage.
+  return [claim.chunkTitle, claim.statement, ...(claim.topics ?? [])].join("\n");
+}
+
+export function claimCoversPremise(claim, premise) {
+  if (!claim || !premise?.markers?.length) return false;
+  const text = claimPremiseMatchText(claim);
+  return premise.markers.some((marker) => marker && text.includes(marker));
+}
+
+/**
+ * When the question states a concrete premise and eligible claims already support or
+ * correct it, force at least one covering claim into the allowed set (within limit).
+ */
+function ensurePremiseClaimCoverage(question, scoredEligible, limit) {
+  const ranked = scoredEligible.slice(0, limit);
+  const premises = extractVerifiablePremises(question);
+  if (!premises.length || !scoredEligible.length) {
+    return ranked.map(({ claim }) => claim);
+  }
+
+  let selected = [...ranked];
+
+  for (const premise of premises) {
+    if (selected.some(({ claim }) => claimCoversPremise(claim, premise))) continue;
+
+    const bestCover = scoredEligible.find(({ claim }) => claimCoversPremise(claim, premise));
+    if (!bestCover) continue;
+
+    if (selected.some(({ claim }) => claim.id === bestCover.claim.id)) continue;
+
+    if (selected.length < limit) {
+      selected.push(bestCover);
+      continue;
+    }
+
+    // Replace the lowest-priority selected claim that is not the sole cover of another premise.
+    let replaceAt = -1;
+    for (let index = selected.length - 1; index >= 0; index -= 1) {
+      const candidate = selected[index].claim;
+      const soleCover = premises.some((otherPremise) => {
+        if (!claimCoversPremise(candidate, otherPremise)) return false;
+        return !selected.some(
+          (entry, otherIndex) =>
+            otherIndex !== index && claimCoversPremise(entry.claim, otherPremise),
+        );
+      });
+      if (!soleCover) {
+        replaceAt = index;
+        break;
+      }
+    }
+    if (replaceAt < 0) replaceAt = selected.length - 1;
+    selected[replaceAt] = bestCover;
+  }
+
+  return selected
+    .sort((left, right) => right.score - left.score)
+    .map(({ claim }) => claim);
+}
+
 export function formatDateInTimeZone(date = new Date(), timeZone = DEFAULT_TIME_ZONE) {
   const parts = new Intl.DateTimeFormat("en-US", {
     timeZone,
@@ -218,11 +347,11 @@ export function createAnswerPlan(searchPlan, cases, currentDate = formatDateInTi
         if (!claim.mentionedCaseIds?.length) return true;
         return allowCaseExamples || claim.mentionedCaseIds.some((caseId) => directCaseIds.includes(caseId));
       });
-  const allowedClaims = eligibleClaims
+  const claimLimit = searchPlan.track === "case" ? 8 : 5;
+  const scoredEligible = eligibleClaims
     .map((claim, index) => ({ claim, score: scoreClaimRelevance(question, claim, index) }))
-    .sort((left, right) => right.score - left.score)
-    .slice(0, searchPlan.track === "case" ? 8 : 5)
-    .map(({ claim }) => claim);
+    .sort((left, right) => right.score - left.score);
+  const allowedClaims = ensurePremiseClaimCoverage(question, scoredEligible, claimLimit);
   const allowedClaimIds = allowedClaims.map((claim) => claim.id);
   const allowedChunkIds = new Set(allowedClaims.map((claim) => claim.chunkId));
   const answerability = allowedClaims.length === 0 ? "insufficient" :
