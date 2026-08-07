@@ -1304,6 +1304,21 @@ test("ships phase-1 mobile CSS baselines for touch and iOS inputs", async () => 
   assert.match(css, /chat-suggest-chip[\s\S]*?min-height:\s*44px/);
 });
 
+test("ships phase-2 mobile product polish for chat shell and fab", async () => {
+  const [css, page] = await Promise.all([
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+  ]);
+  assert.match(css, /\.dialogue-window\s*\{[\s\S]*?flex-direction:\s*column/);
+  assert.match(css, /height:\s*min\(78dvh/);
+  assert.match(css, /\.mobile-chat-fab/);
+  assert.match(css, /@media \(max-width: 480px\)/);
+  assert.match(css, /orientation:\s*landscape/);
+  assert.match(page, /mobile-chat-fab/);
+  assert.match(page, /dialogueBodyRef/);
+  assert.match(page, /showChatFab/);
+});
+
 test("streams BM25-grounded DeepSeek tokens and verified sources", async () => {
   const originalFetch = globalThis.fetch;
   let deepseekRequest;

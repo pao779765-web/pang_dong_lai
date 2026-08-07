@@ -118,6 +118,13 @@ function RagChat() {
   const [draft, setDraft] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [chatError, setChatError] = useState("");
+  const dialogueBodyRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const body = dialogueBodyRef.current;
+    if (!body) return;
+    body.scrollTo({ top: body.scrollHeight, behavior: "smooth" });
+  }, [messages, isSending]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -250,7 +257,7 @@ function RagChat() {
         </span>
       </header>
 
-      <div className="dialogue-body" aria-live="polite" aria-busy={isSending}>
+      <div ref={dialogueBodyRef} className="dialogue-body" aria-live="polite" aria-busy={isSending}>
         {messages.length === 1 && messages[0].id === "assistant-welcome" ? (
           <div className="chat-empty-state">
             <article className="message message-assistant">
@@ -341,6 +348,7 @@ export default function Home() {
   const storeToggleRef = useRef<HTMLButtonElement>(null);
   const [storesOpen, setStoresOpen] = useState(false);
   const [storesClosing, setStoresClosing] = useState(false);
+  const [showChatFab, setShowChatFab] = useState(false);
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -356,6 +364,22 @@ export default function Home() {
     );
 
     observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
+
+  // 二期移动端：对话区不在视口时显示底部快捷入口
+  useEffect(() => {
+    if (!("IntersectionObserver" in window)) return;
+    const dialogue = document.getElementById("ai-dialogue");
+    if (!dialogue) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowChatFab(!entry.isIntersecting);
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+    );
+    observer.observe(dialogue);
     return () => observer.disconnect();
   }, []);
 
@@ -629,6 +653,16 @@ export default function Home() {
           <a href="#top" onClick={handleAnchorClick}>回到表面 ↑</a>
         </footer>
       </section>
+
+      <a
+        className="mobile-chat-fab"
+        href="#ai-dialogue"
+        onClick={handleAnchorClick}
+        hidden={!showChatFab}
+        aria-label="前往与胖东来对话"
+      >
+        去提问
+      </a>
     </main>
   );
 }
