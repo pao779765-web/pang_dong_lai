@@ -435,6 +435,9 @@ export default function Home() {
 
   return (
     <main>
+      <a className="skip-link" href="#explore">
+        跳到正文内容
+      </a>
       <section
         ref={heroRef}
         className="hero"
@@ -566,8 +569,16 @@ export default function Home() {
                 {region.stores.map((store, storeIndex) => (
                   <article className="store-card" key={store.name} style={{ "--store-delay": `${(regionOffset + storeIndex) * 85}ms`, "--store-reverse-delay": `${(13 - (regionOffset + storeIndex)) * 30}ms` } as CSSProperties}>
                     <a className="store-photo-link" href="https://web.azpdl.cn/" target="_blank" rel="noreferrer" aria-label={`前往胖东来官网了解${store.name}`}>
-                      <img src={store.photoUrl} alt={`${store.name}官方门店照片`} loading="lazy" decoding="async" />
-                      <span>前往官网 ↗</span>
+                      <img
+                        src={store.photoUrl}
+                        alt={`${store.name}官方门店照片`}
+                        width={800}
+                        height={500}
+                        sizes="(max-width: 760px) 92vw, (max-width: 1040px) 45vw, 33vw"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <span aria-hidden="true">前往官网 ↗</span>
                     </a>
                     <div className="store-card-body">
                       <h4>{store.name}</h4>

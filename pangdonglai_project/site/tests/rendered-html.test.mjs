@@ -1284,14 +1284,17 @@ test("server-renders the Pangdonglai culture homepage", async () => {
   assert.match(html, /aria-hidden="true"/);
   assert.match(html, /基于已审核资料回答/);
   assert.match(html, /输入你的问题/);
+  assert.match(html, /跳到正文内容/);
   for (const storeName of ["许昌天使城", "许昌时代广场", "许昌生活广场", "许昌大众服饰", "许昌金三角店", "许昌云鼎店", "许昌北海店", "许昌金汇店", "许昌劳动店", "许昌人民店", "禹州店", "新乡大胖", "新乡二胖", "新乡三胖"]) {
     assert.match(html, new RegExp(storeName));
   }
   assert.equal((html.match(/<img[^>]+alt="[^"]*官方门店照片"/g) ?? []).length, 14);
   assert.equal((html.match(/href="https:\/\/web\.azpdl\.cn\/"/g) ?? []).length, 14);
   assert.equal((html.match(/src="\/stores\/[^"]+"/g) ?? []).length, 14);
+  assert.match(html, /sizes=/);
   // 一期移动端：viewport 与安全区/防 iOS 放大相关声明应存在于页面或样式中
   assert.match(html, /viewport|device-width/i);
+  assert.doesNotMatch(html, /结构示例|问答功能将在资料库完成后开放/);
 });
 
 test("ships phase-1 mobile CSS baselines for touch and iOS inputs", async () => {
@@ -1321,6 +1324,26 @@ test("ships phase-2 mobile product polish for chat shell and fab", async () => {
   assert.match(page, /dialogueBodyRef/);
   assert.match(page, /showChatFab/);
   assert.doesNotMatch(page, /dialogue-window-prototype|结构示例|问答功能将在资料库完成后开放/);
+});
+
+test("ships phase-3 mobile QA polish for a11y and store images", async () => {
+  const [css, page, checklist] = await Promise.all([
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../../../docs/MOBILE_QA_CHECKLIST.md", import.meta.url), "utf8"),
+  ]);
+  assert.match(page, /className="skip-link"/);
+  assert.match(page, /sizes="\(max-width: 760px\) 92vw/);
+  assert.match(page, /width=\{800\}/);
+  assert.match(page, /height=\{500\}/);
+  assert.match(css, /\.skip-link/);
+  assert.match(css, /content-visibility:\s*auto/);
+  assert.match(css, /aspect-ratio:\s*8\s*\/\s*5/);
+  assert.match(css, /\.store-map-link:focus-visible/);
+  assert.match(css, /\.chat-suggest-chip:focus-visible/);
+  assert.match(checklist, /移动端验收清单/);
+  assert.match(checklist, /结构示例/);
+  assert.match(checklist, /\/stores\//);
 });
 
 test("streams BM25-grounded DeepSeek tokens and verified sources", async () => {

@@ -16,6 +16,32 @@
   box-sizing: border-box;
 }
 
+/* 三期：键盘用户跳过装饰区，直达正文 */
+.skip-link {
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 12px;
+  transform: translateY(-120%);
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: #2a160f;
+  background: linear-gradient(155deg, #e4a57a 0%, #d4895c 48%, #c9764a 100%);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  box-shadow: 0 10px 24px rgba(160, 78, 42, 0.22);
+  transition: transform 160ms ease;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(calc(10px + env(safe-area-inset-top, 0px)));
+  outline: 2px solid #fff6eb;
+  outline-offset: 3px;
+}
+
 html {
   background: var(--night);
   scroll-behavior: smooth;
@@ -421,10 +447,24 @@ button:disabled {
 
 .wordmark:focus-visible,
 .anchor-link:focus-visible,
-.site-footer a:focus-visible {
+.site-footer a:focus-visible,
+.store-map-link:focus-visible,
+.chat-suggest-chip:focus-visible,
+.message-sources a:focus-visible,
+.mobile-chat-fab:focus-visible,
+.store-photo-link:focus-visible {
   outline: 2px solid rgba(184, 111, 72, 0.75);
   outline-offset: 4px;
   border-radius: 999px;
+}
+
+.store-photo-link:focus-visible {
+  border-radius: 0;
+}
+
+.chat-suggest-chip:focus-visible,
+.message-sources a:focus-visible {
+  border-radius: 14px;
 }
 
 .keyword-field {
@@ -872,6 +912,9 @@ button:disabled {
   background: rgba(255, 251, 243, 0.5);
   opacity: 0;
   transform: translateY(28px);
+  /* 三期：离屏门店卡片降低渲染成本 */
+  content-visibility: auto;
+  contain-intrinsic-size: 360px;
 }
 
 .store-section.is-open .store-card {
@@ -906,7 +949,9 @@ button:disabled {
 .store-card img {
   display: block;
   width: 100%;
-  height: clamp(155px, 16vw, 230px);
+  height: auto;
+  max-height: clamp(155px, 16vw, 230px);
+  aspect-ratio: 8 / 5;
   object-fit: cover;
   background: #e7dfd1;
   transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1), filter 420ms ease;

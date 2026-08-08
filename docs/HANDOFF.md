@@ -4,8 +4,8 @@
 
 **更新时间：** 2026-08-08
 
-**当前执行者：** Grok 已完成一、二期移动端适配；门店图本站托管；GitHub 分支 `main-2026-08-08` 为当前推荐跟踪分支。
-**Git 状态：** 本地 `main` / 远端 `main-2026-08-08`；CloudBase 服务 `pangdonglai-site`（hybrid + TokenHub）；未绑定正式自定义域名
+**当前执行者：** Grok 已完成本地三期移动端工程质量（清单/a11y/性能）；**未 push、未部署**（待用户确认）。
+**Git 状态：** 本地 `main` 领先远端；推送与 CloudBase 上线须用户明确确认。推荐跟踪分支曾为 `main-2026-08-08`。
 
 ---
 
@@ -173,6 +173,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-08 | Grok | 三期移动端（仅本地）：跳过链接、门店图 width/height/sizes 与 aspect-ratio、content-visibility、扩展 focus-visible、验收清单 `docs/MOBILE_QA_CHECKLIST.md` 与单测；**未 push/未部署** | site/app/page.tsx, site/app/globals.css, site/tests/rendered-html.test.mjs, docs/MOBILE_QA_CHECKLIST.md, docs/HANDOFF.md |
 | 2026-08-08 | Grok | 二期移动端：对话窗 flex 贴底输入、消息自动滚底、来源触控卡片、章节全宽、门店图更矮+地图按钮、关键词静止、480/矮屏横屏、「去提问」FAB；测试 55 通过；分支 `main-2026-08-08` | site/app/page.tsx, site/app/globals.css, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-07 | Grok | 一期移动端：viewport/安全区、≤760与390断点、触控热区、输入16px防iOS放大、防横溢与门店/对话收尾；测试通过；推送 `main-2026-08-07` 并部署 CloudBase | site/app/layout.tsx, site/app/globals.css, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-07 | Grok | 门店照片下载到 `public/stores` 本站托管，消除官网防盗链；CloudBase 版本 011 起生效 | site/public/stores/*, site/data/store-directory.json, site/scripts/download-store-photos.mjs |
