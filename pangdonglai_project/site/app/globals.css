@@ -1787,6 +1787,11 @@ button:disabled {
     backdrop-filter: blur(2px);
   }
 
+  /* 手机只保留顶部 4 个词；5–22 全部隐藏，避免压 A/B 按钮与主文案 */
+  .keyword-entry[data-index="5"],
+  .keyword-entry[data-index="6"],
+  .keyword-entry[data-index="7"],
+  .keyword-entry[data-index="8"],
   .keyword-entry[data-index="9"],
   .keyword-entry[data-index="10"],
   .keyword-entry[data-index="11"],
@@ -1794,19 +1799,32 @@ button:disabled {
   .keyword-entry[data-index="13"],
   .keyword-entry[data-index="14"],
   .keyword-entry[data-index="15"],
-  .keyword-entry[data-index="16"] {
-    display: none;
+  .keyword-entry[data-index="16"],
+  .keyword-entry[data-index="17"],
+  .keyword-entry[data-index="18"],
+  .keyword-entry[data-index="19"],
+  .keyword-entry[data-index="20"],
+  .keyword-entry[data-index="21"],
+  .keyword-entry[data-index="22"] {
+    display: none !important;
   }
 
-  /* 远离标题中心，降低与主文案碰撞 */
-  .keyword-entry[data-index="1"] { --x: 2%; --y: 12%; }
-  .keyword-entry[data-index="2"] { --x: 72%; --y: 13%; }
-  .keyword-entry[data-index="3"] { --x: 3%; --y: 24%; }
-  .keyword-entry[data-index="4"] { --x: 74%; --y: 26%; }
-  .keyword-entry[data-index="5"] { --x: 2%; --y: 72%; }
-  .keyword-entry[data-index="6"] { --x: 70%; --y: 74%; }
-  .keyword-entry[data-index="7"] { --x: 4%; --y: 90%; }
-  .keyword-entry[data-index="8"] { --x: 72%; --y: 88%; }
+  /* 严格贴顶部四角，远离标题与 hero-actions */
+  .keyword-entry[data-index="1"] { --x: 2%; --y: 8%; }
+  .keyword-entry[data-index="2"] { --x: 66%; --y: 7%; }
+  .keyword-entry[data-index="3"] { --x: 2%; --y: 18%; }
+  .keyword-entry[data-index="4"] { --x: 68%; --y: 17%; }
+
+  .keyword-field {
+    /* 下半屏不再铺关键词，按钮区保持干净 */
+    clip-path: inset(0 0 48% 0);
+    z-index: 1;
+  }
+
+  .hero-actions {
+    position: relative;
+    z-index: 5;
+  }
 
   .scroll-cue {
     display: none;
@@ -1819,6 +1837,11 @@ button:disabled {
 
   .keyword-drift {
     animation: none;
+  }
+
+  .keyword {
+    animation: none;
+    opacity: 0.88;
   }
 
   /* 避免 min(100% - 32px) 在部分安卓 WebView 整条规则失效 */
@@ -2191,17 +2214,18 @@ button:disabled {
     font-size: 0.8125rem;
   }
 
+  /* 极窄屏只留顶上 2 个词 */
   .keyword-entry[data-index="3"],
   .keyword-entry[data-index="4"] {
-    display: none;
+    display: none !important;
   }
 
-  .keyword-entry[data-index="1"] { --x: 3%; --y: 11%; }
-  .keyword-entry[data-index="2"] { --x: 70%; --y: 12%; }
-  .keyword-entry[data-index="5"] { --x: 3%; --y: 76%; }
-  .keyword-entry[data-index="6"] { --x: 68%; --y: 78%; }
-  .keyword-entry[data-index="7"] { --x: 5%; --y: 91%; }
-  .keyword-entry[data-index="8"] { --x: 70%; --y: 90%; }
+  .keyword-entry[data-index="1"] { --x: 2%; --y: 7%; }
+  .keyword-entry[data-index="2"] { --x: 64%; --y: 6%; }
+
+  .keyword-field {
+    clip-path: inset(0 0 55% 0);
+  }
 
   .dialogue-window {
     height: 72vh;

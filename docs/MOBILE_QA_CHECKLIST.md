@@ -57,6 +57,7 @@
 | 风险 | 说明 |
 |---|---|
 | 双 AI 界面 | 禁止再渲染 `dialogue-window-prototype`；窄屏勿用裸 `.dialogue-window { display:flex }` 覆盖 `display:none` |
+| 关键词压按钮 | ≤760 只保留顶部 1–4 号词并 `clip-path` 裁切下半屏；禁止把词放到 y≈70%+ 靠近 A/B |
 | 官网图床 | 门店图必须本站 `/stores/`，勿改回 `web.azpdl.cn/upload` 直链 |
 | 微信缓存 | 发版后需强刷或重开页 |
 

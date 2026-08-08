@@ -1346,6 +1346,14 @@ test("ships phase-3 mobile QA polish for a11y and store images", async () => {
   assert.match(checklist, /\/stores\//);
 });
 
+test("hides lower hero keywords on mobile so CTAs stay clear", async () => {
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  // Within max-width 760 block, indices 5+ must be display:none and field clipped
+  assert.match(css, /@media \(max-width: 760px\)[\s\S]*data-index="5"[\s\S]*display:\s*none\s*!important/);
+  assert.match(css, /@media \(max-width: 760px\)[\s\S]*\.keyword-field[\s\S]*clip-path:\s*inset\(0 0 48% 0\)/);
+  assert.match(css, /@media \(max-width: 760px\)[\s\S]*\.hero-actions[\s\S]*z-index:\s*5/);
+});
+
 test("streams BM25-grounded DeepSeek tokens and verified sources", async () => {
   const originalFetch = globalThis.fetch;
   let deepseekRequest;
