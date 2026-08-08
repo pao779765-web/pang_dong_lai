@@ -4,8 +4,8 @@
 
 **更新时间：** 2026-08-08
 
-**当前执行者：** Grok 已按用户确认 push 并部署三期移动端；CloudBase 已更新。
-**Git 状态：** 远端 `main-2026-08-08` / `main-2026-08-07` 含 `bffd03c`；上线后 push/部署仍须用户确认。
+**当前执行者：** Grok 已按用户确认 push 并部署「关键词下半屏遮挡」修复。
+**Git 状态：** 远端 `main-2026-08-08` 含 `ff4c7bc`；CloudBase 已更新；后续 push/部署仍须用户确认。
 
 ---
 
@@ -173,7 +173,8 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
-| 2026-08-08 | Grok | 三期移动端（仅本地）：跳过链接、门店图 width/height/sizes 与 aspect-ratio、content-visibility、扩展 focus-visible、验收清单 `docs/MOBILE_QA_CHECKLIST.md` 与单测；**未 push/未部署** | site/app/page.tsx, site/app/globals.css, site/tests/rendered-html.test.mjs, docs/MOBILE_QA_CHECKLIST.md, docs/HANDOFF.md |
+| 2026-08-08 | Grok | 关键词遮挡修复 push+部署：手机仅顶区关键词 + clip-path；提交 `ff4c7bc` | site/app/globals.css, docs/MOBILE_QA_CHECKLIST.md |
+| 2026-08-08 | Grok | 三期移动端：跳过链接、门店图 sizes、content-visibility、focus-visible、`MOBILE_QA_CHECKLIST`；已 push 部署 | site/app/page.tsx, site/app/globals.css, site/tests/rendered-html.test.mjs, docs/MOBILE_QA_CHECKLIST.md, docs/HANDOFF.md |
 | 2026-08-08 | Grok | 二期移动端：对话窗 flex 贴底输入、消息自动滚底、来源触控卡片、章节全宽、门店图更矮+地图按钮、关键词静止、480/矮屏横屏、「去提问」FAB；测试 55 通过；分支 `main-2026-08-08` | site/app/page.tsx, site/app/globals.css, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-07 | Grok | 一期移动端：viewport/安全区、≤760与390断点、触控热区、输入16px防iOS放大、防横溢与门店/对话收尾；测试通过；推送 `main-2026-08-07` 并部署 CloudBase | site/app/layout.tsx, site/app/globals.css, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-07 | Grok | 门店照片下载到 `public/stores` 本站托管，消除官网防盗链；CloudBase 版本 011 起生效 | site/public/stores/*, site/data/store-directory.json, site/scripts/download-store-photos.mjs |
