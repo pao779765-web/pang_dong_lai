@@ -76,3 +76,5 @@ export const featuredHotspot: HotspotEvent = {
   followUpPrompt:
     "关于“网传座谈会发言稿”事件，目前哪些内容已经得到胖东来回应？哪些内容仍不能确认？",
 };
+
+export const hotspotEvents: HotspotEvent[] = [featuredHotspot];

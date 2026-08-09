@@ -4,7 +4,8 @@
 
 import type { CSSProperties, FormEvent, MouseEvent } from "react";
 import { useEffect, useRef, useState } from "react";
-import { featuredHotspot } from "@/data/hotspots";
+import { hotspotEvents } from "@/data/hotspots";
+import type { HotspotEvent } from "@/data/hotspots";
 import { storeRegions } from "@/data/stores";
 import type { ChatRequestMessage, ChatSource } from "@/shared/chat";
 
@@ -347,12 +348,15 @@ export default function Home() {
   const chaptersRef = useRef<HTMLElement>(null);
   const storeDirectoryRef = useRef<HTMLElement>(null);
   const hotspotArchiveRef = useRef<HTMLElement>(null);
+  const hotspotIndexRef = useRef<HTMLDivElement>(null);
+  const hotspotDetailRef = useRef<HTMLDivElement>(null);
   const storeToggleRef = useRef<HTMLButtonElement>(null);
   const hotspotToggleRef = useRef<HTMLButtonElement>(null);
   const [storesOpen, setStoresOpen] = useState(false);
   const [storesClosing, setStoresClosing] = useState(false);
   const [hotspotOpen, setHotspotOpen] = useState(false);
   const [hotspotClosing, setHotspotClosing] = useState(false);
+  const [selectedHotspot, setSelectedHotspot] = useState<HotspotEvent | null>(null);
   const [showChatFab, setShowChatFab] = useState(false);
 
   useEffect(() => {
@@ -452,6 +456,7 @@ export default function Home() {
       window.setTimeout(() => {
         setHotspotOpen(false);
         setHotspotClosing(false);
+        setSelectedHotspot(null);
       }, reducedMotion ? 0 : 620);
       return;
     }
@@ -467,6 +472,36 @@ export default function Home() {
       target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
       window.history.replaceState(null, "", "#hotspot-archive");
       window.setTimeout(() => target.focus({ preventScroll: true }), reducedMotion ? 0 : 560);
+    });
+  }
+
+  function selectHotspot(event: HotspotEvent) {
+    if (hotspotClosing) return;
+
+    setSelectedHotspot(event);
+    window.requestAnimationFrame(() => {
+      const target = hotspotDetailRef.current;
+      if (!target) return;
+
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+      window.history.replaceState(null, "", `#hotspot-${event.id}`);
+      window.setTimeout(() => target.focus({ preventScroll: true }), reducedMotion ? 0 : 520);
+    });
+  }
+
+  function showHotspotIndex() {
+    if (hotspotClosing) return;
+
+    setSelectedHotspot(null);
+    window.requestAnimationFrame(() => {
+      const target = hotspotIndexRef.current;
+      if (!target) return;
+
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+      window.history.replaceState(null, "", "#hotspot-archive");
+      window.setTimeout(() => target.focus({ preventScroll: true }), reducedMotion ? 0 : 420);
     });
   }
 
@@ -608,97 +643,144 @@ export default function Home() {
                   <h2 id="hotspot-archive-title">热点档案</h2>
                 </div>
                 <div className="hotspot-heading-meta">
-                  <span className="hotspot-issued" aria-hidden="true">FIELD NOTE · 01</span>
-                  <span>资料更新至 {featuredHotspot.updatedAt.replaceAll("-", ".")}</span>
+                  <span className="hotspot-issued" aria-hidden="true">{selectedHotspot ? "EVENT FILE · 01" : "EVENT INDEX · 01"}</span>
+                  <span>{selectedHotspot ? `资料更新至 ${selectedHotspot.updatedAt.replaceAll("-", ".")}` : `已收录 ${hotspotEvents.length} 件`}</span>
                   <button type="button" onClick={openHotspotArchive} aria-label="收起热点档案">收起 ↑</button>
                 </div>
               </div>
 
-              <article className="hotspot-featured">
-                <span className="hotspot-folio-number" aria-hidden="true">01</span>
-                <div className="hotspot-featured-copy">
-                  <div className="hotspot-meta-row">
-                    <span className="hotspot-status">{featuredHotspot.status}</span>
-                    <time dateTime={featuredHotspot.happenedAt}>发生于 {featuredHotspot.happenedAt.replaceAll("-", ".")}</time>
+              {selectedHotspot ? (
+                <div ref={hotspotDetailRef} className="hotspot-detail-view" tabIndex={-1}>
+                  <div className="hotspot-detail-toolbar">
+                    <button type="button" className="hotspot-back-link" onClick={showHotspotIndex}>
+                      <span aria-hidden="true">←</span> 返回事件索引
+                    </button>
+                    <span>EVENT FILE / {String(hotspotEvents.findIndex((item) => item.id === selectedHotspot.id) + 1).padStart(2, "0")}</span>
                   </div>
-                  <h3>{featuredHotspot.title}</h3>
-                  <p className="hotspot-summary">{featuredHotspot.summary}</p>
-                  <div className="hotspot-known">
-                    <span>现在知道什么</span>
-                    <p>{featuredHotspot.known}</p>
-                  </div>
-                </div>
 
-                <aside className="hotspot-status-card" aria-label="事件资料状态">
-                  <div className="hotspot-signal" aria-hidden="true">
-                    <span className="hotspot-signal-ring hotspot-signal-ring-one" />
-                    <span className="hotspot-signal-ring hotspot-signal-ring-two" />
-                    <span className="hotspot-signal-core" />
-                    <span className="hotspot-signal-cross hotspot-signal-cross-x" />
-                    <span className="hotspot-signal-cross hotspot-signal-cross-y" />
-                  </div>
-                  <span>资料状态</span>
-                  <strong>{featuredHotspot.status}</strong>
-                  <p>{featuredHotspot.unknown}</p>
-                  <span className="hotspot-status-card-line" aria-hidden="true" />
-                  <small>1 个已审核来源</small>
-                </aside>
-              </article>
+                  <article className="hotspot-featured">
+                    <span className="hotspot-folio-number" aria-hidden="true">{String(hotspotEvents.findIndex((item) => item.id === selectedHotspot.id) + 1).padStart(2, "0")}</span>
+                    <div className="hotspot-featured-copy">
+                      <div className="hotspot-meta-row">
+                        <span className="hotspot-status">{selectedHotspot.status}</span>
+                        <time dateTime={selectedHotspot.happenedAt}>发生于 {selectedHotspot.happenedAt.replaceAll("-", ".")}</time>
+                      </div>
+                      <h3>{selectedHotspot.title}</h3>
+                      <p className="hotspot-summary">{selectedHotspot.summary}</p>
+                      <div className="hotspot-known">
+                        <span>现在知道什么</span>
+                        <p>{selectedHotspot.known}</p>
+                      </div>
+                    </div>
 
-              <div className="hotspot-detail-grid">
-                <div className="hotspot-timeline-block">
-                  <div className="hotspot-block-heading">
-                    <p>EVENT TRACE</p>
-                    <h3>事件时间线</h3>
-                  </div>
-                  <ol className="hotspot-timeline">
-                    {featuredHotspot.timeline.map((item, index) => (
-                      <li className="hotspot-timeline-item" key={item.title} style={{ "--hotspot-delay": `${index * 90}ms` } as CSSProperties}>
-                        <span className="hotspot-timeline-marker" aria-hidden="true" />
-                        <div>
-                          <div className="hotspot-timeline-meta">
-                            <span className="hotspot-timeline-number">0{index + 1}</span>
-                            <time>{item.date}</time>
-                            <span>{item.label}</span>
-                          </div>
-                          <h4>{item.title}</h4>
-                          <p>{item.body}</p>
-                        </div>
-                      </li>
-                    ))}
-                  </ol>
-                </div>
+                    <aside className="hotspot-status-card" aria-label="事件资料状态">
+                      <div className="hotspot-signal" aria-hidden="true">
+                        <span className="hotspot-signal-ring hotspot-signal-ring-one" />
+                        <span className="hotspot-signal-ring hotspot-signal-ring-two" />
+                        <span className="hotspot-signal-core" />
+                        <span className="hotspot-signal-cross hotspot-signal-cross-x" />
+                        <span className="hotspot-signal-cross hotspot-signal-cross-y" />
+                      </div>
+                      <span>资料状态</span>
+                      <strong>{selectedHotspot.status}</strong>
+                      <p>{selectedHotspot.unknown}</p>
+                      <span className="hotspot-status-card-line" aria-hidden="true" />
+                      <small>{selectedHotspot.sources.length} 个已审核来源</small>
+                    </aside>
+                  </article>
 
-                <aside className="hotspot-reading-card">
-                  <div>
-                    <p>READING NOTE</p>
-                    <h3>还不能确认什么</h3>
-                    <p>{featuredHotspot.unknown}</p>
-                  </div>
-                  <div className="hotspot-observation">
-                    <span>这件事让我们观察什么</span>
-                    <p>{featuredHotspot.observation}</p>
-                  </div>
-                  <div className="hotspot-source-block">
-                    <span>来源</span>
-                    {featuredHotspot.sources.map((source) => (
-                      <a className="hotspot-source-slip" key={source.url} href={source.url} target="_blank" rel="noreferrer">
-                        <span className="hotspot-source-pin" aria-hidden="true" />
-                        <strong>{source.title}</strong>
-                        <small>{source.publisher} · {source.type} · {source.publishedAt}</small>
-                        <span aria-hidden="true">↗</span>
+                  <div className="hotspot-detail-grid">
+                    <div className="hotspot-timeline-block">
+                      <div className="hotspot-block-heading">
+                        <p>EVENT TRACE</p>
+                        <h3>事件时间线</h3>
+                      </div>
+                      <ol className="hotspot-timeline">
+                        {selectedHotspot.timeline.map((item, index) => (
+                          <li className="hotspot-timeline-item" key={item.title} style={{ "--hotspot-delay": `${index * 90}ms` } as CSSProperties}>
+                            <span className="hotspot-timeline-marker" aria-hidden="true" />
+                            <div>
+                              <div className="hotspot-timeline-meta">
+                                <span className="hotspot-timeline-number">0{index + 1}</span>
+                                <time>{item.date}</time>
+                                <span>{item.label}</span>
+                              </div>
+                              <h4>{item.title}</h4>
+                              <p>{item.body}</p>
+                            </div>
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+
+                    <aside className="hotspot-reading-card">
+                      <div>
+                        <p>READING NOTE</p>
+                        <h3>还不能确认什么</h3>
+                        <p>{selectedHotspot.unknown}</p>
+                      </div>
+                      <div className="hotspot-observation">
+                        <span>这件事让我们观察什么</span>
+                        <p>{selectedHotspot.observation}</p>
+                      </div>
+                      <div className="hotspot-source-block">
+                        <span>来源</span>
+                        {selectedHotspot.sources.map((source) => (
+                          <a className="hotspot-source-slip" key={source.url} href={source.url} target="_blank" rel="noreferrer">
+                            <span className="hotspot-source-pin" aria-hidden="true" />
+                            <strong>{source.title}</strong>
+                            <small>{source.publisher} · {source.type} · {source.publishedAt}</small>
+                            <span aria-hidden="true">↗</span>
+                          </a>
+                        ))}
+                      </div>
+                      <a
+                        className="hotspot-question-link"
+                        href="#ai-dialogue"
+                        onClick={handleAnchorClick}
+                      >
+                        基于这条热点继续提问 <span aria-hidden="true">→</span>
                       </a>
+                    </aside>
+                  </div>
+
+                  <button type="button" className="hotspot-detail-return" onClick={showHotspotIndex}>
+                    <span aria-hidden="true">←</span> 返回热点事件索引
+                  </button>
+                </div>
+              ) : (
+                <div ref={hotspotIndexRef} className="hotspot-index" tabIndex={-1} aria-labelledby="hotspot-index-title">
+                  <div className="hotspot-index-intro">
+                    <div>
+                      <h3 id="hotspot-index-title">先看正在发生什么</h3>
+                      <span className="hotspot-index-label">EVENT INDEX / 01</span>
+                    </div>
+                    <div>
+                      <p>热点不是一张结论卡。先从关键词找到事件，再进入它的时间线、回应和证据边界。</p>
+                      <span className="hotspot-index-count">{hotspotEvents.length} 个已收录事件 · 点击进入档案</span>
+                    </div>
+                  </div>
+
+                  <div className="hotspot-event-grid" role="list" aria-label="热点事件索引">
+                    {hotspotEvents.map((event, index) => (
+                      <div role="listitem" key={event.id}>
+                        <button
+                          className="hotspot-event-card"
+                          type="button"
+                          onClick={() => selectHotspot(event)}
+                          aria-label={`打开${event.title}`}
+                        >
+                          <span className="hotspot-event-card-number">{String(index + 1).padStart(2, "0")}</span>
+                          <span className="hotspot-event-card-status">{event.status}</span>
+                          <strong>{event.title}</strong>
+                          <span className="hotspot-event-card-meta">发生于 {event.happenedAt.replaceAll("-", ".")}</span>
+                          <span className="hotspot-event-card-arrow" aria-hidden="true">↗</span>
+                        </button>
+                      </div>
                     ))}
                   </div>
-                  <a
-                    className="hotspot-question-link"
-                    href="#ai-dialogue"
-                    onClick={handleAnchorClick}
-                  >
-                    基于这条热点继续提问 <span aria-hidden="true">→</span>
-                  </a>
-                </aside>
-              </div>
+                </div>
+              )}
 
               <p className="hotspot-credit">这是一个非官方观察项目。企业回应、媒体报道与司法结论会被分别标注。</p>
             </div>
