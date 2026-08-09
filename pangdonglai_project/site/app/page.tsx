@@ -608,12 +608,14 @@ export default function Home() {
                   <h2 id="hotspot-archive-title">热点档案</h2>
                 </div>
                 <div className="hotspot-heading-meta">
+                  <span className="hotspot-issued" aria-hidden="true">FIELD NOTE · 01</span>
                   <span>资料更新至 {featuredHotspot.updatedAt.replaceAll("-", ".")}</span>
                   <button type="button" onClick={openHotspotArchive} aria-label="收起热点档案">收起 ↑</button>
                 </div>
               </div>
 
               <article className="hotspot-featured">
+                <span className="hotspot-folio-number" aria-hidden="true">01</span>
                 <div className="hotspot-featured-copy">
                   <div className="hotspot-meta-row">
                     <span className="hotspot-status">{featuredHotspot.status}</span>
@@ -628,6 +630,13 @@ export default function Home() {
                 </div>
 
                 <aside className="hotspot-status-card" aria-label="事件资料状态">
+                  <div className="hotspot-signal" aria-hidden="true">
+                    <span className="hotspot-signal-ring hotspot-signal-ring-one" />
+                    <span className="hotspot-signal-ring hotspot-signal-ring-two" />
+                    <span className="hotspot-signal-core" />
+                    <span className="hotspot-signal-cross hotspot-signal-cross-x" />
+                    <span className="hotspot-signal-cross hotspot-signal-cross-y" />
+                  </div>
                   <span>资料状态</span>
                   <strong>{featuredHotspot.status}</strong>
                   <p>{featuredHotspot.unknown}</p>
@@ -648,6 +657,7 @@ export default function Home() {
                         <span className="hotspot-timeline-marker" aria-hidden="true" />
                         <div>
                           <div className="hotspot-timeline-meta">
+                            <span className="hotspot-timeline-number">0{index + 1}</span>
                             <time>{item.date}</time>
                             <span>{item.label}</span>
                           </div>
@@ -672,7 +682,8 @@ export default function Home() {
                   <div className="hotspot-source-block">
                     <span>来源</span>
                     {featuredHotspot.sources.map((source) => (
-                      <a key={source.url} href={source.url} target="_blank" rel="noreferrer">
+                      <a className="hotspot-source-slip" key={source.url} href={source.url} target="_blank" rel="noreferrer">
+                        <span className="hotspot-source-pin" aria-hidden="true" />
                         <strong>{source.title}</strong>
                         <small>{source.publisher} · {source.type} · {source.publishedAt}</small>
                         <span aria-hidden="true">↗</span>
