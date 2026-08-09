@@ -665,7 +665,7 @@ button:disabled {
     inset 0 -16px 26px rgba(0, 0, 0, 0.16),
     0 12px 26px rgba(54, 33, 22, 0.13);
   isolation: isolate;
-  transition: transform 300ms cubic-bezier(0.2, 0.9, 0.3, 1.25), box-shadow 300ms ease, border-color 220ms ease, filter 220ms ease;
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 300ms ease, border-color 220ms ease, filter 220ms ease;
 }
 
 .chapter-card::before {
@@ -799,6 +799,439 @@ button:disabled {
 .chapter-card-link.is-expanded:hover .chapter-arrow,
 .chapter-card-link.is-expanded:focus-visible .chapter-arrow {
   transform: translate(0, -3px) rotate(90deg);
+}
+
+.hotspot-section {
+  display: grid;
+  overflow: hidden;
+  grid-template-rows: 0fr;
+  background: #171310;
+  color: var(--paper);
+  opacity: 0;
+  outline: none;
+  scroll-margin-top: 24px;
+  transform: translateY(-10px);
+  visibility: hidden;
+  transition:
+    grid-template-rows 480ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 220ms ease,
+    transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hotspot-section-clip {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.hotspot-section-inner {
+  padding: clamp(88px, 9vw, 128px) 0 clamp(74px, 8vw, 112px);
+}
+
+.hotspot-section.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.hotspot-section.is-closing {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transform: translateY(-10px);
+  visibility: visible;
+}
+
+.hotspot-heading {
+  display: flex;
+  padding-bottom: 30px;
+  border-bottom: 1px solid rgba(244, 233, 213, 0.18);
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.hotspot-heading p,
+.hotspot-block-heading p,
+.hotspot-reading-card > div > p:first-child {
+  margin: 0 0 12px;
+  color: var(--copper-light);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.hotspot-heading h2 {
+  margin: 0;
+  font-family: "Songti SC", SimSun, serif;
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  font-weight: 400;
+  letter-spacing: -0.05em;
+  line-height: 0.98;
+}
+
+.hotspot-heading-meta {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  color: rgba(244, 233, 213, 0.62);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+
+.hotspot-heading-meta button {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgba(226, 158, 104, 0.46);
+  border-radius: 999px;
+  color: var(--paper);
+  font: inherit;
+  cursor: pointer;
+  background: transparent;
+  transition: background 160ms ease, border-color 160ms ease;
+}
+
+.hotspot-heading-meta button:hover,
+.hotspot-heading-meta button:focus-visible {
+  border-color: var(--copper-light);
+  outline: none;
+  background: rgba(255, 225, 194, 0.12);
+}
+
+.hotspot-featured {
+  display: grid;
+  margin-top: clamp(34px, 5vw, 60px);
+  grid-template-columns: minmax(0, 1.45fr) minmax(230px, 0.72fr);
+  gap: clamp(28px, 5vw, 82px);
+  animation: hotspot-featured-in 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hotspot-meta-row,
+.hotspot-timeline-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  color: rgba(244, 233, 213, 0.62);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+}
+
+.hotspot-status {
+  display: inline-flex;
+  min-height: 24px;
+  padding: 0 10px;
+  align-items: center;
+  border: 1px solid rgba(226, 158, 104, 0.56);
+  border-radius: 999px;
+  color: var(--copper-light);
+  background: rgba(192, 103, 59, 0.14);
+}
+
+.hotspot-featured h3 {
+  max-width: 12em;
+  margin: 24px 0 18px;
+  font-family: "Songti SC", SimSun, serif;
+  font-size: clamp(2rem, 4.3vw, 4.3rem);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 1.08;
+}
+
+.hotspot-summary {
+  max-width: 40em;
+  margin: 0;
+  color: rgba(244, 233, 213, 0.76);
+  font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+  letter-spacing: 0.03em;
+  line-height: 1.9;
+}
+
+.hotspot-known {
+  max-width: 42em;
+  margin-top: 36px;
+  padding: 18px 0 0 18px;
+  border-left: 1px solid rgba(226, 158, 104, 0.58);
+}
+
+.hotspot-known span,
+.hotspot-observation span,
+.hotspot-source-block > span {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--copper-light);
+  font-size: 0.7rem;
+  letter-spacing: 0.13em;
+}
+
+.hotspot-known p,
+.hotspot-observation p,
+.hotspot-reading-card > div > p:not(:first-child) {
+  margin: 0;
+  color: rgba(244, 233, 213, 0.72);
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+  line-height: 1.85;
+}
+
+.hotspot-status-card {
+  align-self: start;
+  padding: 24px;
+  border: 1px solid rgba(244, 233, 213, 0.22);
+  border-radius: 20px;
+  background: linear-gradient(150deg, rgba(255, 247, 233, 0.1), rgba(197, 114, 69, 0.12));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.11);
+}
+
+.hotspot-status-card > span:first-child,
+.hotspot-status-card small {
+  color: rgba(244, 233, 213, 0.56);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+}
+
+.hotspot-status-card strong {
+  display: block;
+  margin: 32px 0 16px;
+  color: var(--copper-light);
+  font-family: "Songti SC", SimSun, serif;
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  font-weight: 400;
+}
+
+.hotspot-status-card p {
+  margin: 0;
+  color: rgba(244, 233, 213, 0.72);
+  font-size: 0.82rem;
+  line-height: 1.8;
+}
+
+.hotspot-status-card-line {
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin: 28px 0 14px;
+  background: rgba(244, 233, 213, 0.18);
+}
+
+.hotspot-detail-grid {
+  display: grid;
+  margin-top: clamp(60px, 9vw, 110px);
+  padding-top: 34px;
+  border-top: 1px solid rgba(244, 233, 213, 0.18);
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+  gap: clamp(34px, 7vw, 112px);
+}
+
+.hotspot-block-heading h3 {
+  margin: 0;
+  font-family: "Songti SC", SimSun, serif;
+  font-size: clamp(1.7rem, 3vw, 2.7rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+}
+
+.hotspot-timeline {
+  position: relative;
+  display: grid;
+  margin: 36px 0 0;
+  padding: 0;
+  list-style: none;
+  gap: 28px;
+}
+
+.hotspot-timeline::before {
+  position: absolute;
+  top: 9px;
+  bottom: 12px;
+  left: 4px;
+  width: 1px;
+  background: linear-gradient(rgba(226, 158, 104, 0.8), rgba(244, 233, 213, 0.16));
+  content: "";
+  transform-origin: top;
+  animation: hotspot-line-in 600ms 120ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hotspot-timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 10px minmax(0, 1fr);
+  gap: 22px;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: hotspot-timeline-in 420ms var(--hotspot-delay) cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hotspot-timeline-marker {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 9px;
+  height: 9px;
+  margin-top: 5px;
+  border: 2px solid #171310;
+  border-radius: 50%;
+  background: var(--copper-light);
+  box-shadow: 0 0 0 1px rgba(226, 158, 104, 0.7);
+}
+
+.hotspot-timeline-meta span {
+  color: var(--copper-light);
+}
+
+.hotspot-timeline-item h4 {
+  margin: 10px 0 8px;
+  color: var(--paper);
+  font-family: "Songti SC", SimSun, serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.hotspot-timeline-item p {
+  max-width: 55ch;
+  margin: 0;
+  color: rgba(244, 233, 213, 0.62);
+  font-size: 0.82rem;
+  line-height: 1.8;
+}
+
+.hotspot-reading-card {
+  display: grid;
+  align-content: start;
+  gap: 30px;
+  padding: 24px;
+  border: 1px solid rgba(244, 233, 213, 0.2);
+  border-radius: 20px;
+  background: rgba(255, 248, 235, 0.05);
+}
+
+.hotspot-reading-card h3 {
+  margin: 0 0 14px;
+  color: var(--paper);
+  font-family: "Songti SC", SimSun, serif;
+  font-size: 1.45rem;
+  font-weight: 400;
+}
+
+.hotspot-observation {
+  padding-top: 20px;
+  border-top: 1px solid rgba(244, 233, 213, 0.16);
+}
+
+.hotspot-source-block {
+  padding-top: 20px;
+  border-top: 1px solid rgba(244, 233, 213, 0.16);
+}
+
+.hotspot-source-block a {
+  position: relative;
+  display: block;
+  padding: 14px 28px 14px 0;
+  color: var(--paper);
+  text-decoration: none;
+  border-top: 1px solid rgba(244, 233, 213, 0.1);
+}
+
+.hotspot-source-block a:hover strong,
+.hotspot-source-block a:focus-visible strong {
+  color: var(--copper-light);
+}
+
+.hotspot-source-block a:focus-visible,
+.hotspot-question-link:focus-visible {
+  outline: 2px solid var(--copper-light);
+  outline-offset: 4px;
+}
+
+.hotspot-source-block strong,
+.hotspot-source-block small {
+  display: block;
+}
+
+.hotspot-source-block strong {
+  font-size: 0.84rem;
+  font-weight: 400;
+  line-height: 1.5;
+  transition: color 160ms ease;
+}
+
+.hotspot-source-block small {
+  margin-top: 5px;
+  color: rgba(244, 233, 213, 0.48);
+  font-size: 0.68rem;
+  line-height: 1.55;
+}
+
+.hotspot-source-block a > span {
+  position: absolute;
+  top: 16px;
+  right: 0;
+  color: var(--copper-light);
+  font-size: 1.1rem;
+}
+
+.hotspot-question-link {
+  display: inline-flex;
+  min-height: 44px;
+  padding: 0 16px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border: 1px solid rgba(226, 158, 104, 0.48);
+  border-radius: 999px;
+  color: var(--paper);
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.hotspot-question-link:hover {
+  border-color: var(--copper-light);
+  background: rgba(255, 225, 194, 0.12);
+  transform: translateX(3px);
+}
+
+.hotspot-question-link span {
+  color: var(--copper-light);
+  font-size: 1.1rem;
+}
+
+.hotspot-credit {
+  margin: 56px 0 0;
+  color: rgba(244, 233, 213, 0.42);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  line-height: 1.7;
+}
+
+@keyframes hotspot-featured-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hotspot-line-in {
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes hotspot-timeline-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .store-section {
@@ -1921,6 +2354,94 @@ button:disabled {
     right: 20px;
     bottom: 22px;
     font-size: 1.2rem;
+  }
+
+  .hotspot-section-inner {
+    padding: 64px 0 calc(72px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .hotspot-heading {
+    display: block;
+    padding-bottom: 22px;
+  }
+
+  .hotspot-heading h2 {
+    font-size: clamp(2.6rem, 15vw, 4.4rem);
+  }
+
+  .hotspot-heading-meta {
+    margin-top: 20px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+    line-height: 1.6;
+  }
+
+  .hotspot-heading-meta button {
+    min-height: 44px;
+  }
+
+  .hotspot-featured {
+    display: block;
+    margin-top: 30px;
+  }
+
+  .hotspot-featured h3 {
+    margin-top: 20px;
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .hotspot-summary {
+    font-size: 0.92rem;
+    line-height: 1.8;
+  }
+
+  .hotspot-known {
+    margin-top: 28px;
+    padding-left: 14px;
+  }
+
+  .hotspot-status-card {
+    margin-top: 30px;
+    padding: 20px;
+  }
+
+  .hotspot-status-card strong {
+    margin-top: 24px;
+  }
+
+  .hotspot-detail-grid {
+    display: block;
+    margin-top: 56px;
+    padding-top: 28px;
+  }
+
+  .hotspot-timeline {
+    margin-top: 30px;
+    gap: 24px;
+  }
+
+  .hotspot-timeline-item {
+    gap: 18px;
+  }
+
+  .hotspot-timeline-item h4 {
+    font-size: 1.15rem;
+  }
+
+  .hotspot-timeline-item p,
+  .hotspot-reading-card > div > p:not(:first-child) {
+    font-size: 0.82rem;
+    line-height: 1.75;
+  }
+
+  .hotspot-reading-card {
+    margin-top: 48px;
+    padding: 20px;
+  }
+
+  .hotspot-question-link {
+    min-height: 48px;
   }
 
   .store-section-inner {

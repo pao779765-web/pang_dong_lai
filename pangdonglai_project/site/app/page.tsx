@@ -4,6 +4,7 @@
 
 import type { CSSProperties, FormEvent, MouseEvent } from "react";
 import { useEffect, useRef, useState } from "react";
+import { featuredHotspot } from "@/data/hotspots";
 import { storeRegions } from "@/data/stores";
 import type { ChatRequestMessage, ChatSource } from "@/shared/chat";
 
@@ -345,9 +346,13 @@ export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
   const chaptersRef = useRef<HTMLElement>(null);
   const storeDirectoryRef = useRef<HTMLElement>(null);
+  const hotspotArchiveRef = useRef<HTMLElement>(null);
   const storeToggleRef = useRef<HTMLButtonElement>(null);
+  const hotspotToggleRef = useRef<HTMLButtonElement>(null);
   const [storesOpen, setStoresOpen] = useState(false);
   const [storesClosing, setStoresClosing] = useState(false);
+  const [hotspotOpen, setHotspotOpen] = useState(false);
+  const [hotspotClosing, setHotspotClosing] = useState(false);
   const [showChatFab, setShowChatFab] = useState(false);
 
   useEffect(() => {
@@ -430,6 +435,38 @@ export default function Home() {
       target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
       window.history.replaceState(null, "", "#store-directory");
       window.setTimeout(() => target.focus({ preventScroll: true }), reducedMotion ? 0 : 650);
+    });
+  }
+
+  function openHotspotArchive() {
+    if (hotspotOpen && !hotspotClosing) {
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      setHotspotClosing(true);
+      hotspotToggleRef.current?.focus({ preventScroll: true });
+      chaptersRef.current?.scrollIntoView({
+        behavior: reducedMotion ? "auto" : "smooth",
+        block: "center",
+      });
+      window.history.replaceState(null, "", "#explore");
+      window.setTimeout(() => {
+        setHotspotOpen(false);
+        setHotspotClosing(false);
+      }, reducedMotion ? 0 : 620);
+      return;
+    }
+
+    if (hotspotClosing) return;
+
+    setHotspotOpen(true);
+    window.requestAnimationFrame(() => {
+      const target = hotspotArchiveRef.current;
+      if (!target) return;
+
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+      window.history.replaceState(null, "", "#hotspot-archive");
+      window.setTimeout(() => target.focus({ preventScroll: true }), reducedMotion ? 0 : 560);
     });
   }
 
@@ -537,11 +574,124 @@ export default function Home() {
               <h3>{storesOpen && !storesClosing ? <>收起门店<br />信息</> : <>查看各个门店<br />信息、位置等具体情况</>}</h3>
               <span className="chapter-arrow" aria-hidden="true">{storesOpen && !storesClosing ? "↑" : "↘"}</span>
             </button>
-            <article className="chapter-card">
+            <button
+              ref={hotspotToggleRef}
+              className={`chapter-card chapter-card-link hotspot-chapter-card${hotspotOpen && !hotspotClosing ? " is-expanded" : ""}`}
+              type="button"
+              onClick={openHotspotArchive}
+              aria-expanded={hotspotOpen && !hotspotClosing}
+              aria-controls="hotspot-archive"
+            >
               <span className="chapter-index">02</span>
-              <h3>查看热点事件</h3>
-            </article>
+              <h3>{hotspotOpen && !hotspotClosing ? <>收起热点<br />档案</> : <>查看热点<br />事件</>}</h3>
+              <span className="chapter-arrow" aria-hidden="true">{hotspotOpen && !hotspotClosing ? "↑" : "↘"}</span>
+            </button>
           </aside>
+        </div>
+      </section>
+
+      <section
+        ref={hotspotArchiveRef}
+        id="hotspot-archive"
+        className={`hotspot-section${hotspotOpen ? " is-open" : ""}${hotspotClosing ? " is-closing" : ""}`}
+        tabIndex={-1}
+        aria-labelledby="hotspot-archive-title"
+        aria-hidden={!hotspotOpen || hotspotClosing}
+        inert={!hotspotOpen || hotspotClosing ? true : undefined}
+      >
+        <div className="hotspot-section-clip">
+          <div className="hotspot-section-inner">
+            <div className="section-shell">
+              <div className="hotspot-heading">
+                <div>
+                  <p>PDL HOTSPOT ARCHIVE / 01</p>
+                  <h2 id="hotspot-archive-title">热点档案</h2>
+                </div>
+                <div className="hotspot-heading-meta">
+                  <span>资料更新至 {featuredHotspot.updatedAt.replaceAll("-", ".")}</span>
+                  <button type="button" onClick={openHotspotArchive} aria-label="收起热点档案">收起 ↑</button>
+                </div>
+              </div>
+
+              <article className="hotspot-featured">
+                <div className="hotspot-featured-copy">
+                  <div className="hotspot-meta-row">
+                    <span className="hotspot-status">{featuredHotspot.status}</span>
+                    <time dateTime={featuredHotspot.happenedAt}>发生于 {featuredHotspot.happenedAt.replaceAll("-", ".")}</time>
+                  </div>
+                  <h3>{featuredHotspot.title}</h3>
+                  <p className="hotspot-summary">{featuredHotspot.summary}</p>
+                  <div className="hotspot-known">
+                    <span>现在知道什么</span>
+                    <p>{featuredHotspot.known}</p>
+                  </div>
+                </div>
+
+                <aside className="hotspot-status-card" aria-label="事件资料状态">
+                  <span>资料状态</span>
+                  <strong>{featuredHotspot.status}</strong>
+                  <p>{featuredHotspot.unknown}</p>
+                  <span className="hotspot-status-card-line" aria-hidden="true" />
+                  <small>1 个已审核来源</small>
+                </aside>
+              </article>
+
+              <div className="hotspot-detail-grid">
+                <div className="hotspot-timeline-block">
+                  <div className="hotspot-block-heading">
+                    <p>EVENT TRACE</p>
+                    <h3>事件时间线</h3>
+                  </div>
+                  <ol className="hotspot-timeline">
+                    {featuredHotspot.timeline.map((item, index) => (
+                      <li className="hotspot-timeline-item" key={item.title} style={{ "--hotspot-delay": `${index * 90}ms` } as CSSProperties}>
+                        <span className="hotspot-timeline-marker" aria-hidden="true" />
+                        <div>
+                          <div className="hotspot-timeline-meta">
+                            <time>{item.date}</time>
+                            <span>{item.label}</span>
+                          </div>
+                          <h4>{item.title}</h4>
+                          <p>{item.body}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+
+                <aside className="hotspot-reading-card">
+                  <div>
+                    <p>READING NOTE</p>
+                    <h3>还不能确认什么</h3>
+                    <p>{featuredHotspot.unknown}</p>
+                  </div>
+                  <div className="hotspot-observation">
+                    <span>这件事让我们观察什么</span>
+                    <p>{featuredHotspot.observation}</p>
+                  </div>
+                  <div className="hotspot-source-block">
+                    <span>来源</span>
+                    {featuredHotspot.sources.map((source) => (
+                      <a key={source.url} href={source.url} target="_blank" rel="noreferrer">
+                        <strong>{source.title}</strong>
+                        <small>{source.publisher} · {source.type} · {source.publishedAt}</small>
+                        <span aria-hidden="true">↗</span>
+                      </a>
+                    ))}
+                  </div>
+                  <a
+                    className="hotspot-question-link"
+                    href="#ai-dialogue"
+                    onClick={handleAnchorClick}
+                  >
+                    基于这条热点继续提问 <span aria-hidden="true">→</span>
+                  </a>
+                </aside>
+              </div>
+
+              <p className="hotspot-credit">这是一个非官方观察项目。企业回应、媒体报道与司法结论会被分别标注。</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -633,7 +783,7 @@ export default function Home() {
         className="mobile-chat-fab"
         href="#ai-dialogue"
         onClick={handleAnchorClick}
-        hidden={!showChatFab}
+        hidden={!showChatFab || hotspotOpen}
         aria-label="前往与胖东来对话"
       >
         去提问
