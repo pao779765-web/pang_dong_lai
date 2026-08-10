@@ -2,10 +2,10 @@
 
 > **规则：** 谁做完谁更新本文件。下一位只认本文件 + Git，不靠聊天记录猜。
 
-**更新时间：** 2026-08-08
+**更新时间：** 2026-08-10
 
-**当前执行者：** Grok 已按用户确认 push 并部署「关键词下半屏遮挡」修复。
-**Git 状态：** 远端 `main-2026-08-08` 含 `ff4c7bc`；CloudBase 已更新；后续 push/部署仍须用户确认。
+**当前执行者：** Codex 完成热点事件索引与单事件详情的两级浏览改造；并按用户要求完成 GitHub 历史清理：本地 main 已接管 origin/main，旧网页上传分支已删除。当前已审核热点数据为 1 件；CloudBase 未重新部署。
+**Git 状态：** 本地 main（`38de149`，120 个提交）已用 `--force-with-lease` 推送接管 GitHub `main`；`origin/main` 原有 17 个网页上传提交成为孤立历史；`archive/html-line-2026-07` 与 `feature/keyword-orbit-hero` 已删除；日期分支 `main-2026-08-07/08` 保留（内容已包含在 main 内，可随时删除）。
 
 ---
 
@@ -78,7 +78,7 @@
 - [x] **RAG-CULTURE-R5C-1～6（用户要求执行）**：冻结 54+31 双基线并记录 SHA-256；BM25 Top 12 与向量 Top 12 经安全过滤后由加权 RRF（k=60、权重 1:0.65）直接决定 Top 5，不再固定 BM25 前五。语义案例路由使用现有案例 chunks 的向量相似度、领先差距和案例名称通用模糊匹配；终局意图覆盖监管盖章、尘埃落定、一审结果、法院处理、终审与定论等表达。固定题 54/54、影子题 24/31，相对 R5B 混合检索增加 5、回归 0，案例路由 5/5、隔离 31/31、资料不足 2/2、终局 31/31；用户红裤头题进入正确案例并避免串入尝面员工材料。49项测试与lint通过；未接 Worker、未部署，详见 `docs/RAG_CULTURE_R5C_EXPERIMENT.md`。
 - [x] **RAG-CULTURE-R5C-7A（用户要求进行下一步）**：把已通过双基线的混合检索接入本地 Worker；新增 `RAG_RETRIEVAL_MODE=bm25|hybrid`，默认 `bm25`。显式启用 hybrid 后使用 RRF 1:0.65、向量 Top 12 与语义案例路由；缺 TokenHub 密钥、模型不一致或请求失败时自动退回 BM25。CloudBase Node 入口同步读取服务端变量，页面移除面向用户的 BM25 术语。51 项测试和 lint 通过，未部署。
 - [x] **RAG-CULTURE-R5C-7B（用户明确授权）**：三道本地 Worker 真实问答均调用成功；普通文化题和资料不足题通过，用户红裤头题需修改，自动与人工验收均为 2/3。该题语义案例路由正确、Top-5 第三名已召回员工免职/降级直接资料且没有串入尝面员工案例，但 AnswerPlan 漏掉该 Claim，导致回答错误称公开资料未明确记载处理措施。结果原样保存且未记录密钥，未部署；详见 `docs/RAG_CULTURE_R5C_WORKER_LIVE.md`。
-- [x] **RAG-CULTURE-R5C-8（用户要求执行）**：不为红裤头单题加补丁；在 `createAnswerPlan` 增加通用前提覆盖：当问题含可核实具体前提（员工处置、金额、比例、假期天数、处理结果等），且安全 `eligibleClaims` 中已有直接支持或纠正该前提的 Claim 时，强制至少保留 1 条。匹配只用 statement/title/topics，避免 `canSupport` 范围短语误覆盖。离线回归：53 项测试、固定 54/54、R4 契约 18/18、lint 通过；混合检索用冻结向量索引 mock 嵌入验证红裤头题必保留 `red-underwear-report-testing-and-staff` 且不串尝面案。未再跑需 TokenHub 的 31 题全量混合评测、未调用 DeepSeek、未部署。
+- [x] **RAG-CULTURE-R5C-8（用户要求执行）**：不为红裤头单题加补丁；在 `createAnswerPlan` 增加通用前提覆盖：当问题含可核实具体前提（员工处置、金额、比例、假期天数、处理结果等），且安全 `eligibleClaims` 中已有直接支持或纠正该前提的 Claim 时，强制至少保留 1 条。匹配只用 statement/title/topics，避免 `canSupport` 范围短语误覆盖。离线回归：53 项测试、固定 54/54、R4 契约 18/18、lint 通过；混合检索用冻结向量索引 mock 嵌入验证红裤头题必保留 `red-underwear-report-testing-and-staff` 且不串尝面案。2026-08-08 真实复测三题均返回 200、流式完成、DeepSeek 调用成功，自动检查 3/3；红裤头题已带出免职/降级 Claim 且未串案，资料不足题安全拒答但回答过于简短。结果写入 `evaluation/rag-culture-r5c-worker-live-v1.json`；尚未部署，人工质量复核仍需记录。
 - [ ] **RAG-CULTURE-R1**：用户已批准 C1“员工的尊严、自由与生活”首批两组资料。7 份资料、32 个片段和 3 个独立案例已按 `approved` / `limited` 范围入库，审核与结果见 `docs/SOURCE_AUDIT_C1_01.md`；知识库现有 30 份资料、135 个片段和 6 个案例。本阶段尚未完成后续 C1 一手资料主干，不得自动扩充。
 - [x] **RAG-RESEARCH-01**：建立 Codex 与 Grok 强制共用的互联网资料检索与 RAG 入库规范；明确候选池、来源优先级、企业身份核验、转载去重、事件阶段、用户批准、版权边界、入库测试和向量库接入条件，并在 `AGENTS.md` 设置任务前必读入口。
 - [x] **Codex【RAG-CASE-01】**：按 Grok 审核顺序完成“案例档案 + 事件事实/文化理解双轨回答”：定义 `caseId`、`claimType`、`finality` schema；事件轨仅引用同案例资料，文化轨不得裁定具体客诉真伪；无 `final` 证据时禁止终局话术；界面展示案例来源的证据阶段；补充误召回与最终结论边界测试。
@@ -89,6 +89,9 @@
 - [x] **Codex STORE-01**：用胖东来官网的 14 家门店资料补全门店目录，提供官方照片、地址、夏季与常规营业时间、周二安排和地图入口。
 - [x] **Codex STORE-02**：美化双栏目与门店目录；点击 01 后门店卡片按顺序出场，点击任一门店照片在新标签打开胖东来官网。
 - [x] **Codex UI-CHAPTERS-02**：将双栏目缩小并分隔为独立果冻按钮，补充匹配的悬停浮起与按下回弹效果。
+- [x] **Codex UI-HOTSPOT-01**：将 02“查看热点事件”接通为本地可展开档案；首个事件为 2026-07-17 网传“座谈会发言稿”事件，包含企业回应、资料边界、时间线、来源链接和继续提问入口；手机端展开档案时隐藏悬浮提问入口，避免遮挡内容。
+- [x] **Codex UI-HOTSPOT-02**：按用户反馈将热点档案从深色信息面板推进为“案头证据桌”视觉：加入 FIELD NOTE 标记、事件水印、扫描线展开、状态雷达、实心/空心时间线节点语义和图钉剪报来源；完成桌面端与手机端浏览器检查。
+- [x] **Codex UI-HOTSPOT-03**：按用户反馈将热点区改为“事件索引 → 单事件档案”两级浏览；索引使用桌面三列、平板两列、手机单列的事件关键词卡片，点击卡片后才展示具体时间线、回应、来源与证据边界；当前数据只有 1 件已审核事件，未虚构额外热点。
 - [x] **Codex STORE-03**：优化 01 门店目录“收起”体验：卡片逆序退场、区域平滑回收并把视线带回入口，避免内容突然消失造成页面跳动。
 - [x] **Codex DEPLOY-01**：用户已授权并完成仅本人可访问的预览版本发布；未创建公开访问或自定义域名。
 - [x] **Codex ARCH-01**：将门店展示资料从 React 页面抽离为独立内容文件，并抽取前后端共用的聊天消息契约，降低内容更新与接口演进的耦合。
@@ -116,9 +119,9 @@
 首页验收提交：`f8090a0`（有条件通过）。  
 本轮另完成：AI 对话区浅色柔和 UI 重构（用户授权，与 Hero/关键词视觉统一）。
 
-待用户确认：AI 对话区新视觉。
+待用户确认：AI 对话区新视觉、文化六条主线的最终取舍，以及是否进入 R1 资料补充和 R6 真实用户试用。
 
-未推送远端；CloudBase 测试域名已部署版本 007（100% 流量）。测试域名见 `tcb cloudrun detail` 的 DefaultDomainName。
+当前发布状态：移动端三期与关键词遮挡修复已按最近变更记录 push 并部署；CloudBase 线上具体版本和真机/微信内置浏览器结果本轮未重新复测。正式域名仍待 ICP 备案后绑定。
 
 ---
 
@@ -173,6 +176,13 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-10 | Codex | 按用户要求清理 GitHub 仓库历史：先提交工作树未提交的文档/评测改动；用 `--force-with-lease` 将本地 main（120 个提交，含热点 UI）接管 `origin/main`；删除 `archive/html-line-2026-07`（Kimi 单文件版 HTML 与 docx，用户确认不需要存档）与 `feature/keyword-orbit-hero` 两个旧分支；保留 `main-2026-08-07/08` 日期分支。远端旧 main 的 17 个网页上传提交成为孤立历史（GitHub 侧仍可找回，未物理抹除） | docs/HANDOFF.md, docs/PLAN.md, docs/RAG_CULTURE_ROADMAP.md, pangdonglai_project/evaluation/rag-culture-r5c-worker-live-v1.json |
+| 2026-08-10 | Codex | 按用户反馈将热点档案改为两级浏览：打开 02 后先显示事件关键词索引卡片，点击卡片才进入单事件详情；桌面三列、平板两列、手机单列，详情支持返回索引；`npm run lint`、`npm run build`、impeccable 检查及桌面/手机交互验证通过。当前仅有 1 件已审核热点，未虚构额外事件，未上传 GitHub、未部署云端 | site/app/page.tsx, site/app/globals.css, site/data/hotspots.ts, docs/HANDOFF.md |
+| 2026-08-10 | Codex | 按用户反馈将热点档案从信息面板推进为“案头证据桌”：新增 FIELD NOTE 标记、事件水印、扫描线、状态雷达、时间线节点语义和图钉剪报来源；`npm run lint`、`npm run build`、impeccable 检查与桌面/手机浏览器检查通过。未上传 GitHub、未部署云端 | site/app/page.tsx, site/app/globals.css, docs/HANDOFF.md |
+| 2026-08-09 | Codex | 按用户要求完成一个胖东来热点事件本地 UI MVP：02 入口可展开热点档案，展示 2026-07-17 网传“座谈会发言稿”事件的企业回应、时间线、资料边界、来源和继续提问入口；修正既有卡片回弹曲线并完成桌面/手机浏览器检查。`npm run lint` 与 `npm run build` 通过；`npm test` 的唯一失败是工作树已有 R5C 评测断言仍期待 2/3、实际结果为 3/3。未上传 GitHub、未部署云端 | site/app/page.tsx, site/app/globals.css, site/data/hotspots.ts, docs/HANDOFF.md |
+| 2026-08-08 | Codex | TokenHub 向量接口冒烟验证通过：`kinfra-text-embedding-0.6b` 返回 1024 维向量，约 530ms；项目 hybrid 检索返回 `hybrid-rrf` 且 `vectorApplied=true`，未调用 DeepSeek、未改业务代码 | docs/HANDOFF.md |
+| 2026-08-08 | Codex | 经用户要求完成 R5C-8 三道真实问答复测；hybrid 检索与 DeepSeek 均按预期调用，自动检查 3/3。红裤头题已覆盖员工免职/降级事实且无尝面案串入；资料不足题安全拒答但文本过短；未部署 | evaluation/rag-culture-r5c-worker-live-v1.json, docs/HANDOFF.md |
+| 2026-08-08 | Codex | 完成全项目状态盘点；`npm test` 57/57、`npm run lint` 通过；确认知识库构建为 30 份资料、135 个片段、135 个 Claim、6 个案例；未改业务代码、未调用外部模型、未部署 | docs/HANDOFF.md |
 | 2026-08-08 | Grok | 关键词遮挡修复 push+部署：手机仅顶区关键词 + clip-path；提交 `ff4c7bc` | site/app/globals.css, docs/MOBILE_QA_CHECKLIST.md |
 | 2026-08-08 | Grok | 三期移动端：跳过链接、门店图 sizes、content-visibility、focus-visible、`MOBILE_QA_CHECKLIST`；已 push 部署 | site/app/page.tsx, site/app/globals.css, site/tests/rendered-html.test.mjs, docs/MOBILE_QA_CHECKLIST.md, docs/HANDOFF.md |
 | 2026-08-08 | Grok | 二期移动端：对话窗 flex 贴底输入、消息自动滚底、来源触控卡片、章节全宽、门店图更矮+地图按钮、关键词静止、480/矮屏横屏、「去提问」FAB；测试 55 通过；分支 `main-2026-08-08` | site/app/page.tsx, site/app/globals.css, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
