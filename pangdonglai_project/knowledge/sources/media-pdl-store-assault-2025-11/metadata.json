@@ -1,0 +1,49 @@
+{
+  "id": "media-pdl-store-assault-2025-11",
+  "title": "许昌生活广场商场内伤人案（警方通报）",
+  "type": "media_official_notice",
+  "status": "approved",
+  "caseId": "store-assault-case-2025-11",
+  "claimType": "official_notice_reported",
+  "finality": "police_investigation_pending",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "权威媒体对警方通报的记录（案件侦办中）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-12",
+    "basis": "2026-08-12 互联网检索；澎湃（来源许昌日报「许昌时刻」）页面经 WebFetch 核验可访问；用户确认 8~15 全部按协议入库。"
+  },
+  "source": {
+    "publisher": "许昌日报「许昌时刻」微信公众号（经澎湃新闻转载）",
+    "sourceType": "media",
+    "url": "http://www.thepaper.cn/newsDetail_forward_31884361",
+    "publishedAt": "2025-11-03",
+    "verifiedAt": "2026-08-12",
+    "alternateUrls": [
+      "https://cbgc.scol.com.cn/news/6921261"
+    ]
+  },
+  "scope": [
+    "2025-11-02 许昌魏都区南大街胖东来生活广场一楼发生伤人事件",
+    "冯某某（男 37）因纠纷致伤吴某某（男 41）、徐某某（女 39）夫妻二人",
+    "巡逻警力与商场保安第一时间抓获嫌疑人、送医；伤者伤情稳定",
+    "案件进一步侦办中"
+  ],
+  "answeringRules": [
+    "必须使用「据警方通报」等归因措辞，并带日期。",
+    "案件仍在侦办，禁止使用终局表述（已定罪、已结案等）。",
+    "该事件是商场公共空间治安案件，不是胖东来经营或商品争议，不得用其评价企业文化或商品质量。",
+    "嫌疑人与伤者身份细节以警方后续通报为准。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-pdl-store-assault-2025-11/content.md",
+    "chunksPath": "chunks/media-pdl-store-assault-2025-11.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-12",
+    "notes": "2026-08-12 核验；警方通报原文为许昌日报发布，澎湃为转载，partial_text。"
+  }
+}

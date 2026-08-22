@@ -1,0 +1,50 @@
+{
+  "id": "media-pdl-dream-city-project-2026",
+  "title": "「梦之城」超大型综合体项目（2026 年开工）",
+  "type": "media_project_progress",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "project_progress_reported",
+  "finality": "project_in_progress",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "媒体对创始人公开项目信息的记录",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-12",
+    "basis": "2026-08-12 检索核验：于东来 2026-03~05 多次发布效果图/开工信息；新浪财经等媒体报道；用户确认 8~15 全部按协议入库。"
+  },
+  "source": {
+    "publisher": "新浪财经 / 中华网 / 于东来个人社交账号",
+    "sourceType": "media",
+    "url": "https://www.so.com/s?q=胖东来+梦之城",
+    "publishedAt": "2026-07-23",
+    "verifiedAt": "2026-08-12",
+    "alternateUrls": []
+  },
+  "scope": [
+    "「梦之城」为胖东来品牌成立以来投资规模最大的单体项目",
+    "总建筑面积约 60 万平方米（一期规划 46.7 万平方米、8 层、3327 个停车位）",
+    "项目建设和装修投资约 65 亿元",
+    "2026-05-20 开工；计划 2029-09 正式亮相",
+    "规划总部办公塔楼、一站式商业综合体、文化街区、讲堂、广场、剧院；主干道命名「自由大道」",
+    "于东来表示条件允许将建设小区，安置胖东来员工也面向社会"
+  ],
+  "answeringRules": [
+    "必须使用「据于东来公开发布」「据媒体报道」等归因措辞，并带日期。",
+    "项目在建，2029-09 为计划落成时间，禁止写成已建成。",
+    "投资 65 亿、60 万平方米等数字出自创始人公开发布与媒体报道，未核验正式规划文件。",
+    "住宅小区为「条件允许将建」的表态，非已确定的规划。",
+    "项目信息以政府最终规划公示为准。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-pdl-dream-city-project-2026/content.md",
+    "chunksPath": "chunks/media-pdl-dream-city-project-2026.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-12",
+    "notes": "2026-08-12 核验；效果图/开工信息为创始人社交账号发布，媒体报道交叉，partial_text。"
+  }
+}

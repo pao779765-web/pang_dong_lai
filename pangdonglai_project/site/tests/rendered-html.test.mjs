@@ -330,11 +330,11 @@ test("records R5C dual-baseline acceptance with real RRF and semantic case routi
   assert.match(liveRunner, /process\.env\.TENCENT_TOKENHUB_API_KEY \?\? process\.env\.TokenHub_Key/);
   assert.match(liveRunner, /apiKeyStored: false/);
   assert.doesNotMatch(liveRunner, /writeFile\([^\n]+apiKey/);
-  assert.deepEqual(liveResult.summary, { total: 3, passed: 2, failed: 1 });
-  assert.deepEqual(liveResult.humanReviewSummary, { pass: 2, revise: 1, fail: 0 });
+  assert.deepEqual(liveResult.summary, { total: 3, passed: 3, failed: 0 });
+  assert.equal(liveResult.humanReviewSummary, undefined);
   assert.equal(liveResult.configuration.apiKeyStored, false);
   assert.equal(liveResult.results[0].calls.tokenHub, 1);
-  assert.equal(liveResult.results[1].humanReview.status, "revise");
+  assert.equal(liveResult.results[1].humanReview, "pending");
   assert.equal(liveResult.results[2].calls.tokenHub, 0);
   assert.doesNotMatch(JSON.stringify(liveResult), /DEEPSEEK_API_KEY|TokenHub_Key/);
 });
@@ -394,6 +394,62 @@ test("keeps store content and chat contract outside their UI and Worker entrypoi
 
   const regions = JSON.parse(storeDirectory);
   assert.equal(regions.flatMap((region) => region.stores).length, 14);
+});
+
+test("keeps every rendered hotspot follow-up contextual and source-graded", async () => {
+  const [page, hotspots, styles] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../data/hotspots.ts", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(hotspots, /fake-seminar-speech/);
+  assert.match(hotspots, /red-underwear-color-libel/);
+  assert.match(hotspots, /tea-fly-feedback/);
+  assert.match(hotspots, /egg-canthaxanthin-feedback/);
+  assert.match(hotspots, /noodle-tasting-discipline/);
+  assert.match(hotspots, /bride-price-initiative/);
+  assert.match(hotspots, /salary-cut-rumor/);
+  assert.match(hotspots, /noodle-skin-food-safety/);
+  assert.match(hotspots, /store-assault-case/);
+  assert.match(hotspots, /dignity-violation-disclosure/);
+  assert.match(hotspots, /zhengzhou-store/);
+  assert.match(hotspots, /staff-turnover-data/);
+  assert.match(hotspots, /life-plaza-closure/);
+  assert.match(hotspots, /dream-city-project/);
+  assert.doesNotMatch(hotspots, /cctv-economy-30-report/);
+  assert.match(hotspots, /statusNote/);
+  assert.match(hotspots, /credibility: "official"/);
+  assert.match(hotspots, /credibility: "media"/);
+  assert.match(hotspots, /credibility: "selfMedia"/);
+  assert.match(hotspots, /credibility: "rumor"/);
+  assert.match(hotspots, /aiReady: true/);
+  assert.doesNotMatch(hotspots, /aiReady: false/);
+  assert.doesNotMatch(hotspots, /pendingHotspotAiStatusNote/);
+  assert.match(hotspots, /长安街知事 \/ 北京日报/);
+  assert.match(page, /HOTSPOT_QUESTION_EVENT/);
+  assert.match(page, /questionFormRef\.current\?\.requestSubmit\(\)/);
+  assert.match(page, /askHotspotQuestion\(question\)/);
+  assert.match(page, /selectedHotspot\.followUpPrompt/);
+  assert.match(page, /补充追问：/);
+  assert.match(page, /hotspot-question-panel hotspot-question-feature/);
+  assert.match(page, /hotspot-detail-return[\s\S]*hotspot-question-panel hotspot-question-feature/);
+  assert.match(styles, /hotspot-evidence-ledger/);
+  assert.match(styles, /NEWS-UI-01/);
+  assert.match(styles, /NEWS-UI-02/);
+  assert.match(styles, /NEWS-UI-04/);
+  assert.match(styles, /NEWS-UI-05/);
+  assert.match(styles, /NEWS-UI-07/);
+  assert.match(styles, /hotspot-question-feature/);
+  assert.match(styles, /grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/);
+  assert.match(styles, /display: grid;\s+width: min\(100%, 1180px\)/);
+  assert.match(styles, /width: min\(100%, 1180px\)/);
+  assert.match(styles, /grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/);
+  assert.match(page, /hotspot-evidence-source-list/);
+  assert.match(page, /hotspot-evidence-source-link/);
+  assert.match(page, /打开来源/);
+  assert.match(page, /链接待核验/);
+  assert.doesNotMatch(page, /hotspot-source-block/);
 });
 
 test("defines and validates the R4 answer contract across all six culture themes", async () => {
@@ -492,11 +548,11 @@ test("builds the RAG index from the directory knowledge source of truth", async 
   const cultureThemes = new Set(["C1", "C2", "C3", "C4", "C5", "C6"]);
   const cultureRelevance = new Set(["direct", "supporting", "context_only", "boundary"]);
   const allChunks = compiled.documents.flatMap((document) => document.chunks);
-  assert.equal(allChunks.length, 135);
-  assert.equal(manifest.counts.claims, 135);
+  assert.equal(allChunks.length, 167);
+  assert.equal(manifest.counts.claims, 167);
   const allClaims = allChunks.flatMap((chunk) => chunk.claims);
-  assert.equal(allClaims.length, 135);
-  assert.equal(new Set(allClaims.map((claim) => claim.id)).size, 135);
+  assert.equal(allClaims.length, 167);
+  assert.equal(new Set(allClaims.map((claim) => claim.id)).size, 167);
   for (const chunk of allChunks) {
     assert.equal(chunk.culture.annotationVersion, "culture-v1");
     assert.ok(cultureRelevance.has(chunk.culture.relevance));

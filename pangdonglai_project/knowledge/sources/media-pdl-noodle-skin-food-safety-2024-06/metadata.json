@@ -1,0 +1,50 @@
+{
+  "id": "media-pdl-noodle-skin-food-safety-2024-06",
+  "title": "新乡「擀面皮」卫生环境事件的企业调查报告与补偿",
+  "type": "media_company_response",
+  "status": "approved",
+  "caseId": "noodle-skin-food-safety-2024-06",
+  "claimType": "company_investigation_report",
+  "finality": "company_report_stage",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "权威媒体对企业公开调查报告与处理结果的记录",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-12",
+    "basis": "2026-08-12 互联网检索（百度/搜狗/360）；用户确认 8~15 全部按协议入库；来源经 WebFetch 核验可访问。"
+  },
+  "source": {
+    "publisher": "闪电新闻 / 川观新闻 / 大众日报（企业报告源自胖东来官方公众号）",
+    "sourceType": "media",
+    "url": "https://cbgc.scol.com.cn/news/5138676",
+    "publishedAt": "2024-06-27",
+    "verifiedAt": "2026-08-12",
+    "alternateUrls": [
+      "https://baijiahao.baidu.com/s?id=1803163360734720565"
+    ]
+  },
+  "scope": [
+    "2024-06-25 网友投诉联营餐饮擀面皮加工场所卫生环境差",
+    "2024-06-26 企业声明关停排查",
+    "2024-06-27 企业调查报告：辞退/免职、取消年终福利、商户解约撤柜",
+    "奖励举报顾客 10 万元现金",
+    "对 6-09~19 购买擀面皮/香辣面的顾客退款补偿 8833 份、合计 833.3 万元"
+  ],
+  "answeringRules": [
+    "必须使用「据媒体报道」「据企业调查报告」等归因措辞，并带日期。",
+    "调查报告为企业自查结论，禁止写成市场监管部门的最终认定或食品安全监管终局。",
+    "若用户问后续进展：须说明截至核验日公开检索未见监管终局结论。",
+    "禁止用本资料推断全部联营餐饮商户的卫生状况。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-pdl-noodle-skin-food-safety-2024-06/content.md",
+    "chunksPath": "chunks/media-pdl-noodle-skin-food-safety-2024-06.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-12",
+    "notes": "2026-08-12 检索核验；调查报告原文为胖东来官方公众号发布，本资料为媒体转述要点，partial_text。"
+  }
+}

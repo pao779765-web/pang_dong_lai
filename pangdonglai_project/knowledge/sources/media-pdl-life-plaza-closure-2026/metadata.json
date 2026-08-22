@@ -1,0 +1,48 @@
+{
+  "id": "media-pdl-life-plaza-closure-2026",
+  "title": "许昌生活广场店将于 2026 年底关闭（创始人宣布）",
+  "type": "media_company_change",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "founder_statement_reported",
+  "finality": "planned_closure_stage",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "媒体对创始人公开表态与经营动态的记录",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-12",
+    "basis": "2026-08-12 检索核验：于东来 2026-08-07 直播宣布、08-09 社交平台回应；北京商报等媒体报道；用户确认 8~15 全部按协议入库。"
+  },
+  "source": {
+    "publisher": "北京商报 / 新浪新闻 / 于东来个人社交账号",
+    "sourceType": "media",
+    "url": "https://www.so.com/s?q=胖东来+关闭+生活广场+24年",
+    "publishedAt": "2026-08-09",
+    "verifiedAt": "2026-08-12",
+    "alternateUrls": []
+  },
+  "scope": [
+    "2026-08-07 于东来直播宣布：许昌生活广场店将于 2026 年 12 月关闭",
+    "该店 2002-01-01 开业（24 年老店）",
+    "2026-08-09 于东来发文回应：2015 年负责人员未按公司规定统一签订租约，个别租户租金涨到「无法想象的地步」，背离公平原则；另有硬件老化因素",
+    "该店 2026 年上半年销售额 9.77 亿元，全年预计约 20 亿元、利润超 1 亿元（媒体报道口径）"
+  ],
+  "answeringRules": [
+    "必须使用「据于东来表态」「据媒体报道」等归因措辞，并带日期。",
+    "关闭为创始人宣布的计划，截至核验日尚未执行；禁止写成已关闭。",
+    "关闭原因（租约失误、硬件老化）为创始人公开说明，未核验原始合同。",
+    "年销 20 亿、利润超 1 亿等数字为媒体报道口径，未经企业财报独立核验。",
+    "关闭生活广场店是单店经营调整，禁止据此推断企业整体经营状况。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-pdl-life-plaza-closure-2026/content.md",
+    "chunksPath": "chunks/media-pdl-life-plaza-closure-2026.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-12",
+    "notes": "2026-08-12 核验；原始直播/发文未逐条抓取，内容为媒体交叉转述，partial_text。"
+  }
+}

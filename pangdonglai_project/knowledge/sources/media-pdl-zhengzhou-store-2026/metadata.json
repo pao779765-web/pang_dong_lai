@@ -1,0 +1,47 @@
+{
+  "id": "media-pdl-zhengzhou-store-2026",
+  "title": "宣布进驻郑州：首店计划与开业推迟",
+  "type": "media_company_expansion",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "company_expansion_reported",
+  "finality": "scheduled_opening_pending",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "官方发布与权威媒体对开店计划与推迟的记录",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-12",
+    "basis": "2026-08-12 检索核验；「河南发布」（河南省政府办公厅）确认五一开业计划；于东来 2026-03-13 发文推迟至 10 月；用户确认 8~15 全部按协议入库。"
+  },
+  "source": {
+    "publisher": "河南省政府办公厅「河南发布」/ 观点网 / 搜狐 / 于东来个人社交账号",
+    "sourceType": "media",
+    "url": "https://www.so.com/s?q=胖东来+郑州+开业",
+    "publishedAt": "2026-01-22",
+    "verifiedAt": "2026-08-12",
+    "alternateUrls": []
+  },
+  "scope": [
+    "2025-02-23 于东来社交账号透露郑州开店计划（郑州高铁东站西广场经纬华悦广场）",
+    "2026-01-22 「河南发布」确认：预计 2026 五一开业；郑州交运集团组建「胖东来高铁驿站」（代购代发、行李寄存、车辆代泊）、开通购物直通车",
+    "2026-03-13 于东来发文：因引入国际设计团队、强化项目质量，开业可能推迟到 10 月",
+    "截至 2026-08-12 尚未开业，最新公开口径为 2026 年 10 月"
+  ],
+  "answeringRules": [
+    "必须使用「据于东来表态」「据河南发布」等归因措辞，并带日期。",
+    "开业时间为计划与表态，禁止写成已开业或已确定。",
+    "于东来个人表态 ≠ 企业正式公告；「高铁驿站」是郑州交运集团项目，与胖东来门店为不同主体，需区分。",
+    "禁止据此推断胖东来将大规模全国扩张。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-pdl-zhengzhou-store-2026/content.md",
+    "chunksPath": "chunks/media-pdl-zhengzhou-store-2026.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-12",
+    "notes": "2026-08-12 核验；原始页面（河南发布/观点网）未逐页抓取，内容为搜索摘要交叉，partial_text；10 月开业需后续核验。"
+  }
+}

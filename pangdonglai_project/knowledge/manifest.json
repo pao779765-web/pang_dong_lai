@@ -5,10 +5,10 @@
   "sourceOfTruth": "directory",
   "generatedIndex": "compiled/knowledge-base.json",
   "counts": {
-    "cases": 6,
-    "sources": 30,
-    "chunks": 135,
-    "claims": 135
+    "cases": 10,
+    "sources": 39,
+    "chunks": 167,
+    "claims": 167
   },
   "cases": [
     {
@@ -34,6 +34,22 @@
     {
       "id": "employee-salary-policy-rumor-2026-06",
       "path": "cases/employee-salary-policy-rumor-2026-06.json"
+    },
+    {
+      "id": "fake-seminar-speech-2026-07",
+      "path": "cases/fake-seminar-speech-2026-07.json"
+    },
+    {
+      "id": "noodle-skin-food-safety-2024-06",
+      "path": "cases/noodle-skin-food-safety-2024-06.json"
+    },
+    {
+      "id": "store-assault-case-2025-11",
+      "path": "cases/store-assault-case-2025-11.json"
+    },
+    {
+      "id": "dignity-violation-disclosure-2026-08",
+      "path": "cases/dignity-violation-disclosure-2026-08.json"
     }
   ],
   "sources": [
@@ -216,6 +232,60 @@
       "metadataPath": "sources/book-how-to-learn-pdl-wanghuizhong/metadata.json",
       "contentPath": "sources/book-how-to-learn-pdl-wanghuizhong/content.md",
       "chunksPath": "chunks/book-how-to-learn-pdl-wanghuizhong.jsonl"
+    },
+    {
+      "id": "media-pdl-fake-seminar-speech-response-2026-07",
+      "metadataPath": "sources/media-pdl-fake-seminar-speech-response-2026-07/metadata.json",
+      "contentPath": "sources/media-pdl-fake-seminar-speech-response-2026-07/content.md",
+      "chunksPath": "chunks/media-pdl-fake-seminar-speech-response-2026-07.jsonl"
+    },
+    {
+      "id": "media-pdl-noodle-skin-food-safety-2024-06",
+      "metadataPath": "sources/media-pdl-noodle-skin-food-safety-2024-06/metadata.json",
+      "contentPath": "sources/media-pdl-noodle-skin-food-safety-2024-06/content.md",
+      "chunksPath": "chunks/media-pdl-noodle-skin-food-safety-2024-06.jsonl"
+    },
+    {
+      "id": "media-pdl-store-assault-2025-11",
+      "metadataPath": "sources/media-pdl-store-assault-2025-11/metadata.json",
+      "contentPath": "sources/media-pdl-store-assault-2025-11/content.md",
+      "chunksPath": "chunks/media-pdl-store-assault-2025-11.jsonl"
+    },
+    {
+      "id": "media-pdl-dignity-violation-disclosure-2026-08",
+      "metadataPath": "sources/media-pdl-dignity-violation-disclosure-2026-08/metadata.json",
+      "contentPath": "sources/media-pdl-dignity-violation-disclosure-2026-08/content.md",
+      "chunksPath": "chunks/media-pdl-dignity-violation-disclosure-2026-08.jsonl"
+    },
+    {
+      "id": "media-pdl-zhengzhou-store-2026",
+      "metadataPath": "sources/media-pdl-zhengzhou-store-2026/metadata.json",
+      "contentPath": "sources/media-pdl-zhengzhou-store-2026/content.md",
+      "chunksPath": "chunks/media-pdl-zhengzhou-store-2026.jsonl"
+    },
+    {
+      "id": "media-cctv-pdl-report-2024-04",
+      "metadataPath": "sources/media-cctv-pdl-report-2024-04/metadata.json",
+      "contentPath": "sources/media-cctv-pdl-report-2024-04/content.md",
+      "chunksPath": "chunks/media-cctv-pdl-report-2024-04.jsonl"
+    },
+    {
+      "id": "official-pdl-turnover-2026-h1",
+      "metadataPath": "sources/official-pdl-turnover-2026-h1/metadata.json",
+      "contentPath": "sources/official-pdl-turnover-2026-h1/content.md",
+      "chunksPath": "chunks/official-pdl-turnover-2026-h1.jsonl"
+    },
+    {
+      "id": "media-pdl-life-plaza-closure-2026",
+      "metadataPath": "sources/media-pdl-life-plaza-closure-2026/metadata.json",
+      "contentPath": "sources/media-pdl-life-plaza-closure-2026/content.md",
+      "chunksPath": "chunks/media-pdl-life-plaza-closure-2026.jsonl"
+    },
+    {
+      "id": "media-pdl-dream-city-project-2026",
+      "metadataPath": "sources/media-pdl-dream-city-project-2026/metadata.json",
+      "contentPath": "sources/media-pdl-dream-city-project-2026/content.md",
+      "chunksPath": "chunks/media-pdl-dream-city-project-2026.jsonl"
     }
   ]
 }

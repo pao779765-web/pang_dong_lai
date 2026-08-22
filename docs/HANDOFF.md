@@ -2,10 +2,10 @@
 
 > **规则：** 谁做完谁更新本文件。下一位只认本文件 + Git，不靠聊天记录猜。
 
-**更新时间：** 2026-08-10
+**更新时间：** 2026-08-22
 
-**当前执行者：** Codex 完成热点事件索引与单事件详情的两级浏览改造；并按用户要求完成 GitHub 历史清理：本地 main 已接管 origin/main，旧网页上传分支已删除。当前已审核热点数据为 1 件；CloudBase 未重新部署。
-**Git 状态：** 本地 main（`38de149`，120 个提交）已用 `--force-with-lease` 推送接管 GitHub `main`；`origin/main` 原有 17 个网页上传提交成为孤立历史；`archive/html-line-2026-07` 与 `feature/keyword-orbit-hero` 已删除；日期分支 `main-2026-08-07/08` 保留（内容已包含在 main 内，可随时删除）。
+**当前执行者：** Grok 按用户要求将 NEWS-UI-01～07 与事件 7～15 知识库增量提交并推送 GitHub `main`，随后部署 CloudBase。
+**Git 状态：** 本地 `main` 在 `06361cd` 之上提交本次发布；未纳入 `.agents/`、`.tmp_qa/`、`skills-lock.json`。CloudBase 现网此前为 `pangdonglai-site-017`（2026-08-08），本轮重新发布。
 
 ---
 
@@ -92,6 +92,24 @@
 - [x] **Codex UI-HOTSPOT-01**：将 02“查看热点事件”接通为本地可展开档案；首个事件为 2026-07-17 网传“座谈会发言稿”事件，包含企业回应、资料边界、时间线、来源链接和继续提问入口；手机端展开档案时隐藏悬浮提问入口，避免遮挡内容。
 - [x] **Codex UI-HOTSPOT-02**：按用户反馈将热点档案从深色信息面板推进为“案头证据桌”视觉：加入 FIELD NOTE 标记、事件水印、扫描线展开、状态雷达、实心/空心时间线节点语义和图钉剪报来源；完成桌面端与手机端浏览器检查。
 - [x] **Codex UI-HOTSPOT-03**：按用户反馈将热点区改为“事件索引 → 单事件档案”两级浏览；索引使用桌面三列、平板两列、手机单列的事件关键词卡片，点击卡片后才展示具体时间线、回应、来源与证据边界；当前数据只有 1 件已审核事件，未虚构额外热点。
+- [x] **Codex UI-HOTSPOT-04（用户明确要求）**：将热点档案索引层改为浅色关键词锚点，只展示可点击的新闻关键词气泡；移除索引层的额外标题说明、状态、数量和卡片信息，点击关键词后再进入现有事件详情。详情页同步统一为浅色；lint、build、Impeccable 检测和桌面/手机交互检查通过。`npm test` 仍有 1 项既有 R5C 断言落后于实际 3/3 结果。
+- [x] **Codex UI-HOTSPOT-05（用户明确要求）**：扩展热点索引背景色彩与层次；为关键词锚点加入轻微弹性出场、高级陶瓷釉面材质和鼠标悬停反馈；使用生成式抽象釉彩纹理并压缩为 84 KB WebP，中央保持低对比以保证文字可读性；手机端锚点保持全宽，减少动态偏好下关闭入场动画。`npm run lint`、`npm run build`、Impeccable 检测和桌面端浏览器交互检查通过；`npm test` 仍仅有 1 项既有 R5C 旧断言失败。
+- [x] **Codex UI-HOTSPOT-06（用户明确要求）**：重做关键词锚点，使其直接裁切生成式釉彩背景并采用有机瓷片轮廓、同源纹理游移和更克制的浮起反馈，不再呈现独立彩色渐变按钮感；同步重构展开后的完整事件详情，使主档案、状态面板、时间线、阅读说明、来源和行动入口共享同一釉面材质；保留全部事实、来源、交互、手机布局和浅色可读性。`npm run lint`、`npm run build`、Impeccable 检测和桌面浏览器完整路径通过；`npm test` 仍仅有 1 项既有 R5C 旧断言失败。
+- [x] **Codex UI-HOTSPOT-07（用户明确要求）**：重新设计热点索引整体构图与关键词入口，解决当前背景、留白和按钮形体失衡的问题；保持浅色、关键词点击进入详情、出场/悬停动效、事实内容与响应式约束，但不再沿用当前椭圆瓷片按钮方案。改为方向性釉彩档案背景与不对称新闻档案条入口，详情页同步复用同源材质。
+- [x] **Codex UI-HOTSPOT-08（用户明确要求）**：将热点档案的整页背景改为新闻编辑台/档案桌面风格，使用报纸校样、新闻照片、剪报、采访记录等新闻元素；锚点改为日期+标题的新闻档案卡片，保留点击详情、悬停反馈、动效、响应式和事实内容。
+- [x] **Codex UI-HOTSPOT-09（用户明确要求）**：在新闻详情态右上侧加入独立 Logo 收起按钮；不使用项目宣传图中的“理解胖东来”大标题，改用紧凑 DL + 火焰标记 + PANDONG LAI 字标结构；点击返回热点索引，保留键盘焦点、悬停反馈、移动端缩小和减少动态兼容。
+- [x] **Codex UI-HOTSPOT-10（用户明确要求）**：将详情页 Logo 收起按钮移到热点区块外层，改为视口固定的最右侧悬浮侧轨；桌面端加大并垂直居中，移动端缩窄适配，随网页滚动保持位置，点击仍返回热点索引。
+- [x] **Codex UI-HOTSPOT-11（用户明确要求）**：放大右侧固定 Logo 收起侧轨中的“收起档案”文字，桌面端提高字号与字重，移动端同步放大，保持按钮整体比例与可读性。
+- [x] **Codex UI-HOTSPOT-12（用户明确要求）**：继续强化“收起档案”操作标签，桌面端提升至 `1rem / 800` 并加深颜色与轻微文字高光，移动端提升至 `0.72rem`，确保在侧轨中更醒目。
+- [x] **Codex UI-HOTSPOT-13（用户明确要求）**：将收起标签改为“收起 / 档案”两行竖排，并在下方加入醒目的向上箭头；箭头随悬停轻微上移，减少动态模式下关闭位移动画。
+- [x] **Codex UI-HOTSPOT-14（用户明确要求）**：继续提高“收起 / 档案”两行文字在侧轨中的视觉占比，桌面端提升至 `1.16rem / 900`，移动端提升至 `0.82rem`，同时保持箭头与按钮边界不溢出。
+- [x] **Codex UI-HOTSPOT-15（用户明确要求）**：根据用户截图进一步调整侧轨内信息层级，将“收起 / 档案”提升为主标题级别：桌面端 `1.45rem / 900` 并轻微放大，移动端 `0.92rem`，保持两行、箭头和按钮边界完整。
+- [x] **Codex UI-HOTSPOT-16（用户明确要求）**：将桌面端“收起 / 档案”两行标签调整为 `2rem / 900`（约 32px），移动端调整为 `1rem`，并继续保持箭头、固定侧轨和窄屏边界完整。
+- [x] **Codex UI-HOTSPOT-17（用户明确要求）**：将桌面端“收起 / 档案”两行标签调整为 `1.8rem / 900`（约 28.8px），移动端继续保持 `1rem`，确保箭头与侧轨边界完整。
+- [x] **Codex UI-HOTSPOT-18 / NEWS-UI-01A（用户明确要求）**：依据 `news_summary` 的事件 7 专档整理“网传座谈会发言稿”详情；新增官方/第三方媒体/自媒体/传言四级来源账本、四节点时间线、三条结论边界、来源归因说明和已入库状态；快捷问题点击后直接发送到资料助手。保持新闻编辑台视觉，移除装饰性状态雷达与重复编号，手机端把固定侧轨收为底部角标。`npm run lint`、`npm run build`、`npm test`（58/58）与 Impeccable 检测通过；桌面浏览器路径通过，手机端最终截图受本地浏览器 URL 策略阻断，CSS 冲突已修复但仍建议后续真机复核。未部署。
+- [x] **Codex UI-HOTSPOT-19（用户明确要求）**：精简新闻详情文案：删除来源类型前的重复说明和“这件事值得观察什么”区块；将结论边界标题改为“以下内容无法确认”，保留来源账本、时间线、边界清单与可核验来源。
+- [x] **Codex UI-HOTSPOT-20（用户明确要求）**：使用 Impeccable 的 layout 工作流重整新闻详情页：按“结论 → 来源层级 → 时间线 / 延伸阅读”组织阅读顺序；将来源类型改为紧凑全宽矩阵，修复已删说明文字留下的双栏空位；收紧时间线与右侧阅读栏的比例、间距和移动端单栏回退。`npm run build`、`npm test`（58/58）和 Impeccable layout 检测通过；未上传 GitHub、未部署云端。
+- [x] **Codex UI-HOTSPOT-21（用户明确要求）**：调整热点二级详情的标题层级：主标题最大字号从约 `4.9rem` 收至 `3.55rem`，并将事件日期固定置于标题下方；外层事件锚点不变。`npm run lint`、`npm test`（58/58）和 Impeccable type 检测通过；未上传 GitHub、未部署云端。
 - [x] **Codex STORE-03**：优化 01 门店目录“收起”体验：卡片逆序退场、区域平滑回收并把视线带回入口，避免内容突然消失造成页面跳动。
 - [x] **Codex DEPLOY-01**：用户已授权并完成仅本人可访问的预览版本发布；未创建公开访问或自定义域名。
 - [x] **Codex ARCH-01**：将门店展示资料从 React 页面抽离为独立内容文件，并抽取前后端共用的聊天消息契约，降低内容更新与接口演进的耦合。
@@ -99,6 +117,14 @@
 - [x] **Codex DEPLOY-CN-02**：已将容器版本部署到用户创建的 CloudBase 环境 `pangdonglai-site-d2eqrsj5b8ada0f`；安全版本 004 正常承载 100% 流量，测试域名的首页与健康检查均返回 200；暂未绑定正式域名。
 - [x] **Codex SEC-01**：已为 `/api/chat` 增加仅作用于问答接口的应用层保护：同一客户端每分钟最多 6 次、单实例最多 4 个并发、64 KiB 请求体上限、45 秒上游超时，并返回友好的 413/429/503/504 提示；待绑定正式域名后可再叠加 CloudBase HTTP 网关路径级限频。
 - [x] **Codex AI-LIVE-01**：用户已在 CloudBase 服务设置中配置 `DEEPSEEK_API_KEY`；仅核验变量存在，不读取或记录密钥值。公网真实问答返回 200，包含流式正文、资料来源与完成事件；线上超大输入按预期返回 413。
+- [x] **Codex NEWS-UI-01（用户已布置）**：依据 `pangdonglai_project/news_summary/HANDOFF.md` 将 7 个已审核事件接入统一热点数据模型与前端索引；每个详情均包含官方/第三方媒体/自媒体/传言四级来源、时间线、结论边界、可核验来源和快捷问题直达 AI。事件 8～15 尚未入库或标记待核验，未作为正式热点展示。`npm run lint`、`npm test`（58/58）和 Impeccable layout 检测通过；未上传 GitHub、未部署云端。
+- [x] **Codex NEWS-UI-02（用户明确要求）**：将事件 8 新乡擀面皮、9 许昌生活广场伤人案、10 人格尊严侵权公示、11 郑州首店、13 上半年人员流失、14 生活广场店关闭、15 梦之城项目接入前端热点索引和详情；事件 12 暂不接入。事件 8～15 已按协议获批入库；没有直接 URL 的来源显示为不可点击来源卡，不伪造链接。更新来源类型展示以兼容无 URL 来源；`npm run lint`、`npm test`（58/58）和 Impeccable 检测通过；未上传 GitHub、未部署云端。
+- [x] **Codex NEWS-UI-03（用户明确要求）**：开放每个已展示事件的“继续追问”；快捷问题点击时附带该事件的 `followUpPrompt`，再发送具体问题，确保资料助手按事件上下文检索；事件 12 仍暂不接入。`npm run lint`、`npm test`（58/58）和 Impeccable 检测通过；未上传 GitHub、未部署云端。
+- [x] **Codex NEWS-UI-04（用户明确要求）**：将“继续追问”从详情右侧阅读栏移到每个事件详情的最底部，作为全宽重点行动区；加入更醒目的 Q / FOLLOW-UP 标识、放大标题与说明、桌面三列快捷问题和移动端单列回退；保持点击直达资料助手与键盘焦点反馈。`npm run lint`、`npm test`（58/58）和 Impeccable 检测通过；未上传 GitHub、未部署云端。
+- [x] **Codex NEWS-UI-05（用户明确要求）**：将热点事件一级索引改为居中的两列网格，桌面端每行两个并统一卡片宽度、间距和对齐；取消原先影响行列秩序的错落旋转，保留新闻档案卡材质与悬停反馈；760px 以下回退单列。`npm run lint`、`npm test`（58/58）和 Impeccable 检测通过；未上传 GitHub、未部署云端。
+- [x] **Codex NEWS-UI-06（用户明确要求）**：将每个新闻详情页的来源按“官方 / 第三方媒体 / 自媒体”分组展示；为已保存 URL 的来源增加明确的“打开来源”入口，并对未保存原帖直链的条目保留“链接待核验”状态，不伪造链接。`npm run lint`、`npm test`（58/58）、`git diff --check` 和 Impeccable 检测通过；未上传 GitHub、未部署云端。
+- [x] **Codex NEWS-UI-07（用户明确要求）**：将来源链接从详情页下方的“可核验来源”区域迁移到截图所示的四类来源账本中；每个来源格子内直接展示对应链接，并移除重复的下方来源分组。`npm run lint`、`npm test`（58/58）、`git diff --check` 和 Impeccable 检测通过；未上传 GitHub、未部署云端。
+- [x] **Grok DEPLOY-GH-CB-01（用户明确要求）**：将 NEWS-UI-01～07、事件 7～15 知识库增量（39 份资料、167 片段、10 案例）与新闻专档提交并推送 GitHub `main`；CloudBase 最小包含 `knowledge/vector/r5-general-index.json`，不写入密钥。`npm run lint`、`npm test`（58/58）通过。向量索引仍为 R5C 冻结基线，未重建。
 - [ ] Codex（可选）QA-02：微调 360 视口关键词坐标。
 - [ ] Codex（可选）QA-03：锚点后焦点落到栏目标题。
 - [ ] 用户确认 AI 对话区浅色重构视觉是否满意。
@@ -121,7 +147,7 @@
 
 待用户确认：AI 对话区新视觉、文化六条主线的最终取舍，以及是否进入 R1 资料补充和 R6 真实用户试用。
 
-当前发布状态：移动端三期与关键词遮挡修复已按最近变更记录 push 并部署；CloudBase 线上具体版本和真机/微信内置浏览器结果本轮未重新复测。正式域名仍待 ICP 备案后绑定。
+当前发布状态：NEWS-UI-01～07 与事件 7～15 知识库增量已纳入本次 GitHub / CloudBase 发布；向量索引仍冻在 R5C 的 135 条。正式域名仍待 ICP 备案后绑定。真机/微信内置浏览器本轮未复测。
 
 ---
 
@@ -176,6 +202,39 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-22 | Grok | 按用户要求发布 NEWS-UI-01～07 与事件 7～15 知识库增量：提交并推送 GitHub `main`；CloudBase 最小包含向量索引，不写入密钥。`npm run lint`、`npm test`（58/58）通过。版本号与公网验收见本行后续补充 | docs/HANDOFF.md, pangdonglai_project/knowledge/**, pangdonglai_project/news_summary/**, pangdonglai_project/site/app/{page.tsx,globals.css}, pangdonglai_project/site/data/hotspots.ts, pangdonglai_project/site/tests/rendered-html.test.mjs, pangdonglai_project/site/public/hotspot-*.{webp,png} |
+| 2026-08-12 | Codex | 按协议将事件 8~15 全部入库知识库（用户批准）：新增 8 份 source（擀面皮/伤人案/人格尊严公示/郑州开店/央视报道/员工流失/生活广场关闭/梦之城，均 `partial_text`）+ 3 个 case（noodle-skin、store-assault、dignity-violation），事件 11~15 走一般轨；manifest 更新为 39 份资料、167 片段、167 Claim、10 案例；检索验证 8 问全部正确路由召回；同步更新知识库计数断言（139→167），`npm test` 58/58、lint 通过；BM25 可用，向量索引保持 R5C 冻结基线未重建。未上传 GitHub、未部署云端 | knowledge/cases/{noodle-skin-food-safety-2024-06,store-assault-case-2025-11,dignity-violation-disclosure-2026-08}.json, knowledge/sources/{media-pdl-noodle-skin-food-safety-2024-06,media-pdl-store-assault-2025-11,media-pdl-dignity-violation-disclosure-2026-08,media-pdl-zhengzhou-store-2026,media-cctv-pdl-report-2024-04,official-pdl-turnover-2026-h1,media-pdl-life-plaza-closure-2026,media-pdl-dream-city-project-2026}/**, knowledge/chunks/{对应 8 个}.jsonl, knowledge/manifest.json, knowledge/compiled/knowledge-base.json, site/tests/rendered-html.test.mjs, pangdonglai_project/news_summary/HANDOFF.md, pangdonglai_project/news_summary/events/08~15-*.md, docs/HANDOFF.md |
+| 2026-08-12 | Codex | 按用户清单完成 NEWS-UI-02：将事件 8、9、10、11、13、14、15 接入统一热点索引和二级详情；保留事件时间线、四级来源、结论边界与不可点击来源卡，事件 8～15 已按协议获批入库；事件 12 暂未接入。`npm run lint`、`npm test`（58/58）和 Impeccable 检测通过。未上传 GitHub、未部署云端 | pangdonglai_project/site/data/hotspots.ts, pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/app/globals.css, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md, pangdonglai_project/news_summary/HANDOFF.md |
+| 2026-08-12 | Codex | 实现每个已展示事件的“继续追问”：开放事件 8、9、10、11、13、14、15 的快捷问题；点击时将事件专属追问上下文与具体问题一起发送给资料助手，避免只按孤立问题检索；事件 12 仍按上一轮清单暂未接入。`npm run lint`、`npm test`（58/58）和 Impeccable 检测通过 | pangdonglai_project/site/data/hotspots.ts, pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
+| 2026-08-14 | Codex | 使用 Impeccable layout 重排“继续追问”：从右侧阅读栏移至每个事件详情最底部，做成全宽高强调行动区；加入 Q / FOLLOW-UP 标识、上下文状态胶囊、放大标题、桌面三列快捷问题与手机单列布局。`npm run lint`、`npm test`（58/58）和最终 Impeccable 检测通过。未上传 GitHub、未部署云端 | pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/app/globals.css, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
+| 2026-08-14 | Codex | 使用 Impeccable layout 将热点事件一级索引改为居中的两列档案网格：桌面端一行两个、从上至下统一排列，取消卡片错落旋转；补齐 `display: grid` 以确保浏览器实际按两列渲染，760px 以下回退单列。实测两列卡片位置与宽度正确，`npm run lint`、`npm test`（58/58）和最终 Impeccable 检测通过。未上传 GitHub、未部署云端 | pangdonglai_project/site/app/globals.css, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
+| 2026-08-14 | Codex | 使用 Impeccable 将每个新闻详情页的“可核验来源”按官方、第三方媒体、自媒体和传言分组；带 URL 的来源卡新增明确“打开来源”入口与无障碍标签，未保存原帖直链的来源显示“链接待核验”，同时保留空分类说明。`npm run lint`、`npm test`（58/58）、`git diff --check` 和最终 Impeccable 检测通过。未上传 GitHub、未部署云端 | pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/app/globals.css, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
+| 2026-08-14 | Codex | 按用户截图修正来源链接位置：将每个来源条目直接放进详情页上方四类来源账本的对应格子，显示来源标题、发布方、日期和“打开来源”/“链接待核验”；移除下方重复的“可核验来源”分组。`npm run lint`、`npm test`（58/58）、`git diff --check` 和最终 Impeccable 检测通过。未上传 GitHub、未部署云端 | pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/app/globals.css, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
+| 2026-08-12 | Codex | 应用户反馈继续放大新闻二级详情标题后的事件日期字号：桌面端由 `0.9rem` 调整为 `1.05rem`，移动端由 `0.82rem` 调整为 `0.94rem`，增强日期识别层级并保持既有颜色、字重和布局 | pangdonglai_project/site/app/globals.css, docs/HANDOFF.md |
+| 2026-08-12 | Codex | 按用户要求放大新闻二级详情标题后的事件日期字号：桌面端由 `0.78rem` 调整为 `0.9rem`，移动端由 `0.72rem` 调整为 `0.82rem`；保持颜色、字重、间距和布局不变 | pangdonglai_project/site/app/globals.css, docs/HANDOFF.md |
+| 2026-08-12 | Codex | 复核 3 处待核验事件：事件 13 确认官方出处（胖东来官网 2026-07-27 公布上半年流失 52 名、流失率 0.50%、管理层零流失），由"仅自媒体不建议收录"升级为可收录；事件 11 郑州店开业推迟（2026-03-13 于东来称因质量要求由五一推迟至 10 月，"河南发布"确认高铁驿站/购物直通车）；事件 12 央视《经济半小时》报道确认为 2024-04-18 播出的"探秘中国胖东来"，2026 年流传"被央视点名"系旧闻误读。已同步更新 `news_summary` 对应事件文件与总览表 | pangdonglai_project/news_summary/HANDOFF.md, pangdonglai_project/news_summary/events/11-zhengzhou-store-2026.md, pangdonglai_project/news_summary/events/12-cctv-economy-30-report-2026.md, pangdonglai_project/news_summary/events/13-staff-turnover-52-2026.md, docs/HANDOFF.md |
+| 2026-08-12 | Codex | 按用户要求调整热点二级详情的标题区：缩小所有事件详情主标题，并将“事件日期”从状态行移至标题下方，使用稳定的数字字形与间距，便于在长标题下快速识别时间。`npm run lint`、`npm test`（58/58）及 Impeccable type 检测通过。未上传 GitHub、未部署云端 | pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/app/globals.css, docs/HANDOFF.md |
+| 2026-08-12 | Codex | 依据 `news_summary/events/01~07-*.md` 完成 NEWS-UI-01：将红色内裤、茶叶苍蝇、鲜鸡蛋角黄素、尝面员工处分、彩礼倡议、降薪传言与既有座谈会发言稿共 7 个已审核事件接入“查看热点事件”。每条均采用统一新闻详情结构：状态专属说明、四级来源、时间线、无法确认项、可核验来源及快捷提问直达 AI；不把企业回应、内部复议、个人倡议和一审结果混为同一结论。事件 8～15 尚未入库或待核验，未展示。`npm run lint`、`npm test`（58/58）及 Impeccable layout 检测通过。未上传 GitHub、未部署云端 | pangdonglai_project/site/data/hotspots.ts, pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
+| 2026-08-12 | Codex | 按用户要求进行胖东来互联网新闻检索（百度/搜狗/360，2026-08-12）：新增 8 个事件候选并全部写入 `news_summary/events/`（08 擀面皮、09 伤人案、10 人格尊严公示、11 郑州开店、12 央视报道、13 员工流失、14 生活广场关闭、15 梦之城）；逐事件完成时间线+四级可信度标注，标注 3 处待核验（郑州开业进度、央视播出日期、52 名员工数据出处，后者仅自媒体不建议直接收录）；总览表更新为 15 事件；事件 8～15 尚未入库知识库 | pangdonglai_project/news_summary/HANDOFF.md, pangdonglai_project/news_summary/events/08~15-*.md, docs/HANDOFF.md |
+| 2026-08-12 | Codex | 使用 Impeccable layout 重整新闻详情排版：来源类型从带空白占位的双栏改为全宽 2×2 信息矩阵，时间线标题改为单列阅读起点，时间线与右侧“以下内容无法确认 / 可核验来源 / 继续追问”形成清晰主次栏；同步处理平板与手机单栏回退。`npm run build`、`npm test`（58/58）及 Impeccable layout 检测通过。未上传 GitHub、未部署云端 | pangdonglai_project/site/app/globals.css, docs/HANDOFF.md |
+| 2026-08-12 | Codex | 按用户要求精简新闻详情：删除“先分清信息来自哪里”及其说明文字，删除“这件事值得观察什么”及对应段落，将“还不能确认什么”改为“以下内容无法确认”；保留来源类型账本，并为该无标题区块补充无障碍标签。`npm run lint`、`npm run build`、Impeccable 检测通过。未上传 GitHub、未部署云端 | site/app/page.tsx, docs/HANDOFF.md |
+| 2026-08-11 | Codex | 使用 Impeccable 精修“网传座谈会发言稿”事件详情：按已审核专档同步长安街知事/北京日报来源、企业回应与非终局边界，新增四级可信度账本、四节点时间线、三条不能确认事项、来源说明和快捷问题直达 AI；手机端将收起侧轨收为底部角标。lint、build、58 项测试和 Impeccable 检测通过；桌面浏览器路径通过，手机最终截图受本地 URL 策略阻断，未部署 | site/data/hotspots.ts, site/app/page.tsx, site/app/globals.css, site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
+| 2026-08-11 | Codex | 按候选卡 V9-1 经用户批准将「网传座谈会发言稿」事件入库知识库：新增 case `fake-seminar-speech-2026-07`（finality: preliminary）、source `media-pdl-fake-seminar-speech-response-2026-07`（L2 limited / partial_text，长安街知事 2026-07-18 报道，抓取核验可访问）与 4 个 chunks；构建得到 31 份资料、139 片段、139 Claim、7 案例；检索验证 4 问均正确路由召回；同步更新既有 R5C live 断言（结果文件实为 3/3、humanReview pending）与知识库计数断言（135→139），`npm test` 57/57、lint 通过；未上传 GitHub、未部署云端 | knowledge/cases/fake-seminar-speech-2026-07.json, knowledge/sources/media-pdl-fake-seminar-speech-response-2026-07/*, knowledge/chunks/media-pdl-fake-seminar-speech-response-2026-07.jsonl, knowledge/manifest.json, knowledge/compiled/knowledge-base.json, site/tests/rendered-html.test.mjs, pangdonglai_project/news_summary/HANDOFF.md, pangdonglai_project/news_summary/events/07-fake-seminar-speech-2026-07.md, docs/HANDOFF.md |
+| 2026-08-11 | Codex | 按用户要求将桌面端“收起 / 档案”两行标签从 2rem 调整为 1.8rem（约 28.8px），移动端保持 1rem；未改变箭头、固定位置和收起逻辑。未上传 GitHub、未部署云端 | site/app/globals.css, docs/HANDOFF.md |
+| 2026-08-11 | Codex | 按用户要求将桌面端“收起 / 档案”两行标签改为 2rem（约 32px），移动端调整为 1rem；保留 900 字重、向上箭头、右侧固定位置和收起逻辑，并核验文字没有超出侧轨。未上传 GitHub、未部署云端 | site/app/globals.css, docs/HANDOFF.md |
+| 2026-08-11 | Codex | 针对用户截图继续提高“收起 / 档案”的占比：桌面端提升至 1.45rem、字重 900、压紧行距并轻微放大，移动端提升至 0.92rem；Logo 与箭头作为辅助元素保留，按钮不溢出。`npm run lint`、`npm run build`、Impeccable 检测通过。未上传 GitHub、未部署云端 | site/app/globals.css, docs/HANDOFF.md |
+| 2026-08-11 | Codex | 按用户反馈继续拉高收起标签占比：两行“收起 / 档案”桌面端提升至 1.16rem、字重 900、深色高对比并压紧行距，移动端提升至 0.82rem；保持向上箭头、按钮固定位置和收起逻辑不变。`npm run lint`、`npm run build`、Impeccable 检测通过。未上传 GitHub、未部署云端 | site/app/globals.css, docs/HANDOFF.md |
+| 2026-08-11 | Codex | 按用户要求重排右侧收起入口：将“收起档案”拆成两行，并在下方增加向上箭头；箭头采用同源棕橙色、加粗字形和轻微悬停上移，移动端同步缩放。未改变按钮固定位置与点击返回索引逻辑。`npm run lint`、`npm run build`、Impeccable 检测通过。未上传 GitHub、未部署云端 | site/app/page.tsx, site/app/globals.css, docs/HANDOFF.md |
+| 2026-08-11 | Codex | 按用户反馈继续强化“收起档案”标签：桌面端提升至 1rem、字重 800、加深颜色并加入轻微白色文字高光，移动端提升至 0.72rem；按钮位置、Logo 和滚动固定行为保持不变。`npm run lint`、`npm run build`、Impeccable 检测通过。未上传 GitHub、未部署云端 | site/app/globals.css, docs/HANDOFF.md |
+| 2026-08-11 | Codex | 按用户反馈放大右侧固定收起侧轨中的“收起档案”标签：桌面端字号提高至 0.82rem 并提高字重，移动端提高至 0.62rem；不改变按钮位置、Logo 和滚动固定行为。`npm run lint`、`npm run build`、Impeccable 检测通过。未上传 GitHub、未部署云端 | site/app/globals.css, docs/HANDOFF.md |
+| 2026-08-11 | Codex | 按用户要求建立 `news_summary/` 专有交接：把当前阶段已提到的 7 个新闻事件（红内裤、茶叶、鲜鸡蛋、尝面员工、彩礼、降薪、座谈会发言稿）总结为总览 HANDOFF + 每事件详情文件，逐条按用户指定的四级可信度（官方/第三方媒体/自媒体/传言）标注来源并标注事件时间；信息全部来自已审核知识库与热点档案，未虚构。供 Codex 后续设计热点前端与排版 | pangdonglai_project/news_summary/HANDOFF.md, pangdonglai_project/news_summary/events/01~07-*.md, docs/HANDOFF.md |
+| 2026-08-11 | Codex | 按用户要求将详情页收起入口改为最右端固定悬浮侧轨：按钮脱离热点区块展开动画的坐标系，使用 `position: fixed` 垂直居中，增强尺寸、边缘贴合、阴影和橙/绿竖向强调线；滚动 420px 前后视口位置保持不变，点击返回热点索引并恢复 `#hotspot-archive`。`npm run lint`、`npm run build`、Impeccable 检测和浏览器固定位置/收起路径通过。未上传 GitHub、未部署云端 | site/app/page.tsx, site/app/globals.css, docs/HANDOFF.md |
+| 2026-08-11 | Codex | 按用户要求在新闻详情页右侧增加 Logo 收起入口：按钮不再使用项目宣传图中的大标题，而使用紧凑 DL 标志、上方火焰标记和 PANDONG LAI 字标；点击后返回热点索引，悬停抬升并提供焦点样式，桌面无横向溢出，移动端缩小适配。`npm run lint`、`npm run build`、Impeccable 检测和浏览器详情/悬停/收起路径通过。未上传 GitHub、未部署云端 | site/app/page.tsx, site/app/globals.css, docs/HANDOFF.md |
+| 2026-08-11 | Codex | 按用户补充要求将热点档案背景改为新闻元素：使用内置生图模式生成新闻编辑台/档案桌面背景，包含报纸校样、新闻照片、剪报、采访记录与纸张证据，中心保留可读留白；锚点改为“事件日期 + 新闻标题 + 进入箭头”的编辑台卡片，详情态同步使用新闻背景。`npm run lint`、`npm run build`、Impeccable 检测、桌面索引/悬停/详情路径通过，日期显示正确且无横向溢出；手机响应式 CSS 已静态核验。未上传 GitHub、未部署云端 | site/public/hotspot-news-archive-bg.png, site/app/page.tsx, site/app/globals.css, docs/HANDOFF.md |
+| 2026-08-11 | Codex | 按用户反馈重做热点索引整体构图：替换旧柔雾背景与椭圆瓷片按钮为方向性釉彩档案背景和不对称新闻档案条；入口仅保留事件标题，加入左侧色带、右侧箭头、轻微弹性落座、悬停纹理位移与键盘焦点反馈；详情页继续复用新背景并保持事实、来源、返回交互。新背景由内置生图模式生成并压缩为 165 KB WebP。`npm run lint`、`npm run build`、Impeccable 检测、桌面索引/悬停/详情/返回路径通过；浏览器当前无可用视口模拟能力，手机响应式 CSS 已静态核验。未上传 GitHub、未部署云端 | site/public/hotspot-archive-field-v2.webp, site/app/globals.css, docs/HANDOFF.md |
+| 2026-08-11 | Codex | 按用户二次反馈重做热点视觉：关键词气泡不再使用独立三色渐变，而是裁切同一张背景釉纹形成有机瓷片，悬停时纹理与高光同步游移；展开详情改为连续釉彩档案空间，主档案、资料状态、时间线节点、阅读说明、来源瓷片和继续提问入口统一材质，同时去除旧扫描线、图钉纸条和装饰性英文眉题。保留原有事实、来源、返回/跳转、响应式和减少动态兼容。`npm run lint`、`npm run build`、Impeccable 检测、桌面浏览器索引/悬停/详情完整路径通过且无横向溢出；`npm test` 56/57，唯一失败仍是既有 R5C 统计旧断言。未上传 GitHub、未部署云端 | site/app/globals.css, docs/HANDOFF.md |
+| 2026-08-11 | Codex | 按用户反馈为热点索引加入生成式多色陶瓷釉彩背景；关键词锚点改为带釉面高光、内外阴影和不规则圆角的陶瓷气泡，加入轻微弹性落座、分批延迟、鼠标悬停抬升/高光流动、键盘焦点与按压反馈；详情态降低背景纹理强度；补充手机全宽布局和 `prefers-reduced-motion` 兼容。背景压缩为 84 KB WebP。`npm run lint`、`npm run build`、Impeccable 检测、桌面端浏览器展示/悬停/详情跳转通过；手机端浏览器模拟受本地 URL 安全策略限制，已完成响应式 CSS 静态核验；`npm test` 56/57，通过项之外仍是既有 R5C 统计旧断言。未上传 GitHub、未部署云端 | site/public/hotspot-ceramic-glaze-bg.webp, site/app/page.tsx, site/app/globals.css, docs/HANDOFF.md |
+| 2026-08-11 | Codex | 按用户反馈将热点档案索引收敛为浅色关键词气泡：索引层仅保留事件标题锚点，移除额外标题、说明、状态、数量、日期和卡片信息；点击气泡进入现有事件详情；详情区域同步改为浅色，并修复索引/详情容器默认焦点边框。`npm run lint`、`npm run build`、Impeccable 检测、桌面/手机交互检查通过；未上传 GitHub、未部署云端 | site/app/page.tsx, site/app/globals.css, docs/HANDOFF.md |
 | 2026-08-10 | Codex | 按用户要求清理 GitHub 仓库历史：先提交工作树未提交的文档/评测改动；用 `--force-with-lease` 将本地 main（120 个提交，含热点 UI）接管 `origin/main`；删除 `archive/html-line-2026-07`（Kimi 单文件版 HTML 与 docx，用户确认不需要存档）与 `feature/keyword-orbit-hero` 两个旧分支；保留 `main-2026-08-07/08` 日期分支。远端旧 main 的 17 个网页上传提交成为孤立历史（GitHub 侧仍可找回，未物理抹除） | docs/HANDOFF.md, docs/PLAN.md, docs/RAG_CULTURE_ROADMAP.md, pangdonglai_project/evaluation/rag-culture-r5c-worker-live-v1.json |
 | 2026-08-10 | Codex | 按用户反馈将热点档案改为两级浏览：打开 02 后先显示事件关键词索引卡片，点击卡片才进入单事件详情；桌面三列、平板两列、手机单列，详情支持返回索引；`npm run lint`、`npm run build`、impeccable 检查及桌面/手机交互验证通过。当前仅有 1 件已审核热点，未虚构额外事件，未上传 GitHub、未部署云端 | site/app/page.tsx, site/app/globals.css, site/data/hotspots.ts, docs/HANDOFF.md |
 | 2026-08-10 | Codex | 按用户反馈将热点档案从信息面板推进为“案头证据桌”：新增 FIELD NOTE 标记、事件水印、扫描线、状态雷达、时间线节点语义和图钉剪报来源；`npm run lint`、`npm run build`、impeccable 检查与桌面/手机浏览器检查通过。未上传 GitHub、未部署云端 | site/app/page.tsx, site/app/globals.css, docs/HANDOFF.md |

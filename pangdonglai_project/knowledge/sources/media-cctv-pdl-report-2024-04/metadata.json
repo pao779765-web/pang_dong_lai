@@ -1,0 +1,46 @@
+{
+  "id": "media-cctv-pdl-report-2024-04",
+  "title": "央视《经济半小时》正面报道胖东来（2024-04-18）",
+  "type": "media_positive_report",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "media_narrative",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "权威媒体（央视）公开报道记录",
+  "answerMode": "reported_account",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-12",
+    "basis": "2026-08-12 检索核验；B 站等平台确认 2024-04-18 播出；2026 年「被央视点名」系旧闻误读；用户确认 8~15 全部按协议入库。"
+  },
+  "source": {
+    "publisher": "央视财经频道《经济半小时》",
+    "sourceType": "media",
+    "url": "https://tv.cctv.com/",
+    "publishedAt": "2024-04-18",
+    "verifiedAt": "2026-08-12",
+    "alternateUrls": []
+  },
+  "scope": [
+    "2024-04-18 央视财经频道《经济半小时》播出「探秘中国胖东来，凭什么那么火」",
+    "报道从商品品质、服务细节（冰袋贴心服务、肉类打折逻辑、7 天无理由退货等）正面呈现",
+    "2026 年网络流传「胖东来被央视点名半小时」为 2024 年节目旧闻传播，实为正面报道"
+  ],
+  "answeringRules": [
+    "必须使用「据央视《经济半小时》报道」等归因措辞，并带日期。",
+    "该期节目播出时间为 2024-04-18，禁止表述为 2026 年新报道。",
+    "央视正面报道是媒体评价，不代表企业所有经营环节无问题。",
+    "「投资 50 亿建食品安全中心」的说法未在该期节目核验到，不得作为事实引用。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-cctv-pdl-report-2024-04/content.md",
+    "chunksPath": "chunks/media-cctv-pdl-report-2024-04.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-12",
+    "notes": "2026-08-12 核验；具体期号/完整内容未逐帧核验，要点来自公开转载；partial_text。"
+  }
+}
