@@ -5,7 +5,7 @@
 **更新时间：** 2026-08-22
 
 **当前执行者：** Grok 按用户要求将 NEWS-UI-01～07 与事件 7～15 知识库增量提交并推送 GitHub `main`，随后部署 CloudBase。
-**Git 状态：** 本地 `main` 在 `06361cd` 之上提交本次发布；未纳入 `.agents/`、`.tmp_qa/`、`skills-lock.json`。CloudBase 现网此前为 `pangdonglai-site-017`（2026-08-08），本轮重新发布。
+**Git 状态：** 本地 `main` 已推送到 GitHub（`ca1e52b`）。未纳入 `.agents/`、`.tmp_qa/`、`skills-lock.json`。CloudBase 现网为 `pangdonglai-site-018`（100% 流量，2026-08-22 14:00:06），替换此前的 `pangdonglai-site-017`。
 
 ---
 
@@ -124,7 +124,7 @@
 - [x] **Codex NEWS-UI-05（用户明确要求）**：将热点事件一级索引改为居中的两列网格，桌面端每行两个并统一卡片宽度、间距和对齐；取消原先影响行列秩序的错落旋转，保留新闻档案卡材质与悬停反馈；760px 以下回退单列。`npm run lint`、`npm test`（58/58）和 Impeccable 检测通过；未上传 GitHub、未部署云端。
 - [x] **Codex NEWS-UI-06（用户明确要求）**：将每个新闻详情页的来源按“官方 / 第三方媒体 / 自媒体”分组展示；为已保存 URL 的来源增加明确的“打开来源”入口，并对未保存原帖直链的条目保留“链接待核验”状态，不伪造链接。`npm run lint`、`npm test`（58/58）、`git diff --check` 和 Impeccable 检测通过；未上传 GitHub、未部署云端。
 - [x] **Codex NEWS-UI-07（用户明确要求）**：将来源链接从详情页下方的“可核验来源”区域迁移到截图所示的四类来源账本中；每个来源格子内直接展示对应链接，并移除重复的下方来源分组。`npm run lint`、`npm test`（58/58）、`git diff --check` 和 Impeccable 检测通过；未上传 GitHub、未部署云端。
-- [x] **Grok DEPLOY-GH-CB-01（用户明确要求）**：将 NEWS-UI-01～07、事件 7～15 知识库增量（39 份资料、167 片段、10 案例）与新闻专档提交并推送 GitHub `main`；CloudBase 最小包含 `knowledge/vector/r5-general-index.json`，不写入密钥。`npm run lint`、`npm test`（58/58）通过。向量索引仍为 R5C 冻结基线，未重建。
+- [x] **Grok DEPLOY-GH-CB-01（用户明确要求）**：将 NEWS-UI-01～07、事件 7～15 知识库增量（39 份资料、167 片段、10 案例）与新闻专档提交并推送 GitHub `main`（`ca1e52b`）；CloudBase `pangdonglai-site-018` 已 100% 切流。最小包含 `knowledge/vector/r5-general-index.json`，不写入密钥。公网 `/` 与 `/healthz` 返回 200，首页含座谈会/擀面皮/人格尊严等热点且不含事件 12；1 个 CSS、5 个 JS 与门店图 200。`npm run lint`、`npm test`（58/58）通过。向量索引仍为 R5C 冻结基线，未重建。
 - [ ] Codex（可选）QA-02：微调 360 视口关键词坐标。
 - [ ] Codex（可选）QA-03：锚点后焦点落到栏目标题。
 - [ ] 用户确认 AI 对话区浅色重构视觉是否满意。
@@ -147,7 +147,7 @@
 
 待用户确认：AI 对话区新视觉、文化六条主线的最终取舍，以及是否进入 R1 资料补充和 R6 真实用户试用。
 
-当前发布状态：NEWS-UI-01～07 与事件 7～15 知识库增量已纳入本次 GitHub / CloudBase 发布；向量索引仍冻在 R5C 的 135 条。正式域名仍待 ICP 备案后绑定。真机/微信内置浏览器本轮未复测。
+当前发布状态：NEWS-UI-01～07 与事件 7～15 知识库增量已推送 GitHub `ca1e52b`，CloudBase `pangdonglai-site-018` 已 100% 切流；向量索引仍冻在 R5C 的 135 条。正式域名仍待 ICP 备案后绑定。真机/微信内置浏览器本轮未复测。
 
 ---
 
@@ -156,13 +156,13 @@
 ### 给 Codex
 
 1. 资料架构只维护 `pangdonglai_project/knowledge/**`；禁止手工修改 `knowledge/compiled/knowledge-base.json` 或恢复旧根文件。
-2. CloudBase 已更新到版本 007；后续发布务必带上 `knowledge/vector/r5-general-index.json`，见 `docs/DEPLOY_CN.md`。
+2. CloudBase 现网为 `pangdonglai-site-018`；后续发布务必带上 `knowledge/vector/r5-general-index.json`，见 `docs/DEPLOY_CN.md`。
 3. 所有 RAG 工作先读 `docs/RAG_RESEARCH_PROTOCOL.md` 和 `docs/RAG_CULTURE_ROADMAP.md`；不修改原始 HTML，完成后更新本 HANDOFF 并小步提交。
 
 ### 给 Grok
 
 1. 先完整阅读 `docs/RAG_RESEARCH_PROTOCOL.md` 与 `docs/RAG_CULTURE_ROADMAP.md`。
-2. 线上默认 BM25；若要开 hybrid 需用户明确授权并配置 TokenHub 服务端变量。
+2. 本轮未改 CloudBase 服务端环境变量。本地默认仍为 BM25；云端此前已启用 hybrid。新开或关闭 hybrid 需用户明确授权。
 3. 未经用户批准不得新增来源入库；部署与密钥只走云端环境变量，禁止写入镜像/Git。
 
 ### 给用户
@@ -202,7 +202,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
-| 2026-08-22 | Grok | 按用户要求发布 NEWS-UI-01～07 与事件 7～15 知识库增量：提交并推送 GitHub `main`；CloudBase 最小包含向量索引，不写入密钥。`npm run lint`、`npm test`（58/58）通过。版本号与公网验收见本行后续补充 | docs/HANDOFF.md, pangdonglai_project/knowledge/**, pangdonglai_project/news_summary/**, pangdonglai_project/site/app/{page.tsx,globals.css}, pangdonglai_project/site/data/hotspots.ts, pangdonglai_project/site/tests/rendered-html.test.mjs, pangdonglai_project/site/public/hotspot-*.{webp,png} |
+| 2026-08-22 | Grok | 按用户要求发布 NEWS-UI-01～07 与事件 7～15 知识库增量：GitHub `main` 推送 `ca1e52b`；CloudBase `pangdonglai-site-018` 100% 切流。公网 `/`、`/healthz`、CSS/JS/门店图均为 200；首页含 14 件热点（事件 12 未接入）。密钥未写入镜像或 Git。`npm run lint`、`npm test`（58/58）通过 | docs/HANDOFF.md, pangdonglai_project/knowledge/**, pangdonglai_project/news_summary/**, pangdonglai_project/site/app/{page.tsx,globals.css}, pangdonglai_project/site/data/hotspots.ts, pangdonglai_project/site/tests/rendered-html.test.mjs, pangdonglai_project/site/public/hotspot-*.{webp,png} |
 | 2026-08-12 | Codex | 按协议将事件 8~15 全部入库知识库（用户批准）：新增 8 份 source（擀面皮/伤人案/人格尊严公示/郑州开店/央视报道/员工流失/生活广场关闭/梦之城，均 `partial_text`）+ 3 个 case（noodle-skin、store-assault、dignity-violation），事件 11~15 走一般轨；manifest 更新为 39 份资料、167 片段、167 Claim、10 案例；检索验证 8 问全部正确路由召回；同步更新知识库计数断言（139→167），`npm test` 58/58、lint 通过；BM25 可用，向量索引保持 R5C 冻结基线未重建。未上传 GitHub、未部署云端 | knowledge/cases/{noodle-skin-food-safety-2024-06,store-assault-case-2025-11,dignity-violation-disclosure-2026-08}.json, knowledge/sources/{media-pdl-noodle-skin-food-safety-2024-06,media-pdl-store-assault-2025-11,media-pdl-dignity-violation-disclosure-2026-08,media-pdl-zhengzhou-store-2026,media-cctv-pdl-report-2024-04,official-pdl-turnover-2026-h1,media-pdl-life-plaza-closure-2026,media-pdl-dream-city-project-2026}/**, knowledge/chunks/{对应 8 个}.jsonl, knowledge/manifest.json, knowledge/compiled/knowledge-base.json, site/tests/rendered-html.test.mjs, pangdonglai_project/news_summary/HANDOFF.md, pangdonglai_project/news_summary/events/08~15-*.md, docs/HANDOFF.md |
 | 2026-08-12 | Codex | 按用户清单完成 NEWS-UI-02：将事件 8、9、10、11、13、14、15 接入统一热点索引和二级详情；保留事件时间线、四级来源、结论边界与不可点击来源卡，事件 8～15 已按协议获批入库；事件 12 暂未接入。`npm run lint`、`npm test`（58/58）和 Impeccable 检测通过。未上传 GitHub、未部署云端 | pangdonglai_project/site/data/hotspots.ts, pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/app/globals.css, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md, pangdonglai_project/news_summary/HANDOFF.md |
 | 2026-08-12 | Codex | 实现每个已展示事件的“继续追问”：开放事件 8、9、10、11、13、14、15 的快捷问题；点击时将事件专属追问上下文与具体问题一起发送给资料助手，避免只按孤立问题检索；事件 12 仍按上一轮清单暂未接入。`npm run lint`、`npm test`（58/58）和 Impeccable 检测通过 | pangdonglai_project/site/data/hotspots.ts, pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
@@ -322,4 +322,4 @@
 
 ## 阻塞
 
-- **上线：** CloudBase 公网访问与 AI 对话均已可用；只剩正式域名需在完成 ICP 备案后绑定。
+- **上线：** CloudBase 公网访问与 AI 对话均已可用（现网 `pangdonglai-site-018`）；只剩正式域名需在完成 ICP 备案后绑定。
