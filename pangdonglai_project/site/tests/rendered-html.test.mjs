@@ -406,6 +406,8 @@ test("keeps every rendered hotspot follow-up contextual and source-graded", asyn
   assert.doesNotMatch(hotspots, /fake-seminar-speech|bride-price-initiative/);
   assert.match(hotspots, /red-underwear-color-libel/);
   assert.match(hotspots, /tea-fly-feedback/);
+  assert.match(hotspots, /顾客在抖音平台反馈茶叶中有苍蝇/);
+  assert.doesNotMatch(hotspots, /title: "顾客抖音反馈茶叶有苍蝇"/);
   assert.match(hotspots, /egg-canthaxanthin-feedback/);
   assert.match(hotspots, /noodle-tasting-discipline/);
   assert.match(hotspots, /salary-cut-rumor/);

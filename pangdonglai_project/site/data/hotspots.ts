@@ -155,7 +155,7 @@ export const featuredHotspot: HotspotEvent = {
 
 const teaFlyHotspot: HotspotEvent = {
   id: "2026-01-05-tea-fly-feedback",
-  title: "顾客抖音反馈茶叶有苍蝇",
+  title: "顾客在抖音平台反馈茶叶中有苍蝇",
   summary:
     "顾客经抖音反馈茶叶有苍蝇类问题后，胖东来发布《情况说明（一）》，称已组建调查组、下架排查并赴厂家复核。截至最近核验日，未见可核验的后续说明或完整最终调查报告。",
   status: "持续关注",
