@@ -4,8 +4,8 @@
 
 **更新时间：** 2026-08-23
 
-**当前执行者：** Codex 已按用户要求将所有热点事件详情中的事实摘要标签统一改为「总体事件流程：」。
-**Git 状态：** 本轮详情文案与回归测试改动已提交；未纳入 `.agents/`、`.tmp_qa/`、`skills-lock.json`。CloudBase 现网仍为 `pangdonglai-site-018`，本轮未部署。
+**当前执行者：** Codex 已按用户要求删除首页 Hero 的「01 / 从标签走向理解」眉题。
+**Git 状态：** 本轮首页眉题移除与回归测试改动已提交；未纳入 `.agents/`、`.tmp_qa/`、`skills-lock.json`。CloudBase 现网仍为 `pangdonglai-site-018`，本轮未部署。
 
 ---
 
@@ -207,6 +207,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-23 | Codex | 按用户截图删除首页 Hero 的「01 / 从标签走向理解」眉题及对应 CSS，保留主标题、介绍文案和 A/B 入口；`npm run lint`、`npm test`（58/58）和 Impeccable 检测通过。未部署 | pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/app/globals.css, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-23 | Codex | 按用户要求将事件详情标签由「总体时间流程：」调整为「总体事件流程：」；保留事实摘要正文。`npm run lint`、`npm test`（58/58）和 Impeccable 检测通过。未部署 | pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-23 | Grok | 将茶叶苍蝇事件显示名改为「顾客在抖音平台反馈茶叶中有苍蝇」 | pangdonglai_project/site/data/hotspots.ts, pangdonglai_project/news_summary/events/02-tea-fly-feedback-2026-01.md, pangdonglai_project/news_summary/HANDOFF.md, pangdonglai_project/knowledge/cases/tea-fly-feedback-2026-01.json, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-23 | Grok | 按用户截图完全剔除座谈会发言稿与彩礼倡议：删除案例/来源/切片/专档/前端热点，并去掉对应向量条目。知识库 37/158/8。lint/test 58/58。未部署 | pangdonglai_project/knowledge/**, pangdonglai_project/site/data/hotspots.ts, pangdonglai_project/news_summary/**, pangdonglai_project/evaluation/rag-culture-questions-v1.json, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |

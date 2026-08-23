@@ -1332,6 +1332,7 @@ test("server-renders the Pangdonglai culture homepage", async () => {
   assert.match(html, /不要只停留在表面——/);
   assert.match(html, /理解胖东来/);
   assert.match(html, /从理解人开始/);
+  assert.doesNotMatch(html, /从标签走向理解|hero-eyebrow/);
   assert.match(html, /href="#explore"/);
   assert.match(html, /href="#ai-dialogue"/);
   assert.match(html, /aria-controls="store-directory"/);

@@ -209,31 +209,6 @@ button:disabled {
   text-align: center;
 }
 
-.hero-eyebrow {
-  display: flex;
-  margin: 0 0 clamp(21px, 3vh, 34px);
-  align-items: center;
-  gap: 11px;
-  color: #ad5f3b;
-  font-size: clamp(0.64rem, 0.85vw, 0.75rem);
-  font-weight: 600;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  animation: reveal-up 0.9s 0.15s both;
-}
-
-.hero-eyebrow span {
-  display: inline-grid;
-  width: 28px;
-  height: 28px;
-  place-items: center;
-  border: 1px solid rgba(173, 95, 59, 0.5);
-  border-radius: 50%;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 0.66rem;
-  letter-spacing: 0;
-}
-
 .hero-title {
   margin: 0;
   color: #4e2417;
@@ -3372,10 +3347,6 @@ button:disabled {
 
   .hero-title {
     font-size: clamp(3rem, 8.5vh, 5.1rem);
-  }
-
-  .hero-eyebrow {
-    margin-bottom: 18px;
   }
 
   .hero-intro {

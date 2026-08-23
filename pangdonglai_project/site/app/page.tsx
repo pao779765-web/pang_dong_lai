@@ -565,10 +565,6 @@ export default function Home() {
         </header>
 
         <div id="top" className="hero-core">
-          <p className="hero-eyebrow">
-            <span>01</span>
-            从标签走向理解
-          </p>
           <h1 id="hero-title" className="hero-title">
             <span className="title-question">不要只停留在表面——</span>
             <span>理解胖东来</span>
