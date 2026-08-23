@@ -705,7 +705,7 @@ export default function Home() {
                       </time>
                       <p className="hotspot-summary">{selectedHotspot.summary}</p>
                       <div className="hotspot-known">
-                        <h4>总体时间流程：</h4>
+                        <h4>总体事件流程：</h4>
                         <p>{selectedHotspot.known.replace(/^已确认的是：/, "")}</p>
                       </div>
                     </div>

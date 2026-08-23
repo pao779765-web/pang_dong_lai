@@ -450,7 +450,7 @@ test("keeps every rendered hotspot follow-up contextual and source-graded", asyn
   assert.match(page, /hotspot-evidence-source-link/);
   assert.match(page, /打开来源/);
   assert.match(page, /链接待核验/);
-  assert.match(page, /<h4>总体时间流程：<\/h4>/);
+  assert.match(page, /<h4>总体事件流程：<\/h4>/);
   assert.doesNotMatch(page, /<h4>目前能确认的事实<\/h4>/);
   assert.match(page, /selectedHotspot\.known\.replace\(\/\^已确认的是：\//);
   assert.doesNotMatch(page, /hotspot-source-block/);
