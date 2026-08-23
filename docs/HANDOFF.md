@@ -4,8 +4,8 @@
 
 **更新时间：** 2026-08-23
 
-**当前执行者：** Grok 按 `$impeccable` polish 优化首页 01/02 入口按钮。
-**Git 状态：** 本地 `main` 含 UI-EXPLORE-02（`79112a5`）与本轮按钮样式改动。未纳入 `.agents/`、`.tmp_qa/`、`skills-lock.json`。CloudBase 现网仍为 `pangdonglai-site-018`，本轮未部署。
+**当前执行者：** Grok 按 Impeccable typeset 优化 01/02 按钮文案层次。
+**Git 状态：** 本地 `main` 在 `5bd4125` 之上有按钮文字排版改动。未纳入 `.agents/`、`.tmp_qa/`、`skills-lock.json`。CloudBase 现网仍为 `pangdonglai-site-018`，本轮未部署。
 
 ---
 
@@ -127,6 +127,7 @@
 - [x] **Grok DEPLOY-GH-CB-01（用户明确要求）**：将 NEWS-UI-01～07、事件 7～15 知识库增量（39 份资料、167 片段、10 案例）与新闻专档提交并推送 GitHub `main`（`ca1e52b`）；CloudBase `pangdonglai-site-018` 已 100% 切流。最小包含 `knowledge/vector/r5-general-index.json`，不写入密钥。公网 `/` 与 `/healthz` 返回 200，首页含座谈会/擀面皮/人格尊严等热点且不含事件 12；1 个 CSS、5 个 JS 与门店图 200。`npm run lint`、`npm test`（58/58）通过。向量索引仍为 R5C 冻结基线，未重建。
 - [x] **Grok UI-EXPLORE-02（用户明确要求）**：删除首页 Explore 区三块装饰卡「标签如何形成 / 做法如何落地 / 证据来自哪里」及对应 `lenses` 数据与 `.lens-*` 样式；保留 `#explore`、A 锚点、门店 01 与热点 02。Explore 区不再占满整屏。`npm run lint`、`npm test`（58/58）通过。未上传 GitHub、未部署云端。
 - [x] **Grok UI-CHAPTERS-03（用户要求 `$impeccable` 优化 01/02 按钮）**：把两枚入口从空心果冻块收成目录封面：大号 01/02 填满留白，标题与箭头落在底部一行；门店偏铜、热点偏墨；Unicode 箭头改为 SVG；展开态箭头朝上且不再错误旋转。文案与展开逻辑不变。Impeccable detect 无命中；`npm run lint`、`npm test`（58/58）通过。未部署。
+- [x] **Grok UI-CHAPTERS-04（用户要求优化按钮文字与排版）**：标题改为成对四字宋体「各个门店 / 热点事件」，副行说明「信息、位置等具体情况 / 来源、时间线与边界」；去掉把「热点事件」切断的换行。原「查看…」完整说法保留在 `aria-label`。type detect 无命中；lint/test 58/58。未部署。
 - [ ] Codex（可选）QA-02：微调 360 视口关键词坐标。
 - [ ] Codex（可选）QA-03：锚点后焦点落到栏目标题。
 - [ ] 用户确认 AI 对话区浅色重构视觉是否满意。
@@ -204,6 +205,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-23 | Grok | Impeccable typeset：01/02 按钮改为四字主标题 + 副行说明，展开态同样四字；原「查看…」进 aria-label。type detect 无命中；lint/test 58/58。未部署 | pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/app/globals.css, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-23 | Grok | `$impeccable` polish：01/02 入口改为目录封面构图（大号编号、底部标题行、门店/热点材质区分、SVG 箭头）；修复展开态箭头旋转。detect 无命中；lint/test 58/58。未部署 | pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/app/globals.css, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-23 | Grok | 按用户截图删除首页三块装饰说明（标签如何形成 / 做法如何落地 / 证据来自哪里），收紧 Explore 区留白；保留门店与热点入口、A 锚点和 `#explore`。`npm run lint`、`npm test`（58/58）通过。未部署 | pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/app/globals.css, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-22 | Grok | 按用户要求发布 NEWS-UI-01～07 与事件 7～15 知识库增量：GitHub `main` 推送 `ca1e52b`；CloudBase `pangdonglai-site-018` 100% 切流。公网 `/`、`/healthz`、CSS/JS/门店图均为 200；首页含 14 件热点（事件 12 未接入）。密钥未写入镜像或 Git。`npm run lint`、`npm test`（58/58）通过 | docs/HANDOFF.md, pangdonglai_project/knowledge/**, pangdonglai_project/news_summary/**, pangdonglai_project/site/app/{page.tsx,globals.css}, pangdonglai_project/site/data/hotspots.ts, pangdonglai_project/site/tests/rendered-html.test.mjs, pangdonglai_project/site/public/hotspot-*.{webp,png} |

@@ -1335,6 +1335,15 @@ test("server-renders the Pangdonglai culture homepage", async () => {
   assert.match(html, /aria-controls="store-directory"/);
   assert.match(html, /aria-controls="hotspot-archive"/);
   assert.match(html, /chapter-body/);
+  assert.match(html, /chapter-copy/);
+  assert.match(html, /chapter-lede/);
+  assert.match(html, />各个门店</);
+  assert.match(html, />热点事件</);
+  assert.match(html, /信息、位置等具体情况/);
+  assert.match(html, /来源、时间线与边界/);
+  assert.match(html, /aria-label="查看各个门店信息、位置等具体情况"/);
+  assert.match(html, /aria-label="查看热点事件"/);
+  assert.doesNotMatch(html, /查看热点<br|查看各个门店<br/);
   assert.match(html, /class="chapter-arrow"/);
   assert.match(html, /<svg viewBox="0 0 24 24"/);
   assert.doesNotMatch(html, /chapter-arrow[^>]*>[↗↘↑↓]/);
@@ -1370,6 +1379,8 @@ test("ships phase-1 mobile CSS baselines for touch and iOS inputs", async () => 
   assert.match(css, /chat-suggest-chip[\s\S]*?min-height:\s*44px/);
   assert.doesNotMatch(css, /\.lens-grid|\.lens-card|\.lens-meta/);
   assert.match(css, /\.chapter-body/);
+  assert.match(css, /\.chapter-copy/);
+  assert.match(css, /\.chapter-lede/);
   assert.match(css, /\.chapter-index[\s\S]*?clamp\(6rem/);
   assert.match(css, /\.chapter-arrow svg/);
 });

@@ -627,10 +627,21 @@ export default function Home() {
       <section id="explore" className="explore-section" tabIndex={-1} aria-label="探索主题">
         <div className="section-shell">
           <aside ref={chaptersRef} className="next-chapters" aria-label="内容板块">
-            <button ref={storeToggleRef} className={`chapter-card chapter-card-link${storesOpen && !storesClosing ? " is-expanded" : ""}`} type="button" onClick={openStoreDirectory} aria-expanded={storesOpen && !storesClosing} aria-controls="store-directory">
+            <button
+              ref={storeToggleRef}
+              className={`chapter-card chapter-card-link${storesOpen && !storesClosing ? " is-expanded" : ""}`}
+              type="button"
+              onClick={openStoreDirectory}
+              aria-expanded={storesOpen && !storesClosing}
+              aria-controls="store-directory"
+              aria-label={storesOpen && !storesClosing ? "收起门店信息" : "查看各个门店信息、位置等具体情况"}
+            >
               <span className="chapter-index" aria-hidden="true">01</span>
               <span className="chapter-body">
-                <h3>{storesOpen && !storesClosing ? <>收起门店<br />信息</> : <>查看各个门店<br />信息、位置等具体情况</>}</h3>
+                <span className="chapter-copy">
+                  <h3>{storesOpen && !storesClosing ? "收起门店" : "各个门店"}</h3>
+                  <p className="chapter-lede">信息、位置等具体情况</p>
+                </span>
                 <ChapterArrow expanded={storesOpen && !storesClosing} />
               </span>
             </button>
@@ -641,10 +652,14 @@ export default function Home() {
               onClick={openHotspotArchive}
               aria-expanded={hotspotOpen && !hotspotClosing}
               aria-controls="hotspot-archive"
+              aria-label={hotspotOpen && !hotspotClosing ? "收起热点档案" : "查看热点事件"}
             >
               <span className="chapter-index" aria-hidden="true">02</span>
               <span className="chapter-body">
-                <h3>{hotspotOpen && !hotspotClosing ? <>收起热点<br />档案</> : <>查看热点<br />事件</>}</h3>
+                <span className="chapter-copy">
+                  <h3>{hotspotOpen && !hotspotClosing ? "收起档案" : "热点事件"}</h3>
+                  <p className="chapter-lede">来源、时间线与边界</p>
+                </span>
                 <ChapterArrow expanded={hotspotOpen && !hotspotClosing} />
               </span>
             </button>

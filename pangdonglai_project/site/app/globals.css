@@ -704,19 +704,35 @@ button:disabled {
   z-index: 1;
   display: flex;
   width: 100%;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 18px;
+}
+
+.chapter-copy {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .chapter-card h3 {
-  max-width: 12.5em;
   margin: 0;
-  font-family: "Songti SC", SimSun, serif;
-  font-size: clamp(1.42rem, 2.05vw, 2.02rem);
+  font-family: "Songti SC", SimSun, "Times New Roman", serif;
+  font-size: clamp(1.9rem, 2.8vw, 2.55rem);
   font-weight: 400;
-  letter-spacing: -0.035em;
-  line-height: 1.22;
+  letter-spacing: 0.04em;
+  line-height: 1.12;
+}
+
+.chapter-lede {
+  max-width: 18em;
+  margin: 8px 0 0;
+  color: rgba(241, 234, 220, 0.86);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  line-height: 1.55;
 }
 
 .chapter-arrow {
@@ -2771,9 +2787,15 @@ button:disabled {
   }
 
   .chapter-card h3 {
-    max-width: 11em;
-    font-size: clamp(1.28rem, 5.2vw, 1.7rem);
-    line-height: 1.25;
+    font-size: clamp(1.7rem, 7vw, 2.05rem);
+    letter-spacing: 0.06em;
+  }
+
+  .chapter-lede {
+    max-width: 16em;
+    margin-top: 6px;
+    font-size: 0.76rem;
+    letter-spacing: 0.06em;
   }
 
   .chapter-arrow {
