@@ -4,8 +4,8 @@
 
 **更新时间：** 2026-08-23
 
-**当前执行者：** Grok 按用户要求把每题召回改为 embedding 5 + BM25 5，合计 10 个 chunks。
-**Git 状态：** 本地 `main` 含未部署的 UI/热点改动、C1 第二轮知识库增量与本轮召回 knobs。CloudBase 现网仍为 `pangdonglai-site-018`，按用户要求暂不发布。
+**当前执行者：** Grok 按用户要求启用本地向量检索（hybrid）并重启 `npm run dev`。
+**Git 状态：** 本地 `main` 含未部署的 UI/热点改动、C1 第二轮知识库增量与召回 knobs。CloudBase 现网仍为 `pangdonglai-site-018`，按用户要求暂不发布。
 
 ---
 
@@ -168,7 +168,7 @@
 ### 给 Grok
 
 1. 先完整阅读 `docs/RAG_RESEARCH_PROTOCOL.md` 与 `docs/RAG_CULTURE_ROADMAP.md`。
-2. 本轮未改 CloudBase 服务端环境变量。本地默认仍为 BM25；云端此前已启用 hybrid。新开或关闭 hybrid 需用户明确授权。
+2. 用户已明确要求本地使用向量检索。`site/.dev.vars` 现为 `RAG_RETRIEVAL_MODE=hybrid`，本地 `npm run dev` 已按 hybrid 启动。CloudBase 现网环境变量本轮未改，5+5 召回也尚未部署。新开或关闭云端 hybrid 仍需用户明确授权。
 3. 未经用户批准不得新增来源入库；部署与密钥只走云端环境变量，禁止写入镜像/Git。
 
 ### 给用户
@@ -208,6 +208,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-23 | Grok | 按用户要求启用本地 hybrid：确认 `.dev.vars` 为 hybrid，TokenHub 冒烟 `vectorApplied=true` 且召回 10 条，并重启 `npm run dev`（http://localhost:3000/）。未部署 | pangdonglai_project/site/.dev.vars（未提交）, pangdonglai_project/site/scripts/smoke-hybrid-recall.mjs, docs/HANDOFF.md |
 | 2026-08-23 | Grok | 按用户要求将每题召回改为 embedding 5 + BM25 5，合计 10 chunks；纯 BM25 也召回 10。未改 AnswerPlan 上限、未部署 | pangdonglai_project/site/shared/retrieval.mjs, pangdonglai_project/site/shared/hybrid-retrieval.mjs, pangdonglai_project/site/worker/index.ts, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-23 | Grok | 按用户批示入库 C1 第二轮：B1 approved，B2/B3/B5 limited，B4/B6 拒绝。知识库 41 份资料、172 片段。lint/test 59/59。未部署 | pangdonglai_project/knowledge/**, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/SOURCE_AUDIT_C1_02.md, docs/RAG_APPROVALS.md, docs/HANDOFF.md |
 | 2026-08-23 | Codex | 按用户截图删除首页 Hero 的「01 / 从标签走向理解」眉题及对应 CSS，保留主标题、介绍文案和 A/B 入口；`npm run lint`、`npm test`（58/58）和 Impeccable 检测通过。未部署 | pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/app/globals.css, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
