@@ -55,6 +55,16 @@ function formatStoreHours(tuesdayOpen: boolean) {
   return `夏季（6–8月）09:30–21:30；其他月份：周一、三、四、日 09:30–21:00，周五、六 09:30–21:30；周二${tuesdayOpen ? "正常营业" : "闭店"}`;
 }
 
+function ChapterArrow({ expanded }: { expanded: boolean }) {
+  return (
+    <span className="chapter-arrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24" focusable="false">
+        {expanded ? <path d="M5 14.5 12 7.5l7 7" /> : <path d="M7 17 17 7M9 7h8v8" />}
+      </svg>
+    </span>
+  );
+}
+
 const suggestedQuestions = ["胖东来周二是否闭店？", "茶叶反馈后企业公开怎么说的？是最终结论吗？", "新乡三胖在哪里？"];
 
 const credibilityLabels: Record<HotspotCredibility, string> = {
@@ -618,9 +628,11 @@ export default function Home() {
         <div className="section-shell">
           <aside ref={chaptersRef} className="next-chapters" aria-label="内容板块">
             <button ref={storeToggleRef} className={`chapter-card chapter-card-link${storesOpen && !storesClosing ? " is-expanded" : ""}`} type="button" onClick={openStoreDirectory} aria-expanded={storesOpen && !storesClosing} aria-controls="store-directory">
-              <span className="chapter-index">01</span>
-              <h3>{storesOpen && !storesClosing ? <>收起门店<br />信息</> : <>查看各个门店<br />信息、位置等具体情况</>}</h3>
-              <span className="chapter-arrow" aria-hidden="true">{storesOpen && !storesClosing ? "↑" : "↘"}</span>
+              <span className="chapter-index" aria-hidden="true">01</span>
+              <span className="chapter-body">
+                <h3>{storesOpen && !storesClosing ? <>收起门店<br />信息</> : <>查看各个门店<br />信息、位置等具体情况</>}</h3>
+                <ChapterArrow expanded={storesOpen && !storesClosing} />
+              </span>
             </button>
             <button
               ref={hotspotToggleRef}
@@ -630,9 +642,11 @@ export default function Home() {
               aria-expanded={hotspotOpen && !hotspotClosing}
               aria-controls="hotspot-archive"
             >
-              <span className="chapter-index">02</span>
-              <h3>{hotspotOpen && !hotspotClosing ? <>收起热点<br />档案</> : <>查看热点<br />事件</>}</h3>
-              <span className="chapter-arrow" aria-hidden="true">{hotspotOpen && !hotspotClosing ? "↑" : "↘"}</span>
+              <span className="chapter-index" aria-hidden="true">02</span>
+              <span className="chapter-body">
+                <h3>{hotspotOpen && !hotspotClosing ? <>收起热点<br />档案</> : <>查看热点<br />事件</>}</h3>
+                <ChapterArrow expanded={hotspotOpen && !hotspotClosing} />
+              </span>
             </button>
           </aside>
         </div>

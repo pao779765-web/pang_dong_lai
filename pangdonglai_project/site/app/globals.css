@@ -588,58 +588,60 @@ button:disabled {
 
 .next-chapters {
   display: grid;
-  width: min(940px, 100%);
+  width: min(1080px, 100%);
   margin: 0 auto;
-  gap: clamp(16px, 2.2vw, 26px);
+  gap: clamp(14px, 2vw, 22px);
   grid-template-columns: repeat(2, minmax(0, 1fr));
   color: var(--paper);
 }
 
 .chapter-card {
+  --chapter-sheen: rgba(255, 247, 232, 0.18);
   position: relative;
   display: flex;
   overflow: hidden;
-  min-height: clamp(182px, 18vw, 230px);
-  padding: clamp(26px, 3vw, 39px);
-  border: 1px solid rgba(244, 233, 213, 0.34);
-  border-radius: 28px;
+  min-height: clamp(156px, 16vw, 188px);
+  padding: clamp(22px, 2.4vw, 28px);
+  border: 1px solid rgba(244, 233, 213, 0.28);
+  border-radius: 24px;
   flex-direction: column;
-  align-items: flex-start;
+  justify-content: flex-end;
+  align-items: stretch;
+  appearance: none;
   background:
-    radial-gradient(circle at 18% 2%, rgba(255, 245, 226, 0.35), transparent 31%),
-    radial-gradient(circle at 94% 110%, rgba(190, 104, 59, 0.32), transparent 43%),
-    linear-gradient(135deg, rgba(64, 42, 32, 0.96), rgba(31, 23, 19, 0.88));
+    radial-gradient(ellipse at 82% 12%, rgba(237, 160, 111, 0.22), transparent 46%),
+    linear-gradient(158deg, #4a3228 0%, #2c1d18 54%, #17110e 100%);
   box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.22),
-    inset 0 -16px 26px rgba(0, 0, 0, 0.16),
-    0 12px 26px rgba(54, 33, 22, 0.13);
+    inset 0 1px 0 rgba(255, 247, 232, 0.22),
+    0 16px 34px rgba(54, 33, 22, 0.14);
+  color: inherit;
   isolation: isolate;
-  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 300ms ease, border-color 220ms ease, filter 220ms ease;
+  transition:
+    transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 300ms ease,
+    border-color 220ms ease;
+}
+
+.hotspot-chapter-card {
+  --chapter-sheen: rgba(174, 216, 198, 0.14);
+  background:
+    radial-gradient(ellipse at 18% 92%, rgba(174, 216, 198, 0.16), transparent 42%),
+    linear-gradient(158deg, #3b2e28 0%, #221916 56%, #13110f 100%);
 }
 
 .chapter-card::before {
   position: absolute;
-  top: -62%;
-  left: -14%;
+  inset: 0 0 auto;
   z-index: 0;
-  width: 82%;
-  height: 120%;
-  border-radius: 50%;
-  background: linear-gradient(112deg, rgba(255, 255, 255, 0.27), rgba(255, 255, 255, 0));
+  height: 44%;
+  background: linear-gradient(180deg, var(--chapter-sheen), transparent 78%);
   content: "";
-  opacity: 0.82;
-  transform: rotate(18deg);
-  transition: transform 420ms ease, opacity 260ms ease;
-}
-
-.chapter-card > * {
-  position: relative;
-  z-index: 1;
+  pointer-events: none;
 }
 
 .chapter-card-link {
   width: 100%;
-  border: 1px solid rgba(244, 233, 213, 0.34);
+  border: 1px solid rgba(244, 233, 213, 0.28);
   color: inherit;
   font: inherit;
   text-align: left;
@@ -648,21 +650,12 @@ button:disabled {
 }
 
 .chapter-card-link:hover,
-.chapter-card-link:focus-visible,
-.chapter-card:not(.chapter-card-link):hover {
-  border-color: rgba(255, 219, 184, 0.66);
+.chapter-card-link:focus-visible {
+  border-color: rgba(255, 219, 184, 0.7);
   box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.32),
-    inset 0 -16px 26px rgba(0, 0, 0, 0.1),
-    0 20px 34px rgba(88, 49, 27, 0.25);
-  filter: saturate(1.12);
-  transform: translateY(-7px) scale(1.018);
-}
-
-.chapter-card:hover::before,
-.chapter-card:focus-visible::before {
-  opacity: 1;
-  transform: translateX(18px) rotate(18deg);
+    inset 0 1px 0 rgba(255, 247, 232, 0.3),
+    0 22px 40px rgba(88, 49, 27, 0.22);
+  transform: translateY(-6px);
 }
 
 .chapter-card-link:focus-visible {
@@ -670,84 +663,98 @@ button:disabled {
   outline-offset: 4px;
 }
 
-.chapter-card + .chapter-card {
-  border-left: 1px solid rgba(244, 233, 213, 0.34);
-}
-
 .chapter-card-link:active {
   box-shadow:
-    inset 0 7px 14px rgba(0, 0, 0, 0.26),
-    inset 0 -1px 1px rgba(255, 255, 255, 0.16),
-    0 5px 12px rgba(54, 33, 22, 0.14);
-  transform: translateY(3px) scale(0.985);
-  transition-duration: 80ms;
-}
-
-.chapter-card:not(.chapter-card-link):active {
-  box-shadow:
-    inset 0 7px 14px rgba(0, 0, 0, 0.26),
-    inset 0 -1px 1px rgba(255, 255, 255, 0.16),
-    0 5px 12px rgba(54, 33, 22, 0.14);
-  transform: translateY(3px) scale(0.985);
+    inset 0 8px 16px rgba(0, 0, 0, 0.28),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12),
+    0 6px 14px rgba(54, 33, 22, 0.14);
+  transform: translateY(2px);
   transition-duration: 80ms;
 }
 
 .chapter-index {
-  color: var(--copper-light);
-  font-size: 0.62rem;
-  letter-spacing: 0.2em;
+  position: absolute;
+  right: 5%;
+  top: 46%;
+  z-index: 0;
+  color: rgba(250, 242, 226, 0.11);
+  font-family: Georgia, "Songti SC", "Times New Roman", serif;
+  font-size: clamp(6rem, 9.5vw, 8.2rem);
+  font-weight: 400;
+  letter-spacing: -0.08em;
+  line-height: 0.75;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: color 220ms ease, transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.chapter-card-link:hover .chapter-index,
+.chapter-card-link:focus-visible .chapter-index {
+  color: rgba(250, 242, 226, 0.18);
+  transform: translateY(-56%);
+}
+
+.chapter-card-link.is-expanded .chapter-index {
+  color: rgba(250, 242, 226, 0.07);
+}
+
+.chapter-body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
 }
 
 .chapter-card h3 {
-  max-width: 14em;
-  margin: auto 0 8px;
+  max-width: 12.5em;
+  margin: 0;
   font-family: "Songti SC", SimSun, serif;
-  font-size: clamp(1.55rem, 2.35vw, 2.3rem);
+  font-size: clamp(1.42rem, 2.05vw, 2.02rem);
   font-weight: 400;
-  letter-spacing: -0.04em;
-  line-height: 1.2;
-}
-
-.chapter-card p {
-  margin: 16px 0 0;
-  color: rgba(241, 234, 220, 0.6);
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
-  line-height: 1.8;
+  letter-spacing: -0.035em;
+  line-height: 1.22;
 }
 
 .chapter-arrow {
-  position: absolute;
-  right: clamp(24px, 2.8vw, 35px);
-  bottom: clamp(22px, 2.5vw, 31px);
-  color: var(--copper-light);
   display: grid;
-  width: 32px;
-  height: 32px;
+  flex: none;
+  width: 42px;
+  height: 42px;
   place-items: center;
-  border: 1px solid rgba(226, 158, 104, 0.45);
+  border: 1px solid rgba(226, 158, 104, 0.5);
   border-radius: 50%;
-  font-size: 1rem;
-  transition: transform 180ms ease, background 180ms ease;
+  color: var(--copper-light);
+  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+
+.chapter-arrow svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .chapter-card-link:hover .chapter-arrow,
 .chapter-card-link:focus-visible .chapter-arrow {
-  background: rgba(255, 225, 194, 0.18);
-  transform: translate(4px, 4px) rotate(-7deg);
-}
-
-.chapter-card-link:active .chapter-arrow {
-  transform: translate(3px, 6px) scale(0.88);
-}
-
-.chapter-card-link.is-expanded .chapter-arrow {
-  transform: rotate(90deg);
+  background: rgba(255, 225, 194, 0.16);
+  border-color: rgba(237, 160, 111, 0.78);
+  transform: translate(2px, 2px);
 }
 
 .chapter-card-link.is-expanded:hover .chapter-arrow,
 .chapter-card-link.is-expanded:focus-visible .chapter-arrow {
-  transform: translate(0, -3px) rotate(90deg);
+  transform: translateY(-3px);
+}
+
+.chapter-card-link:active .chapter-arrow {
+  transform: scale(0.9);
 }
 
 .hotspot-section {
@@ -2747,34 +2754,31 @@ button:disabled {
   .chapter-card,
   button.chapter-card-link {
     display: flex;
-    min-height: 200px;
+    min-height: 148px;
     min-width: 0;
     width: 100%;
     max-width: 100%;
     margin: 0;
-    padding: 26px 20px;
+    padding: 22px 18px 20px;
     box-sizing: border-box;
     appearance: none;
     -webkit-appearance: none;
   }
 
-  .chapter-card + .chapter-card {
-    border-top: 0;
-    border-left: 0;
+  .chapter-index {
+    right: 6%;
+    font-size: clamp(4.6rem, 22vw, 5.6rem);
   }
 
   .chapter-card h3 {
-    max-width: none;
-    margin-right: 2rem;
-    font-size: clamp(1.35rem, 5.5vw, 1.85rem);
+    max-width: 11em;
+    font-size: clamp(1.28rem, 5.2vw, 1.7rem);
     line-height: 1.25;
   }
 
   .chapter-arrow {
-    position: absolute;
-    right: 20px;
-    bottom: 22px;
-    font-size: 1.2rem;
+    width: 40px;
+    height: 40px;
   }
 
   .hotspot-section-inner {
@@ -3241,7 +3245,7 @@ button:disabled {
   }
 
   .chapter-card {
-    min-height: 200px;
+    min-height: 148px;
   }
 
   .dialogue-window {
@@ -3255,13 +3259,14 @@ button:disabled {
 /* 触屏：取消 hover 位移，避免安卓点按后按钮“卡住/错位” */
 @media (hover: none) {
   .chapter-card-link:hover,
-  .chapter-card:not(.chapter-card-link):hover,
   .anchor-primary:hover,
   .anchor-dialogue:hover {
     transform: none;
     filter: none;
   }
 
+  .chapter-card-link:hover .chapter-index,
+  .chapter-card-link:hover .chapter-arrow,
   .anchor-primary:hover .anchor-arrow,
   .anchor-dialogue:hover .anchor-arrow {
     transform: none;
