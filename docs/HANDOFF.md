@@ -4,8 +4,8 @@
 
 **更新时间：** 2026-08-23
 
-**当前执行者：** Grok 按用户要求启用本地向量检索（hybrid）并重启 `npm run dev`。
-**Git 状态：** 本地 `main` 含未部署的 UI/热点改动、C1 第二轮知识库增量与召回 knobs。CloudBase 现网仍为 `pangdonglai-site-018`，按用户要求暂不发布。
+**当前执行者：** Grok 修复一般文化题被「人格尊严」等通用词误判为串案、从而触发固定降级句的问题。
+**Git 状态：** 本地 `main` 含未部署的校验修复与 hybrid 召回改动。CloudBase 现网仍为 `pangdonglai-site-018`，按用户要求暂不发布。
 
 ---
 
@@ -79,7 +79,8 @@
 - [x] **RAG-CULTURE-R5C-7A（用户要求进行下一步）**：把已通过双基线的混合检索接入本地 Worker；新增 `RAG_RETRIEVAL_MODE=bm25|hybrid`，默认 `bm25`。显式启用 hybrid 后使用 RRF 1:0.65、向量 Top 12 与语义案例路由；缺 TokenHub 密钥、模型不一致或请求失败时自动退回 BM25。CloudBase Node 入口同步读取服务端变量，页面移除面向用户的 BM25 术语。51 项测试和 lint 通过，未部署。
 - [x] **RAG-CULTURE-R5C-7B（用户明确授权）**：三道本地 Worker 真实问答均调用成功；普通文化题和资料不足题通过，用户红裤头题需修改，自动与人工验收均为 2/3。该题语义案例路由正确、Top-5 第三名已召回员工免职/降级直接资料且没有串入尝面员工案例，但 AnswerPlan 漏掉该 Claim，导致回答错误称公开资料未明确记载处理措施。结果原样保存且未记录密钥，未部署；详见 `docs/RAG_CULTURE_R5C_WORKER_LIVE.md`。
 - [x] **RAG-CULTURE-R5C-8（用户要求执行）**：不为红裤头单题加补丁；在 `createAnswerPlan` 增加通用前提覆盖：当问题含可核实具体前提（员工处置、金额、比例、假期天数、处理结果等），且安全 `eligibleClaims` 中已有直接支持或纠正该前提的 Claim 时，强制至少保留 1 条。匹配只用 statement/title/topics，避免 `canSupport` 范围短语误覆盖。离线回归：53 项测试、固定 54/54、R4 契约 18/18、lint 通过；混合检索用冻结向量索引 mock 嵌入验证红裤头题必保留 `red-underwear-report-testing-and-staff` 且不串尝面案。2026-08-08 真实复测三题均返回 200、流式完成、DeepSeek 调用成功，自动检查 3/3；红裤头题已带出免职/降级 Claim 且未串案，资料不足题安全拒答但回答过于简短。结果写入 `evaluation/rag-culture-r5c-worker-live-v1.json`；尚未部署，人工质量复核仍需记录。
-- [x] **RAG-RECALL-10（用户明确要求）**：每题总共召回 10 个 chunks：混合检索 BM25 通道 5 + embedding 通道 5，RRF 排序后不足 10 条时用剩余向量再补 BM25；纯 BM25 模式直接取 Top 10。`retrieved` 与 `answerCandidates` 同一批，不再另留 Top-12 隐藏池。AnswerPlan 的 Claim 上限仍为一般 5 / 案例 8，未改校验或降级。未部署。
+- [x] **RAG-RECALL-10（用户明确要求）**：每题总共召回 10 个 chunks：混合检索 BM25 通道 5 + embedding 通道 5，RRF 排序后不足 10 条时用剩余向量再补 BM25；纯 BM25 模式直接取 Top 10。`retrieved` 与 `answerCandidates` 同一批，不再另留 Top-12 隐藏池。未部署。
+- [x] **RAG-FALLBACK-01（用户截图复现）**：「企业文化体现在哪些方面」等一般题只要写到「人格尊严」，AnswerValidation 就会按热点案例别名报串案，两次失败后 `makeSafeFallback()` 只回第一条 Claim。现改为只有足够具体的案例别名才算串案；一般题 Claim 上限随召回扩到 10。提问路由仍可用短别名进入案例轨。未部署。
 - [ ] **RAG-CULTURE-R1**：C1 首批已入库（`docs/SOURCE_AUDIT_C1_01.md`）。第二轮用户已批示：B1 approved，B2/B3/B5 limited，B4/B6 拒绝；4 份休假口径资料已入库，见 `docs/SOURCE_AUDIT_C1_02.md`。C1 一手资料主干仍未完成（缺手册原文、完整薪酬表），不得自动扩充。知识库当前 41 份资料、172 片段、8 案例。
 - [x] **RAG-RESEARCH-01**：建立 Codex 与 Grok 强制共用的互联网资料检索与 RAG 入库规范；明确候选池、来源优先级、企业身份核验、转载去重、事件阶段、用户批准、版权边界、入库测试和向量库接入条件，并在 `AGENTS.md` 设置任务前必读入口。
 - [x] **Codex【RAG-CASE-01】**：按 Grok 审核顺序完成“案例档案 + 事件事实/文化理解双轨回答”：定义 `caseId`、`claimType`、`finality` schema；事件轨仅引用同案例资料，文化轨不得裁定具体客诉真伪；无 `final` 证据时禁止终局话术；界面展示案例来源的证据阶段；补充误召回与最终结论边界测试。
@@ -208,6 +209,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-23 | Grok | 修复一般文化题因「人格尊严」等通用词被误判串案而触发固定降级句；一般题 Claim 上限改为 10。未部署 | pangdonglai_project/site/shared/answer-control.mjs, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-23 | Grok | 按用户要求启用本地 hybrid：确认 `.dev.vars` 为 hybrid，TokenHub 冒烟 `vectorApplied=true` 且召回 10 条，并重启 `npm run dev`（http://localhost:3000/）。未部署 | pangdonglai_project/site/.dev.vars（未提交）, pangdonglai_project/site/scripts/smoke-hybrid-recall.mjs, docs/HANDOFF.md |
 | 2026-08-23 | Grok | 按用户要求将每题召回改为 embedding 5 + BM25 5，合计 10 chunks；纯 BM25 也召回 10。未改 AnswerPlan 上限、未部署 | pangdonglai_project/site/shared/retrieval.mjs, pangdonglai_project/site/shared/hybrid-retrieval.mjs, pangdonglai_project/site/worker/index.ts, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-23 | Grok | 按用户批示入库 C1 第二轮：B1 approved，B2/B3/B5 limited，B4/B6 拒绝。知识库 41 份资料、172 片段。lint/test 59/59。未部署 | pangdonglai_project/knowledge/**, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/SOURCE_AUDIT_C1_02.md, docs/RAG_APPROVALS.md, docs/HANDOFF.md |

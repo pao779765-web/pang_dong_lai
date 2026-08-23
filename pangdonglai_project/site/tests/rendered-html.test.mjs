@@ -8,6 +8,7 @@ import {
   createAnswerPlan,
   extractVerifiablePremises,
   formatDateInTimeZone,
+  isDistinctiveCaseAlias,
   makeSafeFallback,
   validateAnswer,
 } from "../shared/answer-control.mjs";
@@ -821,6 +822,51 @@ test("validates factual numbers, negated verdicts, Beijing dates and grounded fa
   const fallback = makeSafeFallback(plan);
   assert.match(fallback, /企业公布了鸡蛋样品送检结果/);
   assert.doesNotMatch(fallback, /资料还不足以支持一个稳妥的完整结论/);
+});
+
+test("does not treat generic culture phrases as unexpected hotspot cases", () => {
+  assert.equal(isDistinctiveCaseAlias("人格尊严"), false);
+  assert.equal(isDistinctiveCaseAlias("维权依法"), false);
+  assert.equal(isDistinctiveCaseAlias("人格尊严公示"), true);
+  assert.equal(isDistinctiveCaseAlias("茶叶苍蝇"), true);
+
+  const cases = [
+    {
+      id: "dignity-violation-disclosure-2026-08",
+      title: "首期「人格尊严侵权」案例公示",
+      aliases: ["人格尊严", "人格尊严公示", "人格尊严侵权"],
+    },
+    {
+      id: "tea-fly-feedback-2026-01",
+      title: "顾客在抖音平台反馈茶叶中有苍蝇",
+      aliases: ["茶叶苍蝇", "茶叶苍蝇事件"],
+    },
+  ];
+  const plan = {
+    question: "胖东来的企业文化体现在哪些方面？",
+    currentDate: "2026-08-23",
+    answerability: "supported",
+    track: "general",
+    binaryVerdict: false,
+    allowedClaims: [{
+      id: "culture-claim",
+      statement: "新华社文章把胖东来的吸引力与企业文化、服务质量和员工状态联系起来。",
+      sourceTitle: "新华社千笔楼",
+      effectiveAt: "2025-03",
+      mentionedCaseIds: [],
+    }],
+  };
+
+  const cultureAnswer = validateAnswer(
+    "公开资料里，胖东来文化常落到员工人格尊严、一线授权、顾客服务和经营节制这几方面，这些是媒体与管理层表述，不能写成独立审计结论。",
+    plan,
+    cases,
+  );
+  assert.equal(cultureAnswer.passed, true);
+
+  const hotspotAnswer = validateAnswer("这就是人格尊严公示里写的那件事。", plan, cases);
+  assert.equal(hotspotAnswer.passed, false);
+  assert.ok(hotspotAnswer.violations.some((item) => item.code === "unexpected_case"));
 });
 
 test("makes an insufficient AnswerPlan refuse similar retrieval noise", () => {

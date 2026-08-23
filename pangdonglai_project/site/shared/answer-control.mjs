@@ -16,6 +16,15 @@ function uniqueStrings(values) {
   return [...new Set(values.filter((value) => typeof value === "string" && value.trim()).map((value) => value.trim()))];
 }
 
+const CASE_ALIAS_EVENT_MARKERS = /事件|争议|公示|侵权|反馈|掉色|尝面|伤人|擀面|降薪|苍蝇|角黄|内裤|顶撞|掌掴|补偿/;
+
+export function isDistinctiveCaseAlias(alias) {
+  const normalized = String(alias ?? "").replace(/\s+/g, "");
+  if (normalized.length < 4) return false;
+  if (normalized.length >= 6) return true;
+  return CASE_ALIAS_EVENT_MARKERS.test(normalized);
+}
+
 export function deriveSourceRole(metadata) {
   if (metadata.answerMode === "attributed_claim") return "attributed_statement";
   if (metadata.source?.sourceType === "official") return "official_record";
@@ -55,7 +64,7 @@ export function createClaimV1(metadata, chunk, cases = []) {
     .filter((caseRecord) =>
       caseRecord.id === metadata.caseId ||
       caseRecord.aliases
-        .filter((alias) => alias.replace(/\s+/g, "").length >= 4)
+        .filter((alias) => isDistinctiveCaseAlias(alias))
         .some((alias) => searchableText.includes(alias.toLowerCase())),
     )
     .map((caseRecord) => caseRecord.id);
@@ -347,7 +356,7 @@ export function createAnswerPlan(searchPlan, cases, currentDate = formatDateInTi
         if (!claim.mentionedCaseIds?.length) return true;
         return allowCaseExamples || claim.mentionedCaseIds.some((caseId) => directCaseIds.includes(caseId));
       });
-  const claimLimit = searchPlan.track === "case" ? 8 : 5;
+  const claimLimit = searchPlan.track === "case" ? 8 : 10;
   const scoredEligible = eligibleClaims
     .map((claim, index) => ({ claim, score: scoreClaimRelevance(question, claim, index) }))
     .sort((left, right) => right.score - left.score);
@@ -446,7 +455,7 @@ export function validateAnswer(answer, answerPlan, cases) {
   for (const caseRecord of cases) {
     if (allowedCaseIds.has(caseRecord.id)) continue;
     const unexpectedAlias = caseRecord.aliases
-      .filter((alias) => alias.replace(/\s+/g, "").length >= 4 && !answerPlan.question.includes(alias))
+      .filter((alias) => isDistinctiveCaseAlias(alias) && !answerPlan.question.includes(alias))
       .find((alias) => normalized.includes(alias));
     if (unexpectedAlias) {
       violations.push({ code: "unexpected_case", message: `回答引入了本题未允许的案例：${caseRecord.title}` });
@@ -486,7 +495,10 @@ export function buildRepairInstruction(validation) {
 
 export function makeSafeFallback(answerPlan) {
   if (answerPlan.answerability === "insufficient") return "目前没有足够信息回答这个问题。";
-  const claim = answerPlan.allowedClaims[0];
-  if (!claim?.statement) return "目前没有足够信息回答这个问题。";
-  return `目前能确认的是：${claim.statement}\n\n现有资料只能支持到这里，不能据此作进一步推断。`;
+  const claims = (answerPlan.allowedClaims ?? []).filter((claim) => claim?.statement).slice(0, 3);
+  if (!claims.length) return "目前没有足够信息回答这个问题。";
+  const body = claims.length === 1
+    ? claims[0].statement
+    : claims.map((claim, index) => `${index + 1}. ${claim.statement}`).join("\n");
+  return `目前能确认的是：${body}\n\n以上来自已审核公开资料，不能把单条报道或单次争议写成整套文化的最终结论。`;
 }
