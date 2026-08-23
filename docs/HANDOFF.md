@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-08-23
 
-**当前执行者：** Grok 修复一般文化题被「人格尊严」等通用词误判为串案、从而触发固定降级句的问题。
+**当前执行者：** Grok 按用户要求去掉有 Claim 时 `makeSafeFallback()` 的「目前能确认的是」套话和终局提醒。
 **Git 状态：** 本地 `main` 含未部署的校验修复与 hybrid 召回改动。CloudBase 现网仍为 `pangdonglai-site-018`，按用户要求暂不发布。
 
 ---
@@ -209,6 +209,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-23 | Grok | 有允许 Claim 时 `makeSafeFallback()` 只输出 Claim 正文，去掉「目前能确认的是」和终局提醒句。未部署 | pangdonglai_project/site/shared/answer-control.mjs, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-23 | Grok | 修复一般文化题因「人格尊严」等通用词被误判串案而触发固定降级句；一般题 Claim 上限改为 10。未部署 | pangdonglai_project/site/shared/answer-control.mjs, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-23 | Grok | 按用户要求启用本地 hybrid：确认 `.dev.vars` 为 hybrid，TokenHub 冒烟 `vectorApplied=true` 且召回 10 条，并重启 `npm run dev`（http://localhost:3000/）。未部署 | pangdonglai_project/site/.dev.vars（未提交）, pangdonglai_project/site/scripts/smoke-hybrid-recall.mjs, docs/HANDOFF.md |
 | 2026-08-23 | Grok | 按用户要求将每题召回改为 embedding 5 + BM25 5，合计 10 chunks；纯 BM25 也召回 10。未改 AnswerPlan 上限、未部署 | pangdonglai_project/site/shared/retrieval.mjs, pangdonglai_project/site/shared/hybrid-retrieval.mjs, pangdonglai_project/site/worker/index.ts, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |

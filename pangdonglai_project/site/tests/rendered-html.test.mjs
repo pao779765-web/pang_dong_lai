@@ -820,8 +820,9 @@ test("validates factual numbers, negated verdicts, Beijing dates and grounded fa
   assert.ok(unsupportedVerdict.violations.some((item) => item.code === "unsupported_verdict"));
 
   const fallback = makeSafeFallback(plan);
-  assert.match(fallback, /企业公布了鸡蛋样品送检结果/);
-  assert.doesNotMatch(fallback, /资料还不足以支持一个稳妥的完整结论/);
+  assert.equal(fallback, "企业公布了鸡蛋样品送检结果。");
+  assert.doesNotMatch(fallback, /目前能确认的是/);
+  assert.doesNotMatch(fallback, /不能把单条报道或单次争议写成整套文化的最终结论/);
 });
 
 test("does not treat generic culture phrases as unexpected hotspot cases", () => {

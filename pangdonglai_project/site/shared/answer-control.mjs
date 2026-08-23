@@ -497,8 +497,7 @@ export function makeSafeFallback(answerPlan) {
   if (answerPlan.answerability === "insufficient") return "目前没有足够信息回答这个问题。";
   const claims = (answerPlan.allowedClaims ?? []).filter((claim) => claim?.statement).slice(0, 3);
   if (!claims.length) return "目前没有足够信息回答这个问题。";
-  const body = claims.length === 1
+  return claims.length === 1
     ? claims[0].statement
     : claims.map((claim, index) => `${index + 1}. ${claim.statement}`).join("\n");
-  return `目前能确认的是：${body}\n\n以上来自已审核公开资料，不能把单条报道或单次争议写成整套文化的最终结论。`;
 }
