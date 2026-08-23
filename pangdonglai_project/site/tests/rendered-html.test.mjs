@@ -154,6 +154,84 @@ test("fuses keyword and vector rankings while preserving safety routes", async (
   assert.equal(embeddingCalls, 1);
 });
 
+test("recalls five BM25 chunks and five embedding chunks for a total of ten", async () => {
+  const { BM25_RECALL_K, EMBEDDING_RECALL_K, TOTAL_RECALL_K } = await import("../shared/retrieval.mjs");
+  const keywordIds = ["kw-1", "kw-2", "kw-3", "kw-4", "kw-5", "kw-6"];
+  const vectorIds = ["vec-1", "vec-2", "vec-3", "vec-4", "vec-5", "vec-6"];
+  const makeDocument = (id, embeddingAxis) => ({
+    id,
+    title: id,
+    status: "approved",
+    caseId: null,
+    claimType: "practice",
+    finality: "not_applicable",
+    evidenceLevel: "L1",
+    evidenceLabel: "可核验",
+    answerMode: "fact_with_source",
+    answeringRules: [],
+    source: { url: `https://example.com/${id}`, verifiedAt: "2026-08-23" },
+    chunks: [{
+      id,
+      title: id,
+      text: `${id} 员工生活设施`,
+      facts: {},
+      claims: [],
+      culture: { annotationVersion: "culture-v1", relevance: "direct" },
+    }],
+    embeddingAxis,
+  });
+  const documents = [
+    ...keywordIds.map((id) => makeDocument(id, "keyword")),
+    ...vectorIds.map((id) => makeDocument(id, "vector")),
+  ];
+  const knowledgeBase = { documents, cases: [] };
+  const keywordResults = keywordIds.map((id, index) => ({
+    chunkId: id,
+    chunkTitle: id,
+    content: `${id} 员工生活设施`,
+    sourceTitle: id,
+    sourceUrl: `https://example.com/${id}`,
+    score: 10 - index,
+    baseScore: 10 - index,
+  }));
+  const keywordRetriever = {
+    searchKnowledge() {
+      return {
+        track: "general",
+        queryText: "怎么尊重员工",
+        detectedAnswerPurposes: [],
+        retrieved: keywordResults,
+        answerCandidates: keywordResults,
+      };
+    },
+  };
+  const retriever = createHybridKnowledgeRetriever({
+    knowledgeBase,
+    keywordRetriever,
+    vectorIndex: {
+      schemaVersion: "r5-vector-index-v1",
+      model: "test-model",
+      dimensions: 2,
+      entries: documents.map((document) => ({
+        chunkId: document.id,
+        embedding: document.embeddingAxis === "keyword" ? [1, 0] : [0, 1],
+      })),
+    },
+    embedQuery: async () => [0, 1],
+    fallbackToKeyword: false,
+  });
+
+  const hybrid = await retriever.searchKnowledge("怎么尊重员工");
+  const retrievedIds = hybrid.retrieved.map((item) => item.chunkId);
+  assert.equal(hybrid.retrievalMode, "hybrid-rrf");
+  assert.equal(retrievedIds.length, TOTAL_RECALL_K);
+  assert.equal(hybrid.answerCandidates.length, TOTAL_RECALL_K);
+  assert.deepEqual(retrievedIds.filter((id) => id.startsWith("kw-")).sort(), keywordIds.slice(0, BM25_RECALL_K));
+  assert.deepEqual(retrievedIds.filter((id) => id.startsWith("vec-")).sort(), vectorIds.slice(0, EMBEDDING_RECALL_K));
+  assert.ok(!retrievedIds.includes("kw-6"));
+  assert.ok(!retrievedIds.includes("vec-6"));
+});
+
 test("uses semantic case routing before RRF without mixing case evidence into general retrieval", async () => {
   const knowledgeBase = {
     documents: [
@@ -383,6 +461,7 @@ test("keeps store content and chat contract outside their UI and Worker entrypoi
   assert.match(worker, /RAG_RETRIEVAL_MODE/);
   assert.match(worker, /vectorWeight: 0\.65/);
   assert.match(worker, /keywordGuardWeight: 0/);
+  assert.match(worker, /vectorTopK: EMBEDDING_RECALL_K/);
   assert.match(worker, /semanticCaseRouting: true/);
   assert.match(worker, /queryRewriteV1: true/);
   assert.match(worker, /answerPurposeFilterV1: true/);
@@ -997,8 +1076,8 @@ test("adopts answer-purpose filtering after improving all remaining boundary que
   assert.match(packageJson.scripts["rag:evaluate:answer-purpose-filter-v1"], /--answer-purpose-filter-v1/);
 });
 
-test("builds R4 AnswerPlans from a broader candidate pool without changing BM25 top five", async () => {
-  const [{ createKnowledgeRetriever }, compiled] = await Promise.all([
+test("builds R4 AnswerPlans from ten recalled chunks without a hidden extra candidate pool", async () => {
+  const [{ createKnowledgeRetriever, TOTAL_RECALL_K }, compiled] = await Promise.all([
     import("../shared/retrieval.mjs"),
     readFile(new URL("../../knowledge/compiled/knowledge-base.json", import.meta.url), "utf8").then(JSON.parse),
   ]);
@@ -1010,8 +1089,8 @@ test("builds R4 AnswerPlans from a broader candidate pool without changing BM25 
   const retirementSearch = retriever.searchKnowledge(
     "所谓‘信任员工’会不会只是老板个人魅力，老板退休就没了？",
   );
-  assert.equal(retirementSearch.retrieved.length, 5);
-  assert.ok(retirementSearch.answerCandidates.length > retirementSearch.retrieved.length);
+  assert.equal(retirementSearch.retrieved.length, TOTAL_RECALL_K);
+  assert.equal(retirementSearch.answerCandidates.length, retirementSearch.retrieved.length);
   const retirementPlan = createAnswerPlan(retirementSearch, compiled.cases, "2026-08-04");
   assert.ok(retirementPlan.allowedClaimIds.includes("jiemian-rotation-governance--claim-1"));
 

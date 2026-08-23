@@ -1,8 +1,11 @@
 import {
+  BM25_RECALL_K,
   detectAnswerPurposes,
+  EMBEDDING_RECALL_K,
   isSearchableInGeneralTrack,
   isSoftAnswerPurpose,
   supportsAnswerPurposes,
+  TOTAL_RECALL_K,
 } from "./retrieval.mjs";
 
 const DEFAULT_RRF_K = 60;
@@ -175,7 +178,7 @@ export function createHybridKnowledgeRetriever({
   embedQuery,
   vectorWeight = 0.65,
   keywordGuardWeight = 0,
-  vectorTopK = 12,
+  vectorTopK = EMBEDDING_RECALL_K,
   semanticCaseRouting = false,
   caseRouteMinScore = DEFAULT_CASE_ROUTE_MIN_SCORE,
   caseRouteMinMargin = DEFAULT_CASE_ROUTE_MIN_MARGIN,
@@ -265,7 +268,7 @@ export function createHybridKnowledgeRetriever({
       const hardPurposes = purposes.filter((purpose) => !isSoftAnswerPurpose(purpose));
       const softPurposes = purposes.filter(isSoftAnswerPurpose);
       const filteredOut = [];
-      const vectorRanking = safeVectorEntries
+      const allVectorRanking = safeVectorEntries
         .map((entry) => {
           const corpusItem = corpusById.get(entry.chunkId);
           return {
@@ -286,19 +289,26 @@ export function createHybridKnowledgeRetriever({
           Number(right.supportsSoftPurpose) - Number(left.supportsSoftPurpose) ||
           right.vectorScore - left.vectorScore ||
           left.chunkId.localeCompare(right.chunkId),
-        )
-        .slice(0, vectorTopK);
+        );
+      const vectorRanking = allVectorRanking.slice(0, vectorTopK);
 
-      const keywordRanking = keywordPlan.answerCandidates ?? keywordPlan.retrieved;
-      const fused = reciprocalRankFusion([keywordRanking, vectorRanking, keywordPlan.retrieved], {
+      const fullKeywordRanking = keywordPlan.answerCandidates ?? keywordPlan.retrieved;
+      const keywordRanking = fullKeywordRanking.slice(0, BM25_RECALL_K);
+      const fused = reciprocalRankFusion([keywordRanking, vectorRanking, keywordRanking], {
         weights: [1, vectorWeight, keywordGuardWeight],
       });
-      const keywordById = new Map(keywordRanking.map((item, index) => [item.chunkId, { item, rank: index + 1 }]));
-      const vectorById = new Map(vectorRanking.map((item, index) => [item.chunkId, { ...item, rank: index + 1 }]));
-      const fusedResults = fused.map(({ chunkId, score }) => {
+      const keywordById = new Map(
+        fullKeywordRanking.map((item, index) => [item.chunkId, { item, rank: index + 1 }]),
+      );
+      const vectorById = new Map(
+        allVectorRanking.map((item, index) => [item.chunkId, { ...item, rank: index + 1 }]),
+      );
+      const fusedScoreById = new Map(fused.map((item) => [item.chunkId, item.score]));
+      const makePublicResult = (chunkId, score) => {
         const keyword = keywordById.get(chunkId);
         const vector = vectorById.get(chunkId);
-        const base = keyword?.item ?? corpusById.get(chunkId).result;
+        const base = keyword?.item ?? corpusById.get(chunkId)?.result;
+        if (!base) return null;
         const result = {
           ...base,
           score,
@@ -310,9 +320,25 @@ export function createHybridKnowledgeRetriever({
         delete result.evidenceText;
         delete result.cultureRelevance;
         return result;
-      });
-      const retrieved = fusedResults.slice(0, 5);
-      const answerCandidates = fusedResults.slice(0, 12);
+      };
+      const selected = [];
+      const selectedIds = new Set();
+      const pushChunk = (chunkId, score) => {
+        if (selectedIds.has(chunkId) || selected.length >= TOTAL_RECALL_K) return;
+        const result = makePublicResult(chunkId, score);
+        if (!result) return;
+        selected.push(result);
+        selectedIds.add(chunkId);
+      };
+      for (const { chunkId, score } of fused) pushChunk(chunkId, score);
+      for (const item of allVectorRanking) {
+        pushChunk(item.chunkId, fusedScoreById.get(item.chunkId) ?? item.vectorScore ?? 0);
+      }
+      for (const item of fullKeywordRanking) {
+        pushChunk(item.chunkId, fusedScoreById.get(item.chunkId) ?? item.score ?? 0);
+      }
+      const retrieved = selected;
+      const answerCandidates = selected.slice();
 
       return {
         ...keywordPlan,

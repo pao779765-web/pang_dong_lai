@@ -17,7 +17,7 @@ import {
   DEFAULT_TOKENHUB_EMBEDDING_MODEL,
 } from "../shared/embedding-client.mjs";
 import { createHybridKnowledgeRetriever } from "../shared/hybrid-retrieval.mjs";
-import { createKnowledgeRetriever } from "../shared/retrieval.mjs";
+import { createKnowledgeRetriever, EMBEDDING_RECALL_K } from "../shared/retrieval.mjs";
 
 interface Env {
   ASSETS: Fetcher;
@@ -283,7 +283,7 @@ function getHybridRetriever(env: Env): HybridKnowledgeRetriever | null {
     embedQuery: async (queryText: string) => (await embeddingClient.embed([queryText]))[0],
     vectorWeight: 0.65,
     keywordGuardWeight: 0,
-    vectorTopK: 12,
+    vectorTopK: EMBEDDING_RECALL_K,
     semanticCaseRouting: true,
     fallbackToKeyword: true,
   }) as HybridKnowledgeRetriever;

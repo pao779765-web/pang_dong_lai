@@ -4,8 +4,8 @@
 
 **更新时间：** 2026-08-23
 
-**当前执行者：** Grok 按用户批示入库 C1 第二轮休假资料（批准 B1，限制 B2/B3/B5，拒绝 B4/B6）。
-**Git 状态：** 本地 `main` 含未部署的 UI/热点改动与本轮知识库增量。CloudBase 现网仍为 `pangdonglai-site-018`，按用户要求暂不发布。
+**当前执行者：** Grok 按用户要求把每题召回改为 embedding 5 + BM25 5，合计 10 个 chunks。
+**Git 状态：** 本地 `main` 含未部署的 UI/热点改动、C1 第二轮知识库增量与本轮召回 knobs。CloudBase 现网仍为 `pangdonglai-site-018`，按用户要求暂不发布。
 
 ---
 
@@ -79,6 +79,7 @@
 - [x] **RAG-CULTURE-R5C-7A（用户要求进行下一步）**：把已通过双基线的混合检索接入本地 Worker；新增 `RAG_RETRIEVAL_MODE=bm25|hybrid`，默认 `bm25`。显式启用 hybrid 后使用 RRF 1:0.65、向量 Top 12 与语义案例路由；缺 TokenHub 密钥、模型不一致或请求失败时自动退回 BM25。CloudBase Node 入口同步读取服务端变量，页面移除面向用户的 BM25 术语。51 项测试和 lint 通过，未部署。
 - [x] **RAG-CULTURE-R5C-7B（用户明确授权）**：三道本地 Worker 真实问答均调用成功；普通文化题和资料不足题通过，用户红裤头题需修改，自动与人工验收均为 2/3。该题语义案例路由正确、Top-5 第三名已召回员工免职/降级直接资料且没有串入尝面员工案例，但 AnswerPlan 漏掉该 Claim，导致回答错误称公开资料未明确记载处理措施。结果原样保存且未记录密钥，未部署；详见 `docs/RAG_CULTURE_R5C_WORKER_LIVE.md`。
 - [x] **RAG-CULTURE-R5C-8（用户要求执行）**：不为红裤头单题加补丁；在 `createAnswerPlan` 增加通用前提覆盖：当问题含可核实具体前提（员工处置、金额、比例、假期天数、处理结果等），且安全 `eligibleClaims` 中已有直接支持或纠正该前提的 Claim 时，强制至少保留 1 条。匹配只用 statement/title/topics，避免 `canSupport` 范围短语误覆盖。离线回归：53 项测试、固定 54/54、R4 契约 18/18、lint 通过；混合检索用冻结向量索引 mock 嵌入验证红裤头题必保留 `red-underwear-report-testing-and-staff` 且不串尝面案。2026-08-08 真实复测三题均返回 200、流式完成、DeepSeek 调用成功，自动检查 3/3；红裤头题已带出免职/降级 Claim 且未串案，资料不足题安全拒答但回答过于简短。结果写入 `evaluation/rag-culture-r5c-worker-live-v1.json`；尚未部署，人工质量复核仍需记录。
+- [x] **RAG-RECALL-10（用户明确要求）**：每题总共召回 10 个 chunks：混合检索 BM25 通道 5 + embedding 通道 5，RRF 排序后不足 10 条时用剩余向量再补 BM25；纯 BM25 模式直接取 Top 10。`retrieved` 与 `answerCandidates` 同一批，不再另留 Top-12 隐藏池。AnswerPlan 的 Claim 上限仍为一般 5 / 案例 8，未改校验或降级。未部署。
 - [ ] **RAG-CULTURE-R1**：C1 首批已入库（`docs/SOURCE_AUDIT_C1_01.md`）。第二轮用户已批示：B1 approved，B2/B3/B5 limited，B4/B6 拒绝；4 份休假口径资料已入库，见 `docs/SOURCE_AUDIT_C1_02.md`。C1 一手资料主干仍未完成（缺手册原文、完整薪酬表），不得自动扩充。知识库当前 41 份资料、172 片段、8 案例。
 - [x] **RAG-RESEARCH-01**：建立 Codex 与 Grok 强制共用的互联网资料检索与 RAG 入库规范；明确候选池、来源优先级、企业身份核验、转载去重、事件阶段、用户批准、版权边界、入库测试和向量库接入条件，并在 `AGENTS.md` 设置任务前必读入口。
 - [x] **Codex【RAG-CASE-01】**：按 Grok 审核顺序完成“案例档案 + 事件事实/文化理解双轨回答”：定义 `caseId`、`claimType`、`finality` schema；事件轨仅引用同案例资料，文化轨不得裁定具体客诉真伪；无 `final` 证据时禁止终局话术；界面展示案例来源的证据阶段；补充误召回与最终结论边界测试。
@@ -207,6 +208,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-23 | Grok | 按用户要求将每题召回改为 embedding 5 + BM25 5，合计 10 chunks；纯 BM25 也召回 10。未改 AnswerPlan 上限、未部署 | pangdonglai_project/site/shared/retrieval.mjs, pangdonglai_project/site/shared/hybrid-retrieval.mjs, pangdonglai_project/site/worker/index.ts, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-23 | Grok | 按用户批示入库 C1 第二轮：B1 approved，B2/B3/B5 limited，B4/B6 拒绝。知识库 41 份资料、172 片段。lint/test 59/59。未部署 | pangdonglai_project/knowledge/**, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/SOURCE_AUDIT_C1_02.md, docs/RAG_APPROVALS.md, docs/HANDOFF.md |
 | 2026-08-23 | Codex | 按用户截图删除首页 Hero 的「01 / 从标签走向理解」眉题及对应 CSS，保留主标题、介绍文案和 A/B 入口；`npm run lint`、`npm test`（58/58）和 Impeccable 检测通过。未部署 | pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/app/globals.css, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-23 | Codex | 按用户要求将事件详情标签由「总体时间流程：」调整为「总体事件流程：」；保留事实摘要正文。`npm run lint`、`npm test`（58/58）和 Impeccable 检测通过。未部署 | pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |

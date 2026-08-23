@@ -1,5 +1,8 @@
 const BM25_K1 = 1.2;
 const BM25_B = 0.75;
+export const BM25_RECALL_K = 5;
+export const EMBEDDING_RECALL_K = 5;
+export const TOTAL_RECALL_K = 10;
 const CULTURE_THEME_LABELS = {
   C1: "员工的尊严自由与生活",
   C2: "信任一线授权与责任",
@@ -564,8 +567,8 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
       delete retrievedItem.evidenceText;
       return retrievedItem;
     };
-    const retrieved = purposeRanked.slice(0, 5).map(toPublicResult);
-    const answerCandidates = purposeRanked.slice(0, 12).map(toPublicResult);
+    const retrieved = purposeRanked.slice(0, TOTAL_RECALL_K).map(toPublicResult);
+    const answerCandidates = retrieved.slice();
 
     return { retrieved, answerCandidates, purposeFilteredOutChunkIds, purposeBoostedChunkIds };
   }
