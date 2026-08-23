@@ -4,8 +4,8 @@
 
 **更新时间：** 2026-08-23
 
-**当前执行者：** Grok 将茶叶苍蝇事件显示名改为「顾客在抖音平台反馈茶叶中有苍蝇」。
-**Git 状态：** 本地 `main` 在 `c3a98c8` 之上有事件更名改动。未纳入 `.agents/`、`.tmp_qa/`、`skills-lock.json`。CloudBase 现网仍为 `pangdonglai-site-018`，本轮未部署。
+**当前执行者：** Codex 已按用户要求将所有热点事件详情中的事实摘要标签统一改为「总体时间流程：」。
+**Git 状态：** 本轮详情文案与回归测试改动已提交；未纳入 `.agents/`、`.tmp_qa/`、`skills-lock.json`。CloudBase 现网仍为 `pangdonglai-site-018`，本轮未部署。
 
 ---
 
@@ -207,6 +207,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-23 | Codex | 按用户截图移除事件详情中的「已确认的是：」与「目前能确认的事实」，统一显示「总体时间流程：」；保留事实摘要正文。`npm run lint`、`npm test`（58/58）和 Impeccable 检测通过。未部署 | pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-23 | Grok | 将茶叶苍蝇事件显示名改为「顾客在抖音平台反馈茶叶中有苍蝇」 | pangdonglai_project/site/data/hotspots.ts, pangdonglai_project/news_summary/events/02-tea-fly-feedback-2026-01.md, pangdonglai_project/news_summary/HANDOFF.md, pangdonglai_project/knowledge/cases/tea-fly-feedback-2026-01.json, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-23 | Grok | 按用户截图完全剔除座谈会发言稿与彩礼倡议：删除案例/来源/切片/专档/前端热点，并去掉对应向量条目。知识库 37/158/8。lint/test 58/58。未部署 | pangdonglai_project/knowledge/**, pangdonglai_project/site/data/hotspots.ts, pangdonglai_project/news_summary/**, pangdonglai_project/evaluation/rag-culture-questions-v1.json, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-23 | Grok | Impeccable typeset：01/02 按钮改为四字主标题 + 副行说明，展开态同样四字；原「查看…」进 aria-label。type detect 无命中；lint/test 58/58。未部署 | pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/app/globals.css, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
