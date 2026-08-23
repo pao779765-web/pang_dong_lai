@@ -5,10 +5,10 @@
   "sourceOfTruth": "directory",
   "generatedIndex": "compiled/knowledge-base.json",
   "counts": {
-    "cases": 10,
-    "sources": 39,
-    "chunks": 167,
-    "claims": 167
+    "cases": 8,
+    "sources": 37,
+    "chunks": 158,
+    "claims": 158
   },
   "cases": [
     {
@@ -28,16 +28,8 @@
       "path": "cases/employee-noodle-tasting-discipline-2024-02.json"
     },
     {
-      "id": "employee-bride-price-boundary-2024-11",
-      "path": "cases/employee-bride-price-boundary-2024-11.json"
-    },
-    {
       "id": "employee-salary-policy-rumor-2026-06",
       "path": "cases/employee-salary-policy-rumor-2026-06.json"
-    },
-    {
-      "id": "fake-seminar-speech-2026-07",
-      "path": "cases/fake-seminar-speech-2026-07.json"
     },
     {
       "id": "noodle-skin-food-safety-2024-06",
@@ -216,12 +208,6 @@
       "chunksPath": "chunks/workercn-noodle-reconsideration-2024-02-23.jsonl"
     },
     {
-      "id": "nbd-bride-price-boundary-2024-11",
-      "metadataPath": "sources/nbd-bride-price-boundary-2024-11/metadata.json",
-      "contentPath": "sources/nbd-bride-price-boundary-2024-11/content.md",
-      "chunksPath": "chunks/nbd-bride-price-boundary-2024-11.jsonl"
-    },
-    {
       "id": "jiemian-salary-policy-clarification-2026-06",
       "metadataPath": "sources/jiemian-salary-policy-clarification-2026-06/metadata.json",
       "contentPath": "sources/jiemian-salary-policy-clarification-2026-06/content.md",
@@ -232,12 +218,6 @@
       "metadataPath": "sources/book-how-to-learn-pdl-wanghuizhong/metadata.json",
       "contentPath": "sources/book-how-to-learn-pdl-wanghuizhong/content.md",
       "chunksPath": "chunks/book-how-to-learn-pdl-wanghuizhong.jsonl"
-    },
-    {
-      "id": "media-pdl-fake-seminar-speech-response-2026-07",
-      "metadataPath": "sources/media-pdl-fake-seminar-speech-response-2026-07/metadata.json",
-      "contentPath": "sources/media-pdl-fake-seminar-speech-response-2026-07/content.md",
-      "chunksPath": "chunks/media-pdl-fake-seminar-speech-response-2026-07.jsonl"
     },
     {
       "id": "media-pdl-noodle-skin-food-safety-2024-06",

@@ -1,4 +1,4 @@
-export type HotspotStatus = "企业回应" | "内部复议" | "个人倡议" | "持续关注" | "已有结论";
+export type HotspotStatus = "企业回应" | "内部复议" | "持续关注" | "已有结论";
 
 export type HotspotCredibility = "official" | "media" | "selfMedia" | "rumor" | "boundary";
 
@@ -49,104 +49,6 @@ export type HotspotEvent = {
 };
 
 export const featuredHotspot: HotspotEvent = {
-  id: "2026-07-17-fake-seminar-speech",
-  title: "网传“座谈会发言稿”事件",
-  summary:
-    "7月17日，网络上出现关于“于东来在北京参加座谈会的发言稿”的内容。当晚胖东来商贸集团发布情况说明，称相关稿件系虚假杜撰，存在自行编写、拼接和演绎，并非官方发布内容，也非于东来在官方会议或公开场合的真实发言。",
-  status: "企业回应",
-  statusNote: "企业已经公开回应，但当前没有司法或监管终局。",
-  happenedAt: "2026-07-17",
-  updatedAt: "2026-07-18",
-  known:
-    "已确认的是：胖东来公开回应了这份网传稿件，并明确否认其官方来源，也否认其为于东来在官方会议或公开场合的真实发言。",
-  unknown:
-    "在当前已审核资料中，尚未看到针对这份网传稿件的司法或监管终局结论；企业说明也不能自动证明网传内容背后的所有讨论。",
-  boundaries: [
-    "企业否认不等于这件事已经获得司法或监管终局。",
-    "具体传播源、传播者与完整传播链条不在当前已审核资料范围内。",
-    "网传稿件不能作为胖东来官方言论，也不能据此裁定其经营制度或企业文化。",
-  ],
-  observation:
-    "这件事更适合用来观察信息如何被转述、企业如何回应，而不是用一份网传稿件裁定胖东来的经营制度或文化。",
-  evidence: [
-    {
-      credibility: "official",
-      label: "官方",
-      title: "企业已发布情况说明",
-      detail: "企业说明由长安街知事转述；官方原帖尚未作为独立来源入库核验。",
-    },
-    {
-      credibility: "media",
-      label: "第三方媒体",
-      title: "长安街知事报道可核验",
-      detail: "当前页面可直接打开原报道，核对报道时间与企业回应内容。",
-    },
-    {
-      credibility: "selfMedia",
-      label: "自媒体",
-      title: "传播链条尚未审核",
-      detail: "具体发布主体、账号与转发路径不在当前审核范围内，不能据此归因。",
-    },
-    {
-      credibility: "rumor",
-      label: "传言",
-      title: "网传稿件不得作官方引用",
-      detail: "稿件内容已经被企业否认，当前不能作为胖东来或于东来的真实发言。",
-    },
-  ],
-  timeline: [
-    {
-      date: "2026.07.17",
-      label: "网络传播",
-      credibility: "rumor",
-      title: "网传“座谈会发言稿”引发讨论",
-      body: "相关文字以“座谈会发言稿”的名义在网络流传，具体传播链条不在当前审核资料范围内。",
-    },
-    {
-      date: "2026.07.17 晚",
-      label: "企业回应",
-      credibility: "official",
-      title: "胖东来发布情况说明",
-      body: "胖东来称网传稿件属于虚假杜撰，存在自行编写、拼接和演绎，并非官方发布内容，也非于东来在官方会议或公开场合的真实发言，并呼吁停止传播不实信息。",
-    },
-    {
-      date: "2026.07.18 01:56",
-      label: "媒体报道",
-      credibility: "media",
-      title: "长安街知事转述企业情况说明",
-      body: "长安街知事（北京日报旗下新媒体）报道企业回应，为当前页面可打开核验的第三方媒体来源。",
-    },
-    {
-      date: "截至 2026.08.11",
-      label: "资料边界",
-      credibility: "boundary",
-      title: "当前仍应保留结论边界",
-      body: "当前页面只呈现已审核的公开信息；未把企业回应扩写为司法或监管结论。",
-    },
-  ],
-  sources: [
-    {
-      title: "胖东来发布情况说明",
-      publisher: "长安街知事 / 北京日报",
-      publishedAt: "2026-07-18 01:56",
-      type: "媒体转述企业说明",
-      credibility: "media",
-      note: "可核验报道；企业官方原帖未作为独立来源入库。",
-      url: "https://xinwen.bjd.com.cn/content/s6a5a6cd0e4b03fa51a81a4ba.html",
-    },
-  ],
-  followUpPrompt:
-    "关于“网传座谈会发言稿”事件，目前哪些内容已经得到胖东来回应？哪些内容仍不能确认？",
-  quickQuestions: [
-    "这份网传发言稿哪些内容已经被企业回应？",
-    "企业回应与司法或监管结论有什么区别？",
-    "为什么不能用这份网传稿件判断胖东来的企业文化？",
-  ],
-  aiReady: true,
-  aiStatusNote: "本事件已于 2026-08-11 获批入库；资料助手会区分企业回应、媒体转述与非终局边界。",
-};
-
-const redUnderwearHotspot: HotspotEvent = {
   id: "2025-01-30-red-underwear-color-libel",
   title: "红色内裤掉色过敏争议与名誉权诉讼",
   summary:
@@ -548,95 +450,6 @@ const noodleTastingHotspot: HotspotEvent = {
   ],
   aiReady: true,
   aiStatusNote: "本事件已在审核知识库中；资料助手会区分企业内部处理、专家观点与劳动争议终局。",
-};
-
-const bridePriceHotspot: HotspotEvent = {
-  id: "2024-11-bride-price-initiative",
-  title: "员工彩礼倡议与私人生活边界",
-  summary:
-    "于东来曾在个人社交平台提出员工结婚不收付彩礼、婚礼不铺张等倡议，引发私人生活边界讨论。企业行政管理部门回应称相关说法当时尚未形成规章制度，只是提前倡导。",
-  status: "个人倡议",
-  statusNote: "企业当时称尚未形成规章制度，不能把倡议写成已生效制度。",
-  happenedAt: "2024-11",
-  updatedAt: "2024-11-22",
-  known:
-    "已确认的是：创始人作出过个人公开倡议，企业回应其当时尚未形成规章制度；媒体呈现了支持倡导与强调个人选择的不同专家观点。",
-  unknown:
-    "当前资料不能确认倡议后来是否成为正式制度、员工整体态度或福利是否实际发生变化。",
-  boundaries: [
-    "不能确认倡议后来是否形成正式制度、员工整体支持或福利取消实际发生。",
-    "专家观点不等于法院或行政机关对合法性作出的认定。",
-    "不能把正反任一方观点改写成社会共识。",
-  ],
-  observation: "",
-  evidence: [
-    {
-      credibility: "official",
-      label: "官方",
-      title: "企业称尚未形成规章制度",
-      detail: "企业行政管理部门经媒体转述表示，相关说法是倡导而非已生效制度。",
-    },
-    {
-      credibility: "media",
-      label: "第三方媒体",
-      title: "媒体呈现不同专业观点",
-      detail: "报道同时记录节俭倡导与私人选择、协商程序等不同角度。",
-    },
-    {
-      credibility: "selfMedia",
-      label: "自媒体",
-      title: "倡议源自创始人个人社交账号",
-      detail: "个人公开发声传播广泛，但不能直接写成企业正式制度。",
-    },
-    {
-      credibility: "rumor",
-      label: "传言",
-      title: "“禁止收彩礼”是过度简化",
-      detail: "将倡议表述成“已出台禁止制度”与企业当时回应不符。",
-    },
-  ],
-  timeline: [
-    {
-      date: "2024.11",
-      label: "个人倡议",
-      credibility: "selfMedia",
-      title: "于东来提出彩礼与婚礼倡议",
-      body: "个人社交平台内容提出员工结婚不收付彩礼、婚礼不铺张等要求，触发公共讨论。",
-    },
-    {
-      date: "2024.11",
-      label: "企业回应",
-      credibility: "official",
-      title: "企业称尚未形成规章制度",
-      body: "企业行政管理部门表示相关说法当时只是提前倡导，尚未形成规章制度。",
-    },
-    {
-      date: "2024.11.22",
-      label: "媒体报道",
-      credibility: "media",
-      title: "媒体呈现私人生活边界的不同观点",
-      body: "每日经济新闻报道中，受访人士分别讨论节俭倡导、个人选择与涉及劳动者切身利益的程序边界。",
-    },
-  ],
-  sources: [
-    {
-      title: "彩礼倡议与员工私人生活边界",
-      publisher: "每日经济新闻",
-      publishedAt: "2024-11-22",
-      type: "媒体报道与专家观点",
-      credibility: "media",
-      note: "可核对企业“尚未形成制度”的回应及不同观点；不构成法律结论。",
-      url: "https://www.nbd.com.cn/articles/2024-11-22/3656127.html",
-    },
-  ],
-  followUpPrompt: "关于员工彩礼倡议，哪些内容只是个人倡导，企业当时是否已经形成正式制度？",
-  quickQuestions: [
-    "这项彩礼倡议当时是制度还是倡导？",
-    "为什么不能把个人社交账号内容直接视为公司制度？",
-    "媒体报道中的不同专家观点分别在讨论什么？",
-  ],
-  aiReady: true,
-  aiStatusNote: "本事件已在审核知识库中；资料助手会区分个人倡议、企业回应与不同专家观点。",
 };
 
 const salaryCutHotspot: HotspotEvent = {
@@ -1548,11 +1361,9 @@ const dreamCityHotspot: HotspotEvent = {
 
 export const hotspotEvents: HotspotEvent[] = [
   featuredHotspot,
-  redUnderwearHotspot,
   teaFlyHotspot,
   eggCanthaxanthinHotspot,
   noodleTastingHotspot,
-  bridePriceHotspot,
   salaryCutHotspot,
   noodleSkinHotspot,
   storeAssaultHotspot,

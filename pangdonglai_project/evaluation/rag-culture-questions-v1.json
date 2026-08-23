@@ -196,16 +196,16 @@
     {
       "id": "C1-13",
       "theme": "C1",
-      "forms": ["case_boundary", "skeptical", "finality"],
+      "forms": ["no_answer", "skeptical", "finality"],
       "context": [],
       "question": "胖东来不让员工收彩礼已经是正式制度了吗？这不侵犯自由吗？",
-      "expectedTrack": "case",
-      "expectedCaseId": "employee-bride-price-boundary-2024-11",
-      "mustRecallAnyOf": ["bride-price-company-response-not-policy", "bride-price-legal-governance", "bride-price-opposing-views"],
+      "expectedTrack": "general",
+      "expectedCaseId": null,
+      "mustRecallAnyOf": [],
       "mustNotRecallChunkIds": ["culture-system-behavior-and-reward", "red-underwear-judgment-reasoning"],
       "asksForFinality": true,
       "shouldStateInsufficientEvidence": true,
-      "expectedAnswerPoints": ["明确企业当时称尚未形成规章制度", "呈现私人生活、合法福利和制度程序的不同观点", "不裁定倡议一定合法或违法"],
+      "expectedAnswerPoints": ["明确当前知识库已不再收录彩礼倡议专档", "不编造是否已成为正式制度的结论", "不裁定倡议一定合法或违法"],
       "forbiddenClaims": ["已经是正式生效制度", "专家意见等于法院结论", "员工群体一致支持或反对"]
     },
     {

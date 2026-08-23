@@ -403,12 +403,11 @@ test("keeps every rendered hotspot follow-up contextual and source-graded", asyn
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
   ]);
 
-  assert.match(hotspots, /fake-seminar-speech/);
+  assert.doesNotMatch(hotspots, /fake-seminar-speech|bride-price-initiative/);
   assert.match(hotspots, /red-underwear-color-libel/);
   assert.match(hotspots, /tea-fly-feedback/);
   assert.match(hotspots, /egg-canthaxanthin-feedback/);
   assert.match(hotspots, /noodle-tasting-discipline/);
-  assert.match(hotspots, /bride-price-initiative/);
   assert.match(hotspots, /salary-cut-rumor/);
   assert.match(hotspots, /noodle-skin-food-safety/);
   assert.match(hotspots, /store-assault-case/);
@@ -426,7 +425,7 @@ test("keeps every rendered hotspot follow-up contextual and source-graded", asyn
   assert.match(hotspots, /aiReady: true/);
   assert.doesNotMatch(hotspots, /aiReady: false/);
   assert.doesNotMatch(hotspots, /pendingHotspotAiStatusNote/);
-  assert.match(hotspots, /长安街知事 \/ 北京日报/);
+  assert.match(hotspots, /工人日报/);
   assert.match(page, /HOTSPOT_QUESTION_EVENT/);
   assert.match(page, /questionFormRef\.current\?\.requestSubmit\(\)/);
   assert.match(page, /askHotspotQuestion\(question\)/);
@@ -548,11 +547,11 @@ test("builds the RAG index from the directory knowledge source of truth", async 
   const cultureThemes = new Set(["C1", "C2", "C3", "C4", "C5", "C6"]);
   const cultureRelevance = new Set(["direct", "supporting", "context_only", "boundary"]);
   const allChunks = compiled.documents.flatMap((document) => document.chunks);
-  assert.equal(allChunks.length, 167);
-  assert.equal(manifest.counts.claims, 167);
+  assert.equal(allChunks.length, 158);
+  assert.equal(manifest.counts.claims, 158);
   const allClaims = allChunks.flatMap((chunk) => chunk.claims);
-  assert.equal(allClaims.length, 167);
-  assert.equal(new Set(allClaims.map((claim) => claim.id)).size, 167);
+  assert.equal(allClaims.length, 158);
+  assert.equal(new Set(allClaims.map((claim) => claim.id)).size, 158);
   for (const chunk of allChunks) {
     assert.equal(chunk.culture.annotationVersion, "culture-v1");
     assert.ok(cultureRelevance.has(chunk.culture.relevance));
@@ -639,7 +638,6 @@ test("builds the RAG index from the directory knowledge source of truth", async 
     "cnfin-feishu-night-shift-care-2024-12",
     "workercn-noodle-dismissal-critique-2024-02-17",
     "workercn-noodle-reconsideration-2024-02-23",
-    "nbd-bride-price-boundary-2024-11",
     "jiemian-salary-policy-clarification-2026-06",
   ]) {
     const document = backfilledDocuments.get(documentId);
@@ -783,7 +781,6 @@ test("keeps the first culture question set balanced and linked to real chunks", 
 
   for (const caseId of [
     "employee-noodle-tasting-discipline-2024-02",
-    "employee-bride-price-boundary-2024-11",
     "employee-salary-policy-rumor-2026-06",
   ]) {
     assert.ok(evaluation.questions.some((question) => question.expectedCaseId === caseId));
@@ -1350,6 +1347,7 @@ test("server-renders the Pangdonglai culture homepage", async () => {
   assert.match(html, /与胖东来对话/);
   assert.match(html, /id="explore"/);
   assert.doesNotMatch(html, /标签如何形成|做法如何落地|证据来自哪里/);
+  assert.doesNotMatch(html, /座谈会发言稿|员工彩礼倡议/);
   assert.doesNotMatch(html, /lens-grid|lens-card/);
   assert.match(html, /id="ai-dialogue"/);
   assert.match(html, /id="store-directory"/);
@@ -2331,7 +2329,7 @@ test("keeps the noodle-employee discipline timeline inside its own case", async 
   }
 });
 
-test("keeps the bride-price discussion at the proposal-not-policy stage", async () => {
+test("does not retrieve removed bride-price or seminar-speech materials", async () => {
   const originalFetch = globalThis.fetch;
   let deepseekRequest;
 
@@ -2339,7 +2337,7 @@ test("keeps the bride-price discussion at the proposal-not-policy stage", async 
     if (String(input) === "https://api.deepseek.com/chat/completions") {
       deepseekRequest = JSON.parse(init.body);
       return new Response(
-        'data: {"choices":[{"delta":{"content":"倡议边界"}}]}\n\ndata: [DONE]\n\n',
+        'data: {"choices":[{"delta":{"content":"资料不足"}}]}\n\ndata: [DONE]\n\n',
         { headers: { "content-type": "text/event-stream" } },
       );
     }
@@ -2347,22 +2345,24 @@ test("keeps the bride-price discussion at the proposal-not-policy stage", async 
   };
 
   try {
-    const response = await render(
-      "/api/chat",
-      {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ messages: [{ role: "user", content: "胖东来不让员工收彩礼已经是正式制度了吗？" }] }),
-      },
-      { DEEPSEEK_API_KEY: "test-key" },
-    );
+    for (const content of [
+      "胖东来不让员工收彩礼已经是正式制度了吗？",
+      "网传座谈会发言稿是真的吗？",
+    ]) {
+      const response = await render(
+        "/api/chat",
+        {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ messages: [{ role: "user", content }] }),
+        },
+        { DEEPSEEK_API_KEY: "test-key" },
+      );
 
-    assert.equal(response.status, 200);
-    const prompt = deepseekRequest.messages[0].content;
-    assert.match(prompt, /员工彩礼倡议与私人生活边界讨论/);
-    assert.match(prompt, /尚未形成企业规章制度/);
-    assert.match(prompt, /私人生活|合法福利|制度形成程序/);
-    assert.doesNotMatch(prompt, /尝面员工|大幅降薪|茶叶苍蝇/);
+      assert.equal(response.status, 200);
+      const prompt = deepseekRequest.messages[0].content;
+      assert.doesNotMatch(prompt, /员工彩礼倡议与私人生活边界讨论|座谈会发言稿|尚未形成企业规章制度|长安街知事/);
+    }
   } finally {
     globalThis.fetch = originalFetch;
   }
