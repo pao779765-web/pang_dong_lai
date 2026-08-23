@@ -568,8 +568,7 @@ button:disabled {
 }
 
 .explore-section {
-  min-height: 100svh;
-  padding: clamp(94px, 12vw, 165px) 0 clamp(80px, 9vw, 126px);
+  padding: clamp(48px, 6vw, 88px) 0 clamp(56px, 7vw, 96px);
   outline: none;
   scroll-margin-top: 24px;
   background:
@@ -587,60 +586,10 @@ button:disabled {
   line-height: 1.08;
 }
 
-.lens-grid {
-  display: grid;
-  margin-top: 0;
-  border-bottom: 1px solid var(--rule-dark);
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.lens-card {
-  min-height: 310px;
-  padding: 26px clamp(24px, 3.2vw, 46px) 34px;
-  border-top: 1px solid var(--rule-dark);
-}
-
-.lens-card + .lens-card {
-  border-left: 1px solid var(--rule-dark);
-}
-
-.lens-meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: rgba(23, 19, 15, 0.45);
-  font-size: 0.61rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-.lens-meta span:first-child {
-  color: #a65e38;
-  font-family: Georgia, "Times New Roman", serif;
-}
-
-.lens-card h3 {
-  margin: 75px 0 18px;
-  font-family: "Songti SC", SimSun, serif;
-  font-size: clamp(1.55rem, 2.2vw, 2.2rem);
-  font-weight: 400;
-  letter-spacing: -0.03em;
-}
-
-.lens-card p {
-  max-width: 29em;
-  margin: 0;
-  color: rgba(23, 19, 15, 0.58);
-  font-size: 0.82rem;
-  letter-spacing: 0.06em;
-  line-height: 1.9;
-}
-
 .next-chapters {
   display: grid;
   width: min(940px, 100%);
-  margin: clamp(42px, 5vw, 68px) auto 0;
+  margin: 0 auto;
   gap: clamp(16px, 2.2vw, 26px);
   grid-template-columns: repeat(2, minmax(0, 1fr));
   color: var(--paper);
@@ -2782,32 +2731,9 @@ button:disabled {
   }
 
   .explore-section {
-    padding-top: 80px;
+    padding-top: 48px;
+    padding-bottom: 56px;
     background: var(--paper);
-  }
-
-  .lens-grid {
-    display: block;
-    margin-top: 0;
-  }
-
-  .lens-card {
-    min-height: 0;
-    padding: 22px 4px 30px;
-  }
-
-  .lens-card + .lens-card {
-    border-left: 0;
-  }
-
-  .lens-card h3 {
-    margin-top: 28px;
-    font-size: clamp(1.35rem, 6vw, 1.75rem);
-  }
-
-  .lens-card p {
-    font-size: 0.9rem;
-    line-height: 1.7;
   }
 
   .next-chapters {

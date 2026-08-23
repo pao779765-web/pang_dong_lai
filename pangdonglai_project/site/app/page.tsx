@@ -51,27 +51,6 @@ const keywords: Keyword[] = [
   { label: "网红朝圣地？", x: 18, y: 78, dx: 12, dy: 10, duration: 25, delay: -19, tone: "paper" },
 ];
 
-const lenses = [
-  {
-    number: "01",
-    kicker: "看见",
-    title: "标签如何形成",
-    copy: "先保留赞美，也保留质疑。把热搜、报道与口耳相传放在同一张桌面上。",
-  },
-  {
-    number: "02",
-    kicker: "追问",
-    title: "做法如何落地",
-    copy: "从服务细节进入制度现场：员工、顾客、管理与城市之间，究竟发生了什么？",
-  },
-  {
-    number: "03",
-    kicker: "核验",
-    title: "证据来自哪里",
-    copy: "让每个结论都能回到公开报道、实地资料与可追溯的来源，而不是停在传说里。",
-  },
-];
-
 function formatStoreHours(tuesdayOpen: boolean) {
   return `夏季（6–8月）09:30–21:30；其他月份：周一、三、四、日 09:30–21:00，周五、六 09:30–21:30；周二${tuesdayOpen ? "正常营业" : "闭店"}`;
 }
@@ -637,19 +616,6 @@ export default function Home() {
 
       <section id="explore" className="explore-section" tabIndex={-1} aria-label="探索主题">
         <div className="section-shell">
-          <div className="lens-grid">
-            {lenses.map((lens) => (
-              <article className="lens-card" key={lens.number}>
-                <div className="lens-meta">
-                  <span>{lens.number}</span>
-                  <span>{lens.kicker}</span>
-                </div>
-                <h3>{lens.title}</h3>
-                <p>{lens.copy}</p>
-              </article>
-            ))}
-          </div>
-
           <aside ref={chaptersRef} className="next-chapters" aria-label="内容板块">
             <button ref={storeToggleRef} className={`chapter-card chapter-card-link${storesOpen && !storesClosing ? " is-expanded" : ""}`} type="button" onClick={openStoreDirectory} aria-expanded={storesOpen && !storesClosing} aria-controls="store-directory">
               <span className="chapter-index">01</span>

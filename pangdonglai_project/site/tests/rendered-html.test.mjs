@@ -1335,6 +1335,8 @@ test("server-renders the Pangdonglai culture homepage", async () => {
   assert.match(html, /aria-controls="store-directory"/);
   assert.match(html, /与胖东来对话/);
   assert.match(html, /id="explore"/);
+  assert.doesNotMatch(html, /标签如何形成|做法如何落地|证据来自哪里/);
+  assert.doesNotMatch(html, /lens-grid|lens-card/);
   assert.match(html, /id="ai-dialogue"/);
   assert.match(html, /id="store-directory"/);
   assert.match(html, /aria-hidden="true"/);
@@ -1361,6 +1363,7 @@ test("ships phase-1 mobile CSS baselines for touch and iOS inputs", async () => 
   assert.match(css, /font-size:\s*16px/);
   assert.match(css, /min-height:\s*48px/);
   assert.match(css, /chat-suggest-chip[\s\S]*?min-height:\s*44px/);
+  assert.doesNotMatch(css, /\.lens-grid|\.lens-card|\.lens-meta/);
 });
 
 test("ships phase-2 mobile product polish for chat shell and fab", async () => {

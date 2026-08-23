@@ -2,10 +2,10 @@
 
 > **规则：** 谁做完谁更新本文件。下一位只认本文件 + Git，不靠聊天记录猜。
 
-**更新时间：** 2026-08-22
+**更新时间：** 2026-08-23
 
-**当前执行者：** Grok 按用户要求将 NEWS-UI-01～07 与事件 7～15 知识库增量提交并推送 GitHub `main`，随后部署 CloudBase。
-**Git 状态：** 本地 `main` 已推送到 GitHub（`ca1e52b`）。未纳入 `.agents/`、`.tmp_qa/`、`skills-lock.json`。CloudBase 现网为 `pangdonglai-site-018`（100% 流量，2026-08-22 14:00:06），替换此前的 `pangdonglai-site-017`。
+**当前执行者：** Grok 按用户截图删除首页三块装饰说明（标签如何形成 / 做法如何落地 / 证据来自哪里）。
+**Git 状态：** 本地 `main` 在 `873e79b` 之上有未提交的 Explore 删卡改动。未纳入 `.agents/`、`.tmp_qa/`、`skills-lock.json`。CloudBase 现网仍为 `pangdonglai-site-018`（100% 流量），本轮未部署。
 
 ---
 
@@ -125,6 +125,7 @@
 - [x] **Codex NEWS-UI-06（用户明确要求）**：将每个新闻详情页的来源按“官方 / 第三方媒体 / 自媒体”分组展示；为已保存 URL 的来源增加明确的“打开来源”入口，并对未保存原帖直链的条目保留“链接待核验”状态，不伪造链接。`npm run lint`、`npm test`（58/58）、`git diff --check` 和 Impeccable 检测通过；未上传 GitHub、未部署云端。
 - [x] **Codex NEWS-UI-07（用户明确要求）**：将来源链接从详情页下方的“可核验来源”区域迁移到截图所示的四类来源账本中；每个来源格子内直接展示对应链接，并移除重复的下方来源分组。`npm run lint`、`npm test`（58/58）、`git diff --check` 和 Impeccable 检测通过；未上传 GitHub、未部署云端。
 - [x] **Grok DEPLOY-GH-CB-01（用户明确要求）**：将 NEWS-UI-01～07、事件 7～15 知识库增量（39 份资料、167 片段、10 案例）与新闻专档提交并推送 GitHub `main`（`ca1e52b`）；CloudBase `pangdonglai-site-018` 已 100% 切流。最小包含 `knowledge/vector/r5-general-index.json`，不写入密钥。公网 `/` 与 `/healthz` 返回 200，首页含座谈会/擀面皮/人格尊严等热点且不含事件 12；1 个 CSS、5 个 JS 与门店图 200。`npm run lint`、`npm test`（58/58）通过。向量索引仍为 R5C 冻结基线，未重建。
+- [x] **Grok UI-EXPLORE-02（用户明确要求）**：删除首页 Explore 区三块装饰卡「标签如何形成 / 做法如何落地 / 证据来自哪里」及对应 `lenses` 数据与 `.lens-*` 样式；保留 `#explore`、A 锚点、门店 01 与热点 02。Explore 区不再占满整屏。`npm run lint`、`npm test`（58/58）通过。未上传 GitHub、未部署云端。
 - [ ] Codex（可选）QA-02：微调 360 视口关键词坐标。
 - [ ] Codex（可选）QA-03：锚点后焦点落到栏目标题。
 - [ ] 用户确认 AI 对话区浅色重构视觉是否满意。
@@ -202,6 +203,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-23 | Grok | 按用户截图删除首页三块装饰说明（标签如何形成 / 做法如何落地 / 证据来自哪里），收紧 Explore 区留白；保留门店与热点入口、A 锚点和 `#explore`。`npm run lint`、`npm test`（58/58）通过。未部署 | pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/app/globals.css, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-22 | Grok | 按用户要求发布 NEWS-UI-01～07 与事件 7～15 知识库增量：GitHub `main` 推送 `ca1e52b`；CloudBase `pangdonglai-site-018` 100% 切流。公网 `/`、`/healthz`、CSS/JS/门店图均为 200；首页含 14 件热点（事件 12 未接入）。密钥未写入镜像或 Git。`npm run lint`、`npm test`（58/58）通过 | docs/HANDOFF.md, pangdonglai_project/knowledge/**, pangdonglai_project/news_summary/**, pangdonglai_project/site/app/{page.tsx,globals.css}, pangdonglai_project/site/data/hotspots.ts, pangdonglai_project/site/tests/rendered-html.test.mjs, pangdonglai_project/site/public/hotspot-*.{webp,png} |
 | 2026-08-12 | Codex | 按协议将事件 8~15 全部入库知识库（用户批准）：新增 8 份 source（擀面皮/伤人案/人格尊严公示/郑州开店/央视报道/员工流失/生活广场关闭/梦之城，均 `partial_text`）+ 3 个 case（noodle-skin、store-assault、dignity-violation），事件 11~15 走一般轨；manifest 更新为 39 份资料、167 片段、167 Claim、10 案例；检索验证 8 问全部正确路由召回；同步更新知识库计数断言（139→167），`npm test` 58/58、lint 通过；BM25 可用，向量索引保持 R5C 冻结基线未重建。未上传 GitHub、未部署云端 | knowledge/cases/{noodle-skin-food-safety-2024-06,store-assault-case-2025-11,dignity-violation-disclosure-2026-08}.json, knowledge/sources/{media-pdl-noodle-skin-food-safety-2024-06,media-pdl-store-assault-2025-11,media-pdl-dignity-violation-disclosure-2026-08,media-pdl-zhengzhou-store-2026,media-cctv-pdl-report-2024-04,official-pdl-turnover-2026-h1,media-pdl-life-plaza-closure-2026,media-pdl-dream-city-project-2026}/**, knowledge/chunks/{对应 8 个}.jsonl, knowledge/manifest.json, knowledge/compiled/knowledge-base.json, site/tests/rendered-html.test.mjs, pangdonglai_project/news_summary/HANDOFF.md, pangdonglai_project/news_summary/events/08~15-*.md, docs/HANDOFF.md |
 | 2026-08-12 | Codex | 按用户清单完成 NEWS-UI-02：将事件 8、9、10、11、13、14、15 接入统一热点索引和二级详情；保留事件时间线、四级来源、结论边界与不可点击来源卡，事件 8～15 已按协议获批入库；事件 12 暂未接入。`npm run lint`、`npm test`（58/58）和 Impeccable 检测通过。未上传 GitHub、未部署云端 | pangdonglai_project/site/data/hotspots.ts, pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/app/globals.css, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md, pangdonglai_project/news_summary/HANDOFF.md |
