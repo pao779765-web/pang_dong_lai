@@ -4,8 +4,8 @@
 
 **更新时间：** 2026-08-23
 
-**当前执行者：** Codex 已按用户要求删除首页 Hero 的「01 / 从标签走向理解」眉题。
-**Git 状态：** 本轮首页眉题移除与回归测试改动已提交；未纳入 `.agents/`、`.tmp_qa/`、`skills-lock.json`。CloudBase 现网仍为 `pangdonglai-site-018`，本轮未部署。
+**当前执行者：** Grok 按用户要求暂不发布，开始 RAG-CULTURE-R1 的 C1 第二轮资料候选。
+**Git 状态：** 本地 `main` 含未部署的 UI/热点改动。CloudBase 现网仍为 `pangdonglai-site-018`。C1 第二轮候选见 `docs/SOURCE_AUDIT_C1_02.md`，等待用户批准后才能入库。
 
 ---
 
@@ -79,7 +79,7 @@
 - [x] **RAG-CULTURE-R5C-7A（用户要求进行下一步）**：把已通过双基线的混合检索接入本地 Worker；新增 `RAG_RETRIEVAL_MODE=bm25|hybrid`，默认 `bm25`。显式启用 hybrid 后使用 RRF 1:0.65、向量 Top 12 与语义案例路由；缺 TokenHub 密钥、模型不一致或请求失败时自动退回 BM25。CloudBase Node 入口同步读取服务端变量，页面移除面向用户的 BM25 术语。51 项测试和 lint 通过，未部署。
 - [x] **RAG-CULTURE-R5C-7B（用户明确授权）**：三道本地 Worker 真实问答均调用成功；普通文化题和资料不足题通过，用户红裤头题需修改，自动与人工验收均为 2/3。该题语义案例路由正确、Top-5 第三名已召回员工免职/降级直接资料且没有串入尝面员工案例，但 AnswerPlan 漏掉该 Claim，导致回答错误称公开资料未明确记载处理措施。结果原样保存且未记录密钥，未部署；详见 `docs/RAG_CULTURE_R5C_WORKER_LIVE.md`。
 - [x] **RAG-CULTURE-R5C-8（用户要求执行）**：不为红裤头单题加补丁；在 `createAnswerPlan` 增加通用前提覆盖：当问题含可核实具体前提（员工处置、金额、比例、假期天数、处理结果等），且安全 `eligibleClaims` 中已有直接支持或纠正该前提的 Claim 时，强制至少保留 1 条。匹配只用 statement/title/topics，避免 `canSupport` 范围短语误覆盖。离线回归：53 项测试、固定 54/54、R4 契约 18/18、lint 通过；混合检索用冻结向量索引 mock 嵌入验证红裤头题必保留 `red-underwear-report-testing-and-staff` 且不串尝面案。2026-08-08 真实复测三题均返回 200、流式完成、DeepSeek 调用成功，自动检查 3/3；红裤头题已带出免职/降级 Claim 且未串案，资料不足题安全拒答但回答过于简短。结果写入 `evaluation/rag-culture-r5c-worker-live-v1.json`；尚未部署，人工质量复核仍需记录。
-- [ ] **RAG-CULTURE-R1**：用户已批准 C1“员工的尊严、自由与生活”首批两组资料。7 份资料、32 个片段和 3 个独立案例已按 `approved` / `limited` 范围入库，审核与结果见 `docs/SOURCE_AUDIT_C1_01.md`；知识库现有 30 份资料、135 个片段和 6 个案例。本阶段尚未完成后续 C1 一手资料主干，不得自动扩充。
+- [ ] **RAG-CULTURE-R1**：C1 首批已入库（见 `docs/SOURCE_AUDIT_C1_01.md`）。第二轮候选已写出 `docs/SOURCE_AUDIT_C1_02.md`，待用户批准 / 限制 / 拒绝后才能写入知识库。不得自动扩充。知识库当前 37 份资料、158 片段、8 案例。
 - [x] **RAG-RESEARCH-01**：建立 Codex 与 Grok 强制共用的互联网资料检索与 RAG 入库规范；明确候选池、来源优先级、企业身份核验、转载去重、事件阶段、用户批准、版权边界、入库测试和向量库接入条件，并在 `AGENTS.md` 设置任务前必读入口。
 - [x] **Codex【RAG-CASE-01】**：按 Grok 审核顺序完成“案例档案 + 事件事实/文化理解双轨回答”：定义 `caseId`、`claimType`、`finality` schema；事件轨仅引用同案例资料，文化轨不得裁定具体客诉真伪；无 `final` 证据时禁止终局话术；界面展示案例来源的证据阶段；补充误召回与最终结论边界测试。
 - [x] **RAG-CASE-01 资料边界**：V3-1（茶叶反馈）和 V3-2（鲜鸡蛋争议）以用户批准的 `limited` 归因资料进入各自案例轨，只能说明企业公开的初步回应，不能作为终局结论；SOURCE_AUDIT_03 其余候选仍未入库。
