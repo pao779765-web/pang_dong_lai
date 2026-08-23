@@ -1,0 +1,45 @@
+{
+  "id": "media-nbd-leave-cannot-refuse-2023-12",
+  "title": "每日经济新闻：2023 年分享会称请假不允许不批假",
+  "type": "media_feature",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "media_narrative",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "媒体转述企业微信公号对分享会的记录",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-23",
+    "basis": "docs/SOURCE_AUDIT_C1_02.md C1-B5；用户限制批准 limited。"
+  },
+  "source": {
+    "publisher": "每日经济新闻",
+    "sourceType": "media",
+    "url": "https://www.nbd.com.cn/articles/2023-12-02/3143738.html",
+    "publishedAt": "2023-12-02",
+    "verifiedAt": "2026-08-23",
+    "notes": "转述胖东来商贸集团微信公号 2023-12-01 对 11 月 25 日分享会的记录。"
+  },
+  "scope": [
+    "2023 年 11 月分享会上「请假不允许不批假」的公开表述",
+    "当时把工作时间、年假和春节闭店加总后的休假天数说法"
+  ],
+  "answeringRules": [
+    "只能用于 2023-11 分享会这一历史公开表述，必须标注时点。",
+    "必须使用「据每日经济新闻转述企业微信公号」等归因。",
+    "不得把 2023 年薪酬、配车等数字写成现行全体员工待遇。",
+    "不得用「约 140 天 / 管理层约 190 天」替代 2026-08-06 客服确认的 40 天假期口径。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-nbd-leave-cannot-refuse-2023-12/content.md",
+    "chunksPath": "chunks/media-nbd-leave-cannot-refuse-2023-12.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-23",
+    "notes": "只保存不批假机制与历史加总口径的边界。"
+  }
+}

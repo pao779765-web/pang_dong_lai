@@ -6,9 +6,9 @@
   "generatedIndex": "compiled/knowledge-base.json",
   "counts": {
     "cases": 8,
-    "sources": 37,
-    "chunks": 158,
-    "claims": 158
+    "sources": 41,
+    "chunks": 172,
+    "claims": 172
   },
   "cases": [
     {
@@ -266,6 +266,30 @@
       "metadataPath": "sources/media-pdl-dream-city-project-2026/metadata.json",
       "contentPath": "sources/media-pdl-dream-city-project-2026/content.md",
       "chunksPath": "chunks/media-pdl-dream-city-project-2026.jsonl"
+    },
+    {
+      "id": "media-ctdsb-pdl-leave-policy-2026-08",
+      "metadataPath": "sources/media-ctdsb-pdl-leave-policy-2026-08/metadata.json",
+      "contentPath": "sources/media-ctdsb-pdl-leave-policy-2026-08/content.md",
+      "chunksPath": "chunks/media-ctdsb-pdl-leave-policy-2026-08.jsonl"
+    },
+    {
+      "id": "media-nbd-unhappy-leave-announce-2024-03",
+      "metadataPath": "sources/media-nbd-unhappy-leave-announce-2024-03/metadata.json",
+      "contentPath": "sources/media-nbd-unhappy-leave-announce-2024-03/content.md",
+      "chunksPath": "chunks/media-nbd-unhappy-leave-announce-2024-03.jsonl"
+    },
+    {
+      "id": "media-nbd-leave-vs-pay-vote-2026-03",
+      "metadataPath": "sources/media-nbd-leave-vs-pay-vote-2026-03/metadata.json",
+      "contentPath": "sources/media-nbd-leave-vs-pay-vote-2026-03/content.md",
+      "chunksPath": "chunks/media-nbd-leave-vs-pay-vote-2026-03.jsonl"
+    },
+    {
+      "id": "media-nbd-leave-cannot-refuse-2023-12",
+      "metadataPath": "sources/media-nbd-leave-cannot-refuse-2023-12/metadata.json",
+      "contentPath": "sources/media-nbd-leave-cannot-refuse-2023-12/content.md",
+      "chunksPath": "chunks/media-nbd-leave-cannot-refuse-2023-12.jsonl"
     }
   ]
 }

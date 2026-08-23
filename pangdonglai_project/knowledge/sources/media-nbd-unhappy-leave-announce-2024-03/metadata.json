@@ -1,0 +1,46 @@
+{
+  "id": "media-nbd-unhappy-leave-announce-2024-03",
+  "title": "每日经济新闻：2024 年公开宣布新增不开心假",
+  "type": "media_feature",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "media_narrative",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "综合稿转述论坛发言与企业公号（非现行制度核验）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-23",
+    "basis": "docs/SOURCE_AUDIT_C1_02.md C1-B2；用户限制批准 limited。"
+  },
+  "source": {
+    "publisher": "每日经济新闻（综合界面新闻、企业微信公号、官方抖音）",
+    "sourceType": "media",
+    "url": "https://www.nbd.com.cn/articles/2024-03-26/3296439.html",
+    "publishedAt": "2024-03-26",
+    "verifiedAt": "2026-08-23",
+    "notes": "原始场合为 2024 中国超市周论坛；本篇为综合转述。"
+  },
+  "scope": [
+    "2024 年公开宣布新增 10 天不开心假",
+    "创始人关于管理层不能不批的公开表述",
+    "2023 年分享会中关于休假天数加总的历史口径"
+  ],
+  "answeringRules": [
+    "只能说明 2024-03 公开宣布时点，必须与 2026-08 客服确认的现行口径分开。",
+    "必须使用「据每日经济新闻 2024 年 3 月综合报道」等归因。",
+    "不得把 2024 年门店员工关于「10 天含陪护假」的转述写成 2026 年仍有效的制度拆分。",
+    "2023 年「约 140 天 / 管理层约 190 天」是加总口径，不能当作现行客服确认的 40 天带薪假期。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-nbd-unhappy-leave-announce-2024-03/content.md",
+    "chunksPath": "chunks/media-nbd-unhappy-leave-announce-2024-03.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-23",
+    "notes": "只保存 2024 年宣布时点与边界，不保存全文。"
+  }
+}

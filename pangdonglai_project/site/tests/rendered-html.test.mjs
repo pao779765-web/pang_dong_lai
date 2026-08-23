@@ -552,11 +552,11 @@ test("builds the RAG index from the directory knowledge source of truth", async 
   const cultureThemes = new Set(["C1", "C2", "C3", "C4", "C5", "C6"]);
   const cultureRelevance = new Set(["direct", "supporting", "context_only", "boundary"]);
   const allChunks = compiled.documents.flatMap((document) => document.chunks);
-  assert.equal(allChunks.length, 158);
-  assert.equal(manifest.counts.claims, 158);
+  assert.equal(allChunks.length, 172);
+  assert.equal(manifest.counts.claims, 172);
   const allClaims = allChunks.flatMap((chunk) => chunk.claims);
-  assert.equal(allClaims.length, 158);
-  assert.equal(new Set(allClaims.map((claim) => claim.id)).size, 158);
+  assert.equal(allClaims.length, 172);
+  assert.equal(new Set(allClaims.map((claim) => claim.id)).size, 172);
   for (const chunk of allChunks) {
     assert.equal(chunk.culture.annotationVersion, "culture-v1");
     assert.ok(cultureRelevance.has(chunk.culture.relevance));
@@ -644,6 +644,10 @@ test("builds the RAG index from the directory knowledge source of truth", async 
     "workercn-noodle-dismissal-critique-2024-02-17",
     "workercn-noodle-reconsideration-2024-02-23",
     "jiemian-salary-policy-clarification-2026-06",
+    "media-ctdsb-pdl-leave-policy-2026-08",
+    "media-nbd-unhappy-leave-announce-2024-03",
+    "media-nbd-leave-vs-pay-vote-2026-03",
+    "media-nbd-leave-cannot-refuse-2023-12",
   ]) {
     const document = backfilledDocuments.get(documentId);
     assert.equal(document?.ingestion.contentStatus, "partial_text");
@@ -2255,6 +2259,42 @@ test("keeps company egg testing separate from a regulatory final conclusion", as
     assert.match(prompt, /不得引用其他案例或企业理念资料来裁定本案例事实/);
     assert.doesNotMatch(prompt, /茶叶苍蝇|人民日报于东来访谈/);
     assert.match(body, /"finality":"no_regulatory_final"/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("retrieves 2026 customer-service leave numbers on the general track", async () => {
+  const originalFetch = globalThis.fetch;
+  let deepseekRequest;
+
+  globalThis.fetch = async (input, init) => {
+    if (String(input) === "https://api.deepseek.com/chat/completions") {
+      deepseekRequest = JSON.parse(init.body);
+      return new Response(
+        'data: {"choices":[{"delta":{"content":"年假口径"}}]}\n\ndata: [DONE]\n\n',
+        { headers: { "content-type": "application/json" } },
+      );
+    }
+    return originalFetch(input, init);
+  };
+
+  try {
+    const response = await render(
+      "/api/chat",
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ messages: [{ role: "user", content: "胖东来工龄满一年有多少天年假和不开心假？" }] }),
+      },
+      { DEEPSEEK_API_KEY: "test-key" },
+    );
+
+    assert.equal(response.status, 200);
+    const prompt = deepseekRequest.messages[0].content;
+    assert.match(prompt, /极目新闻：官方客服确认现行年假与自由假口径/);
+    assert.match(prompt, /40 天假期|30 天年假|10 天自由假/);
+    assert.doesNotMatch(prompt, /【这次问题的回答边界】/);
   } finally {
     globalThis.fetch = originalFetch;
   }

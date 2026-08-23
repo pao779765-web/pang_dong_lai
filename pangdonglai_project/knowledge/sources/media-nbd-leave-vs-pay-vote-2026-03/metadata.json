@@ -1,0 +1,46 @@
+{
+  "id": "media-nbd-leave-vs-pay-vote-2026-03",
+  "title": "每日经济新闻：员工投票维持现有工资与 40 天休假",
+  "type": "media_feature",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "media_narrative",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "综合稿转述企业自行公布的调研与分配方案",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-23",
+    "basis": "docs/SOURCE_AUDIT_C1_02.md C1-B3；用户限制批准 limited。"
+  },
+  "source": {
+    "publisher": "每日经济新闻（综合自大河财立方、封面新闻）",
+    "sourceType": "media",
+    "url": "https://www.nbd.com.cn/articles/2026-03-09/4283840.html",
+    "publishedAt": "2026-03-09",
+    "verifiedAt": "2026-08-23",
+    "notes": "原始披露为于东来社交平台与企业内部调研；本篇为二次综合。"
+  },
+  "scope": [
+    "2026 年 2 月企业内部「降薪增假」调研的公开数字",
+    "多数员工选择维持现有工资与休假的企业公布结果",
+    "企业对 40 天休假和 7 小时工时满意度的自行公布"
+  ],
+  "answeringRules": [
+    "必须标明 2026 年 2 月 23 日至 24 日调研时点，并写明数字来自企业自行公布、经媒体转述。",
+    "不得把问卷结果写成无压力的全员真实意愿普查。",
+    "不得把约 38 亿元资产分配写成已经现金到账，也不得断言未来 50% 利润分成一定持续。",
+    "现行假期天数仍以 2026-08-06 客服核验口径为主，本条主要用于「员工选择维持现状」。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-nbd-leave-vs-pay-vote-2026-03/content.md",
+    "chunksPath": "chunks/media-nbd-leave-vs-pay-vote-2026-03.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-23",
+    "notes": "只保存调研设置、投票结果、满意度与证据边界。"
+  }
+}

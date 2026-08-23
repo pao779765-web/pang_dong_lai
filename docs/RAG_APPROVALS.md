@@ -20,6 +20,19 @@
 | `https://web.azpdl.cn/` | `candidate` | 需要进一步确认页面主体与更新信息，才能用作企业介绍证据。 |
 | `https://cpc.people.com.cn/n1/2025/0819/c64387-40545235.html` | `candidate` | 可用于受访者观点，但不宜单独证明具体制度或客观事实。 |
 
+## 2026-08-23：C1 第二轮休假口径
+
+用户已阅读 [`SOURCE_AUDIT_C1_02.md`](./SOURCE_AUDIT_C1_02.md)，并批示：批准 B1；限制 B2、B3、B5；拒绝 B4、B6。
+
+| 来源 | 状态 | 可回答范围 |
+| --- | --- | --- |
+| https://www.ctdsb.net/c1716_202608/2823455.html | `approved` | 2026-08-06 客服确认的年假 / 自由假天数与自动审批 |
+| https://www.nbd.com.cn/articles/2024-03-26/3296439.html | `limited` | 仅 2024-03 公开宣布不开心假的时点 |
+| https://www.nbd.com.cn/articles/2026-03-09/4283840.html | `limited` | 企业公布的降薪增假投票与 40 天休假满意度 |
+| https://www.nbd.com.cn/articles/2023-12-02/3143738.html | `limited` | 仅 2023-11 分享会「不允许不批假」的历史表述 |
+
+未入库：快科技转述企业 15 页说明（缺原帖）；搜狐员工手册摘录（版权与版本无法确认）。
+
 ## 使用边界
 
 门店资料具有时效性。未来回答必须提供原始链接与 `verifiedAt`，并提示以官方最新页面或到店通知为准。

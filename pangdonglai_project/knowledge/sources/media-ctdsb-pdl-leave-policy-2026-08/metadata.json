@@ -1,0 +1,46 @@
+{
+  "id": "media-ctdsb-pdl-leave-policy-2026-08",
+  "title": "极目新闻：官方客服确认现行年假与自由假口径",
+  "type": "media_company_response",
+  "status": "approved",
+  "caseId": null,
+  "claimType": "media_observation",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "记者致电官方客服的媒体记录（非员工手册原文）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-23",
+    "basis": "docs/SOURCE_AUDIT_C1_02.md C1-B1；用户批准 approved。"
+  },
+  "source": {
+    "publisher": "极目新闻，记者陈洋洋",
+    "sourceType": "media",
+    "url": "https://www.ctdsb.net/c1716_202608/2823455.html",
+    "publishedAt": "2026-08-06",
+    "verifiedAt": "2026-08-23",
+    "notes": "记者 2026-08-06 下午从胖东来官方客服处核实休假口径；企业制度原件未取得。"
+  },
+  "scope": [
+    "2026-08-06 官方客服确认的年假与自由假天数",
+    "工龄满一年与试用期满后未满一年的不同口径",
+    "假期可自行安排、人事系统自动审批的客服表述"
+  ],
+  "answeringRules": [
+    "必须使用「据极目新闻 2026 年 8 月 6 日报道，记者从胖东来官方客服处了解到」等归因，并保留该时点。",
+    "不得把客服口径写成员工手册全文，也不得断言所有门店、岗位完全一致执行。",
+    "不得把其他稿件中的「145 天综合休假」算法写成该客服原话。",
+    "试用期口径以本篇「每月 2 天年假 + 10 天自由假」为准，不得与未核验的「每月 5 天」转述混用。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-ctdsb-pdl-leave-policy-2026-08/content.md",
+    "chunksPath": "chunks/media-ctdsb-pdl-leave-policy-2026-08.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-23",
+    "notes": "只保存客服确认段落与使用边界，不复制整篇时评报道。"
+  }
+}
