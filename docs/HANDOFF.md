@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-08-27
 
-**当前执行者：** Grok 已按用户要求全量上线。GitHub `main` 为 `a4a52e9`；CloudBase 已 100% 切流（2026-08-27 22:19）。embedding 为 `kinfra-text-embedding-4b`，hybrid 已启用。
+**当前执行者：** Grok 已按用户要求把刑释人员热点调到第一并上线。GitHub `main` 为 `1901fc6`；CloudBase 已 100% 切流（2026-08-27 23:30 左右）。embedding 为 `kinfra-text-embedding-4b`，hybrid 已启用。
 
 ---
 
@@ -53,7 +53,8 @@
 
 ## 未完成 / 下一步
 
-- [x] **NEWS-Q-01（用户明确要求）**：删除刑释人员热点详情底部快捷追问「为什么不能把‘首批30人无一离职’写成普遍结论？」。档案正文、来源和时间线未改。未部署。
+- [x] **NEWS-ORDER-01（用户明确要求并已上线）**：将「胖东来郑州店计划招聘刑释人员」调到热点索引第一位；同步上线 NEWS-Q-01 删除的那条快捷追问。GitHub `1901fc6`；CloudBase 100% 切流。公网首页 200，正文中该标题出现在红色内裤事件之前，且不含「写成普遍结论」。
+- [x] **NEWS-Q-01（用户明确要求）**：删除刑释人员热点详情底部快捷追问「为什么不能把‘首批30人无一离职’写成普遍结论？」。档案正文、来源和时间线未改。已随 NEWS-ORDER-01 上线。
 - [x] **PPT-XR-01（用户明确要求）**：用 `guizang-ppt-skill` 瑞士风 IKB 完成息壤杯参赛网页 PPT 端到端交付。16 页，数字按 2026-08-27 现网口径（65 来源 / 254 切片 / 14 门店 / 13 热点 / 4b 2560 维 hybrid）。5G 与现场导览标为路线图。校验：Swiss 16 页通过、演讲备注 16/16、计划时长 7.0 分钟。未改网站源码、未部署。
 - [x] **PPT-WEB-01（用户明确要求）**：用 `guizang-ppt-skill` 为网站做展示 PPT。沿用瑞士风 IKB、16 页、现网口径；封面改为网站展示而非赛道标题；补暗页节奏与第 15 页主视觉。校验：Swiss 16 页通过、演讲备注 16/16、计划时长 7.0 分钟。未改网站源码、未部署。
 - [x] **RAG-ARCH-02（用户已授权）**：将单一 `pangdonglai_project/knowledge-base.json` 无损迁移为 `knowledge/manifest.json + sources/<id>/metadata.json/content.md + chunks/<id>.jsonl + cases/<id>.json`；23 份资料、53 个片段和 3 个案例全部保留，现有摘要统一标记 `summary_only`，Worker 改读构建生成的兼容索引，Docker 与结构回归测试通过。此次未抓取或伪造缺失原文。
@@ -161,7 +162,7 @@
 
 待用户确认：是否启动 C2，以及是否把本地增量（含新向量）发到 CloudBase。R6 真实用户试用暂不开始。
 
-当前发布状态：CloudBase 公网测试域 `https://pangdonglai-site-288850-10-1460145328.sh.run.tcloudbase.com` 已切到本轮镜像。`/` 与 `/healthz` 200；首页含刑释人员热点、不含已剔除的座谈会稿；1 个 CSS、5 个 JS 200。公网问答「轮值总审批是什么意思？」返回 200，来源含刘改敏 2024/2025 轮值资料。知识库 65 份 / 254 片段 / 10 案例；向量 `kinfra-text-embedding-4b` 254×2560。正式域名仍待 ICP 备案后绑定。真机/微信内置浏览器本轮未复测。
+当前发布状态：CloudBase 公网测试域 `https://pangdonglai-site-288850-10-1460145328.sh.run.tcloudbase.com` 已切到 `1901fc6`。`/` 与 `/healthz` 200；热点索引第一项为「胖东来郑州店计划招聘刑释人员」，不含已删快捷追问「写成普遍结论」，不含已剔除的座谈会稿。知识库 65 份 / 254 片段 / 10 案例；向量 `kinfra-text-embedding-4b` 254×2560。正式域名仍待 ICP 备案后绑定。真机/微信内置浏览器本轮未复测。
 
 ---
 
@@ -226,6 +227,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-27 | Grok | 用户要求把刑释人员热点放到第一并上线：GitHub `1901fc6`；CloudBase 100% 切流。公网首页该标题在红色内裤事件之前，已删快捷追问不在现网 | pangdonglai_project/site/data/hotspots.ts, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-27 | Grok | 按用户要求用 guizang-ppt-skill 做网站展示 PPT：瑞士风 IKB、16 页、现网口径；封面改为网站展示，补暗页节奏与第 15 页主视觉。Swiss/演讲备注校验通过 | deliverables/xirang-cup-pangdonglai-ai-culture-museum-20260827/**, docs/HANDOFF.md |
 | 2026-08-27 | Grok | 按用户截图删除刑释人员热点的一条快捷追问（首批30人无一离职写成普遍结论） | pangdonglai_project/site/data/hotspots.ts, docs/HANDOFF.md |
 | 2026-08-27 | Grok | 按用户要求用 guizang-ppt-skill 交付息壤杯 16 页瑞士风网页 PPT；现网数字、演讲备注与 60 秒脚本对齐；5G 仅作路线图 | deliverables/xirang-cup-pangdonglai-ai-culture-museum-20260827/**, docs/HANDOFF.md |
