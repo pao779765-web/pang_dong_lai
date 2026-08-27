@@ -4,7 +4,7 @@
 
 **更新时间：** 2026-08-27
 
-**当前执行者：** Grok 正按用户要求全量上线：embedding 已切到 `kinfra-text-embedding-4b` 并重建 254 条向量；hybrid 已写入镜像默认。CloudBase 发布见本轮结论。
+**当前执行者：** Grok 已按用户要求全量上线。GitHub `main` 为 `a4a52e9`；CloudBase 已 100% 切流（2026-08-27 22:19）。embedding 为 `kinfra-text-embedding-4b`，hybrid 已启用。
 
 ---
 
@@ -158,7 +158,7 @@
 
 待用户确认：是否启动 C2，以及是否把本地增量（含新向量）发到 CloudBase。R6 真实用户试用暂不开始。
 
-当前发布状态：知识库本地 65 份资料 / 254 片段 / 10 案例；向量为 `kinfra-text-embedding-4b`、254 条、2560 维。CloudBase 发布版本见最近变更。正式域名仍待 ICP 备案后绑定。真机/微信内置浏览器本轮未复测。
+当前发布状态：CloudBase 公网测试域 `https://pangdonglai-site-288850-10-1460145328.sh.run.tcloudbase.com` 已切到本轮镜像。`/` 与 `/healthz` 200；首页含刑释人员热点、不含已剔除的座谈会稿；1 个 CSS、5 个 JS 200。公网问答「轮值总审批是什么意思？」返回 200，来源含刘改敏 2024/2025 轮值资料。知识库 65 份 / 254 片段 / 10 案例；向量 `kinfra-text-embedding-4b` 254×2560。正式域名仍待 ICP 备案后绑定。真机/微信内置浏览器本轮未复测。
 
 ---
 
@@ -176,7 +176,7 @@
 ### 给 Codex
 
 1. 资料架构只维护 `pangdonglai_project/knowledge/**`；禁止手工修改 `knowledge/compiled/knowledge-base.json` 或恢复旧根文件。
-2. CloudBase 现网为 `pangdonglai-site-018`；后续发布务必带上 `knowledge/vector/r5-general-index.json`，见 `docs/DEPLOY_CN.md`。
+2. CloudBase 现网已切离 `pangdonglai-site-018`；后续发布务必带上 `knowledge/vector/r5-general-index.json`，且 `TENCENT_TOKENHUB_MODEL` 必须与索引模型一致，见 `docs/DEPLOY_CN.md`。
 3. 所有 RAG 工作先读 `docs/RAG_RESEARCH_PROTOCOL.md` 和 `docs/RAG_CULTURE_ROADMAP.md`；不修改原始 HTML，完成后更新本 HANDOFF 并小步提交。
 
 ### 给 Grok
@@ -223,7 +223,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
-| 2026-08-27 | Grok | 用户要求全量上线并更新 embedding：默认模型改为 `kinfra-text-embedding-4b`，重建 254×2560 向量，镜像默认 hybrid；lint/test 61/61。密钥未入库 | pangdonglai_project/knowledge/vector/r5-general-index.json, pangdonglai_project/site/shared/embedding-client.mjs, pangdonglai_project/site/worker/index.ts, pangdonglai_project/Dockerfile, docs/DEPLOY_CN.md, docs/HANDOFF.md |
+| 2026-08-27 | Grok | 用户要求全量上线：GitHub `a4a52e9`；CloudBase 100% 切流。embedding 改为 `kinfra-text-embedding-4b`（254×2560），镜像默认 hybrid。公网 `/` `/healthz` 与轮值问答 200。密钥未入库 | pangdonglai_project/knowledge/vector/r5-general-index.json, pangdonglai_project/site/shared/embedding-client.mjs, pangdonglai_project/site/worker/index.ts, pangdonglai_project/Dockerfile, docs/DEPLOY_CN.md, docs/HANDOFF.md |
 | 2026-08-27 | Codex | 按用户要求安装本地 ZIP 版 `guizang-ppt-skill`，供 Codex 与 Grokbuild 后续生成横向网页 PPT；未改项目源码、未部署 | `.agents/skills/guizang-ppt-skill/**`, `C:\Users\pao chui\.codex\skills\guizang-ppt-skill\**`, `docs/HANDOFF.md` |
 | 2026-08-27 | Grok | 按用户批复入库 C2：核联商网 A1/A2 后 limited；A3/A4/A5 limited；A6 拒绝新建。未重建向量、未部署 | pangdonglai_project/knowledge/**（5 份新来源、15 片段）、docs/SOURCE_AUDIT_C2_01.md、docs/RAG_APPROVALS.md、docs/HANDOFF.md |
 | 2026-08-27 | Grok | 按用户同意启动 C2：检索一线授权/轮值/问责/民主评议，起草审核稿；随后已入库 | docs/SOURCE_AUDIT_C2_01.md, docs/HANDOFF.md |
