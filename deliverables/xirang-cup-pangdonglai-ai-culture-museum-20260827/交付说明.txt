@@ -4,10 +4,10 @@
    正式播放文件。单文件横向翻页网页 PPT（瑞士国际主义 / IKB），16 页。
    方向键翻页，B 静态，ESC 总览，P 演讲者模式。
 
-2. ppt/自由爱_AI文化数字馆_息壤杯参赛展示.html
-   与 index.html 同一份，便于按作品名提交。
+2. ppt/自由爱_AI文化数字馆_网站展示.html
+   与 index.html 同一份，便于按网站展示文件名打开。
 
-3. ppt/images/15-product-visual.png
+3. ppt/images/15-product-visual.jpg
    第 15 页 S22 主视觉。图内无标题、页码或品牌字标。
 
 4. ppt/assets/motion.min.js
