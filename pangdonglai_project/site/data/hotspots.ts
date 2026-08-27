@@ -1595,6 +1595,7 @@ const dreamCityHotspot: HotspotEvent = {
 };
 
 export const hotspotEvents: HotspotEvent[] = [
+  prisonerRecruitmentHotspot,
   featuredHotspot,
   teaFlyHotspot,
   eggCanthaxanthinHotspot,
@@ -1603,7 +1604,6 @@ export const hotspotEvents: HotspotEvent[] = [
   noodleSkinHotspot,
   storeAssaultHotspot,
   dignityViolationHotspot,
-  prisonerRecruitmentHotspot,
   zhengzhouStoreHotspot,
   staffTurnoverHotspot,
   lifePlazaClosureHotspot,

@@ -484,6 +484,12 @@ test("keeps every rendered hotspot follow-up contextual and source-graded", asyn
   ]);
 
   assert.doesNotMatch(hotspots, /fake-seminar-speech|bride-price-initiative/);
+  const hotspotList = hotspots.slice(hotspots.indexOf("export const hotspotEvents"));
+  assert.match(hotspotList, /prisonerRecruitmentHotspot/);
+  assert.ok(
+    hotspotList.indexOf("prisonerRecruitmentHotspot") < hotspotList.indexOf("featuredHotspot"),
+    "刑释人员招聘应排在热点索引第一位",
+  );
   assert.match(hotspots, /red-underwear-color-libel/);
   assert.match(hotspots, /tea-fly-feedback/);
   assert.match(hotspots, /顾客在抖音平台反馈茶叶中有苍蝇/);
