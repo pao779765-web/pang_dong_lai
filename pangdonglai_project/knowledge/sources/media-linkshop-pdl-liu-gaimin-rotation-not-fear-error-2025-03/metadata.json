@@ -1,0 +1,50 @@
+{
+  "id": "media-linkshop-pdl-liu-gaimin-rotation-not-fear-error-2025-03",
+  "title": "媒体记录：刘改敏 2025 超市周谈竞聘隔离与轮值不怕出错",
+  "type": "media_speech_report",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "attributed_person_statement",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "行业媒体对管理层超市周分享的编辑稿（非竞聘细则原文）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-27",
+    "basis": "docs/SOURCE_AUDIT_C2_01.md C2-A2；用户要求先核联商网页后 limited 入库。范围仅 2025-03 对竞聘/轮值原则的公开描述。"
+  },
+  "source": {
+    "publisher": "联商网编辑；刘改敏（胖东来超市运营负责人）2025 中国超市周店长交流论坛分享",
+    "sourceType": "media",
+    "url": "https://www.linkshop.com/news/2025530143.shtml",
+    "publishedAt": "2025-03-28",
+    "verifiedAt": "2026-08-27",
+    "alternateUrls": [
+      "http://www.linkshop.com/news/2025530143.shtml"
+    ],
+    "notes": "2026-08-27 用 curl.exe -L 打开正文（HTTP 200，charset=gb2312）。场合为 2025-03-26 中国超市店长交流论坛。不收录同篇薪酬、经营指标和欧洲行等段落。"
+  },
+  "scope": [
+    "管理层培养四项：竞聘、轮值、民主评议、团队管理",
+    "竞聘：除竞聘者外，公司、用人单位、管理层均不参加",
+    "轮值：自下而上，轮值期间全权负责上一级工作；所有轮值都是轮着来的",
+    "「不能不放权，不能害怕出错」是针对轮值流于形式的公开口径"
+  ],
+  "answeringRules": [
+    "必须写「据联商网 2025 年编辑的刘改敏超市周分享」。不是现行竞聘细则全文，也不是零差错承诺。",
+    "只收竞聘隔离原则和轮值「轮着来、全权负责、不怕出错」。民主评议数字以 2026-04 官网结果转述条为准，不用本篇展开评议门槛。",
+    "「其他企业学不会是因为不放心员工能力」是发言人对比，不能写成对其他企业的核实结论。",
+    "不能证明每次轮值都无差错，也不能证明竞聘现场完全无上级影响。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-linkshop-pdl-liu-gaimin-rotation-not-fear-error-2025-03/content.md",
+    "chunksPath": "chunks/media-linkshop-pdl-liu-gaimin-rotation-not-fear-error-2025-03.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-27",
+    "notes": "只保存竞聘不参加、轮值自下而上/轮着来、不能不放权不能害怕出错。"
+  }
+}

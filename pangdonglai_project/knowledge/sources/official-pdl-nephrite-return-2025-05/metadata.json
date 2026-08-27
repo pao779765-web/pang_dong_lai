@@ -1,0 +1,46 @@
+{
+  "id": "official-pdl-nephrite-return-2025-05",
+  "title": "胖东来官方账号：和田玉、翡翠退货说明（不扣手续费，须完好并持凭证）",
+  "type": "company_public_statement",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "company_public_statement",
+  "finality": "not_applicable",
+  "evidenceLevel": "L1",
+  "evidenceLabel": "企业抖音官方账号通报（官方通报；本库存媒体摘录，原帖 ID 未定位）",
+  "answerMode": "fact_with_source",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-26",
+    "basis": "docs/SOURCE_AUDIT_C3_01.md C3-A3；用户确认属官方通报、按 L1 入库。"
+  },
+  "source": {
+    "publisher": "胖东来抖音官方账号（每日经济新闻 2025-05-08 转述）",
+    "sourceType": "official",
+    "url": "https://www.nbd.com.cn/articles/2025-05-08/3868326.html",
+    "publishedAt": "2025-05-08",
+    "verifiedAt": "2026-08-26",
+    "notes": "稳定链接为每日经济新闻转述页。同稿市监局抽查内容不纳入本 C3 来源。"
+  },
+  "scope": [
+    "珠宝部自营区和田玉、翡翠可因价格或品质质疑办理退货",
+    "退货不扣手续费及税费",
+    "须无人为断裂裂纹，并持购物凭证、标签、鉴定证书"
+  ],
+  "answeringRules": [
+    "必须写「据胖东来官方账号 2025 年 5 月 8 日退货说明」。",
+    "只适用于珠宝部自营区和田玉、翡翠，不得写成全部珠宝或全品类。",
+    "必须保留「无人为损坏、持凭证」条件，不得写成无条件退货。",
+    "同稿市场监管抽查不是本资料范围，不得用本条证明质量终局。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/official-pdl-nephrite-return-2025-05/content.md",
+    "chunksPath": "chunks/official-pdl-nephrite-return-2025-05.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-26",
+    "notes": "只保存官方退货说明要点，不收录市监检查与销售数字。"
+  }
+}

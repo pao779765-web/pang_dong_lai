@@ -1,0 +1,49 @@
+{
+  "id": "media-jschina-weidu-nephrite-inspection-2025-05",
+  "title": "媒体转述：许昌魏都市监对胖东来和田玉的日常检查",
+  "type": "media_regulatory_report",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "regulatory_routine_inspection",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "政府日常检查通报的媒体转述（公众号原帖未定位）",
+  "answerMode": "fact_with_source",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-27",
+    "basis": "docs/SOURCE_AUDIT_C4_01.md C4-A5；用户要求六条一并入库。C3 和田玉退货来源未收录本段，本条单独入库。"
+  },
+  "source": {
+    "publisher": "中国江苏网转述许昌市市场监督管理局魏都区分局日常检查；联合早报称来源为许昌市场监管微信公众号约 2025-05-05",
+    "sourceType": "media",
+    "url": "https://jsnews.jschina.com.cn/nj/a/202505/t20250507_s681ac794e4b0ec5323b4e42e.shtml",
+    "publishedAt": "2025-05-07",
+    "verifiedAt": "2026-08-27",
+    "alternateUrls": [
+      "https://www.zaobao.com.sg/realtime/china/story20250506-6297054"
+    ],
+    "notes": "检查对象为时代广场销售和田玉的许昌市胖东来唯初珠宝有限公司。微信原帖未定位，不升 L1。"
+  },
+  "scope": [
+    "2025 年 1–4 月和田玉销售 4177 件、金额 2959.2175 万元，通报称平均毛利率不超过 20%",
+    "随机抽查在售 13 件：进货手续齐全、台账完备、鉴定机构有资质、证书有效",
+    "在售和田玉按规定明码标价"
+  ],
+  "answeringRules": [
+    "必须写「据媒体转述的许昌市监魏都分局日常检查通报」。",
+    "这是手续、标价和该时段平均毛利率的日常检查，不是质量认证，不是侵权案判决，也不是企业送检报告。",
+    "不得外推到黄金、翡翠以外品类或超市食品。",
+    "不得用本条终局否定或坐实柴怼怼指控；司法进展须另查案件材料。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-jschina-weidu-nephrite-inspection-2025-05/content.md",
+    "chunksPath": "chunks/media-jschina-weidu-nephrite-inspection-2025-05.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-27",
+    "notes": "只保存检查对象、抽查件数、销售与毛利率通报句，不收录舆情互怼细节。"
+  }
+}

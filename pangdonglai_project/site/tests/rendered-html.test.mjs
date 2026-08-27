@@ -37,7 +37,7 @@ test("validates TokenHub embedding responses without exposing the key", async ()
     },
   });
   assert.deepEqual(await client.embed(["员工尊严", "顾客服务"]), [[1, 0], [0, 1]]);
-  assert.equal(JSON.parse(requests[0].init.body).model, "kinfra-text-embedding-0.6b");
+  assert.equal(JSON.parse(requests[0].init.body).model, "kinfra-text-embedding-4b");
   assert.equal(requests[0].init.headers.authorization, "Bearer test-secret-key");
   assert.doesNotMatch(JSON.stringify(JSON.parse(requests[0].init.body)), /test-secret-key/);
 
@@ -529,7 +529,19 @@ test("keeps every rendered hotspot follow-up contextual and source-graded", asyn
   assert.match(page, /hotspot-evidence-source-list/);
   assert.match(page, /hotspot-evidence-source-link/);
   assert.match(page, /打开来源/);
-  assert.match(page, /链接待核验/);
+  assert.match(styles, /\.hotspot-evidence-source-action \{[\s\S]*font-size: 0\.98rem/);
+  assert.match(styles, /\.hotspot-evidence-source-action \{[\s\S]*background: linear-gradient/);
+  assert.match(page, /无稳定网页链接/);
+  assert.doesNotMatch(page, /链接待核验/);
+  assert.match(page, /function hotspotLedgerItems/);
+  assert.match(page, /item.credibility === "rumor"/);
+  assert.match(page, /item.credibility === "selfMedia"/);
+  assert.match(page, /hotspotLedgerItems\(selectedHotspot\)\.map/);
+  assert.match(hotspots, /www\.nbd\.com\.cn\/articles\/2026-07-27\/4517131\.html/);
+  assert.match(hotspots, /www\.bbtnews\.com\.cn\/2026\/0809\/601678\.shtml/);
+  assert.match(hotspots, /www\.henan\.gov\.cn\/2025\/03-20\/3138572\.html/);
+  assert.doesNotMatch(hotspots, /sogou\.com\/web\?query=/);
+  assert.doesNotMatch(hotspots, /so\.com\/s\?q=/);
   assert.match(page, /<h4>总体事件流程：<\/h4>/);
   assert.doesNotMatch(page, /<h4>目前能确认的事实<\/h4>/);
   assert.match(page, /selectedHotspot\.known\.replace\(\/\^已确认的是：\//);
@@ -549,7 +561,7 @@ test("defines and validates the R4 answer contract across all six culture themes
     "这件事现在知道什么",
     "企业当时怎么处理",
     "后来有没有明确结论",
-    "这件事让我们观察什么",
+    "从这件事观察胖东来：",
   ]);
 
   const general = guidance.createR4AnswerGuidance({ track: "general", hasEvidence: true });
@@ -632,11 +644,11 @@ test("builds the RAG index from the directory knowledge source of truth", async 
   const cultureThemes = new Set(["C1", "C2", "C3", "C4", "C5", "C6"]);
   const cultureRelevance = new Set(["direct", "supporting", "context_only", "boundary"]);
   const allChunks = compiled.documents.flatMap((document) => document.chunks);
-  assert.equal(allChunks.length, 172);
-  assert.equal(manifest.counts.claims, 172);
+  assert.equal(allChunks.length, manifest.counts.chunks);
+  assert.equal(manifest.counts.claims, manifest.counts.chunks);
   const allClaims = allChunks.flatMap((chunk) => chunk.claims);
-  assert.equal(allClaims.length, 172);
-  assert.equal(new Set(allClaims.map((claim) => claim.id)).size, 172);
+  assert.equal(allClaims.length, manifest.counts.claims);
+  assert.equal(new Set(allClaims.map((claim) => claim.id)).size, manifest.counts.claims);
   for (const chunk of allChunks) {
     assert.equal(chunk.culture.annotationVersion, "culture-v1");
     assert.ok(cultureRelevance.has(chunk.culture.relevance));
@@ -728,6 +740,20 @@ test("builds the RAG index from the directory knowledge source of truth", async 
     "media-nbd-unhappy-leave-announce-2024-03",
     "media-nbd-leave-vs-pay-vote-2026-03",
     "media-nbd-leave-cannot-refuse-2023-12",
+    "media-daxiang-pdl-salary-9886-2025-03",
+    "media-dazhong-pdl-salary-principles-2026-05",
+    "official-pdl-turnover-2026-h1",
+    "media-pdl-shen-hongli-culture-happiness-handbook-2026",
+    "official-pdl-jewelry-aftersales-2025-04",
+    "official-pdl-nephrite-return-2025-05",
+    "pdl-weighing-dispute-report-2023-06",
+    "media-chinanews-hn-pdl-return-promise-2024-01",
+    "media-pdl-salmon-overnight-2024-08",
+    "media-nbd-pdl-margin-caps-2025-04",
+    "media-dahe-pdl-price-tag-cost-2021-03",
+    "media-pdl-bu-jingchao-suppliers-lab-2026-04",
+    "media-jschina-weidu-nephrite-inspection-2025-05",
+    "media-dahe-pdl-supplier-interviews-2026-03",
   ]) {
     const document = backfilledDocuments.get(documentId);
     assert.equal(document?.ingestion.contentStatus, "partial_text");
@@ -1090,11 +1116,40 @@ test("adopts answer-purpose filtering after improving all remaining boundary que
   assert.ok(replication.purposeFilteredOutChunkIds.includes("xinhua-yonghui-performance-boundary"));
 
   const customerAward = retriever.searchKnowledge("现在投诉胖东来一次，顾客固定能拿多少奖励？");
-  assert.deepEqual(customerAward.retrieved.map((item) => item.chunkId), [
-    "interview-trust-returns-and-complaints",
-  ]);
+  const customerAwardIds = customerAward.retrieved.map((item) => item.chunkId);
+  assert.ok(customerAwardIds.includes("interview-trust-returns-and-complaints"));
+  assert.ok(customerAwardIds.includes("weighing-report-500-customer-complaint-award"));
+  assert.ok(!customerAwardIds.includes("weiqu-award-office-response"));
+  assert.ok(!customerAwardIds.includes("red-underwear-report-customer-and-legal"));
   assert.ok(customerAward.purposeFilteredOutChunkIds.includes("weiqu-award-office-response"));
   assert.ok(customerAward.purposeFilteredOutChunkIds.includes("red-underwear-report-customer-and-legal"));
+  assert.ok(!customerAwardIds.includes("salmon-overnight-reward-and-refund"));
+
+  const marginCaps = retriever.searchKnowledge("胖东来民生商品的毛利率限定标准是多少？");
+  assert.ok(!marginCaps.insufficientReason);
+  assert.ok(
+    marginCaps.retrieved.some((item) => item.chunkId === "nbd-margin-cap-livelihood-private-label"),
+  );
+
+  const qualityDept = retriever.searchKnowledge("胖东来品质管理部是独立的吗？");
+  assert.ok(
+    qualityDept.retrieved.some((item) => item.chunkId === "shen-quality-dept-independent"),
+  );
+
+  const inspectionVsSelfTest = retriever.searchKnowledge(
+    "企业自己送检和市场监管日常检查有什么区别？",
+  );
+  assert.ok(
+    inspectionVsSelfTest.retrieved.some(
+      (item) => item.chunkId === "weidu-inspection-not-lab-or-verdict",
+    ),
+  );
+
+  const salmon = retriever.searchKnowledge("新乡胖东来隔夜三文鱼刺身怎么处理的？");
+  assert.equal(salmon.track, "case");
+  assert.equal(salmon.caseRecord.id, "salmon-overnight-sashimi-2024-08");
+  assert.ok(salmon.retrieved.some((item) => item.chunkId === "salmon-overnight-reward-and-refund"));
+  assert.ok(!salmon.retrieved.some((item) => String(item.chunkId).startsWith("noodle-skin")));
 
   const selfTesting = retriever.searchKnowledge("企业自己送检、自己公布结果，这能算最终结论吗？");
   assert.equal(selfTesting.retrieved.length, 0);
@@ -1383,6 +1438,7 @@ test("recognizes natural finality intent and blocks known unsupported detail req
     "请列出胖东来当前所有供应商的审核分数和淘汰名单。",
     "胖东来今年净利润率多少，未来三年准备开多少家店？",
     "胖东来历史上所有投诉最后分别是谁对谁错？",
+    "胖东来不让员工收彩礼已经是正式制度了吗？这不侵犯自由吗？",
   ]) {
     const plan = retriever.searchKnowledge(question);
     assert.equal(plan.track, "general");
@@ -1476,6 +1532,7 @@ test("server-renders the Pangdonglai culture homepage", async () => {
   assert.match(html, /来源、时间线与边界/);
   assert.match(html, /aria-label="查看各个门店信息、位置等具体情况"/);
   assert.match(html, /aria-label="查看热点事件"/);
+  assert.doesNotMatch(html, /入馆体验|五分钟入馆|hall-tour|mobile-nav-dock/);
   assert.doesNotMatch(html, /查看热点<br|查看各个门店<br/);
   assert.match(html, /class="chapter-arrow"/);
   assert.match(html, /<svg viewBox="0 0 24 24"/);
@@ -1536,6 +1593,7 @@ test("ships phase-2 mobile product polish for chat shell and fab", async () => {
   assert.match(page, /dialogueBodyRef/);
   assert.match(page, /showChatFab/);
   assert.doesNotMatch(page, /dialogue-window-prototype|结构示例|问答功能将在资料库完成后开放/);
+  assert.doesNotMatch(page, /HallTour|mobile-nav-dock|hall-tour/);
 });
 
 test("ships phase-3 mobile QA polish for a11y and store images", async () => {
@@ -2338,7 +2396,7 @@ test("keeps a limited event response inside its case and forbids finality langua
     assert.match(prompt, /这件事现在知道什么/);
     assert.match(prompt, /企业当时怎么处理/);
     assert.match(prompt, /后来有没有明确结论/);
-    assert.match(prompt, /这件事让我们观察什么/);
+    assert.match(prompt, /从这件事观察胖东来：/);
     assert.match(prompt, /不能用文化口号裁定客诉真伪/);
     assert.doesNotMatch(prompt, /人民日报于东来访谈/);
     assert.doesNotMatch(prompt, /胖东来简介/);

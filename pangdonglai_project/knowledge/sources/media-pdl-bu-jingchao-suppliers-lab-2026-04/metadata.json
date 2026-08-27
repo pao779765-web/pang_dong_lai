@@ -1,0 +1,49 @@
+{
+  "id": "media-pdl-bu-jingchao-suppliers-lab-2026-04",
+  "title": "媒体记录：卜景超谈供应商分级、到厂审核与检测中心沿革",
+  "type": "media_speech_report",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "attributed_person_statement",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "行业媒体对管理层分享的转载摘要（微信原页验证码，全文页未稳定打开）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-27",
+    "basis": "docs/SOURCE_AUDIT_C4_01.md C4-A4；用户要求六条一并入库。正文页未稳定打开，按同花顺公开摘要 limited 入库。"
+  },
+  "source": {
+    "publisher": "联商网分享，同花顺财经转载；卜景超（胖东来超市总经理）",
+    "sourceType": "media",
+    "url": "https://news.10jqka.com.cn/20260403/c675760493.shtml",
+    "publishedAt": "2026-04-03",
+    "verifiedAt": "2026-08-27",
+    "alternateUrls": [
+      "http://www.linkshop.com/news/2026545477.shtml"
+    ],
+    "notes": "联商网页多次重定向失败；同花顺页跳转微信并触发验证码。本轮只保存搜索引擎与同花顺摘要中可核对的句子。"
+  },
+  "scope": [
+    "供应商评估分 A/B/C/D 的公开描述",
+    "2024 年起新供应商到厂审核；2025 年现场评估约 400 多家的公开数字",
+    "2019 安全检测室至 2024-03 品质管理部的沿革自述"
+  ],
+  "answeringRules": [
+    "必须写「据同花顺 2026 年 4 月 3 日转载的卜景超分享摘要」。不是制度原文，也不是供应商名单。",
+    "A 级≥90 可合作、C 级 60–80 须复审、D 级不考虑合作，可作为管理层公开分级框架；摘要把 B 级写成 89–90 分，疑似转写错误，不得当精确评分表。",
+    "2025 年 NB/PB 合格率数字只支持「当时现场评估规模与通过率自述」，不能推出当前全部供应商名单或淘汰名单。",
+    "检测中心沿革是企业自建能力描述，不能写成监管抽检或「308 项」设备清单。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-pdl-bu-jingchao-suppliers-lab-2026-04/content.md",
+    "chunksPath": "chunks/media-pdl-bu-jingchao-suppliers-lab-2026-04.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-27",
+    "notes": "全文页未打开，只保存公开摘要中的分级、评估规模与检测中心沿革。"
+  }
+}

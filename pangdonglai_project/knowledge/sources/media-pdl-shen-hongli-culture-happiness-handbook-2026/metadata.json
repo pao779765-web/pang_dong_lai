@@ -1,43 +1,56 @@
 {
   "id": "media-pdl-shen-hongli-culture-happiness-handbook-2026",
-  "title": "媒体记录：胖东来管理层谈文化理念与《幸福生命状态手册》",
+  "title": "媒体记录：申红丽 2026-03-26 分享中的文化、手册与员工生活",
   "type": "media_interview",
   "status": "limited",
   "caseId": null,
   "claimType": "attributed_person_statement",
   "finality": "not_applicable",
   "evidenceLevel": "L2",
-  "evidenceLabel": "行业媒体对管理层公开分享的记录",
+  "evidenceLabel": "行业媒体对管理层公开分享的编辑稿（非手册原文）",
   "answerMode": "attributed_claim",
   "approval": {
     "approvedBy": "user",
     "approvedAt": "2026-07-31",
-    "basis": "线甲：补幸福生命手册与文化定义的管理层表述。"
+    "basis": "线甲：补幸福生命手册与文化定义的管理层表述。2026-08-26 用户批准 C1-C4，将 FoodTalks 摘要升级为联商网编辑稿 partial_text。"
   },
   "source": {
-    "publisher": "FoodTalks 等行业媒体（胖东来超市总经理申红丽相关公开分享）",
+    "publisher": "联商网（新浪转载），整理 / 吴忧",
     "sourceType": "media",
-    "url": "https://www.foodtalks.cn/news/61988",
-    "publishedAt": "2026-04-14",
-    "verifiedAt": "2026-08-01",
-    "notes": "2026-08-01 终轮复核：FoodTalks 页面仍只返回需要 JavaScript 的应用壳；公开检索摘要可见相关表述，但不足以定位完整段落。"
+    "url": "https://finance.sina.com.cn/roll/2026-04-02/doc-inhtaviy1092779.shtml",
+    "publishedAt": "2026-04-02",
+    "verifiedAt": "2026-08-26",
+    "alternateUrls": [
+      "https://www.foodtalks.cn/news/61988"
+    ],
+    "notes": "场合为 2026-03-26 超市美好商品论坛。FoodTalks 原页仍无稳定正文。2026-08-27 按 C4-A1 补入商品/品质必要段。"
   },
   "scope": [
     "管理层对自由精神、爱的精神与文化目标的表述",
-    "《幸福生命状态手册》的功能定位（据报道）"
+    "「幸福人的十条标准」",
+    "《幸福生命状态手册》的功能定位（据演讲）",
+    "幸福生命指标与薪酬福利分配的公开方向",
+    "核心岗位双配制与假期的管理层描述",
+    "商品约占经营八成、品类准入权重的管理层描述",
+    "禁止暴利、禁止负毛利、合理而非低价的定价原则",
+    "品质管理部独立及自有品牌内控方向"
   ],
   "answeringRules": [
-    "写「据行业媒体记录的胖东来管理层公开分享」；不是于东来本人访谈全文。",
-    "手册名称报道或作「幸福生命状态手册」，与「幸福生命手册」可能为同一系文本的不同称呼，勿武断合并为同一文件版本。"
+    "写「据联商网 2026 年 4 月 2 日编辑的申红丽演讲稿」；不是于东来本人访谈，也不是手册全文。",
+    "手册名称报道作「幸福生命状态手册」，与「幸福生命手册」可能为同一系文本的不同称呼，勿武断合并为同一文件版本。",
+    "「生命状态越轻松，收入会越高」是 2026-03-26 公开方向，不能当成已公布的量化分值表或现行薪酬公式。",
+    "双岗配置只能说明管理层对轮休机制的公开描述，不能证明所有岗位、所有时期都无例外。",
+    "商品结构比例、定价原则、品质部独立和自有品牌数量都是演讲自述，不是现行准入/抽检制度原文，也不是监管结论。",
+    "本篇没有民生 5%–20% 等数字表；该表须引用每经 2025-04-10 来源，不得与本篇混成同一张价目表。"
   ],
   "ingestion": {
-    "contentStatus": "summary_only",
-    "fullTextAllowed": "unknown",
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
     "contentFormat": "markdown",
     "contentPath": "sources/media-pdl-shen-hongli-culture-happiness-handbook-2026/content.md",
     "chunksPath": "chunks/media-pdl-shen-hongli-culture-happiness-handbook-2026.jsonl",
     "sourceSnapshotHash": null,
     "migratedAt": "2026-07-31",
-    "notes": "2026-08-01 终轮处理决定：保持 summary_only。原页面正文仍不可稳定读取，现有内容只作为已审核媒体摘要，不冒充演讲全文或手册正文。"
+    "notes": "2026-08-27 按用户批准 C4-A1 补入商品与品质必要段，保持 partial_text。"
   }
 }

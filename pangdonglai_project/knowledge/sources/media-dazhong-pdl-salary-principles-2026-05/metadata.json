@@ -1,0 +1,46 @@
+{
+  "id": "media-dazhong-pdl-salary-principles-2026-05",
+  "title": "媒体记录：2026-05-02 企业声明中的薪酬体系原则",
+  "type": "media_company_response",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "media_observation",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "党报对 2026-05-02 企业声明的转述（声明原帖未定位）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-26",
+    "basis": "docs/SOURCE_AUDIT_C1_03.md C1-C2；用户要求按标准入库 limited。"
+  },
+  "source": {
+    "publisher": "大众新闻-大众日报（新浪转载）",
+    "sourceType": "media",
+    "url": "https://finance.sina.cn/2026-05-02/detail-inhwnnkh4793290.d.html",
+    "publishedAt": "2026-05-02",
+    "verifiedAt": "2026-08-26",
+    "notes": "企业就博主「惊梦人」质疑薪资虚假宣传发声明。新浪标题标签含 8974 元，正文未出现该数字，8974 不从本条提取。不得并入 2026-06 降薪传闻案例。"
+  },
+  "scope": [
+    "2026-05-02 企业声明中的薪酬体系目标与原则",
+    "工资项与奖励项的公开结构名目"
+  ],
+  "answeringRules": [
+    "必须使用「据大众日报 2026 年 5 月 2 日报道转述企业声明」等归因。",
+    "只能说明该日公开的薪酬原则与结构名目，不能替代薪酬表或具体金额。",
+    "不得裁定博主「惊梦人」质疑的真伪。",
+    "不得与 2026-06 降薪传闻案例合并。",
+    "不得从本条标题标签提取 8974 元。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-dazhong-pdl-salary-principles-2026-05/content.md",
+    "chunksPath": "chunks/media-dazhong-pdl-salary-principles-2026-05.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-26",
+    "notes": "只保存薪酬原则与结构名目段落，不复制整篇转载页。"
+  }
+}

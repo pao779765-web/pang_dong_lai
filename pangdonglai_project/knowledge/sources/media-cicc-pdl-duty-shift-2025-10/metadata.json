@@ -1,0 +1,44 @@
+{
+  "id": "media-cicc-pdl-duty-shift-2025-10",
+  "title": "研究转述：客诉处理采取现场值班负责制",
+  "type": "research_report_repost",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "third_party_analysis",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "卖方研报经新浪转载的机制描述（非值班排班表）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-27",
+    "basis": "docs/SOURCE_AUDIT_C2_01.md C2-A5；用户批准 limited：只用值班机制这句，不用 80% 评议口径。"
+  },
+  "source": {
+    "publisher": "中金公司研究部（林思婕等）；新浪财经转载「中金点睛」",
+    "sourceType": "media",
+    "url": "https://finance.sina.com.cn/stock/stockzmt/2025-10-20/doc-infupeft5463031.shtml",
+    "publishedAt": "2025-10-20",
+    "verifiedAt": "2026-08-27",
+    "notes": "文末称摘自 2025-10-17 已发布研报《何以胖东来：人本经营造就幸福生产力》。本条不保存 14 天退换货、500 元投诉奖、流失率等其他数字。同稿「满意度低于 80%」评议口径不入库，民主评议以 2026-04 官网结果转述为准。"
+  },
+  "scope": [
+    "客诉处理采取「现场值班负责制」：值班安排、联系人电话现场公示，由更贴近一线的班长/骨干轮值，以提高处置即时性"
+  ],
+  "answeringRules": [
+    "必须写「据中金 2025-10-17 研报、经新浪 2025-10-20 转载」。这是研究综合，不是值班排班表。",
+    "只用「现场值班负责制」这一机制描述。",
+    "不得使用同稿「满意度低于 80% 的管理层要接受 3 个月培训，甚至会被免职」。民主评议数字和月份以 21 经济网转述的 2026-04 官网结果为准。",
+    "不能证明班长可自主批准任意金额，也不能借本条新开售后制度。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-cicc-pdl-duty-shift-2025-10/content.md",
+    "chunksPath": "chunks/media-cicc-pdl-duty-shift-2025-10.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-27",
+    "notes": "只留现场值班负责制数句，并写明不用 80% 评议口径。"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "id": "media-21jingji-pdl-democratic-review-2026-05",
+  "title": "媒体转述：2026 年 4 月民主评议结果与每年 4 月、10 月安排",
+  "type": "media_company_result_report",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "attributed_company_statement",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "官网民主评议结果的财经媒体转述（官网原页未定位）",
+  "answerMode": "fact_with_source",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-27",
+    "basis": "docs/SOURCE_AUDIT_C2_01.md C2-A4；用户批准 limited：只收这次数字和「每年 4 月、10 月」。"
+  },
+  "source": {
+    "publisher": "21 经济网 / 南方财经综合，写明来源为胖东来官网",
+    "sourceType": "media",
+    "url": "https://www.21jingji.com/article/20260506/herald/253cfb0a7f16d5fc629c767f1868946f.html",
+    "publishedAt": "2026-05-06",
+    "verifiedAt": "2026-08-27",
+    "notes": "评议时点 2026-04。官网原页本轮未定位，不升 L1。不收录鞭牛士等二手稿的 60 分免职、下级权重。"
+  },
+  "scope": [
+    "2026 年 4 月民主评议：1455 名管理人员参评",
+    "计划投票 16676 人，实际 16675 人，总计投票 133362 次",
+    "合格 1435 人（98.63%），不合格降级 19 人（1.30%），不合格免职 1 人（0.07%）",
+    "官网口径：每年 4 月和 10 月进行民主评议"
+  ],
+  "answeringRules": [
+    "必须写「据 21 经济网 2026-05-06 转述的胖东来官网结果」。官网原页未打开。",
+    "只使用 2026-04 这组数字和「每年 4 月、10 月」这一句。",
+    "不得并入 60 分免职、满意度低于 80%、下级权重 50%–80%、在岗满 3 个月才可投票等其他稿件口径。",
+    "不能证明投票完全无压力，也不能根据免职 1 人推断具体事由，更不能说评议已替代全部任命制。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-21jingji-pdl-democratic-review-2026-05/content.md",
+    "chunksPath": "chunks/media-21jingji-pdl-democratic-review-2026-05.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-27",
+    "notes": "只保存 2026-04 数字与每年 4 月、10 月。"
+  }
+}

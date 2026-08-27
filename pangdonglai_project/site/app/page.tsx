@@ -75,6 +75,16 @@ const credibilityLabels: Record<HotspotCredibility, string> = {
   boundary: "资料边界",
 };
 
+function hotspotLedgerItems(event: HotspotEvent) {
+  return event.evidence.filter((item) => {
+    if (item.credibility === "rumor") return false;
+    if (item.credibility === "selfMedia") {
+      return event.sources.some((source) => source.credibility === "selfMedia" && Boolean(source.url));
+    }
+    return true;
+  });
+}
+
 const HOTSPOT_QUESTION_EVENT = "pdl:hotspot-question";
 
 function readSources(value: unknown): ChatSource[] {
@@ -725,8 +735,11 @@ export default function Home() {
 
                   <section className="hotspot-evidence" aria-label="来源类型">
                     <dl className="hotspot-evidence-ledger">
-                      {selectedHotspot.evidence.map((item) => {
-                        const sources = selectedHotspot.sources.filter((source) => source.credibility === item.credibility);
+                      {hotspotLedgerItems(selectedHotspot).map((item) => {
+                        const sources = selectedHotspot.sources.filter((source) => (
+                          source.credibility === item.credibility
+                          && (item.credibility !== "selfMedia" || Boolean(source.url))
+                        ));
 
                         return (
                           <div className={`hotspot-evidence-row is-${item.credibility}`} key={item.credibility}>
@@ -755,7 +768,7 @@ export default function Home() {
                                   <span className="hotspot-evidence-source-link is-pending" key={source.title}>
                                     <span className="hotspot-evidence-source-name">{source.title}</span>
                                     <span className="hotspot-evidence-source-meta">{source.publisher} · {source.type} · {source.publishedAt}</span>
-                                    <span className="hotspot-evidence-source-action">链接待核验</span>
+                                    <span className="hotspot-evidence-source-action">无稳定网页链接</span>
                                   </span>
                                 )) : (
                                   <span className="hotspot-evidence-source-empty">当前没有单独收录的来源链接</span>

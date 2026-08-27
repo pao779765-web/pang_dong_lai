@@ -1,0 +1,45 @@
+{
+  "id": "media-pdl-prisoner-recruitment-expert-2026-08",
+  "title": "专家：首批30人是现实样本，不宜神化",
+  "type": "media_expert_analysis",
+  "status": "limited",
+  "caseId": "prisoner-recruitment-2026-08",
+  "claimType": "third_party_analysis",
+  "finality": "public_discussion_stage",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "澎湃新闻专家访谈与事件分析",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-26",
+    "basis": "用户同意将前期检索的专家分析作为 limited 资料入库；保留观点归因和资料缺口。"
+  },
+  "source": {
+    "publisher": "澎湃新闻",
+    "sourceType": "media",
+    "url": "https://www.thepaper.cn/newsDetail_forward_33795425",
+    "publishedAt": "2026-08-17",
+    "verifiedAt": "2026-08-26",
+    "alternateUrls": []
+  },
+  "scope": [
+    "专家对一家公司首批30人样本意义的分析",
+    "公开资料未披露的岗位、试用期转正和长期留任细分数据",
+    "从一次性倡议走向常态化机制的讨论"
+  ],
+  "answeringRules": [
+    "专家观点必须标注为媒体采访或评论，不得写成事实结论。",
+    "本资料用于补充样本局限与待观察问题，不能推翻或替代企业公开口径。",
+    "不得把‘可复制’‘常态化’等分析性词语写成企业已经实现的结果。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-pdl-prisoner-recruitment-expert-2026-08/content.md",
+    "chunksPath": "chunks/media-pdl-prisoner-recruitment-expert-2026-08.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-26",
+    "notes": "专家分析按观点归因使用，不把评论性判断写成独立事实。"
+  }
+}

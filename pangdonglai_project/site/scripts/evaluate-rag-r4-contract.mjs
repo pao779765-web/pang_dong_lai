@@ -21,7 +21,7 @@ const retriever = createKnowledgeRetriever(knowledgeBase, {
 
 function expectedMoves(mode) {
   if (mode === "event") {
-    return ["这件事现在知道什么", "企业当时怎么处理", "后来有没有明确结论", "这件事让我们观察什么"];
+    return ["这件事现在知道什么", "企业当时怎么处理", "后来有没有明确结论", "从这件事观察胖东来："];
   }
   if (mode === "insufficient") {
     return ["简单说", "目前能确认什么", "为什么还不能下结论", "还缺什么信息"];

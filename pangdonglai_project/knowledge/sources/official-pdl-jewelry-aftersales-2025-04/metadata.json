@@ -1,0 +1,46 @@
+{
+  "id": "official-pdl-jewelry-aftersales-2025-04",
+  "title": "胖东来唯初珠宝：售后政策调整公告（停旧金兑换、售后仅限本人）",
+  "type": "company_public_statement",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "company_public_statement",
+  "finality": "not_applicable",
+  "evidenceLevel": "L1",
+  "evidenceLabel": "企业微信公众号公告全文（官方通报；本库存媒体照登文本，原帖 ID 未定位）",
+  "answerMode": "fact_with_source",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-26",
+    "basis": "docs/SOURCE_AUDIT_C3_01.md C3-A2；用户确认属官方通报、按 L1 入库。"
+  },
+  "source": {
+    "publisher": "许昌市胖东来唯初珠宝有限公司（胖东来唯初珠宝微信公众号；中原网/新浪照登）",
+    "sourceType": "official",
+    "url": "https://finance.sina.com.cn/jjxw/2025-04-04/doc-ineryuyu4607309.shtml",
+    "publishedAt": "2025-04-03",
+    "verifiedAt": "2026-08-26",
+    "notes": "公告落款 2025-04-03，自 2025-04-04 起执行。稳定链接为新浪转载页，企业微信原帖 ID 未定位。"
+  },
+  "scope": [
+    "2025-04-04 起胖东来珠宝不再提供旧金兑换及回收",
+    "2025-04-04 前购买的黄金、铂金、18K 金可按店内最新细则办理",
+    "珠宝售后三重绑定、仅限本人"
+  ],
+  "answeringRules": [
+    "必须写「据胖东来唯初珠宝 2025 年 4 月 3 日公告」并保留生效日期。",
+    "只适用于胖东来珠宝，不得写成全品类退换货或超市政策。",
+    "不得把「不再提供旧金兑换及回收」写成珠宝商品一律不能退。",
+    "4 月 4 日前购买的黄金/铂金/18K 金仍须按店内当时细则，本库未收录该细则全文。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/official-pdl-jewelry-aftersales-2025-04/content.md",
+    "chunksPath": "chunks/official-pdl-jewelry-aftersales-2025-04.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-26",
+    "notes": "只保存公告三条调整，不复制报道其余评论。"
+  }
+}

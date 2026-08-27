@@ -38,7 +38,7 @@ npm run start:cloudbase
 | 服务端口 | `3000` |
 | 访问类型 | WEB / 公网访问 |
 | 健康检查路径 | `/healthz` |
-| 运行时环境变量 | `DEEPSEEK_API_KEY` |
+| 运行时环境变量 | `DEEPSEEK_API_KEY`、`TokenHub_Key` 或 `TENCENT_TOKENHUB_API_KEY`、`RAG_RETRIEVAL_MODE` |
 
 容器默认以非 root 用户运行。项目根目录的 `.dockerignore` 采用最小允许清单，只纳入网站源码、知识库与构建所需的非敏感 Sites 项目配置，并排除本地密钥、环境文件、构建缓存、测试文件和 Git 元数据。
 
@@ -56,7 +56,7 @@ cmd /c "echo.| tcb cloudrun deploy -e pangdonglai-site-d2eqrsj5b8ada0f -s pangdo
 ```
 
 环境 Id：`pangdonglai-site-d2eqrsj5b8ada0f`；服务名：`pangdonglai-site`；端口：`3000`。  
-默认检索模式仍为 `bm25`（不配置 `RAG_RETRIEVAL_MODE=hybrid` 时）。`DEEPSEEK_API_KEY` 只写在云托管服务端环境变量，不要写进镜像或 Git。
+镜像默认 `RAG_RETRIEVAL_MODE=hybrid`，embedding 模型为 `kinfra-text-embedding-4b`。缺少 TokenHub 密钥、模型与索引不一致或向量请求失败时自动退回 BM25。`DEEPSEEK_API_KEY` 与 `TokenHub_Key` 只写在云托管服务端环境变量，不要写进镜像或 Git。
 
 第一次部署建议只使用 CloudBase 测试域名验收，不立即切换当前预览站。确认首页、静态资源和 AI 流式回答正常后，再绑定已经完成 ICP 备案的自定义域名。
 

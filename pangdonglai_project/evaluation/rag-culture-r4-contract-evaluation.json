@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "evaluationId": "rag-culture-r4-answer-set-v1",
-  "generatedAt": "2026-08-07T11:30:34.257Z",
+  "generatedAt": "2026-08-27T07:35:54.907Z",
   "configuration": {
     "retriever": "BM25 + Query 改写 V1 + 回答用途过滤 V1",
     "answerContract": "R4 大众回答结构",
@@ -53,9 +53,14 @@
       "retrievedChunkIds": [
         "book-learn-pdl-ch3-humanistic-management",
         "book-learn-pdl-toc-and-structure",
+        "shen-happiness-ten-standards",
         "xinhua-rest-to-service-mechanism",
+        "shen-dual-post-protect-leave",
         "weiqu-award-yudonglai-purpose",
-        "xinhua-employee-home-facilities"
+        "weiqu-award-cultural-meaning-boundary",
+        "xinhua-work-life-boundaries",
+        "xinhua-employee-home-facilities",
+        "culture-system-purpose-and-principles"
       ],
       "checks": {
         "trackPass": true,
@@ -130,7 +135,7 @@
         "这件事现在知道什么",
         "企业当时怎么处理",
         "后来有没有明确结论",
-        "这件事让我们观察什么"
+        "从这件事观察胖东来："
       ],
       "retrievedChunkIds": [
         "noodle-initial-dismissal",
@@ -183,8 +188,13 @@
         "interview-frontline-trust-responsibility-and-society",
         "xinhua-yonghui-employee-community",
         "red-underwear-early-apology",
+        "book-learn-pdl-flywheel-logic",
+        "jiemian-cinema-service-meaning",
         "book-learn-pdl-time-lag-and-crosscheck",
-        "book-learn-pdl-flywheel-logic"
+        "noodle-skin-report-actions",
+        "interview-trust-returns-and-complaints",
+        "book-learn-pdl-ch2-influence",
+        "weighing-report-500-customer-complaint-award"
       ],
       "checks": {
         "trackPass": true,
@@ -225,9 +235,14 @@
       "retrievedChunkIds": [
         "xinhua-culture-love-five-levels",
         "jiemian-retirement-culture-question",
+        "interview-frontline-trust-responsibility-and-society",
         "culture-system-voluntary-assessment",
         "book-learn-pdl-flywheel-logic",
-        "interview-frontline-trust-responsibility-and-society"
+        "xinhua-yonghui-replication-boundary",
+        "recruitment-special-groups",
+        "xinhua-employee-home-facilities",
+        "tsinghua-supply-chain-competitor-value",
+        "jiemian-rotation-governance"
       ],
       "checks": {
         "trackPass": true,
@@ -303,11 +318,16 @@
         "还要分清"
       ],
       "retrievedChunkIds": [
-        "interview-trust-returns-and-complaints",
+        "chinanews-return-promise-boundary",
+        "jewelry-aftersales-boundary",
+        "weighing-report-complaint-channel-not-shouting",
         "tsinghua-customer-value-creation",
         "yudonglai-red-underwear-track-boundary",
+        "interview-trust-returns-and-complaints",
         "xinhua-rest-to-service-mechanism",
-        "book-learn-pdl-flywheel-logic"
+        "book-learn-pdl-flywheel-logic",
+        "chinanews-unsatisfied-return-promise",
+        "zhengzhou-evidence-boundary"
       ],
       "checks": {
         "trackPass": true,
@@ -344,7 +364,7 @@
         "这件事现在知道什么",
         "企业当时怎么处理",
         "后来有没有明确结论",
-        "这件事让我们观察什么"
+        "从这件事观察胖东来："
       ],
       "retrievedChunkIds": [
         "tea-fly-timeline",
@@ -391,7 +411,10 @@
         "还要分清"
       ],
       "retrievedChunkIds": [
-        "interview-trust-returns-and-complaints"
+        "weighing-report-employee-compensation-distinct",
+        "interview-trust-returns-and-complaints",
+        "weighing-report-500-customer-complaint-award",
+        "weighing-report-complaint-channel-not-shouting"
       ],
       "checks": {
         "trackPass": true,
@@ -430,11 +453,16 @@
         "还要分清"
       ],
       "retrievedChunkIds": [
-        "interview-quality-suppliers-and-scale",
         "xinhua-yonghui-product-restructure",
+        "interview-quality-suppliers-and-scale",
         "tsinghua-supply-chain-competitor-value",
         "tsinghua-customer-value-creation",
-        "jiemian-culture-boundary-and-disputes"
+        "jiemian-culture-boundary-and-disputes",
+        "dahe-supplier-profit-around-twenty-percent",
+        "book-learn-pdl-ch4-customer",
+        "red-underwear-report-customer-and-legal",
+        "shen-quality-dept-independent",
+        "xinhua-yonghui-replication-boundary"
       ],
       "checks": {
         "trackPass": true,
@@ -470,7 +498,7 @@
         "这件事现在知道什么",
         "企业当时怎么处理",
         "后来有没有明确结论",
-        "这件事让我们观察什么"
+        "从这件事观察胖东来："
       ],
       "retrievedChunkIds": [
         "egg-canthaxanthin-report-stage",
@@ -513,7 +541,7 @@
         "这件事现在知道什么",
         "企业当时怎么处理",
         "后来有没有明确结论",
-        "这件事让我们观察什么"
+        "从这件事观察胖东来："
       ],
       "retrievedChunkIds": [
         "tea-fly-timeline",
@@ -602,9 +630,14 @@
       "retrievedChunkIds": [
         "interview-quality-suppliers-and-scale",
         "tsinghua-development-quality-first",
+        "zhengzhou-evidence-boundary",
         "xinhua-6a-quality-before-scale",
         "xinhua-yonghui-replication-boundary",
-        "tsinghua-replication-limits"
+        "tsinghua-replication-limits",
+        "book-learn-pdl-limits-of-copying",
+        "shen-pricing-no-exorbitant-margin",
+        "book-learn-pdl-ch1-growth",
+        "xinhua-6a-learning-and-reform"
       ],
       "checks": {
         "trackPass": true,
@@ -683,7 +716,12 @@
         "xinhua-6a-quality-before-scale",
         "jiemian-culture-boundary-and-disputes",
         "xinhua-yonghui-replication-boundary",
-        "pdl-baike-portal-exists"
+        "pdl-baike-portal-exists",
+        "book-learn-pdl-ch4-customer",
+        "jiemian-retirement-culture-question",
+        "jiemian-freedom-love-rousseau-origin",
+        "xinhua-culture-love-five-levels",
+        "xinhua-culture-outline-faith-mission"
       ],
       "checks": {
         "trackPass": true,
@@ -720,7 +758,7 @@
         "这件事现在知道什么",
         "企业当时怎么处理",
         "后来有没有明确结论",
-        "这件事让我们观察什么"
+        "从这件事观察胖东来："
       ],
       "retrievedChunkIds": [
         "red-underwear-early-takedown-and-team",
@@ -788,10 +826,15 @@
       ],
       "retrievedChunkIds": [
         "yudonglai-red-underwear-track-boundary",
-        "jiemian-culture-boundary-and-disputes",
         "xinhua-yonghui-replication-boundary",
         "xinhua-6a-quality-before-scale",
-        "pdl-baike-portal-exists"
+        "jiemian-culture-boundary-and-disputes",
+        "pdl-baike-portal-exists",
+        "store-assault-evidence-boundary",
+        "xinhua-culture-love-five-levels",
+        "jiemian-freedom-love-rousseau-origin",
+        "weiqu-award-yudonglai-purpose",
+        "xinhua-culture-outline-faith-mission"
       ],
       "checks": {
         "trackPass": true,

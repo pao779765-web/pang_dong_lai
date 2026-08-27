@@ -2,10 +2,9 @@
 
 > **规则：** 谁做完谁更新本文件。下一位只认本文件 + Git，不靠聊天记录猜。
 
-**更新时间：** 2026-08-23
+**更新时间：** 2026-08-27
 
-**当前执行者：** Grok 按用户要求去掉有 Claim 时 `makeSafeFallback()` 的「目前能确认的是」套话和终局提醒。
-**Git 状态：** 本地 `main` 含未部署的校验修复与 hybrid 召回改动。CloudBase 现网仍为 `pangdonglai-site-018`，按用户要求暂不发布。
+**当前执行者：** Grok 正按用户要求全量上线：embedding 已切到 `kinfra-text-embedding-4b` 并重建 254 条向量；hybrid 已写入镜像默认。CloudBase 发布见本轮结论。
 
 ---
 
@@ -81,7 +80,11 @@
 - [x] **RAG-CULTURE-R5C-8（用户要求执行）**：不为红裤头单题加补丁；在 `createAnswerPlan` 增加通用前提覆盖：当问题含可核实具体前提（员工处置、金额、比例、假期天数、处理结果等），且安全 `eligibleClaims` 中已有直接支持或纠正该前提的 Claim 时，强制至少保留 1 条。匹配只用 statement/title/topics，避免 `canSupport` 范围短语误覆盖。离线回归：53 项测试、固定 54/54、R4 契约 18/18、lint 通过；混合检索用冻结向量索引 mock 嵌入验证红裤头题必保留 `red-underwear-report-testing-and-staff` 且不串尝面案。2026-08-08 真实复测三题均返回 200、流式完成、DeepSeek 调用成功，自动检查 3/3；红裤头题已带出免职/降级 Claim 且未串案，资料不足题安全拒答但回答过于简短。结果写入 `evaluation/rag-culture-r5c-worker-live-v1.json`；尚未部署，人工质量复核仍需记录。
 - [x] **RAG-RECALL-10（用户明确要求）**：每题总共召回 10 个 chunks：混合检索 BM25 通道 5 + embedding 通道 5，RRF 排序后不足 10 条时用剩余向量再补 BM25；纯 BM25 模式直接取 Top 10。`retrieved` 与 `answerCandidates` 同一批，不再另留 Top-12 隐藏池。未部署。
 - [x] **RAG-FALLBACK-01（用户截图复现）**：「企业文化体现在哪些方面」等一般题只要写到「人格尊严」，AnswerValidation 就会按热点案例别名报串案，两次失败后 `makeSafeFallback()` 只回第一条 Claim。现改为只有足够具体的案例别名才算串案；一般题 Claim 上限随召回扩到 10。提问路由仍可用短别名进入案例轨。未部署。
-- [ ] **RAG-CULTURE-R1**：C1 首批已入库（`docs/SOURCE_AUDIT_C1_01.md`）。第二轮用户已批示：B1 approved，B2/B3/B5 limited，B4/B6 拒绝；4 份休假口径资料已入库，见 `docs/SOURCE_AUDIT_C1_02.md`。C1 一手资料主干仍未完成（缺手册原文、完整薪酬表），不得自动扩充。知识库当前 41 份资料、172 片段、8 案例。
+- [x] **RAG-HOTSPOT-16（用户已授权）**：将“胖东来郑州店计划招聘刑释人员”作为独立案例入库；新增 7 份 `limited` 来源、14 个摘要切片和法律背景，明确计划/首批样本/第二批未知结果的边界。原始企业完整公告链接仍待核验；未复制新闻全文，未重建冻结的 130 条向量索引，未部署。`knowledge:claims`、`knowledge:build`、`npm test`（61/61）、`npm run lint` 和 Impeccable detector 均通过。
+- [x] **UI-HALL-01（已删除）**：用户认为与当前站不契合，已整段删除入馆体验（Hero C、03、手机底栏、11 幕组件、demo 资源）。首页恢复 A/B 锚点与 01/02 章节。未部署。
+- [x] **RAG-CULTURE-R1（C2 首轮）**：用户 2026-08-27 批复后入库 A1–A5（均为 `limited`），A6 拒绝新建。知识库当前 65 份资料、254 片段、10 案例。C2 岗位赔付权限表、C1 手册官方原文、C4 准入/抽检制度原文仍缺。`C2-08` 继续资料不足。
+- [x] **RAG-EMBED-4B-DEPLOY（用户明确要求）**：embedding 默认模型改为 TokenHub `kinfra-text-embedding-4b`（2560 维）；重建 `r5-general-index.json` 为 254 条（一般轨 197，案例受限 57）；镜像默认 `RAG_RETRIEVAL_MODE=hybrid`；向量查询超时 15 秒。本地冒烟 `vectorApplied=true`。`lint` / `test` 61/61。
+- [ ] **RAG-CULTURE-R1（C5）**：C1、C2、C3、C4 首轮已入库。C5 尚未启动。
 - [x] **RAG-RESEARCH-01**：建立 Codex 与 Grok 强制共用的互联网资料检索与 RAG 入库规范；明确候选池、来源优先级、企业身份核验、转载去重、事件阶段、用户批准、版权边界、入库测试和向量库接入条件，并在 `AGENTS.md` 设置任务前必读入口。
 - [x] **Codex【RAG-CASE-01】**：按 Grok 审核顺序完成“案例档案 + 事件事实/文化理解双轨回答”：定义 `caseId`、`claimType`、`finality` schema；事件轨仅引用同案例资料，文化轨不得裁定具体客诉真伪；无 `final` 证据时禁止终局话术；界面展示案例来源的证据阶段；补充误召回与最终结论边界测试。
 - [x] **RAG-CASE-01 资料边界**：V3-1（茶叶反馈）和 V3-2（鲜鸡蛋争议）以用户批准的 `limited` 归因资料进入各自案例轨，只能说明企业公开的初步回应，不能作为终局结论；SOURCE_AUDIT_03 其余候选仍未入库。
@@ -121,6 +124,7 @@
 - [x] **Codex AI-LIVE-01**：用户已在 CloudBase 服务设置中配置 `DEEPSEEK_API_KEY`；仅核验变量存在，不读取或记录密钥值。公网真实问答返回 200，包含流式正文、资料来源与完成事件；线上超大输入按预期返回 413。
 - [x] **Codex NEWS-UI-01（用户已布置）**：依据 `pangdonglai_project/news_summary/HANDOFF.md` 将 7 个已审核事件接入统一热点数据模型与前端索引；每个详情均包含官方/第三方媒体/自媒体/传言四级来源、时间线、结论边界、可核验来源和快捷问题直达 AI。事件 8～15 尚未入库或标记待核验，未作为正式热点展示。`npm run lint`、`npm test`（58/58）和 Impeccable layout 检测通过；未上传 GitHub、未部署云端。
 - [x] **Codex NEWS-UI-02（用户明确要求）**：将事件 8 新乡擀面皮、9 许昌生活广场伤人案、10 人格尊严侵权公示、11 郑州首店、13 上半年人员流失、14 生活广场店关闭、15 梦之城项目接入前端热点索引和详情；事件 12 暂不接入。事件 8～15 已按协议获批入库；没有直接 URL 的来源显示为不可点击来源卡，不伪造链接。更新来源类型展示以兼容无 URL 来源；`npm run lint`、`npm test`（58/58）和 Impeccable 检测通过；未上传 GitHub、未部署云端。
+- [x] **Codex NEWS-UI-08（用户已授权）**：将事件 16“胖东来郑州店计划招聘刑释人员”接入热点索引和详情页；详情包含 8 个时间节点、官方/媒体/自媒体/传言四级证据账本、第二批结果未知边界、9 个来源卡和 5 个快捷追问。`npm test`（61/61）、`npm run lint` 与 Impeccable detector 通过；未部署云端。
 - [x] **Codex NEWS-UI-03（用户明确要求）**：开放每个已展示事件的“继续追问”；快捷问题点击时附带该事件的 `followUpPrompt`，再发送具体问题，确保资料助手按事件上下文检索；事件 12 仍暂不接入。`npm run lint`、`npm test`（58/58）和 Impeccable 检测通过；未上传 GitHub、未部署云端。
 - [x] **Codex NEWS-UI-04（用户明确要求）**：将“继续追问”从详情右侧阅读栏移到每个事件详情的最底部，作为全宽重点行动区；加入更醒目的 Q / FOLLOW-UP 标识、放大标题与说明、桌面三列快捷问题和移动端单列回退；保持点击直达资料助手与键盘焦点反馈。`npm run lint`、`npm test`（58/58）和 Impeccable 检测通过；未上传 GitHub、未部署云端。
 - [x] **Codex NEWS-UI-05（用户明确要求）**：将热点事件一级索引改为居中的两列网格，桌面端每行两个并统一卡片宽度、间距和对齐；取消原先影响行列秩序的错落旋转，保留新闻档案卡材质与悬停反馈；760px 以下回退单列。`npm run lint`、`npm test`（58/58）和 Impeccable 检测通过；未上传 GitHub、未部署云端。
@@ -152,13 +156,22 @@
 首页验收提交：`f8090a0`（有条件通过）。  
 本轮另完成：AI 对话区浅色柔和 UI 重构（用户授权，与 Hero/关键词视觉统一）。
 
-待用户确认：AI 对话区新视觉、文化六条主线的最终取舍，以及是否进入 R1 资料补充和 R6 真实用户试用。
+待用户确认：是否启动 C2，以及是否把本地增量（含新向量）发到 CloudBase。R6 真实用户试用暂不开始。
 
-当前发布状态：NEWS-UI-01～07 与事件 7～15 知识库增量已推送 GitHub `ca1e52b`，CloudBase `pangdonglai-site-018` 已 100% 切流；向量索引仍冻在 R5C 的 135 条。正式域名仍待 ICP 备案后绑定。真机/微信内置浏览器本轮未复测。
+当前发布状态：知识库本地 65 份资料 / 254 片段 / 10 案例；向量为 `kinfra-text-embedding-4b`、254 条、2560 维。CloudBase 发布版本见最近变更。正式域名仍待 ICP 备案后绑定。真机/微信内置浏览器本轮未复测。
 
 ---
 
 ## 给下一位的指令
+
+### 下一步计划（2026-08-26 写入，不靠聊天记录）
+
+原则：不批准不入库，不授权不部署，不以文库/行业站转载顶替手册原文，不跳过资料主干去开 R6。
+
+1. **C2 已入库，embedding 已换 4b 并授权上线。** 岗位赔付权限表仍缺，不得编。
+2. **R1 再往后：** C5 → C6。每条主线至少 3 份可互证的 L1/L2。C5 启动前须再交审核稿。
+3. **检索与现网：** 本地与镜像默认 hybrid + `kinfra-text-embedding-4b`。云端须带 254 条向量索引；密钥只走 CloudBase 环境变量。
+4. **先不要做：** R6 真实用户试用（会测到过期现网）；为剩余 R4 失败题加专用补丁；绑定正式域名（等 ICP）；可选 QA-02/QA-03（360 视口、锚点焦点）。
 
 ### 给 Codex
 
@@ -169,13 +182,14 @@
 ### 给 Grok
 
 1. 先完整阅读 `docs/RAG_RESEARCH_PROTOCOL.md` 与 `docs/RAG_CULTURE_ROADMAP.md`。
-2. 用户已明确要求本地使用向量检索。`site/.dev.vars` 现为 `RAG_RETRIEVAL_MODE=hybrid`，本地 `npm run dev` 已按 hybrid 启动。CloudBase 现网环境变量本轮未改，5+5 召回也尚未部署。新开或关闭云端 hybrid 仍需用户明确授权。
+2. 用户已要求云端启用 hybrid。默认模型为 `kinfra-text-embedding-4b`，须与 `knowledge/vector/r5-general-index.json` 一致。密钥只走云端环境变量。
 3. 未经用户批准不得新增来源入库；部署与密钥只走云端环境变量，禁止写入镜像/Git。
 
 ### 给用户
 
 1. 确认六条文化主线是否符合你对“自由与爱”的理解目标。
-2. R1 开始后批准、限制或拒绝候选资料；最终判断回答是否真正帮助普通网友理解。
+2. 验收公网 hybrid 问答后，可启动 C5 审核；绑定正式域名仍等 ICP。
+3. 最终判断回答是否真正帮助普通网友理解。
 
 ---
 
@@ -209,6 +223,29 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-27 | Grok | 用户要求全量上线并更新 embedding：默认模型改为 `kinfra-text-embedding-4b`，重建 254×2560 向量，镜像默认 hybrid；lint/test 61/61。密钥未入库 | pangdonglai_project/knowledge/vector/r5-general-index.json, pangdonglai_project/site/shared/embedding-client.mjs, pangdonglai_project/site/worker/index.ts, pangdonglai_project/Dockerfile, docs/DEPLOY_CN.md, docs/HANDOFF.md |
+| 2026-08-27 | Codex | 按用户要求安装本地 ZIP 版 `guizang-ppt-skill`，供 Codex 与 Grokbuild 后续生成横向网页 PPT；未改项目源码、未部署 | `.agents/skills/guizang-ppt-skill/**`, `C:\Users\pao chui\.codex\skills\guizang-ppt-skill\**`, `docs/HANDOFF.md` |
+| 2026-08-27 | Grok | 按用户批复入库 C2：核联商网 A1/A2 后 limited；A3/A4/A5 limited；A6 拒绝新建。未重建向量、未部署 | pangdonglai_project/knowledge/**（5 份新来源、15 片段）、docs/SOURCE_AUDIT_C2_01.md、docs/RAG_APPROVALS.md、docs/HANDOFF.md |
+| 2026-08-27 | Grok | 按用户同意启动 C2：检索一线授权/轮值/问责/民主评议，起草审核稿；随后已入库 | docs/SOURCE_AUDIT_C2_01.md, docs/HANDOFF.md |
+| 2026-08-27 | Grok | 按用户要求整段删除入馆体验，恢复 A/B 与 01/02。未部署 | pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/app/globals.css, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md（删除 hall-tour 源码与 public/hall） |
+| 2026-08-27 | Grok | 按用户要求把入馆体验文案/11 幕剧情改回 demo 原文，界面仍用当前站纸色铜色。随后整段删除 | pangdonglai_project/site/data/hall-tour.ts, pangdonglai_project/site/app/hall-tour.tsx, pangdonglai_project/site/app/globals.css, pangdonglai_project/site/public/hall/*, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
+| 2026-08-27 | Grok | 将另一套手机馆 demo 收成当前站「入馆体验」：C 锚点、03 章节、手机底栏；Hero 在窄屏改为内容高度。随后整段删除 | pangdonglai_project/site/data/hall-tour.ts, pangdonglai_project/site/app/hall-tour.tsx, pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/app/globals.css, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
+| 2026-08-27 | Grok | 热点事件回答模板第四步由「这件事让我们观察什么」改为「从这件事观察胖东来：」。未部署 | pangdonglai_project/site/shared/answer-guidance.mjs, pangdonglai_project/site/scripts/evaluate-rag-r4-contract.mjs, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/RAG_CULTURE_R4_IMPLEMENTATION.md, docs/RAG_CULTURE_ROADMAP.md, docs/HANDOFF.md |
+| 2026-08-27 | Grok | 新闻二级页可点击来源的「打开来源」加大字号并加胶囊底色；无直链条目保持弱样式。未部署 | pangdonglai_project/site/app/globals.css, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
+| 2026-08-27 | Grok | 新闻二级来源账本不再展示「传言」；没有直链的「自媒体」整块也不再展示。官方/第三方媒体仍保留。未部署 | pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
+| 2026-08-27 | Grok | 热点详情补可打开直链（人员流失每经、关闭北京商报/每经、郑州省政府网/每经/快科技、人格尊严凤凰网/扬子晚报、梦之城每经/证券时报）；无稳定原帖改显示「无稳定网页链接」，不伪造搜索页。未部署 | pangdonglai_project/site/data/hotspots.ts, pangdonglai_project/site/app/page.tsx, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
+| 2026-08-27 | Grok | 用户授权重建向量：TokenHub 生成 239 条 1024 维索引。54 题 52/54、严重回归 0；31 题 22/31、严重回归 0。彩礼问法补资料缺口以免向量拉回无关片段。未部署 | pangdonglai_project/knowledge/vector/r5-general-index.json, pangdonglai_project/site/shared/retrieval.mjs, pangdonglai_project/site/scripts/evaluate-rag-vector-rebuild.mjs, pangdonglai_project/evaluation/rag-culture-vector-rebuild-2026-08-27.json, docs/RAG_VECTOR_REBUILD_2026-08-27.md, docs/HANDOFF.md |
+| 2026-08-27 | Grok | 按用户要求入库 C4-A1～A6：申红丽商品段、毛利率标准、2021 价签、卜景超摘要、魏都市监检查、供应商访谈。知识库 60/239/10。修正毛利率被利润率闸门误伤。未部署 | pangdonglai_project/knowledge/**, pangdonglai_project/site/shared/retrieval.mjs, pangdonglai_project/site/shared/answer-control.mjs, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/SOURCE_AUDIT_C4_01.md, docs/RAG_APPROVALS.md, docs/HANDOFF.md |
+| 2026-08-27 | Grok | 按用户同意启动 C4：检索品质标准/供应商/抽检/监管区分，起草 `SOURCE_AUDIT_C4_01.md`；不堆个案，未入库 | docs/SOURCE_AUDIT_C4_01.md, docs/HANDOFF.md |
+| 2026-08-26 | Grok | 按用户同意入库 C3-A1（中新网河南 L2）、拒绝 A5、A6 开三文鱼独立案例。知识库 55/217/10。未部署、未接入热点前端 | pangdonglai_project/knowledge/**, docs/SOURCE_AUDIT_C3_01.md, docs/RAG_APPROVALS.md, docs/HANDOFF.md, pangdonglai_project/site/tests/rendered-html.test.mjs |
+| 2026-08-26 | Grok | 用户确认 C3-A2/A3/A4 为官方通报，按 L1/`limited` 入库珠宝售后、和田玉退货条件、500 元投诉奖与员工补偿区分。知识库 53/209/9。未部署 | pangdonglai_project/knowledge/**, docs/SOURCE_AUDIT_C3_01.md, docs/RAG_APPROVALS.md, docs/HANDOFF.md, pangdonglai_project/site/tests/rendered-html.test.mjs |
+| 2026-08-26 | Grok | 按用户要求启动 C3：检索退换货/投诉奖/服务边界，起草 `SOURCE_AUDIT_C3_01.md`；未入库 | docs/SOURCE_AUDIT_C3_01.md, docs/HANDOFF.md |
+| 2026-08-26 | Codex | 按用户指正，将事件 16 热点详情的主日期从历史首批招聘背景 `2025-08` 修正为郑州店招聘计划日期 `2026-08-14`；2025 年内容保留在时间线作为背景。`npm test`（61/61）、lint、build 与 Impeccable detector 通过 | pangdonglai_project/site/data/hotspots.ts, pangdonglai_project/news_summary/events/16-prisoner-recruitment-2026-08.md, docs/HANDOFF.md |
+| 2026-08-26 | Grok | 把「下一步计划」写入 HANDOFF「给下一位的指令」，纠正此前只写在对话、交接文件找不到计划的问题 | docs/HANDOFF.md |
+| 2026-08-26 | Grok | 按用户要求入库 C1 第三轮 C1–C4：新建 9886/薪酬原则，回填 8974，升级申红丽 partial_text；C5–C8 拒绝。知识库 50/200/9。未部署 | pangdonglai_project/knowledge/**, docs/SOURCE_AUDIT_C1_03.md, docs/RAG_APPROVALS.md, docs/HANDOFF.md, pangdonglai_project/site/tests/rendered-html.test.mjs |
+| 2026-08-26 | Codex | 用户同意后实际落地“胖东来郑州店计划招聘刑释人员”：新增 limited 来源审计、1 个案例、7 份来源、14 个摘要切片、新闻事件专档和热点详情；与同日 C1-C1～C1-C4 变更合并重建后，知识库为 50 份资料/200 片段/9 案例。新的 BM25 案例查询命中 `prisoner-recruitment-2026-08`；不重建 130 条冻结向量索引、不部署 | docs/SOURCE_AUDIT_PRISONER_RECRUITMENT_01.md, pangdonglai_project/knowledge/**, pangdonglai_project/news_summary/events/16-prisoner-recruitment-2026-08.md, pangdonglai_project/site/data/hotspots.ts, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
+| 2026-08-26 | Grok | 按用户要求准备 C1 第三轮入库预览：逐页核验 C1-C1～C1-C8，写出拟入库原文摘录与切片 | docs/SOURCE_AUDIT_C1_03.md, docs/HANDOFF.md |
+| 2026-08-23 | Grok | 按用户选择启动 C1 第三轮（R1 缺口）：双线检索并起草 8 条候选卡（薪酬 9886/8974 口径、企业薪酬原则说明、手册转载甄别等）；未入库、待页面核验与用户批准 | docs/SOURCE_AUDIT_C1_03.md, docs/HANDOFF.md |
 | 2026-08-23 | Grok | 有允许 Claim 时 `makeSafeFallback()` 只输出 Claim 正文，去掉「目前能确认的是」和终局提醒句。未部署 | pangdonglai_project/site/shared/answer-control.mjs, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-23 | Grok | 修复一般文化题因「人格尊严」等通用词被误判串案而触发固定降级句；一般题 Claim 上限改为 10。未部署 | pangdonglai_project/site/shared/answer-control.mjs, pangdonglai_project/site/tests/rendered-html.test.mjs, docs/HANDOFF.md |
 | 2026-08-23 | Grok | 按用户要求启用本地 hybrid：确认 `.dev.vars` 为 hybrid，TokenHub 冒烟 `vectorApplied=true` 且召回 10 条，并重启 `npm run dev`（http://localhost:3000/）。未部署 | pangdonglai_project/site/.dev.vars（未提交）, pangdonglai_project/site/scripts/smoke-hybrid-recall.mjs, docs/HANDOFF.md |

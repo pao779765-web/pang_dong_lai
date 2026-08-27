@@ -55,6 +55,9 @@ function buildClaimDistinctions(chunk) {
   if (/投诉奖/.test(text) && /顾客|客诉|投诉/.test(text)) {
     distinctions.push("顾客投诉奖励、员工委屈奖励和法院判决赔偿属于不同用途，金额不能互相替代。");
   }
+  if (/(日常检查|市监|市场监管)/.test(text) && /(送检|自检|企业自行)/.test(text)) {
+    distinctions.push("企业自行送检、市场监管日常检查和司法判决属于不同证据，不能互相替代。");
+  }
   return distinctions;
 }
 

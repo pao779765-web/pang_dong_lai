@@ -1,0 +1,50 @@
+{
+  "id": "media-pdl-salmon-overnight-2024-08",
+  "title": "新乡生活广场隔夜三文鱼：退赔公告与补充说明",
+  "type": "company_public_statement",
+  "status": "limited",
+  "caseId": "salmon-overnight-sashimi-2024-08",
+  "claimType": "company_investigation_report",
+  "finality": "company_report_stage",
+  "evidenceLevel": "L1",
+  "evidenceLabel": "企业退赔公告与补充公告要点（官方通报；本库存媒体转述，公众号原帖 ID 未定位）",
+  "answerMode": "fact_with_source",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-26",
+    "basis": "docs/SOURCE_AUDIT_C3_01.md C3-A6；用户同意另开案例轨、不并入 C3 日常投诉奖。"
+  },
+  "source": {
+    "publisher": "新乡胖东来超市 / 新乡胖东来生活广场公众号（时代财经/新浪 2024-08-25、21 经济网 2024-08-27 转述）",
+    "sourceType": "official",
+    "url": "https://finance.sina.com.cn/tech/roll/2024-08-25/doc-inckvzsa0603405.shtml",
+    "publishedAt": "2024-08-24",
+    "verifiedAt": "2026-08-26",
+    "alternateUrls": [
+      "https://www.21jingji.com/article/20240827/herald/d34955286775137297554838ed36ff15.html"
+    ]
+  },
+  "scope": [
+    "2024-08-19 顾客反馈寿司柜台日清盒装进口三文鱼刺身隔夜返包",
+    "按监督建议标准给予反馈顾客 10 万元现金奖励",
+    "对 8 月 15、17、19 日购买顾客退款并每人赔偿 1000 元，因无法追溯对期间销售 74 盒全部办理",
+    "课长、班长免职，店第一主管与生鲜处长降一级三个月，促销员调离全部门店",
+    "2024-08-26 补充公告：奖励为企业主动评定，否认促销与举报者勾结，顾客决定将奖励捐给韩红爱心慈善基金会"
+  ],
+  "answeringRules": [
+    "必须写「据胖东来 2024 年 8 月退赔公告/补充公告、经媒体转述」。",
+    "10 万元是「监督建议标准」下重大食品安全线索奖励，禁止写成日常 500 元服务投诉奖，也禁止与擀面皮事件混成同一案件。",
+    "退赔公告为企业自查，禁止写成市场监管终局。",
+    "补充公告中的捐赠意向是顾客决定，不能写成企业已完成捐赠的独立核验。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-pdl-salmon-overnight-2024-08/content.md",
+    "chunksPath": "chunks/media-pdl-salmon-overnight-2024-08.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-26",
+    "notes": "只保存退赔与补充公告要点；擀面皮仅作「并非首次 10 万」对照，不在本条展开该案。"
+  }
+}

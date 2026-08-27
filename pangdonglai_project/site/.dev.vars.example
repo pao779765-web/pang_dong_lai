@@ -17,4 +17,4 @@ RAG_RETRIEVAL_MODE=bm25
 TENCENT_TOKENHUB_API_KEY=请替换为你的TokenHub密钥
 # 通常无需修改下面两项。
 TENCENT_TOKENHUB_ENDPOINT=https://tokenhub.tencentmaas.com/v1/embeddings
-TENCENT_TOKENHUB_MODEL=kinfra-text-embedding-0.6b
+TENCENT_TOKENHUB_MODEL=kinfra-text-embedding-4b

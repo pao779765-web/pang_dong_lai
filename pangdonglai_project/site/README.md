@@ -80,7 +80,7 @@ DEEPSEEK_API_KEY=sk-xxxxxxxxxxxxxxxx
 RAG_RETRIEVAL_MODE=hybrid
 TENCENT_TOKENHUB_API_KEY=xxxxxxxxxxxxxxxx
 TENCENT_TOKENHUB_ENDPOINT=https://tokenhub.tencentmaas.com/v1/embeddings
-TENCENT_TOKENHUB_MODEL=kinfra-text-embedding-0.6b
+TENCENT_TOKENHUB_MODEL=kinfra-text-embedding-4b
 ```
 
 混合模式缺少 TokenHub 密钥、模型与现有索引不一致或向量请求失败时，会自动退回 BM25。不要把任何真实密钥提交到 Git。

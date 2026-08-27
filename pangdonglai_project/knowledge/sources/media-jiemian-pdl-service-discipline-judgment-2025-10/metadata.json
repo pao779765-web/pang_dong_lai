@@ -1,0 +1,46 @@
+{
+  "id": "media-jiemian-pdl-service-discipline-judgment-2025-10",
+  "title": "媒体转述：法院认定未及时接待顾客属服务违纪，解除合法",
+  "type": "media_court_judgment",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "court_labor_judgment_report",
+  "finality": "civil_judgment_public",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "裁判文书网判决的媒体转述（文书原文未打开）",
+  "answerMode": "fact_with_source",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-27",
+    "basis": "docs/SOURCE_AUDIT_C2_01.md C2-A3；用户批准 limited：说明授权不是无限放权。只保留判决认定的制度条款、培训签字与解除合法性。"
+  },
+  "source": {
+    "publisher": "界面新闻（江怡曼）依据中国裁判文书网；许昌市胖东来百货服饰有限公司劳动争议",
+    "sourceType": "media",
+    "url": "https://www.jiemian.com/article/13469926.html",
+    "publishedAt": "2025-10-16",
+    "verifiedAt": "2026-08-27",
+    "notes": "解除劳动关系 2021-08-29；一审二审均为法院认定。裁判文书网原文本轮未打开。不转载报道其余薪酬、扩张和排队段落。不新建热点专档。"
+  },
+  "scope": [
+    "内部《各项管理制度》：顾客有需求时未及时放下手中工作上前接待，属服务违纪，调查属实可视为严重违反规章制度并解除劳动合同",
+    "《迎宾前工作流程》写明点货理货时间为上午 9:00–9:30",
+    "一审、二审认为规章制度制定程序合法、内容不违法，员工曾参加培训并签字确认；驳回经济补偿/赔偿请求"
+  ],
+  "answeringRules": [
+    "必须写「据裁判文书网、经界面新闻 2025-10-16 转述」。不是裁判文书全文。",
+    "只说明该案公开的制度条款、培训签字和法院对解除合法性的认定。授权不是无限放权。",
+    "这是劳动争议，不是客诉真伪案；不得用本案裁定企业文化整体真伪。",
+    "不能证明现行全集团仍使用 2021 年那份制度原文，也不能把该次解除写成管理伦理上「应该」。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-jiemian-pdl-service-discipline-judgment-2025-10/content.md",
+    "chunksPath": "chunks/media-jiemian-pdl-service-discipline-judgment-2025-10.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-27",
+    "notes": "只保留判决认定的制度条款、迎宾前流程时间、培训签字与法院结论。"
+  }
+}

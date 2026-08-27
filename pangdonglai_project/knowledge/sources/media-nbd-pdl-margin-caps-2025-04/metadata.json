@@ -1,0 +1,50 @@
+{
+  "id": "media-nbd-pdl-margin-caps-2025-04",
+  "title": "每日经济新闻：企业回复中公布的商品毛利率限定标准",
+  "type": "media_company_response",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "attributed_company_statement",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "主流财经媒体转述企业 2025-04-08 回复说明（原帖未定位）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-27",
+    "basis": "docs/SOURCE_AUDIT_C4_01.md C4-A2；用户要求六条一并入库。"
+  },
+  "source": {
+    "publisher": "每日经济新闻（徐肖逍 / 董兴生）",
+    "sourceType": "media",
+    "url": "https://www.nbd.com.cn/articles/2025-04-10/3826882.html",
+    "publishedAt": "2025-04-10",
+    "verifiedAt": "2026-08-27",
+    "alternateUrls": [
+      "https://news.qq.com/rain/a/20250410A09X9600"
+    ],
+    "notes": "转述胖东来 2025-04-08 关于宋清辉等网络侵权回复说明中的商品管理技术部分。企业 15 页原件未定位。"
+  },
+  "scope": [
+    "民生商品加价率 5%–20%",
+    "自有商品加价 15%–25%",
+    "自制商品加价率 20%–30%",
+    "食品类加价率不超过 30%"
+  ],
+  "answeringRules": [
+    "必须写「据每日经济新闻 2025 年 4 月 10 日报道，转述企业 4 月 8 日回复说明」。",
+    "这是加价率/毛利率限定标准的企业自述，不是净利润率，也不是经审计的实际加价。",
+    "快科技等同日转述写成常规 15%–25%、非食品不超过 35%、珠宝 15%–16%，口径不同，不得混成一张现行价目表。",
+    "不得用本条证明所有 SKU 都落在该区间，也不得写成监管已确认该标准。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-nbd-pdl-margin-caps-2025-04/content.md",
+    "chunksPath": "chunks/media-nbd-pdl-margin-caps-2025-04.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-27",
+    "notes": "只保留毛利率限定标准与口径冲突说明，不转载专家评论全文。"
+  }
+}

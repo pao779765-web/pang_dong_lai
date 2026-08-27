@@ -1,0 +1,45 @@
+{
+  "id": "media-pdl-prisoner-recruitment-intent-2026-08",
+  "title": "胖东来关于招聘刑释人员的初衷与首批人员状态",
+  "type": "media_company_statement",
+  "status": "limited",
+  "caseId": "prisoner-recruitment-2026-08",
+  "claimType": "company_recruitment_intent_reported",
+  "finality": "company_statement_stage",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "媒体转述企业账号说明与创始人公开表态",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-26",
+    "basis": "用户同意将前期检索的事件来源按 limited 入库；直接官方账号原文未完整归档，因此保留媒体归因。"
+  },
+  "source": {
+    "publisher": "每日经济新闻 / 川观（转述胖东来官方账号与于东来表态）",
+    "sourceType": "media",
+    "url": "https://www.nbd.com.cn/articles/2026-08-20/4547776.html",
+    "publishedAt": "2026-08-20",
+    "verifiedAt": "2026-08-26",
+    "alternateUrls": ["https://cbgc.scol.com.cn/news/7871207"]
+  },
+  "scope": [
+    "企业对刑满释放人员平等公民身份和招聘初衷的公开口径（媒体转述）",
+    "企业称先从罪责较轻人员开始并逐步扩大范围的表述",
+    "于东来 2026-08-15 对首批30人状态的公开说法"
+  ],
+  "answeringRules": [
+    "必须归因于企业账号或于东来公开表态，并保留日期。",
+    "‘无一离职、稳定幸福健康’是公开表态，不是完整人事统计或独立调查。",
+    "不得把企业初衷写成法律结论，也不得由首批人员状态推断所有刑释人员。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-pdl-prisoner-recruitment-intent-2026-08/content.md",
+    "chunksPath": "chunks/media-pdl-prisoner-recruitment-intent-2026-08.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-26",
+    "notes": "只保存媒体可核验的归因摘要；没有把官方账号完整原文复制进知识库。"
+  }
+}

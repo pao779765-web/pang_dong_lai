@@ -273,7 +273,7 @@ function getHybridRetriever(env: Env): HybridKnowledgeRetriever | null {
     apiKey,
     endpoint: env.TENCENT_TOKENHUB_ENDPOINT?.trim() || DEFAULT_TOKENHUB_EMBEDDING_ENDPOINT,
     model,
-    timeoutMs: 5_000,
+    timeoutMs: 15_000,
     maxRetries: 0,
   });
   const retriever = createHybridKnowledgeRetriever({

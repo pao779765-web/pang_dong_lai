@@ -1,0 +1,45 @@
+{
+  "id": "media-pdl-prisoner-recruitment-followup-2026-08",
+  "title": "第二批招聘进展仍缺少可核验结果",
+  "type": "media_followup_report",
+  "status": "limited",
+  "caseId": "prisoner-recruitment-2026-08",
+  "claimType": "recruitment_followup_status",
+  "finality": "recruitment_plan_pending",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "南方周末对候选人经历与第二批招聘状态的跟进报道",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-26",
+    "basis": "用户同意将前期检索的最新跟进报道作为 limited 资料入库；不把候选人个案写成录取结果。"
+  },
+  "source": {
+    "publisher": "南方周末",
+    "sourceType": "media",
+    "url": "https://news.southcn.com/node_64549305f1/4e5acb751a.shtml",
+    "publishedAt": "2026-08-22",
+    "verifiedAt": "2026-08-26",
+    "alternateUrls": ["https://huacheng.gz-cmc.com/pages/2026/08/26/b35ca5960b2341f09b2b915a766f0d1f.html"]
+  },
+  "scope": [
+    "报道记录的潜在应聘者报名和求职过程",
+    "截至核验日未见第二批正式录取、入职和试用结果的公开证据",
+    "‘招犯人’等标题化说法与企业实际招聘边界之间的误读"
+  ],
+  "answeringRules": [
+    "候选人表示或招聘应用状态不能证明企业是否录取。",
+    "截至2026-08-26，第二批实际录取人数、岗位和试用结果必须回答为未知。",
+    "不得把‘招犯人’作为中性事件名称；应说明其是传播中的简化或误读。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-pdl-prisoner-recruitment-followup-2026-08/content.md",
+    "chunksPath": "chunks/media-pdl-prisoner-recruitment-followup-2026-08.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-26",
+    "notes": "该资料用于记录最新状态缺口；报道中的潜在候选人不是企业正式录取结果。"
+  }
+}

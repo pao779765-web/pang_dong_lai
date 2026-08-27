@@ -116,6 +116,11 @@
 - `interview-trust-returns-and-complaints`
 - `jiemian-handbook-and-institutions`、`jiemian-rotation-governance`
 - `xinhua-yonghui-replication-boundary`
+- `liu-gaimin-2024-rotation-full-authority`、`liu-gaimin-2024-rotation-chief-approval`、`liu-gaimin-2024-rotation-when-manager-absent`
+- `liu-gaimin-2025-competition-no-supervisors`、`liu-gaimin-2025-rotation-bottom-up`、`liu-gaimin-2025-rotation-allow-mistakes`
+- `jiemian-2025-service-discipline-rule`、`jiemian-2025-training-signature-court-upholds`、`jiemian-2025-authorization-not-unlimited`
+- `jingji-2026-april-democratic-review-numbers`、`jingji-2026-review-april-october-only`
+- `cicc-2025-on-site-duty-shift`、`cicc-2025-review-80-not-used`
 
 ### 关键缺口与边界
 

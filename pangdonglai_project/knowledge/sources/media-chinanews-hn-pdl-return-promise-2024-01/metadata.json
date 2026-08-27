@@ -1,0 +1,45 @@
+{
+  "id": "media-chinanews-hn-pdl-return-promise-2024-01",
+  "title": "中新网河南：胖东来公开「不满意就退货」等承诺",
+  "type": "media_field_report",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "media_observation",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "权威地方媒体采访团现场记录的企业公开承诺（非退换货细则原文）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-26",
+    "basis": "docs/SOURCE_AUDIT_C3_01.md C3-A1；用户同意核验后按 L2 入库。信用河南原页 403，改用已打开的中新网河南 2024-01-28。"
+  },
+  "source": {
+    "publisher": "中国新闻网河南（中新网河南）",
+    "sourceType": "media",
+    "url": "http://www.ha.chinanews.com.cn/news/hncj/2024/0128/51124.shtml",
+    "publishedAt": "2024-01-28",
+    "verifiedAt": "2026-08-26",
+    "notes": "「放心消费在中原」采访团 1 月 25 日走进时代广场店。信用中国（河南）2023-09-30「七大诚信做法」原页本轮 403，其中「不影响二次销售」等细则未核验，不从搜索摘要入库。"
+  },
+  "scope": [
+    "企业公开承诺：用真品换真心、假一赔十、不满意就退货、商品和服务质量有问题就赔款",
+    "有外包装称重去皮、水产品沥水称重"
+  ],
+  "answeringRules": [
+    "必须写「据中新网河南 2024 年 1 月 28 日报道，采访团在时代广场店了解到」。",
+    "这是媒体记录的公开承诺，不是现行全品类退换货细则，不能写成任何商品、任何时间、无需凭证都能退。",
+    "不得从本条引用信用河南页上未核验的「不影响二次销售」或「质量问题补偿 500 元」表述。",
+    "500 元服务投诉奖须引用已入库的客诉调查报告或人民日报访谈，不从本条推出金额。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-chinanews-hn-pdl-return-promise-2024-01/content.md",
+    "chunksPath": "chunks/media-chinanews-hn-pdl-return-promise-2024-01.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-26",
+    "notes": "只保存承诺与称重做法，不复制采访团其他企业段落。"
+  }
+}

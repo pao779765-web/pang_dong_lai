@@ -1,0 +1,46 @@
+{
+  "id": "media-dahe-pdl-supplier-interviews-2026-03",
+  "title": "大河网：供应商访谈中的检测要求与利润约束",
+  "type": "media_interview",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "attributed_third_party_statement",
+  "finality": "not_applicable",
+  "evidenceLevel": "L3",
+  "evidenceLabel": "地方媒体对供应商的化名/具名访谈，不是企业制度原文",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-27",
+    "basis": "docs/SOURCE_AUDIT_C4_01.md C4-A6；用户要求六条一并入库。"
+  },
+  "source": {
+    "publisher": "顶端新闻·河南商报（大河网），记者郭爽爽",
+    "sourceType": "media",
+    "url": "https://news.dahe.cn/2026/03-11/2064971.html",
+    "publishedAt": "2026-03-11",
+    "verifiedAt": "2026-08-27",
+    "notes": "受访者包括地垫经销商牟强，以及化名王军、夏伟。口述不能写成合同条款。"
+  },
+  "scope": [
+    "受访者称国标有多少项检测就要做多少项，含赠品配件",
+    "受访者称供应商利润大约维持在成本两成左右",
+    "受访者称报新品要同时报供货价和成本价，品质提升可能导致采购加价"
+  ],
+  "answeringRules": [
+    "必须写「据大河网 2026 年 3 月 11 日对供应商的访谈」。",
+    "这是供应商口述，不能写成胖东来现行合同或全品类制度。",
+    "「两成利润」「全项检测」只属于受访者描述，不能与卜景超 A/B/C/D 或每经加价率表混成同一份规则。",
+    "不得用本条证明检测项目数量、供应商名单或监管抽检结果。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-dahe-pdl-supplier-interviews-2026-03/content.md",
+    "chunksPath": "chunks/media-dahe-pdl-supplier-interviews-2026-03.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-27",
+    "notes": "只保留检测要求与利润约束的受访者表述，不转载人情往来故事全文。"
+  }
+}

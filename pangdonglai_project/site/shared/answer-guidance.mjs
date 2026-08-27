@@ -9,7 +9,7 @@ export const R4_EVENT_FLOW = Object.freeze([
   "这件事现在知道什么",
   "企业当时怎么处理",
   "后来有没有明确结论",
-  "这件事让我们观察什么",
+  "从这件事观察胖东来：",
 ]);
 
 export const R4_INSUFFICIENT_FLOW = Object.freeze([

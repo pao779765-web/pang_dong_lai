@@ -5,10 +5,10 @@
   "sourceOfTruth": "directory",
   "generatedIndex": "compiled/knowledge-base.json",
   "counts": {
-    "cases": 8,
-    "sources": 41,
-    "chunks": 172,
-    "claims": 172
+    "cases": 10,
+    "sources": 65,
+    "chunks": 254,
+    "claims": 254
   },
   "cases": [
     {
@@ -42,6 +42,14 @@
     {
       "id": "dignity-violation-disclosure-2026-08",
       "path": "cases/dignity-violation-disclosure-2026-08.json"
+    },
+    {
+      "id": "prisoner-recruitment-2026-08",
+      "path": "cases/prisoner-recruitment-2026-08.json"
+    },
+    {
+      "id": "salmon-overnight-sashimi-2024-08",
+      "path": "cases/salmon-overnight-sashimi-2024-08.json"
     }
   ],
   "sources": [
@@ -290,6 +298,150 @@
       "metadataPath": "sources/media-nbd-leave-cannot-refuse-2023-12/metadata.json",
       "contentPath": "sources/media-nbd-leave-cannot-refuse-2023-12/content.md",
       "chunksPath": "chunks/media-nbd-leave-cannot-refuse-2023-12.jsonl"
+    },
+    {
+      "id": "media-pdl-prisoner-recruitment-announcement-2026-08",
+      "metadataPath": "sources/media-pdl-prisoner-recruitment-announcement-2026-08/metadata.json",
+      "contentPath": "sources/media-pdl-prisoner-recruitment-announcement-2026-08/content.md",
+      "chunksPath": "chunks/media-pdl-prisoner-recruitment-announcement-2026-08.jsonl"
+    },
+    {
+      "id": "media-pdl-prisoner-recruitment-intent-2026-08",
+      "metadataPath": "sources/media-pdl-prisoner-recruitment-intent-2026-08/metadata.json",
+      "contentPath": "sources/media-pdl-prisoner-recruitment-intent-2026-08/content.md",
+      "chunksPath": "chunks/media-pdl-prisoner-recruitment-intent-2026-08.jsonl"
+    },
+    {
+      "id": "media-pdl-prisoner-recruitment-clarification-2026-08",
+      "metadataPath": "sources/media-pdl-prisoner-recruitment-clarification-2026-08/metadata.json",
+      "contentPath": "sources/media-pdl-prisoner-recruitment-clarification-2026-08/content.md",
+      "chunksPath": "chunks/media-pdl-prisoner-recruitment-clarification-2026-08.jsonl"
+    },
+    {
+      "id": "media-pdl-prisoner-recruitment-first-batch-2025-09",
+      "metadataPath": "sources/media-pdl-prisoner-recruitment-first-batch-2025-09/metadata.json",
+      "contentPath": "sources/media-pdl-prisoner-recruitment-first-batch-2025-09/content.md",
+      "chunksPath": "chunks/media-pdl-prisoner-recruitment-first-batch-2025-09.jsonl"
+    },
+    {
+      "id": "media-pdl-prisoner-recruitment-expert-2026-08",
+      "metadataPath": "sources/media-pdl-prisoner-recruitment-expert-2026-08/metadata.json",
+      "contentPath": "sources/media-pdl-prisoner-recruitment-expert-2026-08/content.md",
+      "chunksPath": "chunks/media-pdl-prisoner-recruitment-expert-2026-08.jsonl"
+    },
+    {
+      "id": "media-pdl-prisoner-recruitment-followup-2026-08",
+      "metadataPath": "sources/media-pdl-prisoner-recruitment-followup-2026-08/metadata.json",
+      "contentPath": "sources/media-pdl-prisoner-recruitment-followup-2026-08/content.md",
+      "chunksPath": "chunks/media-pdl-prisoner-recruitment-followup-2026-08.jsonl"
+    },
+    {
+      "id": "official-prisoner-employment-equality-law-2026",
+      "metadataPath": "sources/official-prisoner-employment-equality-law-2026/metadata.json",
+      "contentPath": "sources/official-prisoner-employment-equality-law-2026/content.md",
+      "chunksPath": "chunks/official-prisoner-employment-equality-law-2026.jsonl"
+    },
+    {
+      "id": "media-daxiang-pdl-salary-9886-2025-03",
+      "metadataPath": "sources/media-daxiang-pdl-salary-9886-2025-03/metadata.json",
+      "contentPath": "sources/media-daxiang-pdl-salary-9886-2025-03/content.md",
+      "chunksPath": "chunks/media-daxiang-pdl-salary-9886-2025-03.jsonl"
+    },
+    {
+      "id": "media-dazhong-pdl-salary-principles-2026-05",
+      "metadataPath": "sources/media-dazhong-pdl-salary-principles-2026-05/metadata.json",
+      "contentPath": "sources/media-dazhong-pdl-salary-principles-2026-05/content.md",
+      "chunksPath": "chunks/media-dazhong-pdl-salary-principles-2026-05.jsonl"
+    },
+    {
+      "id": "official-pdl-jewelry-aftersales-2025-04",
+      "metadataPath": "sources/official-pdl-jewelry-aftersales-2025-04/metadata.json",
+      "contentPath": "sources/official-pdl-jewelry-aftersales-2025-04/content.md",
+      "chunksPath": "chunks/official-pdl-jewelry-aftersales-2025-04.jsonl"
+    },
+    {
+      "id": "official-pdl-nephrite-return-2025-05",
+      "metadataPath": "sources/official-pdl-nephrite-return-2025-05/metadata.json",
+      "contentPath": "sources/official-pdl-nephrite-return-2025-05/content.md",
+      "chunksPath": "chunks/official-pdl-nephrite-return-2025-05.jsonl"
+    },
+    {
+      "id": "pdl-weighing-dispute-report-2023-06",
+      "metadataPath": "sources/pdl-weighing-dispute-report-2023-06/metadata.json",
+      "contentPath": "sources/pdl-weighing-dispute-report-2023-06/content.md",
+      "chunksPath": "chunks/pdl-weighing-dispute-report-2023-06.jsonl"
+    },
+    {
+      "id": "media-chinanews-hn-pdl-return-promise-2024-01",
+      "metadataPath": "sources/media-chinanews-hn-pdl-return-promise-2024-01/metadata.json",
+      "contentPath": "sources/media-chinanews-hn-pdl-return-promise-2024-01/content.md",
+      "chunksPath": "chunks/media-chinanews-hn-pdl-return-promise-2024-01.jsonl"
+    },
+    {
+      "id": "media-pdl-salmon-overnight-2024-08",
+      "metadataPath": "sources/media-pdl-salmon-overnight-2024-08/metadata.json",
+      "contentPath": "sources/media-pdl-salmon-overnight-2024-08/content.md",
+      "chunksPath": "chunks/media-pdl-salmon-overnight-2024-08.jsonl"
+    },
+    {
+      "id": "media-nbd-pdl-margin-caps-2025-04",
+      "metadataPath": "sources/media-nbd-pdl-margin-caps-2025-04/metadata.json",
+      "contentPath": "sources/media-nbd-pdl-margin-caps-2025-04/content.md",
+      "chunksPath": "chunks/media-nbd-pdl-margin-caps-2025-04.jsonl"
+    },
+    {
+      "id": "media-dahe-pdl-price-tag-cost-2021-03",
+      "metadataPath": "sources/media-dahe-pdl-price-tag-cost-2021-03/metadata.json",
+      "contentPath": "sources/media-dahe-pdl-price-tag-cost-2021-03/content.md",
+      "chunksPath": "chunks/media-dahe-pdl-price-tag-cost-2021-03.jsonl"
+    },
+    {
+      "id": "media-pdl-bu-jingchao-suppliers-lab-2026-04",
+      "metadataPath": "sources/media-pdl-bu-jingchao-suppliers-lab-2026-04/metadata.json",
+      "contentPath": "sources/media-pdl-bu-jingchao-suppliers-lab-2026-04/content.md",
+      "chunksPath": "chunks/media-pdl-bu-jingchao-suppliers-lab-2026-04.jsonl"
+    },
+    {
+      "id": "media-jschina-weidu-nephrite-inspection-2025-05",
+      "metadataPath": "sources/media-jschina-weidu-nephrite-inspection-2025-05/metadata.json",
+      "contentPath": "sources/media-jschina-weidu-nephrite-inspection-2025-05/content.md",
+      "chunksPath": "chunks/media-jschina-weidu-nephrite-inspection-2025-05.jsonl"
+    },
+    {
+      "id": "media-dahe-pdl-supplier-interviews-2026-03",
+      "metadataPath": "sources/media-dahe-pdl-supplier-interviews-2026-03/metadata.json",
+      "contentPath": "sources/media-dahe-pdl-supplier-interviews-2026-03/content.md",
+      "chunksPath": "chunks/media-dahe-pdl-supplier-interviews-2026-03.jsonl"
+    },
+    {
+      "id": "media-linkshop-pdl-liu-gaimin-rotation-approval-2024-03",
+      "metadataPath": "sources/media-linkshop-pdl-liu-gaimin-rotation-approval-2024-03/metadata.json",
+      "contentPath": "sources/media-linkshop-pdl-liu-gaimin-rotation-approval-2024-03/content.md",
+      "chunksPath": "chunks/media-linkshop-pdl-liu-gaimin-rotation-approval-2024-03.jsonl"
+    },
+    {
+      "id": "media-linkshop-pdl-liu-gaimin-rotation-not-fear-error-2025-03",
+      "metadataPath": "sources/media-linkshop-pdl-liu-gaimin-rotation-not-fear-error-2025-03/metadata.json",
+      "contentPath": "sources/media-linkshop-pdl-liu-gaimin-rotation-not-fear-error-2025-03/content.md",
+      "chunksPath": "chunks/media-linkshop-pdl-liu-gaimin-rotation-not-fear-error-2025-03.jsonl"
+    },
+    {
+      "id": "media-jiemian-pdl-service-discipline-judgment-2025-10",
+      "metadataPath": "sources/media-jiemian-pdl-service-discipline-judgment-2025-10/metadata.json",
+      "contentPath": "sources/media-jiemian-pdl-service-discipline-judgment-2025-10/content.md",
+      "chunksPath": "chunks/media-jiemian-pdl-service-discipline-judgment-2025-10.jsonl"
+    },
+    {
+      "id": "media-21jingji-pdl-democratic-review-2026-05",
+      "metadataPath": "sources/media-21jingji-pdl-democratic-review-2026-05/metadata.json",
+      "contentPath": "sources/media-21jingji-pdl-democratic-review-2026-05/content.md",
+      "chunksPath": "chunks/media-21jingji-pdl-democratic-review-2026-05.jsonl"
+    },
+    {
+      "id": "media-cicc-pdl-duty-shift-2025-10",
+      "metadataPath": "sources/media-cicc-pdl-duty-shift-2025-10/metadata.json",
+      "contentPath": "sources/media-cicc-pdl-duty-shift-2025-10/content.md",
+      "chunksPath": "chunks/media-cicc-pdl-duty-shift-2025-10.jsonl"
     }
   ]
 }

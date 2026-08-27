@@ -30,7 +30,7 @@ function parseDotDevVars(raw) {
 const localEnv = parseDotDevVars(await readFile(resolve(siteRoot, ".dev.vars"), "utf8"));
 const mode = (localEnv.RAG_RETRIEVAL_MODE ?? "").trim().toLowerCase();
 const apiKey = (localEnv.TENCENT_TOKENHUB_API_KEY ?? localEnv.TokenHub_Key ?? "").trim();
-const model = (localEnv.TENCENT_TOKENHUB_MODEL ?? "kinfra-text-embedding-0.6b").trim();
+const model = (localEnv.TENCENT_TOKENHUB_MODEL ?? "kinfra-text-embedding-4b").trim();
 const endpoint = (localEnv.TENCENT_TOKENHUB_ENDPOINT ?? "").trim();
 
 if (mode !== "hybrid") {

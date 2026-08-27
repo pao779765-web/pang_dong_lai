@@ -1,6 +1,6 @@
 export const DEFAULT_TOKENHUB_EMBEDDING_ENDPOINT =
   "https://tokenhub.tencentmaas.com/v1/embeddings";
-export const DEFAULT_TOKENHUB_EMBEDDING_MODEL = "kinfra-text-embedding-0.6b";
+export const DEFAULT_TOKENHUB_EMBEDDING_MODEL = "kinfra-text-embedding-4b";
 
 const MAX_BATCH_SIZE = 128;
 const MAX_TEXT_LENGTH = 2000;

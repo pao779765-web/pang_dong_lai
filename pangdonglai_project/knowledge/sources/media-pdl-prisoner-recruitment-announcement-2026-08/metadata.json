@@ -1,0 +1,46 @@
+{
+  "id": "media-pdl-prisoner-recruitment-announcement-2026-08",
+  "title": "郑州店计划招聘20名刑期5年以上刑释人员",
+  "type": "media_company_recruitment",
+  "status": "limited",
+  "caseId": "prisoner-recruitment-2026-08",
+  "claimType": "company_recruitment_plan_reported",
+  "finality": "recruitment_plan_pending",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "主流媒体对企业招聘计划与公开回应的报道",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-26",
+    "basis": "用户同意将前期关于胖东来招聘刑释人员事件的候选来源作为 limited 资料落地；本资料只保存自写摘要和边界。"
+  },
+  "source": {
+    "publisher": "澎湃新闻（转述胖东来郑州店招聘安排）",
+    "sourceType": "media",
+    "url": "https://www.thepaper.cn/newsDetail_forward_33781961",
+    "publishedAt": "2026-08-14",
+    "verifiedAt": "2026-08-26",
+    "alternateUrls": ["https://industry.caijing.com.cn/20260814/5177241.shtml"]
+  },
+  "scope": [
+    "2026-08-14 郑州店提前公告中计划招聘100名退役边防军人和20名刑期5年以上刑释人员",
+    "刑释人员专项招聘通道、报名和面试安排的媒体转述",
+    "企业称正式招聘细则后续发布"
+  ],
+  "answeringRules": [
+    "必须写成‘据媒体报道/据企业公告转述’，不能把媒体转述改写成独立核验事实。",
+    "计划招聘20人不等于已经录取、入职或完成试用；截至2026-08-26不能据此确认第二批结果。",
+    "不能由‘刑期5年以上’反推出具体罪名、危险程度或个人品格。",
+    "不能把这项计划推广为胖东来所有岗位、所有时期或其他企业的通用招聘规则。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-pdl-prisoner-recruitment-announcement-2026-08/content.md",
+    "chunksPath": "chunks/media-pdl-prisoner-recruitment-announcement-2026-08.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-26",
+    "notes": "保存自写事实摘要，不复制新闻全文；原始企业公告的完整永久链接未独立归档，媒体转述按 L2 limited 使用。"
+  }
+}

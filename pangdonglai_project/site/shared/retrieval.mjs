@@ -415,10 +415,13 @@ export function createKnowledgeRetriever(knowledgeBase, options = {}) {
       return "当前资料库没有完整的供应商审核分数或淘汰名单。";
     }
     if (
-      /净利润率|利润率/.test(normalized) ||
+      /净利润率|(?<!毛)利润率/.test(normalized) ||
       /(?:未来|今后).{0,6}(?:三年|3年).{0,10}(?:开店|多少家|计划)/.test(normalized)
     ) {
       return "当前资料库没有最新净利润率或未来三年开店计划。";
+    }
+    if (/彩礼/.test(normalized)) {
+      return "当前资料库已不再收录员工彩礼倡议专档，不能判断是否已成为正式制度。";
     }
     if (
       /(?:所有|全部|历史上).{0,8}(?:投诉|客诉).{0,12}(?:谁对谁错|结果|结论)/.test(

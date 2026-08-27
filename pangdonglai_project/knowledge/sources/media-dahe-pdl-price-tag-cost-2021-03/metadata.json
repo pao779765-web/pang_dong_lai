@@ -1,0 +1,46 @@
+{
+  "id": "media-dahe-pdl-price-tag-cost-2021-03",
+  "title": "河南商报：2021 年部分服饰价签亮出进货价",
+  "type": "media_field_report",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "media_observation",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "地方主流媒体现场报道（2021 年部分服饰，非现行全店）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-27",
+    "basis": "docs/SOURCE_AUDIT_C4_01.md C4-A3；用户要求六条一并入库。"
+  },
+  "source": {
+    "publisher": "河南商报（大河网），首席记者杨桂芳",
+    "sourceType": "media",
+    "url": "https://4g.dahe.cn/news/20210324816335",
+    "publishedAt": "2021-03-24",
+    "verifiedAt": "2026-08-27",
+    "notes": "新浪看点转载页已不可用，本库存大河网可访问页。"
+  },
+  "scope": [
+    "2021 年前后大众服饰区部分价签标进货价",
+    "店内说明：商场扣点不超过 10 个点、商户品牌毛利控制在 20 个点以内",
+    "自营说明：最高初始毛利率 20%、未来不允许超过 25%"
+  ],
+  "answeringRules": [
+    "必须写「据河南商报 2021 年 3 月 24 日报道」并保留年份。",
+    "只覆盖当时部分服饰鞋帽，不能写成 2026 年全品类仍亮进货价。",
+    "记者按样例粗算的约 19%–19.9% 毛利率只对文中列举商品，不是全店平均。",
+    "不得把价签透明写成食品安全抽检或监管结论。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-dahe-pdl-price-tag-cost-2021-03/content.md",
+    "chunksPath": "chunks/media-dahe-pdl-price-tag-cost-2021-03.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-27",
+    "notes": "只保留价签机制与店内说明，不转载行业分析全文。"
+  }
+}

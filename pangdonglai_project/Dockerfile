@@ -14,6 +14,9 @@ WORKDIR /app/site
 ENV NODE_ENV=production
 ENV PORT=3000
 ENV BIND_HOST=0.0.0.0
+ENV RAG_RETRIEVAL_MODE=hybrid
+ENV TENCENT_TOKENHUB_MODEL=kinfra-text-embedding-4b
+ENV TENCENT_TOKENHUB_ENDPOINT=https://tokenhub.tencentmaas.com/v1/embeddings
 
 RUN addgroup --system --gid 1001 nodejs \
     && adduser --system --uid 1001 site

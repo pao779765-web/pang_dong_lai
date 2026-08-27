@@ -1,0 +1,46 @@
+{
+  "id": "pdl-weighing-dispute-report-2023-06",
+  "title": "企业 8 页调查报告：500 元服务投诉奖与员工精神补偿",
+  "type": "company_investigation_report",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "company_investigation_report",
+  "finality": "company_report_stage",
+  "evidenceLevel": "L1",
+  "evidenceLabel": "企业公开调查报告要点（官方通报；本库存媒体转述的处理结果，报告原帖 URL 未定位）",
+  "answerMode": "fact_with_source",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-26",
+    "basis": "docs/SOURCE_AUDIT_C3_01.md C3-A4；用户确认属官方通报、按 L1 入库。"
+  },
+  "source": {
+    "publisher": "许昌市胖东来商贸集团有限公司（约 2023-06-29 公开 8 页调查报告；三言 Pro / 新浪 2023-07-01 转述处理结果）",
+    "sourceType": "official",
+    "url": "https://finance.sina.com.cn/stock/roll/2023-07-01/doc-imyzeqqh9915058.shtml",
+    "publishedAt": "2023-06-29",
+    "verifiedAt": "2026-08-26",
+    "notes": "媒体稿含报告配图。本库只保留奖项区分与处理结果，不把该争执做成独立热点，不保存评论性文字。"
+  },
+  "scope": [
+    "《客诉处理标准》中向顾客发放 500 元服务投诉奖",
+    "员工另有委屈奖/精神补偿，与顾客投诉奖不是同一笔",
+    "企业认为应通过投诉渠道反馈，不能现场大声呵斥"
+  ],
+  "answeringRules": [
+    "必须写「据胖东来 2023 年 6 月公开的调查报告、经媒体转述」。",
+    "500 元是向顾客发放的服务投诉奖；员工精神补偿是另一笔，不得与委屈奖、重大食品安全 10 万元奖励混成同一制度。",
+    "不得把该次处理写成现行《客诉处理标准》全文，也不得断言每次投诉必奖 500 元。",
+    "本条不进入独立案例轨，不得用它裁定该次争执的司法对错。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/pdl-weighing-dispute-report-2023-06/content.md",
+    "chunksPath": "chunks/pdl-weighing-dispute-report-2023-06.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-26",
+    "notes": "只保存处理结果与奖项区分；不复述视频情节与媒体评论。"
+  }
+}

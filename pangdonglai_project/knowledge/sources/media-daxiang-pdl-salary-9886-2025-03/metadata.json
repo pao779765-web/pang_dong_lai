@@ -1,0 +1,49 @@
+{
+  "id": "media-daxiang-pdl-salary-9886-2025-03",
+  "title": "媒体记录：于东来 2025 超市周公布 1–2 月交完社保后月均 9886 元",
+  "type": "media_speech_report",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "media_observation",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "第三方媒体对公开活动讲话的记录（非薪酬表原文）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-26",
+    "basis": "docs/SOURCE_AUDIT_C1_03.md C1-C1；用户要求按标准入库 limited。"
+  },
+  "source": {
+    "publisher": "大象新闻（读特转载）；交叉：郑州晚报",
+    "sourceType": "media",
+    "url": "https://m.dutenews.com/n/article/8768669",
+    "publishedAt": "2025-03-29",
+    "verifiedAt": "2026-08-26",
+    "alternateUrls": [
+      "https://www.zzwb.cn/news/354501"
+    ],
+    "notes": "2025-03-28「2025 中国超市周」于东来现场讲话。读特转载大象新闻；郑州晚报交叉记录同一场合。企业薪酬表与 15 页说明原帖仍未定位。"
+  },
+  "scope": [
+    "2025 年 1–2 月交完社保以后企业公布的员工月均收入 9886 元",
+    "现场 PPT 中店长一级 2024 / 2025 年月均到手工资的媒体记录"
+  ],
+  "answeringRules": [
+    "必须使用「据大象新闻 2025 年 3 月 29 日报道，于东来在 2025 中国超市周公开透露」等归因，并保留 2025 年 1–2 月、交完社保以后这一口径。",
+    "不得把 9886 元写成薪酬表、全年均值或全体员工同一收入。",
+    "不得与 2025 全年全业态平均到手 8974 元、2026 年 1–3 月 9598 元混为同一口径。",
+    "不得把本条与已拒绝的企业 15 页说明原帖写成同一份原始文件。",
+    "店长一级 PPT 数字只支持该现场记录，不得写成全体管理层或全体员工收入。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-daxiang-pdl-salary-9886-2025-03/content.md",
+    "chunksPath": "chunks/media-daxiang-pdl-salary-9886-2025-03.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-26",
+    "notes": "只保存薪酬口径与现场 PPT 必要数字，不复制整篇报道。"
+  }
+}

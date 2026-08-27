@@ -1,0 +1,45 @@
+{
+  "id": "media-pdl-prisoner-recruitment-clarification-2026-08",
+  "title": "媒体转述胖东来澄清并非无门槛招聘刑释人员",
+  "type": "media_company_clarification",
+  "status": "limited",
+  "caseId": "prisoner-recruitment-2026-08",
+  "claimType": "company_recruitment_boundary_reported",
+  "finality": "company_clarification_stage",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "媒体对企业招聘边界和流程说明的转述",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-26",
+    "basis": "用户同意将前期检索的来源按 limited 入库；媒体转述不冒充完整官方原文。"
+  },
+  "source": {
+    "publisher": "川观 / 荔枝新闻",
+    "sourceType": "media",
+    "url": "https://cbgc.scol.com.cn/news/7862061",
+    "publishedAt": "2026-08-19",
+    "verifiedAt": "2026-08-26",
+    "alternateUrls": ["https://news.sina.com.cn/s/2026-08-19/doc-ininvfss8299801.shtml"]
+  },
+  "scope": [
+    "媒体转述企业对‘并非无门槛接纳’的澄清",
+    "媒体转述的适用边界、统一面试、6个月双向试用期和后台岗位安排",
+    "排除性侵、严重暴力等说法的媒体归因边界"
+  ],
+  "answeringRules": [
+    "必须写成媒体转述的企业说明，不得冒充已经保存了完整官方招聘细则。",
+    "不得用‘刑期5年以上’概括具体罪名，也不得把媒体转述的排除项扩展为完整法律清单。",
+    "统一流程和试用期安排不等于所有申请者都能通过或已经录用。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-pdl-prisoner-recruitment-clarification-2026-08/content.md",
+    "chunksPath": "chunks/media-pdl-prisoner-recruitment-clarification-2026-08.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-26",
+    "notes": "直接官方完整说明未独立归档；保留媒体转述及明确归因，避免把二手报道写成完整官方原文。"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "media-linkshop-pdl-liu-gaimin-rotation-approval-2024-03",
+  "title": "媒体记录：刘改敏 2024 超市周谈轮值全权与轮值总审批",
+  "type": "media_speech_report",
+  "status": "limited",
+  "caseId": null,
+  "claimType": "attributed_person_statement",
+  "finality": "not_applicable",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "行业媒体对管理层超市周分享的编辑稿（非制度原文）",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-27",
+    "basis": "docs/SOURCE_AUDIT_C2_01.md C2-A1；用户要求先核联商网页后 limited 入库。范围仅 2024 年超市周对轮值放权的公开描述。"
+  },
+  "source": {
+    "publisher": "联商网编辑；刘改敏（时任胖东来天使城超市店长）2024 中国超市周店长交流论坛分享",
+    "sourceType": "media",
+    "url": "https://www.linkshop.com/news/2024516554.shtml",
+    "publishedAt": "2024-03-31",
+    "verifiedAt": "2026-08-27",
+    "alternateUrls": [
+      "http://www.linkshop.com/news/2024516554.shtml"
+    ],
+    "notes": "2026-08-27 用 curl.exe -L 打开正文（HTTP 200，charset=gb2312）。场合为 2024-03-30 中国超市店长交流论坛。不收录同篇中的尝面合议庭叙述、薪酬休假和人权财权标准句。"
+  },
+  "scope": [
+    "管理层逐级轮值；轮值期间全权负责和处理上一层级工作事务",
+    "超市公司费用由轮值店长审批，称「轮值总审批」，包括店长休假",
+    "店长不在店时，巡场、事务安排、客诉处理仍由轮值人员投入；轮值不能流于形式、不能事事请示"
+  ],
+  "answeringRules": [
+    "必须写「据联商网 2024 年编辑的刘改敏超市周分享」。这是管理层公开描述，不是现行轮值排班表或制度原文。",
+    "只谈轮值放权。不得用本篇写出岗位赔付权限表、一线授权金额，或把「人权、财权都有标准」扩成权限矩阵。",
+    "同篇还有尝面员工合议庭回忆，本条不收录；个案纠错指向既有尝面员工案例轨，不得升成权限通则。",
+    "不能证明所有客诉都由轮值店长拍板，也不能证明 2026 年排班仍与 2024 年分享完全一致。"
+  ],
+  "ingestion": {
+    "contentStatus": "partial_text",
+    "fullTextAllowed": "partial_only",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-linkshop-pdl-liu-gaimin-rotation-approval-2024-03/content.md",
+    "chunksPath": "chunks/media-linkshop-pdl-liu-gaimin-rotation-approval-2024-03.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-27",
+    "notes": "只保存轮值全权、轮值总审批、店长不在场时的轮值投入与「不能流于形式」四句。"
+  }
+}

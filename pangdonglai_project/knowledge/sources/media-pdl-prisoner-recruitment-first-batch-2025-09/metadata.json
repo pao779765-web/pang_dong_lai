@@ -1,0 +1,45 @@
+{
+  "id": "media-pdl-prisoner-recruitment-first-batch-2025-09",
+  "title": "30名刑释人员面试后全部录用与双向试用",
+  "type": "media_company_recruitment",
+  "status": "limited",
+  "caseId": "prisoner-recruitment-2026-08",
+  "claimType": "first_batch_recruitment_reported",
+  "finality": "first_batch_trial_stage",
+  "evidenceLevel": "L2",
+  "evidenceLabel": "解放日报/上观对首批招聘与个人经历的报道",
+  "answerMode": "attributed_claim",
+  "approval": {
+    "approvedBy": "user",
+    "approvedAt": "2026-08-26",
+    "basis": "用户同意将前期检索的首批招聘报道按 limited 入库；只保存自写摘要。"
+  },
+  "source": {
+    "publisher": "解放日报·上观",
+    "sourceType": "media",
+    "url": "https://www.shobserver.com/journal/article/share?id=463268",
+    "publishedAt": "2025-09-27",
+    "verifiedAt": "2026-08-26",
+    "alternateUrls": []
+  },
+  "scope": [
+    "2025年新乡‘三胖’专项招聘的首批30名候选人",
+    "面试后全部录用和6个月双向试用期的报道",
+    "报道记录的部分人员岗位和面试关注点"
+  ],
+  "answeringRules": [
+    "30人全部录用是媒体报道的企业招聘阶段口径，必须带归因和日期。",
+    "首批人员经历是个体样本，不能外推到第二批或全部刑释人员。",
+    "双向试用不等于已经完成长期留任或转正统计。"
+  ],
+  "ingestion": {
+    "contentStatus": "summary_only",
+    "fullTextAllowed": "unknown",
+    "contentFormat": "markdown",
+    "contentPath": "sources/media-pdl-prisoner-recruitment-first-batch-2025-09/content.md",
+    "chunksPath": "chunks/media-pdl-prisoner-recruitment-first-batch-2025-09.jsonl",
+    "sourceSnapshotHash": null,
+    "migratedAt": "2026-08-26",
+    "notes": "媒体文章只做摘要使用，不复制全文；报道中个人经历不作为全体人员统计。"
+  }
+}
