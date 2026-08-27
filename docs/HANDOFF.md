@@ -53,6 +53,7 @@
 
 ## 未完成 / 下一步
 
+- [x] **NEWS-Q-01（用户明确要求）**：删除刑释人员热点详情底部快捷追问「为什么不能把‘首批30人无一离职’写成普遍结论？」。档案正文、来源和时间线未改。未部署。
 - [x] **PPT-XR-01（用户明确要求）**：用 `guizang-ppt-skill` 瑞士风 IKB 完成息壤杯参赛网页 PPT 端到端交付。16 页，数字按 2026-08-27 现网口径（65 来源 / 254 切片 / 14 门店 / 13 热点 / 4b 2560 维 hybrid）。5G 与现场导览标为路线图。校验：Swiss 16 页通过、演讲备注 16/16、计划时长 7.0 分钟。未改网站源码、未部署。
 - [x] **RAG-ARCH-02（用户已授权）**：将单一 `pangdonglai_project/knowledge-base.json` 无损迁移为 `knowledge/manifest.json + sources/<id>/metadata.json/content.md + chunks/<id>.jsonl + cases/<id>.json`；23 份资料、53 个片段和 3 个案例全部保留，现有摘要统一标记 `summary_only`，Worker 改读构建生成的兼容索引，Docker 与结构回归测试通过。此次未抓取或伪造缺失原文。
 - [x] **RAG-CONTENT-AUDIT-01**：已逐篇审计现有 23 份资料的页面可访问性、正文保存权限与覆盖状态，结论见 `docs/SOURCE_AUDIT_08.md`；当前没有任何资料具有已核验的全文转载许可。
@@ -224,6 +225,7 @@
 
 | 时间 | 谁 | 做了什么 | 文件 |
 |---|---|---|---|
+| 2026-08-27 | Grok | 按用户截图删除刑释人员热点的一条快捷追问（首批30人无一离职写成普遍结论） | pangdonglai_project/site/data/hotspots.ts, docs/HANDOFF.md |
 | 2026-08-27 | Grok | 按用户要求用 guizang-ppt-skill 交付息壤杯 16 页瑞士风网页 PPT；现网数字、演讲备注与 60 秒脚本对齐；5G 仅作路线图 | deliverables/xirang-cup-pangdonglai-ai-culture-museum-20260827/**, docs/HANDOFF.md |
 | 2026-08-27 | Grok | 用户要求全量上线：GitHub `a4a52e9`；CloudBase 100% 切流。embedding 改为 `kinfra-text-embedding-4b`（254×2560），镜像默认 hybrid。公网 `/` `/healthz` 与轮值问答 200。密钥未入库 | pangdonglai_project/knowledge/vector/r5-general-index.json, pangdonglai_project/site/shared/embedding-client.mjs, pangdonglai_project/site/worker/index.ts, pangdonglai_project/Dockerfile, docs/DEPLOY_CN.md, docs/HANDOFF.md |
 | 2026-08-27 | Codex | 按用户要求安装本地 ZIP 版 `guizang-ppt-skill`，供 Codex 与 Grokbuild 后续生成横向网页 PPT；未改项目源码、未部署 | `.agents/skills/guizang-ppt-skill/**`, `C:\Users\pao chui\.codex\skills\guizang-ppt-skill\**`, `docs/HANDOFF.md` |
